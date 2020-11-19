@@ -27,7 +27,7 @@ class SelectLanguage extends Component {
     }
     
     onContinue = () => {
-        alert("clicked")
+      this.props.navigation.navigate('Welcome');
     }
 
     render() {
@@ -42,25 +42,25 @@ class SelectLanguage extends Component {
            style={[AuthStyle.loginTouchable,{flexDirection: 'row', justifyContent: 'space-between',}]}
               activeOpacity={0.7}
                     onPress={() => this.onSelectLang('en')}>
-                     <Text style={AuthStyle.buttonText}>{}</Text>
-                    <Text style={AuthStyle.buttonText}>{'English'}</Text>
+                     <Text style={AuthStyle.buttonText}>{"     "}</Text>
+                    <Text style={[AuthStyle.buttonText,{color:languageCode !=="en"?Colors.TEXT_COLOR2:Colors.TEXT_COLOR_WHITE}]}>{'English'}</Text>
                 {languageCode ==='en'?<Image source={ImagesPath.check} resizeMode='contain' style={AuthStyle.checkImg}/>: <Text  style={AuthStyle.checkImg}>{}</Text>}
                 </TouchableOpacity>
                  <TouchableOpacity
               style={[AuthStyle.loginTouchable,{flexDirection: 'row', justifyContent: 'space-between',}]}
               activeOpacity={0.7}
                     onPress={() => this.onSelectLang('du')}>
-                     <Text style={AuthStyle.buttonText}>{}</Text>
-                    <Text style={AuthStyle.buttonText}>{'Dutch'}</Text>
+                     <Text style={AuthStyle.buttonText}>{"     "}</Text>
+                    <Text style={[AuthStyle.buttonText,{color:languageCode !=="du"?Colors.TEXT_COLOR2:Colors.TEXT_COLOR_WHITE}]}>{'Dutch'}</Text>
                     {languageCode ==='du'?<Image source={ImagesPath.check} resizeMode='contain' style={AuthStyle.checkImg}/>: <Text  style={AuthStyle.checkImg}>{}</Text>}
             </TouchableOpacity>
 
             </View>
               <TouchableOpacity
-              style={AuthStyle.loginTouchable}
+              style={[AuthStyle.loginTouchable,{backgroundColor:languageCode ===""?Colors.BUTTON_COLOR:Colors.TEXT_COLOR2,}]}
               activeOpacity={0.7}
               onPress={() => this.onContinue()}>
-              <Text style={[AuthStyle.buttonText,{color:Colors.TEXT_COLOR2}]}>{'SELECT & CONTINUE'}</Text>
+              <Text style={[AuthStyle.buttonText,{color:languageCode ===""?Colors.TEXT_COLOR2:Colors.TEXT_COLOR_WHITE,}]}>{' Select & Continue '}</Text>
             </TouchableOpacity>
           </View>
      

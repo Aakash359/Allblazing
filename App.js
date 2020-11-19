@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  *
  * @format
- * @flow strict-local
+ * @flow strict-local                                                                          
  */
 
 import React from 'react';
@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
-import SelectLanguage from './src/Screens/Auth/SelectLanguage'
+import Navigation from './src/Navigation/Navigation'
 class App extends React.Component{
 
    componentDidMount() {
@@ -22,7 +22,7 @@ class App extends React.Component{
     }
    render(){
      return (
-      <SelectLanguage/>
+      <Navigation/>
 //       <View style={{flex: 1,alignItems:'center',justifyContent:'center' }}>
 //        <Text>App Screen</Text>
 // </View>

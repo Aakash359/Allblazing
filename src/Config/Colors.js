@@ -16,7 +16,7 @@ const Colors = {
   MATEBLACK1: 'rgb(53,52,52)',
   MATEBLACK2: 'rgb(43,43,43)',
   GRAY: '#808080',
-  RED: '#FF0000',
+  RED: '#EB3223',
   LIGHT_RED: '#ff4a4a',
   DARK_RED: 'rgb(212,5,5)',
   MAROON: '#800000',

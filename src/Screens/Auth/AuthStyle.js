@@ -24,6 +24,26 @@ export const AuthStyle = StyleSheet.create({
   marginRight:Scale(20)
   
   },
+  introButton: {
+    borderRadius: Scale(6),
+    width: '40%',
+    alignSelf: 'center',
+   justifyContent:'center',
+    alignItems: 'center',
+    height: Scale(45),
+    backgroundColor:Colors.TEXT_COLOR2,
+    marginTop: Scale(20),
+  },
+  welcomeView: {
+    borderRadius: Scale(10),
+    width: '78%',
+    alignSelf: 'center',
+   justifyContent:'center',
+    alignItems: 'center',
+    height: Scale(80),
+    backgroundColor: Colors.BUTTON_COLOR,
+   
+  },
   
   languageCont: {
     flex: 1,
@@ -68,7 +88,7 @@ export const AuthStyle = StyleSheet.create({
   },
   loginTouchable: {
   
-    borderRadius: Scale(10),
+    borderRadius: Scale(6),
     width: '90%',
     alignSelf: 'center',
    justifyContent:'center',
