@@ -1,17 +1,5 @@
-// Libraries
-import React from 'react';
-import {StyleSheet, I18nManager} from 'react-native';
-
-// Assets
-// assets
-import {
-  screenWidth,
-  screenHeight,
-  ImagesPath,
-  Colors,
-  Fonts,
-  Scale,
-} from '../../Config';
+import { StyleSheet, I18nManager } from 'react-native';
+import { Colors, Fonts, Scale } from '../../Config';
 
 export const AuthStyle = StyleSheet.create({
   imageBg: {
@@ -19,32 +7,31 @@ export const AuthStyle = StyleSheet.create({
     width: screenWidth,
   },
   checkImg: {
-    width: Scale(20),
     height: Scale(20),
-  marginRight:Scale(20)
-  
+    marginRight: Scale(20),
+    width: Scale(20),
   },
   introButton: {
     borderRadius: Scale(6),
     width: '40%',
     alignSelf: 'center',
-   justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     height: Scale(45),
-    backgroundColor:Colors.TEXT_COLOR2,
+    backgroundColor: Colors.TEXT_COLOR2,
     marginTop: Scale(20),
   },
   welcomeView: {
     borderRadius: Scale(10),
     width: '78%',
     alignSelf: 'center',
-   justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     height: Scale(80),
     backgroundColor: Colors.BUTTON_COLOR,
-   
+
   },
-  
+
   languageCont: {
     flex: 1,
     // justifyContent: 'center',
@@ -77,21 +64,20 @@ export const AuthStyle = StyleSheet.create({
     fontSize: Scale(22),
     color: Colors.TEXT_COLOR_WHITE,
     fontFamily: Fonts.Bold,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginLeft: Scale(5),
   },
-  
+
   buttonText: {
     fontSize: Scale(14),
     color: Colors.TEXT_COLOR_WHITE,
     fontFamily: Fonts.Medium,
   },
   loginTouchable: {
-  
     borderRadius: Scale(6),
     width: '90%',
     alignSelf: 'center',
-   justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     height: Scale(45),
     backgroundColor: Colors.BUTTON_COLOR,
@@ -104,10 +90,9 @@ export const AuthStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: Scale(45),
-    borderWidth:1
-,
-borderColor:  Colors.THEME_COLOR2,
-  
+    borderWidth: 1,
+    borderColor: Colors.THEME_COLOR2,
+
     marginTop: Scale(10),
   },
   keyboardAware: {
@@ -246,12 +231,64 @@ borderColor:  Colors.THEME_COLOR2,
     alignSelf: 'center',
     borderRadius: Scale(20),
     alignItems: 'center',
-    // borderColor: Color.ThemeColor
   },
   modalText: {
     paddingVertical: Scale(10),
-    // color: Color.placeHolderColor,
     fontFamily: Fonts.Regular,
     fontSize: Scale(15),
+  },
+});
+
+export const CommonStyles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.THEME_COLOR,
+    flex: 1,
+  },
+  crossImage: {
+    alignSelf: 'flex-end',
+    height: Scale(20),
+    margin: Scale(20),
+    width: Scale(20),
+  },
+});
+
+export const RegisterStyle = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Colors.TEXT_COLOR2,
+    borderRadius: Scale(6),
+    color: Colors.WHITE,
+    height: Scale(45),
+    justifyContent: 'center',
+    marginTop: Scale(40),
+    width: '90%',
+  },
+});
+
+export const UsernameStyle = StyleSheet.create({
+  buttons: {
+    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: Scale(20), marginTop: Scale(300),
+  },
+  buttonsWrapper: {
+    flex: 0.65, flexDirection: 'column-reverse',
+  },
+  input: {
+    color: Colors.TEXT_COLOR_WHITE,
+    fontFamily: Fonts.Bold,
+    fontSize: Scale(22),
+    fontWeight: 'bold',
+    lineHeight: Scale(30),
+    marginLeft: Scale(5),
+    textAlign: 'center',
+  },
+  inputWrapper: {
+    alignItems: 'center',
+    flex: 0.3,
+    justifyContent: 'space-evenly',
+    marginTop: Scale(20),
+  },
+  wrapper: {
+    flex: 1, marginBottom: Scale(50), marginTop: Scale(20),
   },
 });
