@@ -33,7 +33,9 @@ class Login extends Component {
     }
 
     render() {
-      const {email,password,isShow,isRemember} = this.state
+      const {email,password,isShow,isRemember} = this.state;
+      const { navigation: { navigate } } = this.props;
+
     return (
           <SafeAreaView style={{ flex: 1,backgroundColor : Colors.THEME_COLOR  }}>
             <StatusBar barStyle="light-content" />
@@ -78,7 +80,7 @@ class Login extends Component {
     height: Scale(18),}} /></TouchableOpacity>}
                             <Text style={ { color: Colors.WHITE, fontSize:Scale(14),paddingHorizontal:Scale(6)}}>{'Remember me'}</Text>
                         </View>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+              <TouchableOpacity onPress={() => navigate('ForgotPassword')}>
                 <Text style={[AuthStyle.buttonText, { color: Colors.WHITE, fontSize:Scale(14)}]}>{'Forgot password?'}</Text>
               </TouchableOpacity> 
     </View>
@@ -112,7 +114,9 @@ class Login extends Component {
             </View>
             <View style = {{  width:'100%', alignItems:'center',justifyContent:'center', position:'absolute',bottom:0, backgroundColor:Colors. BUTTON_COLOR, flexDirection:'row',height:Scale(100),borderTopLeftRadius:Scale(20),borderTopRightRadius:Scale(20)}}>
                 <Text style={{ color: Colors.TEXT_COLOR, fontSize: Scale(16),}}>Don't have account?</Text>
-            <Text style={{ color: Colors.RED, fontSize: Scale(16),marginHorizontal:Scale(2) }}>{'Create account'}</Text>  
+                <TouchableOpacity onPress={() => navigate('Register')}>
+                  <Text style={{ color: Colors.RED, fontSize: Scale(16), marginHorizontal:Scale(2) }}>{'Create account'}</Text>  
+                </TouchableOpacity>
             </View>
           </SafeAreaView>
      
