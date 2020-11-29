@@ -29,15 +29,43 @@ class Distance extends Component {
   constructor() {
     super();
     this.state = {
-      time: null, visible: false,
+      hour: 1,
+      minute: 1,
+      second: 1,
+      time: null,
+      visible: true,
     };
   }
 
-  onTypeChange = (payload) => this.setState({ time: payload })
+  onTypeChange = (payload) => {
+    this.setState({
+      time: payload, visible: true,
+    });
+  }
+
+  onValueChange = (value, type) => {
+    this.setState({ [type]: value });
+  }
+
+  onClose = () => {
+    this.setState({
+      hour: 1,
+      minute: 1,
+      second: 1,
+      time: null,
+      visible: false,
+    });
+  }
+
+  onSelect = () => {
+    const { navigation: { navigate } } = this.props;
+
+    this.setState({ visible: false }, () => navigate('Location'));
+  }
 
   render() {
     const {
-      time, visible,
+      hour, minute, second, time, visible,
     } = this.state;
     const {
       navigation: {
@@ -83,7 +111,7 @@ class Distance extends Component {
                 <TouchableOpacity
                   style={AuthStyle.introButton}
                   activeOpacity={0.7}
-                  onPress={() => navigate('Dashboard')}
+                  onPress={() => navigate('Location')}
                 >
                   <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
                 </TouchableOpacity>
@@ -94,12 +122,12 @@ class Distance extends Component {
         {visible && (
           <TimePicker
             visible
-            hour={10}
-            minute={10}
-            second={10}
-            onValueChange={() => true}
-            onPress={() => true}
-            onClose={() => true}
+            hour={hour}
+            minute={minute}
+            second={second}
+            onValueChange={this.onValueChange}
+            onPress={this.onSelect}
+            onClose={this.onClose}
           />
         )}
       </View>

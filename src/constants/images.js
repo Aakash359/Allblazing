@@ -15,6 +15,7 @@ const Images = {
   intro2: require('../assets/w2_img.png'),
   intro3: require('../assets/w3_img.png'),
   line: require('../assets/Line2x.png'),
+  location: require('../assets/location.png'),
   logo: require('../assets/logo.png'),
   path1: require('../assets/Path46.png'),
   path2: require('../assets/Path47.png'),
