@@ -12,6 +12,7 @@ module.exports = {
         props: 'never', children: 'ignore',
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
     'max-len': ['error', 200],
     'max-lines': ['error', 1000],
   },

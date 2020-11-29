@@ -1,0 +1,181 @@
+import { StyleSheet } from 'react-native';
+import Constants from '../constants';
+
+const styles = {
+  attachmentsStyle: {
+    // ...Constants.Fonts.headerBold,
+    color: Constants.Colors.BLACK,
+    marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
+    textAlign: 'left',
+  },
+  bottomContainer: {
+    backgroundColor: Constants.Colors.TRANSLUCENT,
+    flex: 1,
+    justifyContent: 'center',
+    padding: Constants.BaseStyle.MARGIN,
+  },
+  bottomWrapper: {
+    backgroundColor: Constants.Colors.WHITE,
+    bottom: 0,
+    height: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 25,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+  },
+  buttonStyle: {
+    alignSelf: 'center',
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 80,
+  },
+  camContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    marginVertical: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+  },
+  camera: {
+    alignItems: 'center',
+    borderColor: Constants.Colors.LIGHTGRAY,
+    borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 9,
+    borderWidth: 2,
+    height: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 18,
+    justifyContent: 'center',
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 18,
+  },
+  cancelButtonStyle: {
+    backgroundColor: Constants.Colors.WHITE,
+    borderColor: Constants.Colors.PRIMARY,
+    borderWidth: 1,
+  },
+  cancelTextStyle: { color: Constants.Colors.PRIMARY },
+  close: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    height: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 6,
+    justifyContent: 'center',
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 6,
+  },
+  closeButton: {
+    alignItems: 'center',
+    backgroundColor: Constants.Colors.PRIMARY,
+    borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 8,
+    height: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 8,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: (Constants.BaseStyle.DEVICE_WIDTH / 100) * -2,
+    top: (Constants.BaseStyle.DEVICE_WIDTH / 100) * -2,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 8,
+  },
+  container: {
+    backgroundColor: Constants.Colors.TRANSLUCENT,
+    flex: 1,
+    justifyContent: 'center',
+    padding: Constants.BaseStyle.MARGIN,
+  },
+  description: {
+    // ...Constants.Fonts.regular,
+    color: Constants.Colors.BLACK,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+  },
+  inviteCount: {
+    // ...Constants.Fonts.largeBold,
+    color: Constants.Colors.BLACK,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
+    textAlign: 'center',
+  },
+  inviteDescription: {
+    // ...Constants.Fonts.smallRegular,
+    color: Constants.Colors.GRAY,
+    marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 65,
+  },
+  inviteHeading: {
+    // ...Constants.Fonts.largeBold,
+    color: Constants.Colors.BLACK,
+    marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    textAlign: 'left',
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 65,
+  },
+  logoStyle: {
+    height: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 14,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 14,
+  },
+  logoutButton: { marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 2 },
+  logoutContainer: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 3,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 80,
+  },
+  monthLabel: { textAlign: 'right' },
+  monthPicker: {
+    height: 200,
+    width: 100,
+  },
+  monthPickerContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  monthPickerItem: {
+    color: Constants.Colors.CHARCOAL,
+    fontSize: 26,
+  },
+  picker: {
+    height: 180,
+    width: 35,
+  },
+  pickerItem: {
+    color: Constants.Colors.CHARCOAL,
+    fontSize: 26,
+  },
+  pickersContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+  },
+  searchButton: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 5,
+    width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 60,
+  },
+  textAlignLeft: { textAlign: 'left' },
+  textStyle: {
+    // ...Constants.Fonts.large,
+    color: Constants.Colors.BLACK,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+    textAlign: 'center',
+  },
+  timeEndLabel: { width: '35%' },
+  timeStartLabel: { width: '65%' },
+  titleTextStyle: {
+    // ...Constants.Fonts.extraLargeBold,
+    color: Constants.Colors.PRIMARY,
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
+    textAlign: 'center',
+  },
+  webViewStyle: { height: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 30 },
+  wrapper: {
+    backgroundColor: Constants.Colors.WHITE,
+    borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    padding: Constants.BaseStyle.MARGIN,
+  },
+  yearLabel: {
+    marginLeft: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 15,
+    textAlign: 'center',
+  },
+};
+
+export default StyleSheet.create(styles);
