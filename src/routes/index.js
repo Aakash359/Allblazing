@@ -14,6 +14,7 @@ import Userage from '../screens/onboarding/user-age';
 import ConnectUserType from '../screens/onboarding/connect-user-type';
 import Recent5KTime from '../screens/onboarding/recent-5k-time';
 import Distance from '../screens/onboarding/distance';
+import Location from '../screens/onboarding/location';
 import Dashboard from '../screens/dashboard';
 
 const Stack = createStackNavigator();
@@ -22,7 +23,7 @@ const options = { headerShown: false };
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SelectLanguage">
+      <Stack.Navigator initialRouteName="Distance">
         <Stack.Screen
           name="SelectLanguage"
           options={options}
@@ -82,6 +83,11 @@ export default function Navigation() {
           name="Distance"
           options={options}
           component={Distance}
+        />
+        <Stack.Screen
+          name="Location"
+          options={options}
+          component={Location}
         />
         <Stack.Screen
           name="Dashboard"

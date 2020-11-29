@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, View, StatusBar, TouchableOpacity, Text, SafeAreaView } from 'react-native';
+import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { InputField, StepBar } from '../../components';
@@ -20,8 +20,7 @@ class Username extends Component {
     } = this.props;
 
     return (
-      <SafeAreaView style={CommonStyles.container}>
-        <StatusBar barStyle="light-content" />
+      <View style={CommonStyles.container}>
         <ScrollView
           ref={this.scrollViewRef}
           showsHorizontalScrollIndicator={false}
@@ -55,7 +54,7 @@ class Username extends Component {
             </View>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     );
   }
 }

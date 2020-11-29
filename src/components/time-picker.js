@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, Pressable } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import times from 'lodash/times';
 import { bool, func, string } from 'prop-types';
 import { WheelPicker } from 'react-native-wheel-picker-android';
-import { useTranslation } from 'react-i18next';
 import AnimatedModal from './animate-modal';
-import { PopupStyles } from '../styles';
+import { AuthStyle, PopupStyles, OTPStyles } from '../styles';
+import Constants from '../constants';
 
 const hours = times(24, (i) => (i > 9 ? `${i}` : `0${i}`));
 const minutes = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
@@ -19,48 +19,58 @@ const TimePopup = ({
   onValueChange,
   second,
   visible,
-}) => {
-  const { t: translate } = useTranslation();
-
-  return (
-    <AnimatedModal visible={visible}>
-      <View style={PopupStyles.container}>
-        <View style={PopupStyles.wrapper}>
-          <View style={PopupStyles.pickersContainer}>
-            <Text style={PopupStyles.timeStartLabel}>{'HH'}</Text>
-            <Text style={PopupStyles.timeStartLabel}>{'MM'}</Text>
-            <Text style={PopupStyles.timeStartLabel}>{'SS'}</Text>
-          </View>
-          <View style={PopupStyles.pickersContainer}>
-            <WheelPicker
-              style={PopupStyles.picker}
-              itemStyle={PopupStyles.pickerItem}
-              selectedItem={Number(hour)}
-              data={hours}
-              onItemSelected={(value) => onValueChange(value, 'hour')}
-            />
-            <WheelPicker
-              style={PopupStyles.picker}
-              itemStyle={PopupStyles.pickerItem}
-              selectedItem={Number(minute)}
-              data={minutes}
-              onItemSelected={(value) => onValueChange(value, 'minutes')}
-            />
-            <WheelPicker
-              style={PopupStyles.picker}
-              itemStyle={PopupStyles.pickerItem}
-              selectedItem={Number(second)}
-              data={seconds}
-              onItemSelected={(value) => onValueChange(value, 'seconds')}
-            />
-          </View>
-          <Pressable transparent style={PopupStyles.closeButton} onPress={onPress}>{translate('ok')}</Pressable>
-          <Pressable transparent style={PopupStyles.closeButton} onPress={onClose}>{translate('cancel')}</Pressable>
+}) => (
+  <AnimatedModal visible={visible}>
+    <View style={PopupStyles.container}>
+      <View style={PopupStyles.wrapper}>
+        <Text style={PopupStyles.header}>{'What is your recent 1km time?'}</Text>
+        <View style={PopupStyles.divider} />
+        <View style={PopupStyles.pickersContainer}>
+          <Text style={PopupStyles.hourLabel}>{'HH'}</Text>
+          <Text style={PopupStyles.minuteLabel}>{'MM'}</Text>
+          <Text style={PopupStyles.secondLabel}>{'SS'}</Text>
         </View>
+        <View style={PopupStyles.divider} />
+        <View style={PopupStyles.pickersContainer}>
+          <WheelPicker
+            style={PopupStyles.picker}
+            itemStyle={PopupStyles.pickerItem}
+            selectedItem={Number(hour)}
+            data={hours}
+            onItemSelected={(value) => onValueChange(value, 'hour')}
+          />
+          <WheelPicker
+            style={PopupStyles.picker}
+            itemStyle={PopupStyles.pickerItem}
+            selectedItem={Number(minute)}
+            data={minutes}
+            onItemSelected={(value) => onValueChange(value, 'minute')}
+          />
+          <WheelPicker
+            style={PopupStyles.picker}
+            itemStyle={PopupStyles.pickerItem}
+            selectedItem={Number(second)}
+            data={seconds}
+            onItemSelected={(value) => onValueChange(value, 'second')}
+          />
+        </View>
+        <TouchableOpacity
+          style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+          activeOpacity={0.7}
+          onPress={onPress}
+        >
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Ok'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={OTPStyles.button}
+          onPress={onClose}
+        >
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Cancel'}</Text>
+        </TouchableOpacity>
       </View>
-    </AnimatedModal>
-  );
-};
+    </View>
+  </AnimatedModal>
+);
 
 TimePopup.propTypes = {
   hour: string.isRequired,

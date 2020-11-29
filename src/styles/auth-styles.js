@@ -346,4 +346,12 @@ export const IntroductionStyles = StyleSheet.create({
   wrapper: { flex: 0.9 },
 });
 
+export const LocationStyles = StyleSheet.create({
+  logo: {
+    alignSelf: 'center',
+    marginBottom: Constants.BaseStyle.scale(40),
+    width: '50%',
+  },
+});
+
 export default AuthStyle;

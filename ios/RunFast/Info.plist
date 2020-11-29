@@ -37,8 +37,35 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Please allow us to access your media gallery to be able to send photos or update your profile picture.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Please allow us to access your bluetooth to be able to connect with nearby devices for media sharing purpose.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Please allow us to access your bluetooth to be able to connect with nearby devices for media sharing purpose.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Please allow us to access your calendars.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow us to access your camera to be able to change your profile picture.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Please allow us to access your contacts.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This will help us to recommend you nearby locations while searching for nearby users.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>This will help us to recommend you nearby locations while searching for nearby users.
+</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please allow us to access your microphone to be able to record a video and send in a chat message.</string>
+	<key>NSMotionUsageDescription</key>
+	<string> Please allow us to access your motion to be able to capture motion movements.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string> Please allow us to access your photo gallery to be able to update your profile picture.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string> Please allow us to access your photo gallery to be able to update your profile picture.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Please allow us to access your speech to be able to record a video and send in a chat message.</string>
+	<key>NSURLIsExcludedFromBackupKey</key>
+	<string> Please allow us backup media to phone gallery to be able to update your profile picture.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

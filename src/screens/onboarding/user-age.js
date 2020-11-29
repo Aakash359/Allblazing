@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, TouchableOpacity, Text, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import lodash from 'lodash';
@@ -31,8 +31,7 @@ class Userage extends Component {
     } = this.props;
 
     return (
-      <SafeAreaView style={CommonStyles.container}>
-        <StatusBar barStyle="light-content" />
+      <View style={CommonStyles.container}>
         <View style={UsernameStyle.wrapper}>
           <StepBar count={5} selected={[0, 1]} />
           <View style={UsernameStyle.inputWrapper}>
@@ -69,7 +68,7 @@ class Userage extends Component {
             onClose={() => this.setState({ visible: false })}
           />
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 }

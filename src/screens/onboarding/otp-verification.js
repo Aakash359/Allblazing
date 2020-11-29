@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, TouchableOpacity, Text, Image } from 'react-native';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
@@ -24,7 +24,6 @@ class OTP extends Component {
             style={CommonStyles.crossImage}
           />
         </TouchableOpacity>
-        <StatusBar barStyle="light-content" />
         <View style={CommonStyles.headerWrapper}>
 
           <Text style={AuthStyle.selectText}>Verification Code</Text>
@@ -57,7 +56,6 @@ class OTP extends Component {
           >
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
           </TouchableOpacity>
-
         </View>
       </View>
     );

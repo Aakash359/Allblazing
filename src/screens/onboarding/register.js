@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View,
   findNodeHandle,
-  StatusBar,
   TouchableOpacity,
   Platform,
   Text,
@@ -61,7 +60,6 @@ export default class Register extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <StatusBar barStyle="light-content" />
         <TouchableOpacity onPress={() => navigate('Login')}>
           <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>

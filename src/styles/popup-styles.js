@@ -3,7 +3,7 @@ import Constants from '../constants';
 
 const styles = {
   attachmentsStyle: {
-    // ...Constants.Fonts.headerBold,
+    ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.BLACK,
     marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
@@ -74,25 +74,42 @@ const styles = {
     padding: Constants.BaseStyle.MARGIN,
   },
   description: {
-    // ...Constants.Fonts.regular,
+    ...Constants.Fonts.Regular,
     color: Constants.Colors.BLACK,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
   },
+  divider: {
+    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    height: 2,
+  },
+  header: {
+    ...Constants.Fonts.ExtraLargeBold,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+    marginVertical: Constants.BaseStyle.scale(15),
+    textAlign: 'center',
+  },
+  hourLabel: {
+    ...Constants.Fonts.Small,
+    color: Constants.Colors.WHITE,
+    marginLeft: '2%',
+    textAlign: 'left',
+    width: '20%',
+  },
   inviteCount: {
-    // ...Constants.Fonts.largeBold,
+    ...Constants.Fonts.LargeBold,
     color: Constants.Colors.BLACK,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
     textAlign: 'center',
   },
   inviteDescription: {
-    // ...Constants.Fonts.smallRegular,
+    ...Constants.Fonts.Small,
     color: Constants.Colors.GRAY,
     marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 65,
   },
   inviteHeading: {
-    // ...Constants.Fonts.largeBold,
+    ...Constants.Fonts.LargeBold,
     color: Constants.Colors.BLACK,
     marginHorizontal: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
     textAlign: 'left',
@@ -112,6 +129,13 @@ const styles = {
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 3,
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 80,
   },
+  minuteLabel: {
+    ...Constants.Fonts.Small,
+    color: Constants.Colors.WHITE,
+    marginLeft: '24%',
+    textAlign: 'left',
+    width: '18%',
+  },
   monthLabel: { textAlign: 'right' },
   monthPicker: {
     height: 200,
@@ -123,7 +147,7 @@ const styles = {
     justifyContent: 'center',
   },
   monthPickerItem: {
-    color: Constants.Colors.CHARCOAL,
+    color: Constants.Colors.WHITE,
     fontSize: 26,
   },
   picker: {
@@ -131,13 +155,16 @@ const styles = {
     width: 35,
   },
   pickerItem: {
-    color: Constants.Colors.CHARCOAL,
+    color: Constants.Colors.WHITE,
     fontSize: 26,
   },
   pickersContainer: {
     alignItems: 'center',
+    backgroundColor: Constants.Colors.PRIMARY,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: Constants.BaseStyle.scale(2),
+    padding: Constants.BaseStyle.scale(10),
   },
   row: {
     flexDirection: 'row',
@@ -151,24 +178,29 @@ const styles = {
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 5,
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 60,
   },
+  secondLabel: {
+    ...Constants.Fonts.Small,
+    color: Constants.Colors.WHITE,
+    marginLeft: '26%',
+    textAlign: 'left',
+    width: '48%',
+  },
   textAlignLeft: { textAlign: 'left' },
   textStyle: {
-    // ...Constants.Fonts.large,
-    color: Constants.Colors.BLACK,
+    ...Constants.Fonts.Large,
+    color: Constants.Colors.WHITE,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
     textAlign: 'center',
   },
-  timeEndLabel: { width: '35%' },
-  timeStartLabel: { width: '65%' },
   titleTextStyle: {
-    // ...Constants.Fonts.extraLargeBold,
-    color: Constants.Colors.PRIMARY,
+    ...Constants.Fonts.ExtraLargeBold,
+    color: Constants.Colors.WHITE,
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
     textAlign: 'center',
   },
   webViewStyle: { height: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 30 },
   wrapper: {
-    backgroundColor: Constants.Colors.WHITE,
+    backgroundColor: Constants.Colors.PRIMARY,
     borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
     padding: Constants.BaseStyle.MARGIN,
   },
