@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import NetInfo from '@react-native-community/netinfo';
 import SplashScreen from 'react-native-splash-screen';
-import configureStore from './Configs/configure-store';
-import i18nLocale, { getLocaleClient } from './Configs/configure-i18n';
+import configureStore from './config/configure-store';
+import i18nLocale, { getLocaleClient } from './config/configure-i18n';
 import Root from './root';
 import Constants from './constants';
-import { Loader } from './Components';
+import { Loader } from './components';
 
 const {
   store, persistor,
