@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, StatusBar } from 'react-native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import Routes from './routes';
 import Constants from './constants';
 import { Loader } from './components';
@@ -15,8 +16,10 @@ const Root = () => (
   <SafeAreaView style={styles.container}>
     <StatusBar barStyle="light-content" />
     <View style={styles.container}>
-      <Loader />
-      <Routes />
+      <NavigationContainer theme={DarkTheme}>
+        <Loader />
+        <Routes />
+      </NavigationContainer>
     </View>
   </SafeAreaView>
 );

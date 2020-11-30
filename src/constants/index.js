@@ -2,7 +2,7 @@
 
 module.exports = {
   BaseStyle: require('./base-style'),
-  Colors: require('./color-codes'),
-  Fonts: require('./font-sizes.js'),
+  Colors: require('./colors'),
+  Fonts: require('./fonts'),
   Images: require('./images'),
 };

@@ -29,7 +29,7 @@ export const AuthStyle = StyleSheet.create({
   loginTouchable: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(6),
     height: Constants.BaseStyle.scale(45),
     justifyContent: 'center',
@@ -48,7 +48,7 @@ export const AuthStyle = StyleSheet.create({
   welcomeView: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(10),
     height: Constants.BaseStyle.scale(80),
     justifyContent: 'center',
@@ -80,7 +80,7 @@ export const RegisterStyle = StyleSheet.create({
   passwordInput: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
     flexDirection: 'row',
     height: Constants.BaseStyle.scale(45),
@@ -96,7 +96,7 @@ export const UsernameStyle = StyleSheet.create({
   age: { color: Constants.Colors.GRAY },
   ageButton: {
     alignItems: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
     flexDirection: 'row',
     height: Constants.BaseStyle.scale(45),
@@ -135,7 +135,7 @@ export const ConnectUserTypeStyles = StyleSheet.create({
   button: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(6),
     flexDirection: 'row',
     height: Constants.BaseStyle.scale(45),
@@ -229,7 +229,7 @@ export const OTPStyles = StyleSheet.create({
     marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
   },
   input: {
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(5),
     borderWidth: 0,
     ...Constants.Fonts.Regular,
@@ -252,7 +252,7 @@ export const LoginStyles = StyleSheet.create({
   },
   accountWrapper: {
     alignItems: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderTopLeftRadius: Constants.BaseStyle.scale(20),
     borderTopRightRadius: Constants.BaseStyle.scale(20),
     bottom: 0,
@@ -299,7 +299,7 @@ export const LoginStyles = StyleSheet.create({
   passwordInput: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
     flexDirection: 'row',
     height: Constants.BaseStyle.scale(45),

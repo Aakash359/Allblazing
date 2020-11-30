@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
   },
   wrapper: {
     alignItems: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
     height: '40%',
     justifyContent: 'space-evenly',

@@ -33,7 +33,7 @@ class Distance extends Component {
       minute: 1,
       second: 1,
       time: null,
-      visible: true,
+      visible: false,
     };
   }
 

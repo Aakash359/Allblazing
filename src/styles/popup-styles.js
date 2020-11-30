@@ -79,7 +79,7 @@ const styles = {
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 1,
   },
   divider: {
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     height: 2,
   },
   header: {

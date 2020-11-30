@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 import { func, shape } from 'prop-types';
+import { connect } from 'react-redux';
 import { InputField } from '../../components';
 import { AuthStyle, CommonStyles, LoginStyles } from '../../styles';
 import Constants from '../../constants';
+import * as actions from '../../actions/user-action-types';
 
 const socialIcons = [{
   icon: Constants.Images.email,
@@ -31,6 +33,15 @@ class Login extends Component {
       isShow: false,
       password: '',
     };
+  }
+
+  onVerify = () => {
+    const {
+      loginSuccess, navigation: { navigate },
+    } = this.props;
+
+    loginSuccess();
+    navigate('Dashboard');
   }
 
   render() {
@@ -130,10 +141,11 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
 };
 
-export default Login;
+export default connect(null, { loginSuccess: actions.loginSuccess })(Login);
