@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { func, shape } from 'prop-types';
+import * as actions from '../../actions/user-action-types';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, OTPStyles } from '../../styles';
 
@@ -9,6 +11,15 @@ class OTP extends Component {
   constructor() {
     super();
     this.state = { otp: '' };
+  }
+
+  onVerify = () => {
+    const {
+      loginSuccess, navigation: { navigate },
+    } = this.props;
+
+    loginSuccess();
+    setTimeout(() => navigate('Username'), 500);
   }
 
   render() {
@@ -52,7 +63,7 @@ class OTP extends Component {
           <TouchableOpacity
             style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
             activeOpacity={0.7}
-            onPress={() => navigate('Username')}
+            onPress={this.onVerify}
           >
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
           </TouchableOpacity>
@@ -63,10 +74,11 @@ class OTP extends Component {
 }
 
 OTP.propTypes = {
+  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
 };
 
-export default OTP;
+export default connect(null, { loginSuccess: actions.loginSuccess })(OTP);

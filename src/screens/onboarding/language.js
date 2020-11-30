@@ -55,7 +55,7 @@ class Language extends Component {
 
           </View>
           <TouchableOpacity
-            style={[AuthStyle.loginTouchable, { backgroundColor: languageCode === '' ? Constants.Colors.BUTTON_COLOR : Constants.Colors.TEXT_COLOR2 }]}
+            style={[AuthStyle.loginTouchable, { backgroundColor: languageCode === '' ? Constants.Colors.SECONDARY_COLOR : Constants.Colors.TEXT_COLOR2 }]}
             activeOpacity={0.7}
             onPress={() => this.onContinue()}
           >

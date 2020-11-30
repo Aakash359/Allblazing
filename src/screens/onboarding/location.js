@@ -1,13 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { View, TouchableOpacity, Text, Image, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, LocationStyles, OTPStyles } from '../../styles';
 import { StepBar } from '../../components';
+import { loginSuccess } from '../../actions/user-action-types';
 
 const Location = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const goToSettings = async () => {
     const url = 'app-settings:';
 
@@ -21,6 +24,11 @@ const Location = () => {
       // eslint-disable-next-line no-console
       console.log('error', e);
     }
+  };
+
+  const onSkip = () => {
+    dispatch(loginSuccess());
+    navigation.navigate('Dashboard');
   };
 
   return (
@@ -39,7 +47,7 @@ const Location = () => {
         <TouchableOpacity style={OTPStyles.button} activeOpacity={0.7} onPress={() => goToSettings()}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Select It Manually'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={OTPStyles.button} activeOpacity={0.7} onPress={() => navigation.navigate('Dashboard')}>
+        <TouchableOpacity style={OTPStyles.button} activeOpacity={0.7} onPress={onSkip}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Skip'}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => Geolocation.requestAuthorization()}>

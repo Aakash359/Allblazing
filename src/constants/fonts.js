@@ -2,64 +2,64 @@ import { normalize } from '../utilities/responsive-fonts';
 
 const Fonts = {
   ExtraLarge: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(18),
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
   },
   ExtraLargeBold: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(18),
-    fontWeight: '900',
+    fontWeight: 'bold',
   },
   ExtraLargeMedium: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(16),
-    fontWeight: '500',
+    // fontWeight: '500',
   },
   Large: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(14),
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
   },
   LargeBold: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(14),
-    fontWeight: '900',
+    fontWeight: 'bold',
   },
   LargeMedium: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(14),
-    fontWeight: '500',
+    // fontWeight: '500',
   },
   Regular: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(12),
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
   },
   RegularBold: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(12),
-    fontWeight: '900',
+    fontWeight: 'bold',
   },
   RegularMedium: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(12),
-    fontWeight: '500',
+    // fontWeight: '500',
   },
   Small: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(10),
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
   },
   SmallBold: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(10),
-    fontWeight: '900',
+    fontWeight: 'bold',
   },
   SmallMedium: {
-    fontFamily: 'SF Pro Rounded',
+    fontFamily: 'System',
     fontSize: normalize(10),
-    fontWeight: '500',
+    // fontWeight: '500',
   },
 };
 

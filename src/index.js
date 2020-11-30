@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, LogBox } from 'react-native';
+import 'react-native-gesture-handler';
+import { View, StyleSheet, LogBox, DevSettings } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import NetInfo from '@react-native-community/netinfo';
 import SplashScreen from 'react-native-splash-screen';
 import configureStore from './config/configure-store';
-import i18nLocale, { getLocaleClient } from './config/configure-i18n';
 import Root from './root';
 import Constants from './constants';
 import { Loader } from './components';
@@ -16,7 +16,7 @@ const {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Constants.Colors.PR,
+    backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
   },
 });
@@ -30,6 +30,10 @@ class Runfast extends React.Component {
 
   async componentDidMount() {
     SplashScreen.hide();
+    if (__DEV__) {
+      // eslint-disable-next-line no-underscore-dangle
+      DevSettings._nativeModule.setHotLoadingEnabled(false);
+    }
   }
 
   async componentWillUnmount() {
@@ -41,10 +45,6 @@ class Runfast extends React.Component {
   init = async () => {
     LogBox.ignoreAllLogs();
     this.handleNetwork();
-
-    if (!getLocaleClient()) {
-      i18nLocale(store);
-    }
   };
 
   handleNetwork = () => {

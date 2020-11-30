@@ -5,7 +5,7 @@ const styles = {
   container: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: Constants.Colors.BUTTON_COLOR,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
     height: Constants.BaseStyle.scale(45),
     marginVertical: Constants.BaseStyle.scale(20),
