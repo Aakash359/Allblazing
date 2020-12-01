@@ -84,11 +84,15 @@
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
-		<string>SF Pro Rounded Bold.ttf</string>
-		<string>SF Pro Rounded Medium.ttf</string>
-		<string>SF Pro Rounded Regular.ttf</string>
-		<string>SF Pro Rounded Light.ttf</string>
-		<string>SF Pro Rounded Thin.ttf</string>
+		<string>SF-Pro-Rounded-Black.otf</string>
+		<string>SF-Pro-Rounded-Bold.otf</string>
+		<string>SF-Pro-Rounded-Heavy.otf</string>
+		<string>SF-Pro-Rounded-Light.otf</string>
+		<string>SF-Pro-Rounded-Regular.otf</string>
+		<string>SF-Pro-Rounded-Semibold.otf</string>
+		<string>SF-Pro-Rounded-Thin.otf</string>
+		<string>SF-Pro-Rounded-Ultralight.otf</string>
+		<string>SF-Pro-Rounded-Medium.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

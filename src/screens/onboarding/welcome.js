@@ -25,7 +25,7 @@ class Welcome extends Component {
         <View style={WelcomeStyles.wrapper}>
           <View style={WelcomeStyles.headerWrapper}>
             <Text style={[AuthStyle.selectText, WelcomeStyles.headerText]}>{translate('Welcome')}</Text>
-            <Text style={AuthStyle.selectText}>to ALLBLAZING</Text>
+            <Text style={[AuthStyle.selectText, WelcomeStyles.headerText]}>to ALLBLAZING</Text>
           </View>
           <View style={AuthStyle.welcomeView}>
             <Text style={[AuthStyle.buttonText, WelcomeStyles.description]}>{translate('Connect with other runners in your area')}</Text>
