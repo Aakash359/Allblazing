@@ -14,6 +14,7 @@ target 'RunFast' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+  pod 'Flipper-Folly', '~> 2.2.0'
 
   
   target 'RunFastTests' do

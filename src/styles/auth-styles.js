@@ -203,7 +203,10 @@ export const WelcomeStyles = StyleSheet.create({
     marginHorizontal: Constants.BaseStyle.scale(30),
     textAlign: 'center',
   },
-  headerText: { paddingVertical: Constants.BaseStyle.scale(10) },
+  headerText: {
+    ...Constants.Fonts.ExtraLargeBold,
+    paddingVertical: Constants.BaseStyle.scale(10),
+  },
   headerWrapper: {
     alignItems: 'center', justifyContent: 'center', marginBottom: Constants.BaseStyle.scale(30),
   },
@@ -337,13 +340,6 @@ export const LoginStyles = StyleSheet.create({
   wrapper: {
     flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
   },
-});
-
-export const IntroductionStyles = StyleSheet.create({
-  buttonsWrapper: {
-    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: Constants.BaseStyle.scale(20),
-  },
-  wrapper: { flex: 0.9 },
 });
 
 export const LocationStyles = StyleSheet.create({

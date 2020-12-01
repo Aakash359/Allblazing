@@ -7,7 +7,6 @@ import { AuthStyle,
   RegisterStyle,
   Repeat5KStyles,
   UsernameStyle,
-  IntroductionStyles,
   WelcomeStyles } from './auth-styles';
 import BottomTabsStyles from './bottom-tab.styles';
 import CommonStyles from './common-styles';
@@ -17,6 +16,7 @@ import HomeStyles from './home-styles';
 import InputStyles from './input-styles';
 import InviteFriendsStyles from './invite-friends-styles';
 import PopupStyles from './popup-styles';
+import IntroductionStyles from './introduction-styles';
 
 export {
   AuthStyle,

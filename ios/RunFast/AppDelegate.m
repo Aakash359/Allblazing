@@ -36,7 +36,8 @@ static void InitializeFlipper(UIApplication *application) {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"RunFast"
                                             initialProperties:nil];
-
+  
+  
   [GMSServices provideAPIKey:@"AIzaSyAyG3vMWgKJ9KLjQCIYUGmlodNCDbsCuwg"];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 

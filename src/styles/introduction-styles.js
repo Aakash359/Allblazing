@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 const styles = StyleSheet.create({
+  buttonsWrapper: {
+    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: Constants.BaseStyle.scale(20),
+  },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
@@ -12,6 +15,7 @@ const styles = StyleSheet.create({
     margin: Constants.BaseStyle.scale(20),
     width: Constants.BaseStyle.scale(20),
   },
+  wrapper: { flex: 0.9 },
 });
 
 export default styles;
