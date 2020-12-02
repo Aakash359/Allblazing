@@ -13,6 +13,7 @@ module.exports = {
       },
     ],
     'react/jsx-props-no-spreading': 'off',
+    'react/no-array-index-key': 'off',
     'max-len': ['error', 200],
     'max-lines': ['error', 1000],
   },

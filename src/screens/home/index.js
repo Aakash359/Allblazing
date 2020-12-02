@@ -40,7 +40,7 @@ class Home extends React.Component {
             scrollEnabled={false}
             data={[1]}
             renderItem={this.renderItem}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => `${index}`}
           />
           {this.renderHeader({
             navigate, route: 'InviteFriends', title: 'Runners Near Me',
@@ -48,7 +48,7 @@ class Home extends React.Component {
           <FlatList
             data={[1, 2, 3]}
             renderItem={() => <InviteFriend />}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => `${index}`}
           />
         </View>
       </View>
