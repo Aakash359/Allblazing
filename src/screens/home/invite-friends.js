@@ -13,7 +13,7 @@ class InviteFriends extends React.Component {
         <FlatList
           data={[1, 2, 3, 4, 5]}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => `${index}`}
         />
         <TouchableOpacity activeOpacity={0.7} style={InviteFriendsStyles.button}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Send Invite'}</Text>

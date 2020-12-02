@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
   },
   crossImage: {
     alignSelf: 'flex-end',
-    height: Constants.BaseStyle.scale(20),
-    margin: Constants.BaseStyle.scale(20),
-    width: Constants.BaseStyle.scale(20),
+    height: Constants.BaseStyle.scale(18),
+    margin: Constants.BaseStyle.scale(18),
+    width: Constants.BaseStyle.scale(18),
   },
   headerWrapper: {
     alignItems: 'center', flex: 0.3, justifyContent: 'space-evenly', marginTop: Constants.BaseStyle.scale(20),
