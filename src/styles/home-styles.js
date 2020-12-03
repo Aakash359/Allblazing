@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
-    borderRadius: 5,
+    borderRadius: 8,
     marginHorizontal: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(20),
     paddingVertical: Constants.BaseStyle.scale(10),

@@ -1,7 +1,6 @@
 import React from 'react';
-import { TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import Constants from '../constants';
 import { CommonStyles, FilterStyles } from '../styles';
 
@@ -37,7 +36,7 @@ const Filter = () => {
         <View style={FilterStyles.row}>
           <Text style={FilterStyles.subHeader}>Near Me</Text>
           <TouchableOpacity activeOpacity={0.7} onPress={() => setIsEnabled(!isEnabled)}>
-            <Entypo name='switch' size={40} color={Constants.Colors.LIGHT_BLUE} />
+            <Image source={isEnabled ? Constants.Images.toggleOn : Constants.Images.toggleOff} style={FilterStyles.switch} />
           </TouchableOpacity>
         </View>
         <View style={FilterStyles.input}>

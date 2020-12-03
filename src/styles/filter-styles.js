@@ -77,6 +77,10 @@ const styles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginHorizontal: Constants.BaseStyle.scale(20),
   },
+  switch: {
+    height: 45,
+    width: 55,
+  },
   wrapper: { backgroundColor: Constants.Colors.PRIMARY },
 });
 
