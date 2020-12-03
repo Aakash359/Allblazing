@@ -152,11 +152,11 @@ const styles = {
   },
   picker: {
     height: 180,
-    width: 35,
+    width: Constants.BaseStyle.scale(50),
   },
   pickerItem: {
     color: Constants.Colors.WHITE,
-    fontSize: 26,
+    fontSize: Constants.BaseStyle.scale(20),
   },
   pickersContainer: {
     alignItems: 'center',

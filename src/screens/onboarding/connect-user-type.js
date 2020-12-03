@@ -12,14 +12,23 @@ class ConnectUserType extends Component {
   }
 
   onTypeChange = (payload) => this.setState({ type: payload })
+  // eslint-disable-next-line consistent-return
+  onPressNext = () => {
+    const { navigation: { navigate } } = this.props;
+    const { type } = this.state;
+
+    if (type === 'race') {
+      navigate('Distance');
+    } else if (type === 'train') {
+      navigate('Recent5KTime');
+    } else {
+      return null;
+    }
+  }
 
   render() {
     const { type } = this.state;
-    const {
-      navigation: {
-        goBack, navigate,
-      },
-    } = this.props;
+    const { navigation: { goBack } } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -59,7 +68,7 @@ class ConnectUserType extends Component {
                 <TouchableOpacity
                   style={AuthStyle.introButton}
                   activeOpacity={0.7}
-                  onPress={() => navigate('Recent5KTime')}
+                  onPress={this.onPressNext}
                 >
                   <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
                 </TouchableOpacity>

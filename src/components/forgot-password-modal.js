@@ -70,12 +70,12 @@ const ForgotPasswordModal = ({
             resizeMode='contain'
             style={styles.image}
           />
-          <Text style={styles.header}>{'Password link successfully shared to your email xyz@gmail.com'}</Text>
+          <Text style={styles.header}>{'Password reset link successfully shared to your email "xyz@gmail.com"'}</Text>
           <TouchableOpacity onPress={onClick} style={styles.okButton}>
             <Text style={styles.okButtonTextStyle}>{translate('ok')}</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.resendText}>{translate('resend link')}</Text>
+            <Text style={styles.resendText}>{translate('Resend Link')}</Text>
           </TouchableOpacity>
         </View>
       </View>

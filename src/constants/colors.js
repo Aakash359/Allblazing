@@ -23,6 +23,7 @@ const Colors = {
   OLIVE: '#808000',
   ORANGE: 'orange',
   PRIMARY: '#121212',
+  PRIVCYTEXT: '#898989',
   PURPLE: '#800080',
   RED: '#EB3223',
   SECONDARY_COLOR: '#252525',
@@ -40,6 +41,7 @@ const Colors = {
   WARNING: '#FFFF00',
   WHITE: '#FFFFFF',
   YELLOW: '#FFFF00',
+
 };
 
 module.exports = Colors;

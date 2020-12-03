@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     width: Constants.BaseStyle.scale(18),
   },
   headerWrapper: {
-    alignItems: 'center', flex: 0.3, justifyContent: 'space-evenly', marginTop: Constants.BaseStyle.scale(20),
+    alignItems: 'center', flex: 0.25, marginTop: Constants.BaseStyle.scale(20),
   },
   logo: {
     alignSelf: 'center',
