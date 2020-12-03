@@ -38,7 +38,8 @@ class OTP extends Component {
         <View style={CommonStyles.headerWrapper}>
 
           <Text style={AuthStyle.selectText}>Verification Code</Text>
-          <Text style={[AuthStyle.buttonText, OTPStyles.header]}>{'Please enter the code sent to "xyz@gmail.com" '}</Text>
+          <Text style={[AuthStyle.buttonText, OTPStyles.header]}>{'Please enter the code sent to'}</Text>
+          <Text style={[AuthStyle.buttonText, OTPStyles.header]}>{'"xyz@gmail.com"'}</Text>
         </View>
         <OTPInputView
           style={OTPStyles.inputView}
@@ -56,7 +57,7 @@ class OTP extends Component {
         <View style={OTPStyles.buttonsWrapper}>
           <TouchableOpacity
             style={OTPStyles.button}
-            onPress={() => this.onContinue()}
+            onPress={() => {}}
           >
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
           </TouchableOpacity>

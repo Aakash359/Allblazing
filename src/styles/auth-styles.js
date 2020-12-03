@@ -2,7 +2,10 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 export const AuthStyle = StyleSheet.create({
-  buttonActiveText: { color: Constants.Colors.TEXT_COLOR2 },
+  buttonActiveText: { color: Constants.Colors.TEXT_COLOR_WHITE },
+  buttonLanguageText: {
+    ...Constants.Fonts.Regular, color: Constants.Colors.TEXT_COLOR2,
+  },
   buttonText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
@@ -26,6 +29,16 @@ export const AuthStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
     width: '40%',
   },
+  introButton2: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: Constants.BaseStyle.scale(6),
+    height: Constants.BaseStyle.scale(45),
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(20),
+    width: '90%',
+  },
   loginTouchable: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -40,10 +53,26 @@ export const AuthStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  privcyContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    margin: Constants.BaseStyle.scale(25),
+  },
+  privcyText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+
+  },
+  privcyText2: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
+
   selectText: {
     ...Constants.Fonts.ExtraLarge,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     marginLeft: Constants.BaseStyle.scale(5),
+    marginVertical: Constants.BaseStyle.scale(0),
   },
   welcomeView: {
     alignItems: 'center',
@@ -65,7 +94,7 @@ export const RegisterStyle = StyleSheet.create({
     color: Constants.Colors.WHITE,
     height: Constants.BaseStyle.scale(45),
     justifyContent: 'center',
-    marginTop: Constants.BaseStyle.scale(40),
+    marginBottom: Constants.BaseStyle.scale(40),
     width: '90%',
   },
   password: {
@@ -244,6 +273,7 @@ export const OTPStyles = StyleSheet.create({
   inputView: {
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(60),
+
     width: '70%',
   },
 });
@@ -253,6 +283,7 @@ export const LoginStyles = StyleSheet.create({
     color: Constants.Colors.TEXT_COLOR,
     ...Constants.Fonts.Regular,
   },
+
   accountWrapper: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -260,7 +291,7 @@ export const LoginStyles = StyleSheet.create({
     borderTopRightRadius: Constants.BaseStyle.scale(20),
     bottom: 0,
     flexDirection: 'row',
-    height: Constants.BaseStyle.scale(100),
+    height: Constants.BaseStyle.scale(80),
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
@@ -276,7 +307,14 @@ export const LoginStyles = StyleSheet.create({
   },
   login: {
     color: Constants.Colors.WHITE,
+    marginBottom: Constants.BaseStyle.scale(30),
     marginHorizontal: Constants.BaseStyle.scale(10),
+    ...Constants.Fonts.Regular,
+  },
+  loginText: {
+    color: Constants.Colors.WHITE,
+    marginHorizontal: Constants.BaseStyle.scale(10),
+
     ...Constants.Fonts.Regular,
   },
   logo: {
@@ -330,6 +368,12 @@ export const LoginStyles = StyleSheet.create({
     height: Constants.BaseStyle.scale(40),
     width: Constants.BaseStyle.scale(40),
   },
+  // eslint-disable-next-line sort-keys
+  scollWrapper: { flex: 0.6 },
+  wrapper: {
+    flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
+  },
+  // eslint-disable-next-line sort-keys
   socialIconsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -337,17 +381,16 @@ export const LoginStyles = StyleSheet.create({
     marginHorizontal: Constants.BaseStyle.scale(30),
     marginVertical: Constants.BaseStyle.scale(30),
   },
-  wrapper: {
-    flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
-  },
 });
 
 export const LocationStyles = StyleSheet.create({
+  locationText: { alignSelf: 'center' },
   logo: {
     alignSelf: 'center',
     marginBottom: Constants.BaseStyle.scale(40),
     width: '50%',
   },
+
 });
 
 export default AuthStyle;

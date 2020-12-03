@@ -117,12 +117,23 @@ export default class Register extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            <View style={AuthStyle.privcyContainer}>
+
+              <Text style={[AuthStyle.privcyText]}>{'By signing up,you agree to our  '}</Text>
+
+              <Text style={[AuthStyle.privcyText2]}>Privacy Policy</Text>
+              <Text style={[AuthStyle.privcyText]}>{' and  '}</Text>
+              <Text style={[AuthStyle.privcyText2]}>
+                {' Terms & Conditions'}
+              </Text>
+            </View>
+
           </View>
 
-          <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Sign Up'}</Text>
-          </TouchableOpacity>
         </ScrollView>
+        <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Sign Up'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }
