@@ -1,6 +1,7 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { View, Image, ViewPropTypes } from 'react-native';
+import { func } from 'prop-types';
 import { MapViewStyles } from '../../styles';
 
 const markers = [{
@@ -61,7 +62,9 @@ class EventsMap extends React.Component {
 
   render() {
     const { region } = this.state;
-    const { style } = this.props;
+    const {
+      onMarkerPress, style,
+    } = this.props;
 
     return (
       <MapView
@@ -76,6 +79,7 @@ class EventsMap extends React.Component {
             coordinate={marker.coordinate}
             title={marker.title}
             description={marker.description}
+            onPress={onMarkerPress}
           >
             <View style={MapViewStyles.outerCircle}>
               <Image source={{ uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' }} style={MapViewStyles.image} />
@@ -87,7 +91,10 @@ class EventsMap extends React.Component {
   }
 }
 
-EventsMap.propTypes = { style: ViewPropTypes.style };
+EventsMap.propTypes = {
+  onMarkerPress: func.isRequired,
+  style: ViewPropTypes.style,
+};
 EventsMap.defaultProps = { style: {} };
 
 export default EventsMap;

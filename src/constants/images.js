@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 
 const Images = {
+  blueLocation: require('../assets/blue-location.png'),
   check: require('../assets/check2x.png'),
   checkbox: require('../assets/checkbox2x.png'),
   checkmark: require('../assets/checkmark2x.png'),
@@ -10,7 +11,9 @@ const Images = {
   eyeoff: require('../assets/eyeoff2x.png'),
   eyeon: require('../assets/eye2x.png'),
   fb: require('../assets/fb2x.png'),
+  female: require('../assets/female.png'),
   filter: require('../assets/filters.png'),
+  greenLocation: require('../assets/green-location.png'),
   insta: require('../assets/insta2x.png'),
   intro1: require('../assets/w1_img.png'),
   intro2: require('../assets/w2_img.png'),
@@ -30,7 +33,11 @@ const Images = {
   tabBarHome: require('../assets/tabbar_home.png'),
   tabBarProfile: require('../assets/tabbar_profile.png'),
   tiktok: require('../assets/tiktok2x.png'),
+  toggleOff: require('../assets/toggle_off.png'),
+  toggleOn: require('../assets/toggle_on.png'),
   twitter: require('../assets/twitter2x.png'),
+  watch: require('../assets/stopwatch.png'),
+  yellowLocation: require('../assets/yellow-location.png'),
 };
 
 module.exports = Images;
