@@ -10,6 +10,7 @@ import { AuthStyle,
   WelcomeStyles } from './auth-styles';
 import BottomTabsStyles from './bottom-tab.styles';
 import CommonStyles from './common-styles';
+import EventDetailStyles from './event-detail-styles';
 import EventMapStyles from './event-map-styles';
 import FilterStyles from './filter-styles';
 import HeaderStyles from './header-styles';
@@ -25,6 +26,7 @@ export {
   BottomTabsStyles,
   CommonStyles,
   ConnectUserTypeStyles,
+  EventDetailStyles,
   EventMapStyles,
   FilterStyles,
   ForgotPassStyles,

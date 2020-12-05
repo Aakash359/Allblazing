@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { bool, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import { HomeStyles, EventMapStyles, MapViewStyles } from '../../styles';
 import { SingleEvent } from '../../components';
 import Map from './map-view';
@@ -10,16 +10,22 @@ class Events extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { visible: true };
+    this.state = { visible: false };
   }
 
-  renderItem = () => <SingleEvent />
+  onEventPress = () => {
+    const { navigation: { navigate } } = this.props;
+
+    navigate('SingleEventDetail');
+  };
+
+  renderItem = () => <SingleEvent onPress={this.onEventPress} />
 
   onMarkerPress = () => { this.setState({ visible: true }); };
 
   renderEventPopup = () => (
     <View style={EventMapStyles.popover}>
-      <SingleEvent />
+      <SingleEvent onPress={this.onEventPress} />
     </View>
   );
 
@@ -29,7 +35,7 @@ class Events extends React.Component {
 
     return (
       <View style={HomeStyles.container}>
-        {params?.isMapView ? (<Map style={MapViewStyles.map} onMarkerPress={this.onMarkerPress} />) : (
+        {params?.isMapView ? (<Map style={MapViewStyles.map} onMarkerPress={this.onMarkerPress} onEventPress={this.onEventPress} />) : (
           <FlatList
             data={[1, 2, 3]}
             renderItem={this.renderItem}
@@ -42,6 +48,12 @@ class Events extends React.Component {
   }
 }
 
-Events.propTypes = { route: shape({ params: shape({ isMapView: bool }) }).isRequired };
+Events.propTypes = {
+  navigation: shape({
+    dispatch: func.isRequired,
+    goBack: func.isRequired,
+  }).isRequired,
+  route: shape({ params: shape({ isMapView: bool }) }).isRequired,
+};
 
 export default Events;

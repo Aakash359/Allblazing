@@ -67,10 +67,10 @@ const styles = StyleSheet.create({
   more: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.BLUE,
-    borderRadius: 15,
-    height: 30,
+    borderRadius: Constants.BaseStyle.scale(30) / 2,
+    height: Constants.BaseStyle.scale(30),
     justifyContent: 'center',
-    width: 30,
+    width: Constants.BaseStyle.scale(30),
   },
   moreText: {
     ...Constants.Fonts.Regular,
@@ -92,14 +92,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
   user: {
-    borderRadius: 15, height: 30, width: 30,
+    borderRadius: Constants.BaseStyle.scale(30) / 2, height: Constants.BaseStyle.scale(30), width: Constants.BaseStyle.scale(30),
   },
   userSpace: { marginLeft: -10 },
   users: {
+    alignItems: 'center',
     flexDirection: 'row',
     paddingBottom: Constants.BaseStyle.scale(15),
   },
   usersRow: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
