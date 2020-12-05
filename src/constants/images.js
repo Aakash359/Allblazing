@@ -26,6 +26,7 @@ const Images = {
   logo: require('../assets/logo.png'),
   map: require('../assets/map.png'),
   mapPin: require('../assets/map-pin.png'),
+  myLocation: require('../assets/my-location.png'),
   notifications: require('../assets/notifications.png'),
   path1: require('../assets/Path46.png'),
   path2: require('../assets/Path47.png'),

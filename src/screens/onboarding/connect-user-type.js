@@ -20,7 +20,7 @@ class ConnectUserType extends Component {
     if (type === 'race') {
       navigate('Distance');
     } else if (type === 'train') {
-      navigate('Recent5KTime');
+      navigate('UserPersonalBest');
     } else {
       return null;
     }

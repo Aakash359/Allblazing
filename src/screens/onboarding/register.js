@@ -52,17 +52,19 @@ export default class Register extends Component {
     }, 300);
   };
 
+  onStaticRoutes = (route, title) => () => {
+    const { navigation: { navigate } } = this.props;
+
+    navigate(route, { title });
+  };
+
   render() {
     const {
       email, password, isPasswordVisible,
     } = this.state;
-    const { navigation: { navigate } } = this.props;
 
     return (
       <View style={CommonStyles.container}>
-        <TouchableOpacity onPress={() => navigate('Login')}>
-          <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
-        </TouchableOpacity>
         <ScrollView
           ref={this.scrollViewRef}
           showsHorizontalScrollIndicator={false}
@@ -117,19 +119,17 @@ export default class Register extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={AuthStyle.privcyContainer}>
-
-              <Text style={[AuthStyle.privcyText]}>{'By signing up,you agree to our  '}</Text>
-
-              <Text style={[AuthStyle.privcyText2]}>Privacy Policy</Text>
-              <Text style={[AuthStyle.privcyText]}>{' and  '}</Text>
-              <Text style={[AuthStyle.privcyText2]}>
-                {' Terms & Conditions'}
-              </Text>
+            <View style={RegisterStyle.textLinkView}>
+              <Text style={RegisterStyle.textSmallStyle}>{'By signing up, you agree to our'}</Text>
+              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'Privacy Policy')}>
+                <Text style={RegisterStyle.textSmallLinkStyle}>{' Privacy Policy '}</Text>
+              </TouchableOpacity>
+              <Text style={RegisterStyle.textSmallStyle}>and</Text>
+              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'Terms & Conditions')}>
+                <Text style={RegisterStyle.textSmallLinkStyle}>{' Terms & Conditions.'}</Text>
+              </TouchableOpacity>
             </View>
-
           </View>
-
         </ScrollView>
         <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Sign Up'}</Text>

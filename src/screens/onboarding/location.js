@@ -12,6 +12,7 @@ const Location = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const goToSettings = async () => {
+    dispatch(loginSuccess());
     navigation.navigate('Dashboard');
     // const url = 'app-settings:';
 
@@ -25,12 +26,6 @@ const Location = () => {
     //   // eslint-disable-next-line no-console
     //   console.log('error', e);
     // }
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const onSkip = () => {
-    dispatch(loginSuccess());
-    navigation.navigate('Dashboard');
   };
 
   return (
@@ -52,9 +47,6 @@ const Location = () => {
           <TouchableOpacity style={OTPStyles.button} activeOpacity={0.7} onPress={() => goToSettings()}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Select It Manually'}</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity style={OTPStyles.button} activeOpacity={0.7} onPress={() => navigation.navigate('Dashboard')}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Skip'}</Text>
-        </TouchableOpacity> */}
           <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => null}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Share My Location'}</Text>
           </TouchableOpacity>

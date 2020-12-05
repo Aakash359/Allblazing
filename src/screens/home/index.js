@@ -12,7 +12,11 @@ class Home extends React.Component {
     this.state = { keyword: '' };
   }
 
-  renderItem = () => <SingleEvent />
+  renderItem = () => {
+    const { navigation: { navigate } } = this.props;
+
+    return (<SingleEvent onPress={() => navigate('SingleEventDetail')} />);
+  }
 
   renderHeader = ({
     navigate, payload = {}, route, title,

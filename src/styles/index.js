@@ -1,9 +1,11 @@
 import { AuthStyle,
   ConnectUserTypeStyles,
   ForgotPassStyles,
+  GenderStyles,
   OTPStyles,
   LocationStyles,
   LoginStyles,
+  MottoStyles,
   RegisterStyle,
   Repeat5KStyles,
   UsernameStyle,
@@ -20,6 +22,7 @@ import InviteFriendsStyles from './invite-friends-styles';
 import PopupStyles from './popup-styles';
 import IntroductionStyles from './introduction-styles';
 import MapViewStyles from './map-view-styles';
+import StaticContentStyles from './static-content-styles';
 
 export {
   AuthStyle,
@@ -30,6 +33,7 @@ export {
   EventMapStyles,
   FilterStyles,
   ForgotPassStyles,
+  GenderStyles,
   HeaderStyles,
   HomeStyles,
   InputStyles,
@@ -38,8 +42,10 @@ export {
   LocationStyles,
   LoginStyles,
   MapViewStyles,
+  MottoStyles,
   OTPStyles,
   PopupStyles,
+  StaticContentStyles,
   RegisterStyle,
   Repeat5KStyles,
   UsernameStyle,

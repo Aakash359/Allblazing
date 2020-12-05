@@ -25,6 +25,25 @@ const styles = StyleSheet.create({
     marginBottom: Constants.BaseStyle.scale(40),
     width: '80%',
   },
+  textArea: {
+    ...Constants.Fonts.Regular,
+    alignSelf: 'center',
+    color: Constants.Colors.TEXT_COLOR,
+    height: Constants.BaseStyle.scale(200),
+    margin: Constants.BaseStyle.scale(15),
+    padding: Constants.BaseStyle.scale(15),
+    textAlignVertical: 'top',
+    width: '100%',
+  },
+  textAreaWrapper: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
+    borderRadius: Constants.BaseStyle.scale(8),
+    height: Constants.BaseStyle.scale(200),
+    justifyContent: 'flex-start',
+    width: '90%',
+  },
 });
 
 export default styles;
