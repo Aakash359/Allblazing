@@ -67,7 +67,16 @@ export const AuthStyle = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
   },
-
+  saveBtn: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: Constants.BaseStyle.scale(6),
+    height: Constants.BaseStyle.scale(45),
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(500),
+    width: '90%',
+  },
   selectText: {
     ...Constants.Fonts.ExtraLarge,
     color: Constants.Colors.TEXT_COLOR_WHITE,
@@ -97,6 +106,12 @@ export const RegisterStyle = StyleSheet.create({
     marginBottom: Constants.BaseStyle.scale(40),
     width: '90%',
   },
+  mottoCount: {
+    color: Constants.Colors.WHITE,
+    marginTop: Constants.BaseStyle.scale(5),
+    textAlign: 'right',
+    width: '90%',
+  },
   password: {
     alignSelf: 'center',
     color: Constants.Colors.TEXT_COLOR,
@@ -116,13 +131,32 @@ export const RegisterStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(4),
     width: '90%',
   },
+  textLinkView: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginHorizontal: Constants.BaseStyle.scale(25),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
+  textSmallLinkStyle: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
+  textSmallStyle: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+  },
   wrapper: {
     flex: 0.9, marginTop: Constants.BaseStyle.scale(10),
   },
 });
 
 export const UsernameStyle = StyleSheet.create({
-  age: { color: Constants.Colors.GRAY },
+  age: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+  },
   ageButton: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -210,6 +244,7 @@ export const Repeat5KStyles = StyleSheet.create({
     flexDirection: 'column-reverse',
     marginTop: Constants.BaseStyle.scale(100),
   },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(200) },
 });
 
 export const ForgotPassStyles = StyleSheet.create({
@@ -254,9 +289,7 @@ export const OTPStyles = StyleSheet.create({
   button: {
     alignItems: 'center', margin: Constants.BaseStyle.scale(10),
   },
-  buttonsWrapper: {
-    flex: 0.65, flexDirection: 'column-reverse',
-  },
+  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(400) },
   header: {
     marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
   },
@@ -273,7 +306,7 @@ export const OTPStyles = StyleSheet.create({
   inputView: {
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(60),
-
+    marginTop: Constants.BaseStyle.scale(20),
     width: '70%',
   },
 });
@@ -364,16 +397,11 @@ export const LoginStyles = StyleSheet.create({
     ...Constants.Fonts.Regular,
   },
   row: { flexDirection: 'row' },
+  scollWrapper: { flex: 0.6 },
   socialIcon: {
     height: Constants.BaseStyle.scale(40),
     width: Constants.BaseStyle.scale(40),
   },
-  // eslint-disable-next-line sort-keys
-  scollWrapper: { flex: 0.6 },
-  wrapper: {
-    flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
-  },
-  // eslint-disable-next-line sort-keys
   socialIconsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -381,16 +409,36 @@ export const LoginStyles = StyleSheet.create({
     marginHorizontal: Constants.BaseStyle.scale(30),
     marginVertical: Constants.BaseStyle.scale(30),
   },
+  wrapper: {
+    flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
+  },
 });
 
 export const LocationStyles = StyleSheet.create({
+  currentLocationText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    marginLeft: Constants.BaseStyle.scale(10),
+  },
+  location: { justifyContent: 'flex-start' },
+  locationIcon: {
+    height: 25, width: 26,
+  },
   locationText: { alignSelf: 'center' },
   logo: {
     alignSelf: 'center',
     marginBottom: Constants.BaseStyle.scale(40),
     width: '50%',
   },
-
+  margin: { marginVertical: Constants.BaseStyle.scale(10) },
+  orText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+  },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(350) },
 });
+
+export const GenderStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(400) } });
+export const MottoStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(350) } });
 
 export default AuthStyle;

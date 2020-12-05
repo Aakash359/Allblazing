@@ -3,14 +3,18 @@ import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import Username from '../screens/onboarding/user-name';
 import Userage from '../screens/onboarding/user-age';
+import UserGender from '../screens/onboarding/user-gender';
 import ConnectUserType from '../screens/onboarding/connect-user-type';
-import Recent5KTime from '../screens/onboarding/recent-5k-time';
+import UserPersonalBest from '../screens/onboarding/user-personal-best';
+import UserMotto from '../screens/onboarding/user-motto';
 import Distance from '../screens/onboarding/distance';
 import Location from '../screens/onboarding/location';
+import EditLocation from '../screens/onboarding/edit-location';
 import InviteFriends from '../screens/home/invite-friends';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
+import StaticContent from '../screens/static-content';
 import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
 import { CommonStyles, HeaderStyles } from '../styles';
@@ -23,13 +27,41 @@ export default function MainNavigator() {
     <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
       <Stack.Screen
         name="Username"
-        options={options}
         component={Username}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+          headerShown: !!route?.params?.title,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || '',
+        })}
       />
       <Stack.Screen
         name="Userage"
-        options={options}
         component={Userage}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+          headerShown: !!route?.params?.title,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || '',
+        })}
+      />
+      <Stack.Screen
+        name="UserGender"
+        component={UserGender}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Edit Gender',
+        })}
+      />
+      <Stack.Screen
+        name="UserMotto"
+        component={UserMotto}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Edit Motto',
+        })}
       />
       <Stack.Screen
         name="ConnectUserType"
@@ -37,9 +69,14 @@ export default function MainNavigator() {
         component={ConnectUserType}
       />
       <Stack.Screen
-        name="Recent5KTime"
-        options={options}
-        component={Recent5KTime}
+        name="UserPersonalBest"
+        component={UserPersonalBest}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+          headerShown: !!route?.params?.title,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || '',
+        })}
       />
       <Stack.Screen
         name="Distance"
@@ -55,6 +92,15 @@ export default function MainNavigator() {
         name="Dashboard"
         options={options}
         component={Dashboard}
+      />
+      <Stack.Screen
+        name="EditLocation"
+        component={EditLocation}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Edit Location',
+        })}
       />
       <Stack.Screen
         name="Events"
@@ -110,6 +156,15 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Event Details',
+        })}
+      />
+      <Stack.Screen
+        name="StaticContent"
+        component={StaticContent}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || '',
         })}
       />
     </Stack.Navigator>
