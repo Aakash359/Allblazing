@@ -15,11 +15,11 @@ class Home extends React.Component {
   renderItem = () => <SingleEvent />
 
   renderHeader = ({
-    navigate, route, title,
+    navigate, payload = {}, route, title,
   }) => (
     <View style={HomeStyles.content}>
       <Text style={HomeStyles.heading}>{title}</Text>
-      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route)}>
+      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
         <Text style={HomeStyles.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
@@ -43,7 +43,7 @@ class Home extends React.Component {
             keyExtractor={(item, index) => `${index}`}
           />
           {this.renderHeader({
-            navigate, route: 'InviteFriends', title: 'Runners Near Me',
+            navigate, payload: { hasCheckBox: true }, route: 'InviteFriends', title: 'Runners Near Me',
           })}
           <FlatList
             data={[1, 2, 3]}

@@ -5,4 +5,5 @@ module.exports = {
   Colors: require('./colors'),
   Fonts: require('./fonts'),
   Images: require('./images'),
+  MapStyle: require('./map-style'),
 };

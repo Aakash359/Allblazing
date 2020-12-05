@@ -11,6 +11,7 @@ import InviteFriends from '../screens/home/invite-friends';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
+import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
 import { CommonStyles, HeaderStyles } from '../styles';
 
@@ -78,14 +79,14 @@ export default function MainNavigator() {
       <Stack.Screen
         name="InviteFriends"
         component={InviteFriends}
-        options={{
+        options={({ route }) => ({
           headerBackTitleVisible: false,
-          headerRight: () => (
+          headerRight: () => (route?.params?.title ? null : (
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
-          ),
+          )),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Strava Users',
-        }}
+          headerTitle: route?.params?.title || 'Strava Users',
+        })}
       />
       <Stack.Screen
         name="Filter"
@@ -100,6 +101,15 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Filters',
+        })}
+      />
+      <Stack.Screen
+        name="SingleEventDetail"
+        component={SingleEventDetail}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Event Details',
         })}
       />
     </Stack.Navigator>

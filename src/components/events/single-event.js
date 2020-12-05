@@ -1,10 +1,12 @@
+import { func } from 'prop-types';
 import React from 'react';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import constants from '../../constants';
 import { HomeStyles } from '../../styles';
+import UserImages from '../user-images';
 
-export const SingleEvent = () => (
-  <TouchableOpacity activeOpacity={0.7} style={HomeStyles.item}>
+export const SingleEvent = ({ onPress }) => (
+  <TouchableOpacity activeOpacity={1} style={HomeStyles.item} onPress={onPress}>
     <View style={HomeStyles.row}>
       <View style={HomeStyles.dateView}>
         <Text style={HomeStyles.title}>{'30'}</Text>
@@ -23,17 +25,11 @@ export const SingleEvent = () => (
         <Image source={constants.Images.fb} style={HomeStyles.icon} />
         <Text style={HomeStyles.iconText}>{'Watching'}</Text>
       </View>
-      <View style={HomeStyles.users}>
-        {[1, 2, 3, 4, 5].map((user, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <View key={`user-avatar-${index}`}>
-            {index < 4 && <Image source={{ uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' }} style={[HomeStyles.user, index !== 0 && HomeStyles.userSpace]} />}
-            {index === 4 && <View style={[HomeStyles.user, HomeStyles.userSpace, HomeStyles.more]}><Text style={HomeStyles.moreText}>{'8+'}</Text></View> }
-          </View>
-        ))}
-      </View>
+      <UserImages users={[1, 2, 3, 4, 5]} />
     </View>
   </TouchableOpacity>
 );
+
+SingleEvent.propTypes = { onPress: func.isRequired };
 
 export default SingleEvent;

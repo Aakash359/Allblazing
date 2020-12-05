@@ -4,7 +4,9 @@ import { TouchableOpacity, Text, View, Image } from 'react-native';
 import Constants from '../constants';
 import { InviteFriendsStyles } from '../styles';
 
-export const SingleEvent = ({ hasCheckBox }) => {
+export const InviteFriend = ({
+  hasCheckBox, hasTick,
+}) => {
   const [checked, setCheck] = useState(false);
 
   return (
@@ -17,12 +19,17 @@ export const SingleEvent = ({ hasCheckBox }) => {
         </View>
       </View>
       {hasCheckBox && <Image source={checked ? Constants.Images.checkbox : Constants.Images.checkoff} resizeMode='contain' style={InviteFriendsStyles.icon} />}
+      {hasTick && checked && <Image source={Constants.Images.check} resizeMode='contain' style={InviteFriendsStyles.icon} />}
     </TouchableOpacity>
   );
 };
 
-SingleEvent.propTypes = { hasCheckBox: bool };
+InviteFriend.propTypes = {
+  hasCheckBox: bool, hasTick: bool,
+};
 
-SingleEvent.defaultProps = { hasCheckBox: false };
+InviteFriend.defaultProps = {
+  hasCheckBox: false, hasTick: false,
+};
 
-export default SingleEvent;
+export default InviteFriend;
