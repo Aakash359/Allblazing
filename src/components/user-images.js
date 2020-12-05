@@ -21,8 +21,6 @@ UserImages.propTypes = {
   style: ViewPropTypes.style,
   users: arrayOf(number).isRequired,
 };
-UserImages.defaultProps = {
-  style: {},
-};
+UserImages.defaultProps = { style: {} };
 
 export default UserImages;
