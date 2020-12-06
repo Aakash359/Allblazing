@@ -1,16 +1,68 @@
 import React from 'react';
-import { View } from 'react-native';
-import { HomeStyles } from '../../styles';
-import { InviteFriend } from '../../components';
+import { View, Image, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { RunnersStyles } from '../../styles';
 
-class Runners extends React.Component {
-  renderItem = () => <InviteFriend />
+import Constants from '../../constants';
 
-  render() {
-    return (
-      <View style={HomeStyles.container} />
-    );
-  }
+function Runners() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={RunnersStyles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('UserProfile')}
+        style={RunnersStyles.mainView}
+      >
+        <View>
+          <ImageBackground
+            source={Constants.Images.profilePic}
+            // resizeMode='contain'
+            imageStyle={RunnersStyles.borderStyle}
+            style={RunnersStyles.profileIcon}
+          >
+            <View style={RunnersStyles.levelStyle}>
+              <Text style={RunnersStyles.levelText}>Level 1</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <Text style={RunnersStyles.heading}>{'Cameron Williamson, 23'}</Text>
+        <Text style={RunnersStyles.subHeading}>{'It always seems impossible until it`s done!'}</Text>
+        <View style={RunnersStyles.sectionMainView}>
+          <View style={RunnersStyles.sectionView}>
+            <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
+            <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
+          </View>
+          <View style={RunnersStyles.sectionView}>
+            <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
+            <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
+          </View>
+          <View style={RunnersStyles.sectionView}>
+            <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
+            <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
+          </View>
+        </View>
+        <View style={RunnersStyles.iconView}>
+          <Image
+            source={Constants.Images.closeRound}
+            resizeMode='contain'
+            style={RunnersStyles.icon}
+          />
+          <Image
+            source={Constants.Images.chat}
+            resizeMode='contain'
+            style={RunnersStyles.icon}
+          />
+          <Image
+            source={Constants.Images.addFriend}
+            resizeMode='contain'
+            style={RunnersStyles.icon}
+          />
+        </View>
+      </TouchableOpacity>
+      <View style={RunnersStyles.endView} />
+    </View>
+  );
 }
 
 export default Runners;

@@ -41,7 +41,7 @@ class Login extends Component {
     } = this.props;
 
     loginSuccess();
-    navigate('Dashboard');
+    navigate('Home');
   }
 
   render() {

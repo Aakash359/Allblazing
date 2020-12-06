@@ -17,8 +17,24 @@ import InputStyles from './input-styles';
 import InviteFriendsStyles from './invite-friends-styles';
 import PopupStyles from './popup-styles';
 import IntroductionStyles from './introduction-styles';
+import RunnersStyles from './runners-styles';
+import ProfileStyles from './profile-styles';
+import MyProfileStyles from './myProfile-styles';
+import SectionStyles from './profileSection-styles';
+import FollowersStyles from './followers-styles';
+import FollowingStyles from './following-styles';
+import EditProfileStyles from './editProfile-styles';
+import SearchScreen from './search-styles';
 
 export {
+  RunnersStyles,
+  ProfileStyles,
+  MyProfileStyles,
+  SectionStyles,
+  FollowersStyles,
+  FollowingStyles,
+  EditProfileStyles,
+  SearchScreen,
   AuthStyle,
   BottomTabsStyles,
   CommonStyles,

@@ -43,7 +43,7 @@ class Home extends React.Component {
             keyExtractor={(item, index) => index}
           />
           {this.renderHeader({
-            navigate, route: 'InviteFriends', title: 'Runners Near Me',
+            navigate, route: 'Runners', title: 'Runners Near Me',
           })}
           <FlatList
             data={[1, 2, 3]}

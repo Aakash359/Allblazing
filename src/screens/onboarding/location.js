@@ -28,7 +28,7 @@ const Location = () => {
 
   const onSkip = () => {
     dispatch(loginSuccess());
-    navigation.navigate('Dashboard');
+    navigation.navigate('Home');
   };
 
   return (

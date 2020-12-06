@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable sort-keys */
 /* eslint-disable global-require */
 
 const Images = {
@@ -31,6 +33,18 @@ const Images = {
   tabBarProfile: require('../assets/tabbar_profile.png'),
   tiktok: require('../assets/tiktok2x.png'),
   twitter: require('../assets/twitter2x.png'),
+  Screenshot: require('../assets/Screenshot.png'),
+  closeRound: require('../assets/closeRound.png'),
+  chat: require('../assets/chat.png'),
+  addFriend: require('../assets/addFriend.png'),
+  threeDots: require('../assets/threeDots.png'),
+  lockProfile: require('../assets/lockProfile.png'),
+  profilePic: require('../assets/profilePic.png'),
+  goal1: require('../assets/goal1.png'),
+  goal2: require('../assets/goal2.png'),
+  goal3: require('../assets/goal3.png'),
+  videoIcon: require('../assets/videoIcon.png'),
+  settings: require('../assets/settings.png'),
 };
 
 module.exports = Images;

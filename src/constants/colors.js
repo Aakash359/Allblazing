@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 const Colors = {
   AQUA: '#00FFFF',
   BLACK: '#000000',
@@ -40,6 +41,11 @@ const Colors = {
   WARNING: '#FFFF00',
   WHITE: '#FFFFFF',
   YELLOW: '#FFFF00',
+  CARD_GREY: '#292929',
+  CARD_LIGHTGREY: '#252525',
+  GREY_BORDER: '#898989',
+  GREY_CIRCLE: '#636363',
+  BORDER_GREY: '#707070',
 };
 
 module.exports = Colors;
