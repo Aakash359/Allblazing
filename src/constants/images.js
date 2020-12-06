@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 
 const Images = {
+  arrowRight: require('../assets/arrow_right.png'),
   blueLocation: require('../assets/blue-location.png'),
   calendar: require('../assets/calendar.png'),
   check: require('../assets/check2x.png'),

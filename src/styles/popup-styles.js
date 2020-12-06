@@ -186,6 +186,12 @@ const styles = {
     textAlign: 'left',
     width: '48%',
   },
+  subHeader: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+    marginVertical: Constants.BaseStyle.scale(5),
+    textAlign: 'center',
+  },
   textAlignLeft: { textAlign: 'left' },
   textStyle: {
     ...Constants.Fonts.Large,
