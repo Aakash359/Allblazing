@@ -64,10 +64,7 @@ const TimePicker = ({
         >
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Ok'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={OTPStyles.button}
-          onPress={onClose}
-        >
+        <TouchableOpacity style={OTPStyles.button} onPress={onClose} activeOpacity={0.7}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Cancel'}</Text>
         </TouchableOpacity>
       </View>

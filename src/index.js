@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { View, StyleSheet, LogBox, DevSettings } from 'react-native';
+import { View, StyleSheet, LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import NetInfo from '@react-native-community/netinfo';
@@ -30,10 +30,6 @@ class Runfast extends React.Component {
 
   async componentDidMount() {
     SplashScreen.hide();
-    if (__DEV__) {
-      // eslint-disable-next-line no-underscore-dangle
-      DevSettings._nativeModule.setHotLoadingEnabled(false);
-    }
   }
 
   async componentWillUnmount() {

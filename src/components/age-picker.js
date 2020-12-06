@@ -34,7 +34,7 @@ const Picker = ({
           <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => onConfirm(age)} activeOpacity={0.7}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Ok'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={OTPStyles.button} onPress={onClose}>
+          <TouchableOpacity activeOpacity={0.7} style={OTPStyles.button} onPress={onClose}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Cancel'}</Text>
           </TouchableOpacity>
         </View>
