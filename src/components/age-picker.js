@@ -1,96 +1,52 @@
 import React from 'react';
-import { ViewPropTypes,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity } from 'react-native';
-import { arrayOf, func, number, oneOfType, shape, string } from 'prop-types';
-import { Picker as DefaultPicker } from '@react-native-picker/picker';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { WheelPicker } from 'react-native-wheel-picker-android';
+import times from 'lodash/times';
+import { func, number, oneOfType, string } from 'prop-types';
 import Constants from '../constants';
+import { AuthStyle, PopupStyles, OTPStyles } from '../styles';
+import AnimatedModal from './animate-modal';
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'center',
-    backgroundColor: Constants.Colors.White,
-    flexDirection: 'row',
-    height: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 5,
-    justifyContent: 'space-between',
-    width: Constants.BaseStyle.DEVICE_WIDTH,
-    ...Constants.BaseStyle.SHADOW_STYLE,
-  },
-  cancelButton: {
-    color: Constants.Colors.Black,
-    marginLeft: 15,
-    textAlign: 'left',
-  },
-  doneButton: {
-    color: Constants.Colors.Black,
-    marginRight: 15,
-    textAlign: 'right',
-  },
-  mainViewContainer: {
-    bottom: 0,
-    height: Constants.BaseStyle.DEVICE_HEIGHT,
-    position: 'absolute',
-    width: Constants.BaseStyle.DEVICE_WIDTH,
-  },
-  modalContainer: {
-    ...Constants.BaseStyle.SHADOW_STYLE,
-    backgroundColor: Constants.Colors.WHITE,
-    bottom: 0,
-    height: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 30,
-    position: 'absolute',
-    width: Constants.BaseStyle.DEVICE_WIDTH,
-  },
-  picker: { backgroundColor: Constants.Colors.White },
-});
+const ages = times(87, (i) => `${i + 13}`);
 
 const Picker = ({
-  onClose, items, selectedValue, onChange, style,
-}) => (
-  <View style={[styles.mainViewContainer, style]}>
-    <View style={styles.modalContainer}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          hitSlop={Constants.BaseStyle.HIT_SLOP}
-          activeOpacity={0.9}
-          onPress={onClose}
-        >
-          <Text style={styles.cancelButton}>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          hitSlop={Constants.BaseStyle.HIT_SLOP}
-          activeOpacity={0.9}
-          onPress={onClose}
-        >
-          <Text style={styles.doneButton}>Done</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.picker}>
-        <DefaultPicker
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => onChange(itemValue)}
-        >
-          {items.map((item) => (
-            <DefaultPicker.Item key={item.value} label={item.label} value={item.value} />
-          ))}
-        </DefaultPicker>
-      </View>
-    </View>
-  </View>
-);
+  onClose, selectedValue, onConfirm,
+}) => {
+  const initialAge = selectedValue ? (selectedValue - 13) : 5;
+  const [age, setAge] = React.useState(initialAge);
 
-Picker.propTypes = {
-  items: arrayOf(shape({
-    label: string.isRequired,
-    value: oneOfType([number.isRequired, string.isRequired]),
-  })).isRequired,
-  onChange: func.isRequired,
-  onClose: func.isRequired,
-  selectedValue: oneOfType([number, string]).isRequired,
-  style: ViewPropTypes.style,
+  return (
+    <AnimatedModal visible>
+      <View style={PopupStyles.container}>
+        <View style={PopupStyles.wrapper}>
+          <Text style={PopupStyles.header}>{'Select Your Age'}</Text>
+          <View style={PopupStyles.divider} />
+          <View style={PopupStyles.pickersContainer}>
+            <WheelPicker
+              style={[PopupStyles.picker, PopupStyles.agePicker]}
+              itemStyle={PopupStyles.pickerItem}
+              selectedItem={Number(age)}
+              selectedItemTextColor={Constants.Colors.WHITE}
+              data={ages}
+              onItemSelected={(value) => setAge(value + 13)}
+            />
+          </View>
+          <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => onConfirm(age)} activeOpacity={0.7}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Ok'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={OTPStyles.button} onPress={onClose}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Cancel'}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </AnimatedModal>
+  );
 };
 
-Picker.defaultProps = { style: {} };
+Picker.propTypes = {
+  onClose: func.isRequired,
+  onConfirm: func.isRequired,
+  selectedValue: oneOfType([number, string]).isRequired,
+};
 
 export default Picker;

@@ -1,4 +1,5 @@
 import SingleEvent from './events/single-event';
+import InvitedUser from './events/invited-user';
 import AgePicker from './age-picker';
 import AnimatedModal from './animate-modal';
 import BottomTab from './bottom-tab';
@@ -10,6 +11,7 @@ import StepBar from './step-bar';
 import InviteFriend from './invite-friend';
 import TimePicker from './time-picker';
 import HeaderSearchBar from './header-search-bar';
+import UserImages from './user-images';
 
 export {
   AgePicker,
@@ -20,8 +22,10 @@ export {
   IntroCard,
   InputField,
   InviteFriend,
+  InvitedUser,
   Loader,
   SingleEvent,
   StepBar,
   TimePicker,
+  UserImages,
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, ForgotPassStyles } from '../../styles';
@@ -26,13 +26,6 @@ class ForgotPassword extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <TouchableOpacity onPress={() => navigate('Login')}>
-          <Image
-            source={Constants.Images.close}
-            resizeMode='contain'
-            style={CommonStyles.crossImage}
-          />
-        </TouchableOpacity>
         <View style={ForgotPassStyles.wrapper}>
           <Text style={AuthStyle.selectText}>Forgot Password</Text>
           <Text style={[AuthStyle.buttonText, ForgotPassStyles.buttonText]}>

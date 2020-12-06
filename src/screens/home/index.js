@@ -12,14 +12,18 @@ class Home extends React.Component {
     this.state = { keyword: '' };
   }
 
-  renderItem = () => <SingleEvent />
+  renderItem = () => {
+    const { navigation: { navigate } } = this.props;
+
+    return (<SingleEvent onPress={() => navigate('SingleEventDetail')} />);
+  }
 
   renderHeader = ({
-    navigate, route, title,
+    navigate, payload = {}, route, title,
   }) => (
     <View style={HomeStyles.content}>
       <Text style={HomeStyles.heading}>{title}</Text>
-      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route)}>
+      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
         <Text style={HomeStyles.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
@@ -40,15 +44,15 @@ class Home extends React.Component {
             scrollEnabled={false}
             data={[1]}
             renderItem={this.renderItem}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => `${index}`}
           />
           {this.renderHeader({
-            navigate, route: 'Runners', title: 'Runners Near Me',
+            navigate, payload: { hasCheckBox: true }, route: 'InviteFriends', title: 'Runners Near Me',
           })}
           <FlatList
             data={[1, 2, 3]}
             renderItem={() => <InviteFriend />}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => `${index}`}
           />
         </View>
       </View>

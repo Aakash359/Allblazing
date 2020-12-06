@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 const styles = {
+  agePicker: { width: 300 },
   attachmentsStyle: {
     ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.BLACK,
@@ -80,7 +81,7 @@ const styles = {
   },
   divider: {
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
-    height: 2,
+    height: 1,
   },
   header: {
     ...Constants.Fonts.ExtraLargeBold,
@@ -152,11 +153,11 @@ const styles = {
   },
   picker: {
     height: 180,
-    width: 35,
+    width: Constants.BaseStyle.scale(50),
   },
   pickerItem: {
     color: Constants.Colors.WHITE,
-    fontSize: 26,
+    fontSize: Constants.BaseStyle.scale(20),
   },
   pickersContainer: {
     alignItems: 'center',

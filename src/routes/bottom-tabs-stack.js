@@ -10,7 +10,7 @@ import { BottomTabsStyles, HeaderStyles } from '../styles';
 import Username from '../screens/onboarding/user-name';
 import Userage from '../screens/onboarding/user-age';
 import ConnectUserType from '../screens/onboarding/connect-user-type';
-import Recent5KTime from '../screens/onboarding/recent-5k-time';
+// import Recent5KTime from '../../screens/onboarding/recent-5k-time';
 import Distance from '../screens/onboarding/distance';
 import Location from '../screens/onboarding/location';
 import InviteFriends from '../screens/home/invite-friends';
@@ -51,11 +51,11 @@ const homeNavigator = () => (
       options={options}
       component={ConnectUserType}
     />
-    <HomeStack.Screen
+    {/* <HomeStack.Screen
       name="Recent5KTime"
       options={options}
       component={Recent5KTime}
-    />
+    /> */}
     <HomeStack.Screen
       name="Distance"
       options={options}

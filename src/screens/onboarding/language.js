@@ -40,7 +40,7 @@ class Language extends Component {
               onPress={() => this.onSelectLang('en')}
             >
               <Text style={AuthStyle.buttonText}>{'     '}</Text>
-              <Text style={[AuthStyle.buttonText, languageCode === 'en' ? AuthStyle.buttonActiveText : {}]}>{'English'}</Text>
+              <Text style={[AuthStyle.buttonLanguageText, languageCode === 'en' ? AuthStyle.buttonActiveText : {}]}>{'English'}</Text>
               {languageCode === 'en' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
             </TouchableOpacity>
             <TouchableOpacity
@@ -49,7 +49,7 @@ class Language extends Component {
               onPress={() => this.onSelectLang('du')}
             >
               <Text style={AuthStyle.buttonText}>{'     '}</Text>
-              <Text style={[AuthStyle.buttonText, languageCode === 'du' ? AuthStyle.buttonActiveText : {}]}>{'Dutch'}</Text>
+              <Text style={[AuthStyle.buttonLanguageText, languageCode === 'du' ? AuthStyle.buttonActiveText : {}]}>{'Dutch'}</Text>
               {languageCode === 'du' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
             </TouchableOpacity>
 

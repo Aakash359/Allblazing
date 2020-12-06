@@ -58,9 +58,12 @@ class Distance extends Component {
   }
 
   onSelect = () => {
-    const { navigation: { navigate } } = this.props;
-
-    this.setState({ visible: false }, () => navigate('Location'));
+    this.setState({
+      hour: 1,
+      minute: 1,
+      second: 1,
+      visible: false,
+    });
   }
 
   render() {
@@ -94,7 +97,7 @@ class Distance extends Component {
                   onPress={() => this.onTypeChange(t.value)}
                 >
                   <Text style={ConnectUserTypeStyles.buttonText}>{'     '}</Text>
-                  <Text style={ConnectUserTypeStyles.buttonText}>{t.label}</Text>
+                  <Text style={[ConnectUserTypeStyles.buttonText, { color: time === t.value ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{t.label}</Text>
                   {time === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
                 </TouchableOpacity>
               ))}

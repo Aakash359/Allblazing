@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { func, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import { AuthStyle, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
 import { StepBar } from '../../components';
 import Constants from '../../constants';
@@ -32,7 +32,7 @@ const times = [{
   value: 'moreThan30',
 }];
 
-class Recent5KTime extends Component {
+class UserPersonalBest extends Component {
   constructor() {
     super();
     this.state = { time: null };
@@ -46,22 +46,21 @@ class Recent5KTime extends Component {
       navigation: {
         goBack, navigate,
       },
+      route: { params },
     } = this.props;
 
     return (
       <View style={CommonStyles.container}>
-
         <ScrollView
-          ref={this.scrollViewRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
           keyboardShouldPersistTaps="always"
         >
           <View style={ConnectUserTypeStyles.wrapper}>
-            <StepBar count={5} selected={[0, 1, 2, 3]} />
+            {!params?.isEditMode && <StepBar count={5} selected={[0, 1, 2, 3]} />}
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              <Text style={ConnectUserTypeStyles.input}>{'What is your recent 5km time?'}</Text>
+              {!params?.isEditMode && <Text style={ConnectUserTypeStyles.input}>{'What is your recent 5km time?'}</Text>}
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
@@ -75,24 +74,22 @@ class Recent5KTime extends Component {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={Repeat5KStyles.buttonsWrapper}>
-              <View style={ConnectUserTypeStyles.buttons}>
-                <TouchableOpacity
-                  style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                  activeOpacity={0.7}
-                  onPress={() => goBack()}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={AuthStyle.introButton}
-                  activeOpacity={0.7}
-                  onPress={() => navigate('Distance')}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                </TouchableOpacity>
+            {params?.isEditMode ? (
+              <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]} onPress={() => goBack()}>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={Repeat5KStyles.buttonsWrapper}>
+                <View style={ConnectUserTypeStyles.buttons}>
+                  <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={AuthStyle.introButton} activeOpacity={0.7} onPress={() => navigate('Distance')}>
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -100,11 +97,12 @@ class Recent5KTime extends Component {
   }
 }
 
-Recent5KTime.propTypes = {
+UserPersonalBest.propTypes = {
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
 };
 
-export default Recent5KTime;
+export default UserPersonalBest;

@@ -2,7 +2,10 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 export const AuthStyle = StyleSheet.create({
-  buttonActiveText: { color: Constants.Colors.TEXT_COLOR2 },
+  buttonActiveText: { color: Constants.Colors.TEXT_COLOR_WHITE },
+  buttonLanguageText: {
+    ...Constants.Fonts.Regular, color: Constants.Colors.TEXT_COLOR2,
+  },
   buttonText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
@@ -26,6 +29,16 @@ export const AuthStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
     width: '40%',
   },
+  introButton2: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: Constants.BaseStyle.scale(6),
+    height: Constants.BaseStyle.scale(45),
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(20),
+    width: '90%',
+  },
   loginTouchable: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -40,10 +53,35 @@ export const AuthStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  privcyContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    margin: Constants.BaseStyle.scale(25),
+  },
+  privcyText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+
+  },
+  privcyText2: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
+  saveBtn: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: Constants.BaseStyle.scale(6),
+    height: Constants.BaseStyle.scale(45),
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(500),
+    width: '90%',
+  },
   selectText: {
     ...Constants.Fonts.ExtraLarge,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     marginLeft: Constants.BaseStyle.scale(5),
+    marginVertical: Constants.BaseStyle.scale(0),
   },
   welcomeView: {
     alignItems: 'center',
@@ -65,7 +103,13 @@ export const RegisterStyle = StyleSheet.create({
     color: Constants.Colors.WHITE,
     height: Constants.BaseStyle.scale(45),
     justifyContent: 'center',
-    marginTop: Constants.BaseStyle.scale(40),
+    marginBottom: Constants.BaseStyle.scale(40),
+    width: '90%',
+  },
+  mottoCount: {
+    color: Constants.Colors.WHITE,
+    marginTop: Constants.BaseStyle.scale(5),
+    textAlign: 'right',
     width: '90%',
   },
   password: {
@@ -87,13 +131,32 @@ export const RegisterStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(4),
     width: '90%',
   },
+  textLinkView: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginHorizontal: Constants.BaseStyle.scale(25),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
+  textSmallLinkStyle: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
+  textSmallStyle: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+  },
   wrapper: {
     flex: 0.9, marginTop: Constants.BaseStyle.scale(10),
   },
 });
 
 export const UsernameStyle = StyleSheet.create({
-  age: { color: Constants.Colors.GRAY },
+  age: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+  },
   ageButton: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -181,6 +244,7 @@ export const Repeat5KStyles = StyleSheet.create({
     flexDirection: 'column-reverse',
     marginTop: Constants.BaseStyle.scale(100),
   },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(200) },
 });
 
 export const ForgotPassStyles = StyleSheet.create({
@@ -225,9 +289,7 @@ export const OTPStyles = StyleSheet.create({
   button: {
     alignItems: 'center', margin: Constants.BaseStyle.scale(10),
   },
-  buttonsWrapper: {
-    flex: 0.65, flexDirection: 'column-reverse',
-  },
+  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(400) },
   header: {
     marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
   },
@@ -244,6 +306,7 @@ export const OTPStyles = StyleSheet.create({
   inputView: {
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(60),
+    marginTop: Constants.BaseStyle.scale(20),
     width: '70%',
   },
 });
@@ -253,6 +316,7 @@ export const LoginStyles = StyleSheet.create({
     color: Constants.Colors.TEXT_COLOR,
     ...Constants.Fonts.Regular,
   },
+
   accountWrapper: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -260,7 +324,7 @@ export const LoginStyles = StyleSheet.create({
     borderTopRightRadius: Constants.BaseStyle.scale(20),
     bottom: 0,
     flexDirection: 'row',
-    height: Constants.BaseStyle.scale(100),
+    height: Constants.BaseStyle.scale(80),
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
@@ -276,7 +340,14 @@ export const LoginStyles = StyleSheet.create({
   },
   login: {
     color: Constants.Colors.WHITE,
+    marginBottom: Constants.BaseStyle.scale(30),
     marginHorizontal: Constants.BaseStyle.scale(10),
+    ...Constants.Fonts.Regular,
+  },
+  loginText: {
+    color: Constants.Colors.WHITE,
+    marginHorizontal: Constants.BaseStyle.scale(10),
+
     ...Constants.Fonts.Regular,
   },
   logo: {
@@ -326,6 +397,7 @@ export const LoginStyles = StyleSheet.create({
     ...Constants.Fonts.Regular,
   },
   row: { flexDirection: 'row' },
+  scollWrapper: { flex: 0.6 },
   socialIcon: {
     height: Constants.BaseStyle.scale(40),
     width: Constants.BaseStyle.scale(40),
@@ -343,11 +415,30 @@ export const LoginStyles = StyleSheet.create({
 });
 
 export const LocationStyles = StyleSheet.create({
+  currentLocationText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    marginLeft: Constants.BaseStyle.scale(10),
+  },
+  location: { justifyContent: 'flex-start' },
+  locationIcon: {
+    height: 25, width: 26,
+  },
+  locationText: { alignSelf: 'center' },
   logo: {
     alignSelf: 'center',
     marginBottom: Constants.BaseStyle.scale(40),
     width: '50%',
   },
+  margin: { marginVertical: Constants.BaseStyle.scale(10) },
+  orText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.PRIVCYTEXT,
+  },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(350) },
 });
+
+export const GenderStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(400) } });
+export const MottoStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(350) } });
 
 export default AuthStyle;

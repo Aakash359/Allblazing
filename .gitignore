@@ -60,3 +60,9 @@ buck-out/
 ios/Podfile.lock
 ios/RunFast.xcodeproj/project.pbxproj
 package-lock.json
+
+# Andorid built application
+*.apk
+*.ap_
+*.aab
+

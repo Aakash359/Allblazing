@@ -11,7 +11,7 @@ const hours = times(24, (i) => (i > 9 ? `${i}` : `0${i}`));
 const minutes = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
 const seconds = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
 
-const TimePopup = ({
+const TimePicker = ({
   hour,
   minute,
   onClose,
@@ -36,6 +36,7 @@ const TimePopup = ({
             style={PopupStyles.picker}
             itemStyle={PopupStyles.pickerItem}
             selectedItem={Number(hour)}
+            selectedItemTextColor={Constants.Colors.WHITE}
             data={hours}
             onItemSelected={(value) => onValueChange(value, 'hour')}
           />
@@ -44,6 +45,7 @@ const TimePopup = ({
             itemStyle={PopupStyles.pickerItem}
             selectedItem={Number(minute)}
             data={minutes}
+            selectedItemTextColor={Constants.Colors.WHITE}
             onItemSelected={(value) => onValueChange(value, 'minute')}
           />
           <WheelPicker
@@ -51,6 +53,7 @@ const TimePopup = ({
             itemStyle={PopupStyles.pickerItem}
             selectedItem={Number(second)}
             data={seconds}
+            selectedItemTextColor={Constants.Colors.WHITE}
             onItemSelected={(value) => onValueChange(value, 'second')}
           />
         </View>
@@ -72,7 +75,7 @@ const TimePopup = ({
   </AnimatedModal>
 );
 
-TimePopup.propTypes = {
+TimePicker.propTypes = {
   hour: string.isRequired,
   minute: string.isRequired,
   onClose: func,
@@ -82,11 +85,11 @@ TimePopup.propTypes = {
   visible: bool,
 };
 
-TimePopup.defaultProps = {
+TimePicker.defaultProps = {
   onClose: () => true,
   onPress: () => true,
   onValueChange: () => true,
   visible: false,
 };
 
-export default TimePopup;
+export default TimePicker;

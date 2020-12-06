@@ -15,6 +15,7 @@ const Colors = {
   LIGHT_BORDER_COLOR: '#D8D8D8',
   LIGHT_GRAY: '#8E8E8E',
   LIGHT_GREEN: '#B2F8B8',
+  LIGHT_ORANGE: '#FFBE61',
   LIGHT_PINK: '#FECFE1',
   LIGHT_RED: '#F898A4',
   LIGHT_YELLOW: '#FEFFBE',
@@ -24,6 +25,7 @@ const Colors = {
   OLIVE: '#808000',
   ORANGE: 'orange',
   PRIMARY: '#121212',
+  PRIVCYTEXT: '#898989',
   PURPLE: '#800080',
   RED: '#EB3223',
   SECONDARY_COLOR: '#252525',
@@ -46,6 +48,7 @@ const Colors = {
   GREY_BORDER: '#898989',
   GREY_CIRCLE: '#636363',
   BORDER_GREY: '#707070',
+
 };
 
 module.exports = Colors;
