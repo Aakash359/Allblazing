@@ -2,6 +2,7 @@
 
 const Images = {
   arrowRight: require('../assets/arrow_right.png'),
+  block: require('../assets/block.png'),
   blueLocation: require('../assets/blue-location.png'),
   calendar: require('../assets/calendar.png'),
   check: require('../assets/check2x.png'),
@@ -32,6 +33,7 @@ const Images = {
   path1: require('../assets/Path46.png'),
   path2: require('../assets/Path47.png'),
   racing: require('../assets/stopwatch.png'),
+  report: require('../assets/report.png'),
   search: require('../assets/search.png'),
   slectLangLogo2x: require('../assets/slectLangLogo2x.png'),
   tabBarAdd: require('../assets/tabbar_add.png'),

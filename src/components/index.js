@@ -14,6 +14,7 @@ import TimePicker from './time-picker';
 import HeaderSearchBar from './header-search-bar';
 import UserImages from './user-images';
 import LogoutPopup from './popups/logout-popup';
+import MoreOptionsPopup from './popups/more-options-popup';
 
 export {
   AgePicker,
@@ -32,4 +33,5 @@ export {
   TimePicker,
   UserImages,
   LogoutPopup,
+  MoreOptionsPopup,
 };

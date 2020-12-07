@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
     margin: Constants.BaseStyle.scale(18),
     width: Constants.BaseStyle.scale(18),
   },
+  divider: {
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    height: 1,
+    marginVertical: Constants.BaseStyle.scale(10),
+    width: '100%',
+  },
   headerWrapper: {
     alignItems: 'center', flex: 0.25, marginTop: Constants.BaseStyle.scale(20),
   },
