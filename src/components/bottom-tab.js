@@ -22,7 +22,7 @@ export const BottomTab = ({ navigation: { navigate } }) => {
       <TouchableOpacity style={[BottomTabsStyles.tab, BottomTabsStyles.add]} onPress={() => navigate('Home')}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarAdd} />
       </TouchableOpacity>
-      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('Home')}>
+      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('BlockReportUser')}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarChat} />
         <Text style={BottomTabsStyles.tabText}>{i18('chat')}</Text>
       </TouchableOpacity>
