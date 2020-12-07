@@ -9,7 +9,11 @@ import UserPersonalBest from '../screens/onboarding/user-personal-best';
 import UserMotto from '../screens/onboarding/user-motto';
 import Distance from '../screens/onboarding/distance';
 import Location from '../screens/onboarding/location';
+import ChangePassword from '../screens/onboarding/change-password';
+import ContactUS from '../screens/onboarding/contact-us';
+import ChangeLanguage from '../screens/onboarding/change-language';
 import EditLocation from '../screens/onboarding/edit-location';
+import Settings from '../screens/onboarding/settings';
 import InviteFriends from '../screens/home/invite-friends';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
@@ -24,7 +28,7 @@ const options = { headerShown: false };
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
+    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Settings" mode='card'>
       <Stack.Screen
         name="Username"
         component={Username}
@@ -165,6 +169,42 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+        })}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Change Password',
+        })}
+      />
+      <Stack.Screen
+        name="ContactUS"
+        component={ContactUS}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Contact Us',
+        })}
+      />
+      <Stack.Screen
+        name="ChangeLanguage"
+        component={ChangeLanguage}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Change Language',
+        })}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Settings',
         })}
       />
     </Stack.Navigator>

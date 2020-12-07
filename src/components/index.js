@@ -8,10 +8,12 @@ import IntroCard from './intro-card';
 import InputField from './input-field';
 import Loader from './loader';
 import StepBar from './step-bar';
+import SettingItem from './setting-item';
 import InviteFriend from './invite-friend';
 import TimePicker from './time-picker';
 import HeaderSearchBar from './header-search-bar';
 import UserImages from './user-images';
+import LogoutPopup from './popups/logout-popup';
 
 export {
   AgePicker,
@@ -24,8 +26,10 @@ export {
   InviteFriend,
   InvitedUser,
   Loader,
+  SettingItem,
   SingleEvent,
   StepBar,
   TimePicker,
   UserImages,
+  LogoutPopup,
 };
