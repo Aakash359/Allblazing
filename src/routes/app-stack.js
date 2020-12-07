@@ -19,6 +19,7 @@ import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
 import StaticContent from '../screens/static-content';
+import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
 import { CommonStyles, HeaderStyles } from '../styles';
@@ -205,6 +206,21 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Settings',
+        })}
+      />
+      <Stack.Screen
+        name="BlockReportUser"
+        component={BlockReportUser}
+        options={({ navigation }) => ({
+          headerBackTitleVisible: false,
+          headerLeft: null,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
+            </TouchableOpacity>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
         })}
       />
     </Stack.Navigator>

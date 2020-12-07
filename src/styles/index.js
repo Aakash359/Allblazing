@@ -26,9 +26,11 @@ import IntroductionStyles from './introduction-styles';
 import MapViewStyles from './map-view-styles';
 import StaticContentStyles from './static-content-styles';
 import SettingStyles from './setting-styles';
+import BlockUserStyles from './block-user-styles';
 
 export {
   AuthStyle,
+  BlockUserStyles,
   BottomTabsStyles,
   CommonStyles,
   ConnectUserTypeStyles,
