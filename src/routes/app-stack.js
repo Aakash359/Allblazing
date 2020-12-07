@@ -28,7 +28,7 @@ const options = { headerShown: false };
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Settings" mode='card'>
+    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
       <Stack.Screen
         name="Username"
         component={Username}

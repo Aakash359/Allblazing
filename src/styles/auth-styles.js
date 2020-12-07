@@ -83,7 +83,7 @@ export const AuthStyle = StyleSheet.create({
     width: '90%',
   },
   selectText: {
-    ...Constants.Fonts.ExtraLarge,
+    ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     marginLeft: Constants.BaseStyle.scale(5),
     marginVertical: Constants.BaseStyle.scale(0),
@@ -255,6 +255,7 @@ export const Repeat5KStyles = StyleSheet.create({
 export const ForgotPassStyles = StyleSheet.create({
   buttonText: {
     ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
     marginHorizontal: Constants.BaseStyle.scale(40),
     textAlign: 'center',
   },
