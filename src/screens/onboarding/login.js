@@ -49,7 +49,7 @@ class Login extends Component {
     } = this.props;
 
     loginSuccess();
-    this.timer = setTimeout(() => navigate('Settings'), 500);
+    this.timer = setTimeout(() => navigate('Dashboard'), 500);
   }
 
   render() {
