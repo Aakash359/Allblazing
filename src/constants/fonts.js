@@ -40,16 +40,16 @@ const Fonts = {
   },
   Small: {
     fontFamily: 'SFProRounded-Regular',
-    fontSize: 12,
+    fontSize: 14,
   },
   SmallBold: {
     fontFamily: 'SFProRounded-Bold',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   SmallMedium: {
     fontFamily: 'SFProRounded-Medium',
-    fontSize: 12,
+    fontSize: 14,
   },
 };
 

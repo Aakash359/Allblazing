@@ -9,7 +9,7 @@ import AnimatedModal from '../animate-modal';
 
 const ages = times(87, (i) => `${i + 13}`);
 
-const Picker = ({
+const AgePicker = ({
   onClose, selectedValue, onConfirm,
 }) => {
   const initialAge = selectedValue ? (selectedValue - 13) : 5;
@@ -43,10 +43,12 @@ const Picker = ({
   );
 };
 
-Picker.propTypes = {
+AgePicker.propTypes = {
   onClose: func.isRequired,
   onConfirm: func.isRequired,
-  selectedValue: oneOfType([number, string]).isRequired,
+  selectedValue: oneOfType([number, string]),
 };
 
-export default Picker;
+AgePicker.defaultProps = { selectedValue: null };
+
+export default AgePicker;

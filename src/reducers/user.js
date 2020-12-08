@@ -6,7 +6,7 @@ import { LOGIN_FAILURE,
   LOGOUT_SUCCESS } from '../actions/user-action-types';
 
 const initialState = {
-  isAuthorized: false,
+  isAuthorized: true,
   loginStatus: 'pending',
   logoutStatus: 'pending',
   userDetail: {},
