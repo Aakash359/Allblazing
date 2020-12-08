@@ -14,11 +14,12 @@ export const styles = StyleSheet.create({
     height: '90%', width: '100%',
   },
   title: {
+    ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
+    fontSize: 28,
     lineHeight: Constants.BaseStyle.scale(30),
     marginLeft: Constants.BaseStyle.scale(5),
     textAlign: 'center',
-    ...Constants.Fonts.ExtraLargeBold,
   },
   titleWrapper: {
     alignSelf: 'center',

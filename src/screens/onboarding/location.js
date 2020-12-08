@@ -1,31 +1,15 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-// import Geolocation from '@react-native-community/geolocation';
 import Constants from '../../constants';
 import { AuthStyle, UsernameStyle, CommonStyles, LocationStyles, OTPStyles, ConnectUserTypeStyles } from '../../styles';
 import { StepBar } from '../../components';
 import { loginSuccess } from '../../actions/user-action-types';
 
 const Location = () => {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const goToSettings = async () => {
     dispatch(loginSuccess());
-    navigation.navigate('Dashboard');
-    // const url = 'app-settings:';
-
-    // try {
-    //   const canOpenHealthApp = await Linking.canOpenURL(url);
-
-    //   if (canOpenHealthApp) {
-    //     Linking.openURL(url);
-    //   }
-    // } catch (e) {
-    //   // eslint-disable-next-line no-console
-    //   console.log('error', e);
-    // }
   };
 
   return (

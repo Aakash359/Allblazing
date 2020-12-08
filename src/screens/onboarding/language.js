@@ -33,7 +33,7 @@ class Language extends Component {
               resizeMode='contain'
               style={CommonStyles.logo}
             />
-            <Text style={AuthStyle.selectText}>{translate('Select Your Language')}</Text>
+            <Text style={[AuthStyle.selectText, AuthStyle.langHeaderText]}>{translate('Select Your Language')}</Text>
             <TouchableOpacity
               style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}
               activeOpacity={0.7}

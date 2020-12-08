@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { bool, func, shape } from 'prop-types';
+import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import lodash from 'lodash';
 import Constants from '../../constants';
 import { AgePicker, StepBar } from '../../components';
 import { AuthStyle, CommonStyles, UsernameStyle } from '../../styles';
+import * as actions from '../../actions/user-action-types';
 
 const ageRange = lodash.times(60, (val) => ({
   label: `${val + 14}`, value: val + 14,
@@ -26,6 +28,12 @@ class Userage extends Component {
     });
   }
 
+  onVerify = () => {
+    const { navigation: { goBack } } = this.props;
+
+    goBack();
+  }
+
   render() {
     const {
       age, visible,
@@ -44,7 +52,7 @@ class Userage extends Component {
           <View style={UsernameStyle.inputWrapper}>
             {!params?.isEditMode && <Text style={UsernameStyle.input}>{'How old are you?'}</Text>}
             <TouchableOpacity activeOpacity={1} style={UsernameStyle.ageButton} onPress={() => this.setState({ visible: true })}>
-              <Text style={UsernameStyle.age}>{age || 'Age'}</Text>
+              <Text style={age ? UsernameStyle.age : UsernameStyle.ageBlur}>{age || 'Age'}</Text>
               <AntIcon name="down" size={25} color="#5EC2CA" />
             </TouchableOpacity>
           </View>
@@ -94,4 +102,4 @@ Userage.propTypes = {
   route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
 };
 
-export default Userage;
+export default connect(null, { logoutSuccess: actions.logoutSuccess })(Userage);

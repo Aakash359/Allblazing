@@ -10,6 +10,7 @@ import { AuthStyle,
   RegisterStyle,
   Repeat5KStyles,
   LanguageStyles,
+  DistanceStyles,
   UsernameStyle,
   WelcomeStyles } from './auth-styles';
 import BottomTabsStyles from './bottom-tab.styles';
@@ -35,6 +36,7 @@ export {
   CommonStyles,
   ConnectUserTypeStyles,
   ContactUSStyles,
+  DistanceStyles,
   EventDetailStyles,
   EventMapStyles,
   FilterStyles,

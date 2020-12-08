@@ -9,7 +9,7 @@ const MoreOptionsPopup = ({
   blockBtnTitle, blockBtnSubtitle, onBlock, onReport, reportBtnTitle, reportBtnSubtitle, visible,
 }) => (
   <AnimatedModal visible={visible}>
-    <View style={PopupStyles.container}>
+    <View style={[PopupStyles.container, PopupStyles.moreOptionsContainer]}>
       <View style={[PopupStyles.wrapper, PopupStyles.moreOptionsWrapper]}>
         <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
           <Image source={Constants.Images.block} style={PopupStyles.blockIcon} />

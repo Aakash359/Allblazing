@@ -48,7 +48,6 @@ class Introduction extends Component {
           {itemSelected === 2 && <IntroCard selected={[0, 1, 2]} image={Constants.Images.intro3} title="Capture and share the  experience" />}
           {itemSelected === 2 ? (
             <View style={IntroductionStyles.buttonsWrapper2}>
-
               <TouchableOpacity
                 style={AuthStyle.introButton2}
                 onPress={this.onNext}
