@@ -25,6 +25,8 @@ const socialIcons = [{
 }];
 
 class Login extends Component {
+  timer = null;
+
   constructor() {
     super();
     this.state = {
@@ -35,13 +37,19 @@ class Login extends Component {
     };
   }
 
-  onVerify = () => {
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
+  onLogin = () => {
     const {
       loginSuccess, navigation: { navigate },
     } = this.props;
 
     loginSuccess();
-    navigate('Home');
+    this.timer = setTimeout(() => navigate('Dashboard'), 500);
   }
 
   render() {
@@ -118,7 +126,7 @@ class Login extends Component {
               <TouchableOpacity
                 style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
                 activeOpacity={0.7}
-                onPress={() => navigate('Home')}
+                onPress={this.onLogin}
               >
                 <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Login'}</Text>
               </TouchableOpacity>

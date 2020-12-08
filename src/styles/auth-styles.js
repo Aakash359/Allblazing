@@ -2,9 +2,13 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 export const AuthStyle = StyleSheet.create({
-  buttonActiveText: { color: Constants.Colors.TEXT_COLOR_WHITE },
+  buttonActiveText: {
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
   buttonLanguageText: {
-    ...Constants.Fonts.Regular, color: Constants.Colors.TEXT_COLOR2,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR2,
   },
   buttonText: {
     ...Constants.Fonts.Regular,
@@ -53,6 +57,8 @@ export const AuthStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  logoutBtn: { marginTop: Constants.BaseStyle.scale(30) },
+  margin: { marginTop: Constants.BaseStyle.scale(20) },
   privcyContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -61,7 +67,6 @@ export const AuthStyle = StyleSheet.create({
   privcyText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.PRIVCYTEXT,
-
   },
   privcyText2: {
     ...Constants.Fonts.Regular,
@@ -418,6 +423,7 @@ export const LoginStyles = StyleSheet.create({
 });
 
 export const LocationStyles = StyleSheet.create({
+  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(70) },
   currentLocationText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
@@ -442,6 +448,11 @@ export const LocationStyles = StyleSheet.create({
 });
 
 export const GenderStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(400) } });
+
 export const MottoStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(350) } });
+
+export const ContactUSStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(300) } });
+
+export const LanguageStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(450) } });
 
 export default AuthStyle;

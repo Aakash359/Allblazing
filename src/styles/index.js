@@ -1,4 +1,5 @@
 import { AuthStyle,
+  ContactUSStyles,
   ConnectUserTypeStyles,
   ForgotPassStyles,
   GenderStyles,
@@ -8,6 +9,7 @@ import { AuthStyle,
   MottoStyles,
   RegisterStyle,
   Repeat5KStyles,
+  LanguageStyles,
   UsernameStyle,
   WelcomeStyles } from './auth-styles';
 import BottomTabsStyles from './bottom-tab.styles';
@@ -34,6 +36,7 @@ import StaticContentStyles from './static-content-styles';
 import NotificationStyles from './notification-styles';
 import FeedStyles from './feed-styles';
 import FeedDetailStyles from './feedDetail-styles';
+import SettingStyles from './setting-styles';
 
 export {
   RunnersStyles,
@@ -51,6 +54,7 @@ export {
   BottomTabsStyles,
   CommonStyles,
   ConnectUserTypeStyles,
+  ContactUSStyles,
   EventDetailStyles,
   EventMapStyles,
   FilterStyles,
@@ -61,6 +65,7 @@ export {
   InputStyles,
   IntroductionStyles,
   InviteFriendsStyles,
+  LanguageStyles,
   LocationStyles,
   LoginStyles,
   MapViewStyles,
@@ -68,6 +73,7 @@ export {
   OTPStyles,
   PopupStyles,
   StaticContentStyles,
+  SettingStyles,
   RegisterStyle,
   Repeat5KStyles,
   UsernameStyle,

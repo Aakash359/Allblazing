@@ -4,6 +4,7 @@
 const Images = {
   Screenshot: require('../assets/Screenshot.png'),
   addFriend: require('../assets/addFriend.png'),
+  arrowRight: require('../assets/arrow_right.png'),
   blueLocation: require('../assets/blue-location.png'),
   calendar: require('../assets/calendar.png'),
   chat: require('../assets/chat.png'),
