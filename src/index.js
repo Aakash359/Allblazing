@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Runfast extends React.Component {
+class Allblazing extends React.Component {
   unsubscribe = null;
   constructor(props) {
     super(props);
@@ -60,4 +60,4 @@ class Runfast extends React.Component {
   }
 }
 
-export default Runfast;
+export default Allblazing;
