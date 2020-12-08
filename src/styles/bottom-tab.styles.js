@@ -2,10 +2,13 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 export default StyleSheet.create({
+  active: { color: Constants.Colors.WHITE },
   add: {
+    alignItems: 'center',
     backgroundColor: Constants.Colors.WHITE,
     borderRadius: 30,
     height: 60,
+    justifyContent: 'center',
     width: 60,
   },
   container: {
@@ -22,12 +25,13 @@ export default StyleSheet.create({
   },
   tab: {
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 5,
+    padding: 10,
   },
   tabText: {
     ...Constants.Fonts.Small,
-    color: Constants.Colors.WHITE,
+    color: Constants.Colors.TEXT_COLOR2,
     paddingTop: 3,
   },
   tabs: {

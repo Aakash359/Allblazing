@@ -8,10 +8,10 @@ import { BottomTabsStyles } from '../styles';
 
 const Tab = createBottomTabNavigator();
 
-function Screen() {
+function Discover() {
   return (
     <View>
-      <Text>{'Home'}</Text>
+      <Text style={BottomTabsStyles.label}>{'Discover'}</Text>
     </View>
   );
 }
@@ -40,10 +40,10 @@ export default function Dashboard() {
   return (
     <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Discover" component={Screen} />
-      <Tab.Screen name="Create" component={Home} />
-      <Tab.Screen name="Chat" component={Screen} />
-      <Tab.Screen name="Me" component={Screen} />
+      <Tab.Screen name="Discover" component={Discover} />
+      <Tab.Screen name="Create" component={Discover} />
+      <Tab.Screen name="Chat" component={Discover} />
+      <Tab.Screen name="Me" component={Discover} />
     </Tab.Navigator>
   );
 }

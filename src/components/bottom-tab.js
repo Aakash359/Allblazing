@@ -1,44 +1,100 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Image, TouchableOpacity, Text, View } from 'react-native';
-import { func, shape } from 'prop-types';
+import { arrayOf, func, shape, string } from 'prop-types';
 import { BottomTabsStyles } from '../styles';
 import Constants from '../constants';
 
-export const BottomTab = ({ navigation: { navigate } }) => {
-  const [t] = useTranslation();
-  const i18 = (key) => t(key);
+const getTabImage = (name, active) => {
+  if (name === 'Home') {
+    return active ? Constants.Images.tabBarHomeActive : Constants.Images.tabBarHome;
+  }
 
-  return (
-    <View style={BottomTabsStyles.tabs}>
-      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('Home')}>
-        <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarHome} />
-        <Text style={BottomTabsStyles.tabText}>{i18('home')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('Settings')}>
-        <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarFeed} />
-        <Text style={BottomTabsStyles.tabText}>{i18('discover')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[BottomTabsStyles.tab, BottomTabsStyles.add]} onPress={() => navigate('Home')}>
-        <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarAdd} />
-      </TouchableOpacity>
-      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('BlockReportUser')}>
-        <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarChat} />
-        <Text style={BottomTabsStyles.tabText}>{i18('chat')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={BottomTabsStyles.tab} onPress={() => navigate('Home')}>
-        <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarProfile} />
-        <Text style={BottomTabsStyles.tabText}>{i18('me')}</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  if (name === 'Discover') {
+    return active ? Constants.Images.tabBarFeedActive : Constants.Images.tabBarFeed;
+  }
+
+  if (name === 'Create') {
+    return active ? Constants.Images.tabBarAddActive : Constants.Images.tabBarAdd;
+  }
+
+  if (name === 'Chat') {
+    return active ? Constants.Images.tabBarChatActive : Constants.Images.tabBarChat;
+  }
+
+  if (name === 'Me') {
+    return active ? Constants.Images.tabBarProfileActive : Constants.Images.tabBarProfile;
+  }
+
+  return Constants.Images.tabBarHome;
 };
 
+export const BottomTab = ({
+  state, descriptors, navigation,
+}) => (
+  <View style={BottomTabsStyles.tabs}>
+    {state.routes.map((route, index) => {
+      const { options } = descriptors[route.key];
+
+      let label = '';
+
+      if (options.tabBarLabel) {
+        label = options.tabBarLabel;
+      } else if (options.title) {
+        label = options.title;
+      } else {
+        label = route.name;
+      }
+
+      const isFocused = state.index === index;
+
+      const onPress = () => {
+        const event = navigation.emit({
+          canPreventDefault: true,
+          target: route.key,
+          type: 'tabPress',
+        });
+
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate(route.name);
+        }
+      };
+
+      const onLongPress = () => {
+        navigation.emit({
+          target: route.key,
+          type: 'tabLongPress',
+        });
+      };
+
+      const styles = label === 'Create' ? BottomTabsStyles.add : BottomTabsStyles.tab;
+      const currentImage = getTabImage(label, isFocused);
+
+      return (
+        <TouchableOpacity
+          key={route.key}
+          style={styles}
+          onPress={onPress}
+          onLongPress={onLongPress}
+          accessibilityRole="button"
+          accessibilityState={isFocused ? { selected: true } : {}}
+          accessibilityLabel={options.tabBarAccessibilityLabel}
+          testID={options.tabBarTestID}
+        >
+          <Image style={BottomTabsStyles.image} source={currentImage} />
+          {label !== 'Create' && (<Text style={[BottomTabsStyles.tabText, isFocused && BottomTabsStyles.active]}>{label}</Text>)}
+        </TouchableOpacity>
+      );
+    })}
+  </View>
+);
+
 BottomTab.propTypes = {
+  descriptors: shape({ name: string }).isRequired,
   navigation: shape({
     goBack: func.isRequired,
     navigate: func.isRequired,
   }).isRequired,
+  state: shape({ routes: arrayOf(shape({ key: string.isRequired })).isRequired }).isRequired,
 };
 
 export default BottomTab;

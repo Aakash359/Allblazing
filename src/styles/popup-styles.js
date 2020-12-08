@@ -36,7 +36,7 @@ const styles = {
     right: 0,
   },
   btnSubtitle: {
-    ...Constants.Fonts.Regular,
+    ...Constants.Fonts.Small,
     color: Constants.Colors.PRIVCYTEXT,
     marginTop: Constants.BaseStyle.scale(5),
     paddingHorizontal: Constants.BaseStyle.MARGIN,

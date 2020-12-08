@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 
 const Images = {
+  addUser: require('../assets/add-user.png'),
   arrowRight: require('../assets/arrow_right.png'),
   block: require('../assets/block.png'),
   blueLocation: require('../assets/blue-location.png'),
@@ -38,9 +39,13 @@ const Images = {
   slectLangLogo2x: require('../assets/slectLangLogo2x.png'),
   tabBarAdd: require('../assets/tabbar_add.png'),
   tabBarChat: require('../assets/tabbar_chat.png'),
+  tabBarChatActive: require('../assets/tabbar_chat_active.png'),
   tabBarFeed: require('../assets/tabbar_feed.png'),
-  tabBarHome: require('../assets/tabbar_home.png'),
+  tabBarFeedActive: require('../assets/tabbar_feed-active.png'),
+  tabBarHome: require('../assets/tabbar_home_inactive.png'),
+  tabBarHomeActive: require('../assets/tabbar_home.png'),
   tabBarProfile: require('../assets/tabbar_profile.png'),
+  tabBarProfileActive: require('../assets/tabbar_profile_active.png'),
   tiktok: require('../assets/tiktok2x.png'),
   toggleOff: require('../assets/toggle_off.png'),
   toggleOn: require('../assets/toggle_on.png'),
