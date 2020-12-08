@@ -91,7 +91,6 @@ const styles = {
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 8,
   },
   container: {
-    alignItems: 'center',
     backgroundColor: Constants.Colors.TRANSLUCENT,
     flex: 1,
     justifyContent: 'center',
@@ -113,7 +112,7 @@ const styles = {
     textAlign: 'center',
   },
   hourLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '2%',
     textAlign: 'left',
@@ -154,7 +153,7 @@ const styles = {
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 80,
   },
   minuteLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '24%',
     textAlign: 'left',
@@ -174,6 +173,7 @@ const styles = {
     color: Constants.Colors.WHITE,
     fontSize: 26,
   },
+  moreOptionsContainer: { alignItems: 'center' },
   moreOptionsWrapper: {
     borderRadius: Constants.BaseStyle.scale(10),
     paddingHorizontal: 0,
@@ -185,8 +185,9 @@ const styles = {
     width: Constants.BaseStyle.scale(50),
   },
   pickerItem: {
+    ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(20),
+    fontSize: 20,
   },
   pickersContainer: {
     alignItems: 'center',
@@ -213,7 +214,7 @@ const styles = {
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 60,
   },
   secondLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '26%',
     textAlign: 'left',

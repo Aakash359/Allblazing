@@ -41,7 +41,7 @@ export default function Dashboard() {
     <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Discover" component={Screen} />
-      <Tab.Screen name="Create" component={Screen} />
+      <Tab.Screen name="Create" component={Home} />
       <Tab.Screen name="Chat" component={Screen} />
       <Tab.Screen name="Me" component={Screen} />
     </Tab.Navigator>

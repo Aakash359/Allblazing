@@ -40,7 +40,7 @@ const styles = {
     marginTop: Constants.BaseStyle.scale(15),
   },
   eventTitle: {
-    ...Constants.Fonts.ExtraLargeBold,
+    ...Constants.Fonts.LargeBold,
     color: Constants.Colors.WHITE,
     marginTop: Constants.BaseStyle.scale(15),
   },
