@@ -9,6 +9,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  crossIcon: {
+    height: 16,
+    marginRight: 20,
+    width: 16,
+  },
   filterIcon: {
     height: 20,
     marginRight: 10,

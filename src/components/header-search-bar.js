@@ -10,14 +10,16 @@ function SearchBar() {
 
   return (
     <View style={HeaderStyles.container}>
-      <View style={HeaderStyles.input}>
+      <TouchableOpacity style={HeaderStyles.input} onPress={() => navigation.navigate('FeedScreen')}>
         <Text style={[HeaderStyles.searchInput]}>{'Santee, United States'}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={HeaderStyles.row}>
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('SearchScreen')}>
           <Image resizeMode='contain' style={HeaderStyles.searchIcon} source={Constants.Images.search} />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.notificationIcon} source={Constants.Images.notifications} /></TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Notification')}>
+          <Image resizeMode='contain' style={HeaderStyles.notificationIcon} source={Constants.Images.notifications} />
+        </TouchableOpacity>
       </View>
     </View>
   );

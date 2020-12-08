@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import { StyleSheet, Dimensions } from 'react-native';
 import Constants from '../constants';
 
@@ -7,99 +6,93 @@ const {
 } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  borderStyle: { borderRadius: 20 },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
   },
-  mainView: {
-    marginHorizontal: 20,
-    paddingBottom: 20,
+  endView: {
     backgroundColor: Constants.Colors.CARD_GREY,
-    borderRadius: 16,
-    marginTop: '20%',
-  },
-  sectionMainView: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  profileIcon: {
-    height: height * 0.3,
-    width: width * 0.9,
-    borderRadius: 20,
-    alignSelf: 'center',
-    // marginTop: 50,
-  },
-  levelStyle: {
-    // backgroundColor : '#9BE0F1',
-    backgroundColor: Constants.Colors.LIGHT_BLUE,
-    alignSelf: 'flex-end',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    margin: 16,
-  },
-  levelText: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.BLACK,
-    fontSize: Constants.BaseStyle.scale(12),
-    borderRadius: 10,
-    // margin: 20,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    borderTopWidth: 1,
+    marginHorizontal: 40,
+    paddingBottom: 10,
   },
   heading: {
+    alignSelf: 'center',
     ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(24),
-    alignSelf: 'center',
-    marginTop: 24,
     marginBottom: 8,
-  },
-  subHeading: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(16),
-    alignSelf: 'center',
-  },
-  sectionView: {
-    marginHorizontal: 20,
-    backgroundColor: Constants.Colors.PRIMARY,
-    marginTop: 20,
-    borderRadius: 10,
-    padding: 10,
-    // alignItems:'center',
-    // width: '50%'
-  },
-  section1: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(12),
-    alignSelf: 'center',
-  },
-  section2: {
-    ...Constants.Fonts.RegularBold,
-    color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(14),
-    alignSelf: 'center',
+    marginTop: 24,
   },
   icon: {
-    width: 40,
     height: 40,
+    width: 40,
   },
   iconView: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingHorizontal: 90,
     marginTop: 30,
+    paddingHorizontal: 90,
   },
-  endView: {
-    marginHorizontal: 40,
+  levelStyle: {
+    alignSelf: 'flex-end',
+    backgroundColor: Constants.Colors.LIGHT_BLUE,
+    borderRadius: 4,
+    margin: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  levelText: {
+    borderRadius: 10,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.BLACK,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  mainView: {
     backgroundColor: Constants.Colors.CARD_GREY,
-    borderTopWidth: 1,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    paddingBottom: 10,
+    borderRadius: 16,
+    marginHorizontal: 20,
+    marginTop: '20%',
+    paddingBottom: 20,
   },
-  borderStyle: { borderRadius: 20 },
-
+  profileIcon: {
+    alignSelf: 'center',
+    borderRadius: 20,
+    height: height * 0.3,
+    width: width * 0.9,
+  },
+  section1: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  section2: {
+    alignSelf: 'center',
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(14),
+  },
+  sectionMainView: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+  },
+  sectionView: {
+    backgroundColor: Constants.Colors.PRIMARY,
+    borderRadius: 10,
+    marginHorizontal: 20,
+    marginTop: 20,
+    padding: 10,
+  },
+  subHeading: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(16),
+  },
 });
 
 export default StyleSheet.create(styles);

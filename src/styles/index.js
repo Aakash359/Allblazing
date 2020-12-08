@@ -31,6 +31,9 @@ import EditProfileStyles from './editProfile-styles';
 import SearchScreen from './search-styles';
 import MapViewStyles from './map-view-styles';
 import StaticContentStyles from './static-content-styles';
+import NotificationStyles from './notification-styles';
+import FeedStyles from './feed-styles';
+import FeedDetailStyles from './feedDetail-styles';
 
 export {
   RunnersStyles,
@@ -39,6 +42,9 @@ export {
   SectionStyles,
   FollowersStyles,
   FollowingStyles,
+  NotificationStyles,
+  FeedStyles,
+  FeedDetailStyles,
   EditProfileStyles,
   SearchScreen,
   AuthStyle,

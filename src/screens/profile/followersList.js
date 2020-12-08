@@ -1,4 +1,4 @@
-/* eslint-disable sort-keys */
+
 import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
@@ -12,64 +12,50 @@ function FollowersList() {
 
   const list = [
     {
-      name: 'Cameron Williamson',
-      location: 'Santee, United States',
       image: '#F898A4',
-    },
-    {
-      name: 'Sterre Kalis',
       location: 'Santee, United States',
-      image: '#B7FFBD',
-    },
-    {
-      name: 'Heather Siegers',
-      location: 'Santee, United States',
-      image: '#FEFFBE',
-    },
-    {
-      name: 'Esther Corder',
-      location: 'Santee, United States',
-      image: '#FFBE61',
-    },
-    {
-      name: 'Sheldon Cotrell',
-      location: 'Santee, United States',
-      image: '#9BE0F1',
-    },
-    {
-      name: 'Mariska Kornet',
-      location: 'Santee, United States',
-      image: '#FFCFEA',
-    },
-    {
       name: 'Cameron Williamson',
-      location: 'Santee, United States',
-      image: '#F898A4',
+
     },
     {
-      name: 'Sterre Kalis',
-      location: 'Santee, United States',
       image: '#B7FFBD',
+      location: 'Santee, United States',
+      name: 'Sterre Kalis',
     },
     {
-      name: 'Heather Siegers',
-      location: 'Santee, United States',
       image: '#FEFFBE',
+      location: 'Santee, United States',
+      name: 'Heather Siegers',
     },
     {
-      name: 'Esther Corder',
-      location: 'Santee, United States',
       image: '#FFBE61',
+      location: 'Santee, United States',
+      name: 'Esther Corder',
     },
     {
-      name: 'Sheldon Cotrell',
-      location: 'Santee, United States',
       image: '#9BE0F1',
+      location: 'Santee, United States',
+      name: 'Sheldon Cotrell',
     },
     {
-      name: 'Mariska Kornet',
-      location: 'Santee, United States',
       image: '#FFCFEA',
+      location: 'Santee, United States',
+      name: 'Mariska Kornet',
+    },
+    {
+      image: '#F898A4',
+      location: 'Santee, United States',
+      name: 'Cameron Williamson',
+    },
+    {
+      image: '#B7FFBD',
+      location: 'Santee, United States',
+      name: 'Sterre Kalis',
+    },
+    {
+      image: '#FEFFBE',
+      location: 'Santee, United States',
+      name: 'Heather Siegers',
     },
   ];
   const renderItem = ({ item }) => (

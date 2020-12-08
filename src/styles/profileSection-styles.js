@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import { StyleSheet, Dimensions } from 'react-native';
 import Constants from '../constants';
 
@@ -7,33 +6,45 @@ const {
 } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Constants.Colors.PRIMARY,
-    // flex: 1,
-  },
-  inputStyle: {
-    width: '95%',
-    height: height * 0.08,
-    // marginVertical: 10,
-    borderRadius: 10,
-    margin: 10,
-  },
-  textView: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.WHITE,
-    borderRadius: 10,
-  },
-  goalText: {
-    fontSize: Constants.BaseStyle.scale(12),
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.WHITE,
-    borderRadius: 10,
-  },
+  container: { backgroundColor: Constants.Colors.PRIMARY },
+  containerLikes: { backgroundColor: Constants.Colors.PRIMARY },
   containerPB: {
     backgroundColor: Constants.Colors.PRIMARY,
-    margin: 20,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    margin: 20,
+  },
+  goalText: {
+    borderRadius: 10,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  headerQuestion: {
+    color: Constants.Colors.GREY_CIRCLE,
+    ...Constants.Fonts.Regular,
+    fontSize: Constants.BaseStyle.scale(14),
+    paddingBottom: 15,
+    width: '90%',
+  },
+  headerText: {
+    color: Constants.Colors.WHITE,
+    ...Constants.Fonts.Regular,
+    fontSize: Constants.BaseStyle.scale(16),
+  },
+  headerTextLike: {
+    color: Constants.Colors.WHITE,
+    ...Constants.Fonts.RegularBold,
+    fontSize: Constants.BaseStyle.scale(16),
+    width: '90%',
+  },
+  headerViewLike: {
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+    padding: 20,
   },
   headerViewPB: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
@@ -41,57 +52,38 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
   },
-  headerText: {
-    ...Constants.Fonts.Regular,
-    fontSize: Constants.BaseStyle.scale(16),
-    color: Constants.Colors.WHITE,
+  inputStyle: {
+    borderRadius: 10,
+    height: height * 0.08,
+    margin: 10,
+    width: '95%',
   },
   liveView: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
-    width: width * 0.9,
-    height: height * 0.25,
-    borderWidth: 1,
     borderColor: Constants.Colors.BORDER_GREY,
     borderRadius: 10,
-  },
-  videoIcon: {
-    width: 48,
-    height: 27,
-    marginTop: height * 0.125,
-    alignItems: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  containerLikes: {
-    backgroundColor: Constants.Colors.PRIMARY,
-    // margin: 20,
-  },
-  headerViewLike: {
-    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: 10,
-    padding: 20,
-    borderRadius: 10,
-  },
-  headerTextLike: {
-    ...Constants.Fonts.RegularBold,
-    fontSize: Constants.BaseStyle.scale(16),
-    color: Constants.Colors.WHITE,
-    width: '90%',
-  },
-  headerQuestuion: {
-    ...Constants.Fonts.Regular,
-    fontSize: Constants.BaseStyle.scale(14),
-    color: Constants.Colors.GREY_CIRCLE,
-    paddingBottom: 15,
-    width: '90%',
+    borderWidth: 1,
+    height: height * 0.25,
+    width: width * 0.9,
   },
   subHeaderTextLike: {
+    color: Constants.Colors.GREY_BORDER,
     ...Constants.Fonts.Regular,
     fontSize: Constants.BaseStyle.scale(16),
-    color: Constants.Colors.GREY_BORDER,
+  },
+  textView: {
+    borderRadius: 10,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+  },
+  videoIcon: {
+    alignContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    height: 27,
+    justifyContent: 'center',
+    marginTop: height * 0.125,
+    width: 48,
   },
 
 });

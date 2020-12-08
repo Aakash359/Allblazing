@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
@@ -10,25 +9,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
-  },
-  searchView: {
-    backgroundColor: Constants.Colors.SECONDARY_COLOR,
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    marginTop: 40,
-    margin: 10,
-    padding: 15,
-    borderRadius: 12,
-  },
-  searchIcon: {
-    width: 18,
-    height: 18,
-    marginRight: 10,
-  },
-  searchText: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.GREY_BORDER,
-    fontSize: Constants.BaseStyle.scale(16),
   },
   content: {
     alignItems: 'center',
@@ -42,44 +22,52 @@ const styles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
+  optionalSection1: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  optionalSectionView: {
+    borderRadius: 20,
+    marginRight: 10,
+    marginTop: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    // alignItems:'center',
+    // width: '50%'
+  },
   rightHeading: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.LIGHT_BLUE,
     marginRight: Constants.BaseStyle.scale(10),
     // marginRight: 10,
+  },
+  searchIcon: {
+    height: 18,
+    marginRight: 10,
+    width: 18,
+  },
+  searchText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.GREY_BORDER,
+    fontSize: Constants.BaseStyle.scale(16),
+  },
+  searchView: {
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
+    borderRadius: 12,
+    flexDirection: 'row',
+    margin: 10,
+    marginTop: 40,
+    padding: 15,
+  },
+  sectionMainView: {
+    borderColor: Constants.Colors.WHITE,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
 
   },
-  //   flatList: {
-  //     flexDirection: 'column',
-  //     justifyContent: 'space-around',
-  //     // backgroundColor: Constants.Colors.CARD_GREY,
-  //   },
-  //   sectionView: {
-  //     flexDirection: 'row',
-  //     marginTop: 20,
-  //     borderRadius: 12,
-  //     marginVertical: 10,
-  //     marginHorizontal: 10,
-  //     alignItems: 'center',
-  //     backgroundColor: Constants.Colors.SECONDARY_COLOR,
-  //     // width: '50%'
-  //   },
-  //   listView: {
-  //     width: 56,
-  //     height: 56,
-  //     borderRadius: 12,
-  //     marginRight: 10,
-  //   },
-  //   nameText: {
-  //     ...Constants.Fonts.RegularBold,
-  //     color: Constants.Colors.WHITE,
-  //     fontSize: Constants.BaseStyle.scale(16),
-  //   },
-  //   locationText: {
-  //     ...Constants.Fonts.Regular,
-  //     color: Constants.Colors.GREY_BORDER,
-  //     fontSize: Constants.BaseStyle.scale(12),
-  //   },
 
 });
 

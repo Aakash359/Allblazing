@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 import { StyleSheet, Dimensions } from 'react-native';
 import Constants from '../constants';
 
@@ -7,73 +6,113 @@ const {
 } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  borderRadius: { borderRadius: 20 },
+  bottomHeader: {
+    alignSelf: 'center',
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(20),
+    marginTop: 20,
+  },
+  bottomHeader2: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.GREY_BORDER,
+    fontSize: Constants.BaseStyle.scale(16),
+    marginTop: 10,
+  },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
-  },
-  mainView: {
-    marginHorizontal: 20,
-    backgroundColor: Constants.Colors.CARD_GREY,
-    borderRadius: 16,
-    marginTop: '20%',
-  },
-  levelStyle: {
-    // backgroundColor : '#9BE0F1',
-    backgroundColor: Constants.Colors.LIGHT_BLUE,
-    alignSelf: 'flex-end',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    margin: 16,
-  },
-  levelText: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.BLACK,
-    fontSize: Constants.BaseStyle.scale(12),
-    borderRadius: 10,
-    // margin: 20,
-  },
-  sectionMainView: {
-    flexDirection: 'row',
-    // alignSelf: 'center',
-    justifyContent: 'space-around',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    padding: 10,
-    // paddingHorizontal: 30,
-    // borderRightWidth: 1,
-    borderColor: Constants.Colors.WHITE,
-  },
-  profileIcon: {
-    height: height * 0.3,
-    width: width * 0.9,
-    borderRadius: 20,
-    alignSelf: 'center',
-    marginVertical: 30,
   },
   heading: {
     ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(16),
-    // marginTop: 24,
-    // marginBottom: 8,
   },
-  overlappingStyle: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'flex-end',
+  icon: {
+    height: 40,
+    width: 40,
+  },
+  iconView: {
+    alignSelf: 'center',
+    marginTop: '25%',
+  },
+  levelStyle: {
+    alignSelf: 'flex-end',
+    backgroundColor: Constants.Colors.LIGHT_BLUE,
+    borderRadius: 4,
     margin: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
-  subHeading: {
+  levelText: {
+    borderRadius: 10,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.BLACK,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  lockedIcon: {
+    alignSelf: 'center',
+    height: 80,
+    width: 80,
+  },
+  mainView: {
+    backgroundColor: Constants.Colors.CARD_GREY,
+    borderRadius: 16,
+    marginHorizontal: 20,
+    marginTop: '20%',
+  },
+
+  optionalSection1: {
+    alignSelf: 'center',
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(12),
-    // alignSelf: 'center',
+  },
+  optionalSectionView: {
+    borderRadius: 20,
+    marginTop: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+  },
+  overlappingStyle: {
+    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 16,
+  },
+  profileIcon: {
+    alignSelf: 'center',
+    borderRadius: 20,
+    height: height * 0.3,
+    marginVertical: 30,
+    width: width * 0.9,
+  },
+  section1: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.GREY_BORDER,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+  section2: {
+    alignSelf: 'center',
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(14),
+  },
+  sectionMainView: {
+    borderBottomWidth: 1,
+    borderColor: Constants.Colors.WHITE,
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   sectionView: {
-    borderRightWidth: 1,
     borderColor: Constants.Colors.WHITE,
+    borderRightWidth: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -81,60 +120,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  section1: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.GREY_BORDER,
-    fontSize: Constants.BaseStyle.scale(12),
-    alignSelf: 'center',
-  },
-  section2: {
-    ...Constants.Fonts.RegularBold,
-    color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(14),
-    alignSelf: 'center',
-  },
-  bottomHeader: {
-    ...Constants.Fonts.RegularBold,
-    color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(20),
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  bottomHeader2: {
-    ...Constants.Fonts.Regular,
-    color: Constants.Colors.GREY_BORDER,
-    fontSize: Constants.BaseStyle.scale(16),
-    alignSelf: 'center',
-    marginTop: 10,
-  },
-  iconView: {
-    alignSelf: 'center',
-    marginTop: '25%',
-  },
-  icon: {
-    width: 40,
-    height: 40,
-  },
-  lockedIcon: {
-    width: 80,
-    height: 80,
-    alignSelf: 'center',
-  },
-  optionalSectionView: {
-    marginTop: 20,
-    borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    // alignItems:'center',
-    // width: '50%'
-  },
-  optionalSection1: {
+  subHeading: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(12),
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
-  borderRadius: { borderRadius: 20 },
 
 });
 

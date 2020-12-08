@@ -17,7 +17,7 @@ const AppNavigator = ({ isAuthorized }) => (
 );
 
 AppNavigator.propTypes = { isAuthorized: bool };
-AppNavigator.defaultProps = { isAuthorized: false };
+AppNavigator.defaultProps = { isAuthorized: true };
 
 const mapStateToProps = (state) => ({ isAuthorized: state.user.isAuthorized });
 

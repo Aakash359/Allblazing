@@ -60,7 +60,7 @@ function EditProfile() {
           </View>
           <View style={EditProfileStyles.headerViewLike}>
             <View style={EditProfileStyles.flexDirection}>
-              <Text numberOfLines={2} style={EditProfileStyles.headerQuestuion}>{'What is your recent personal best time for 5km?'}</Text>
+              <Text numberOfLines={2} style={EditProfileStyles.headerQuestion}>{'What is your recent personal best time for 5km?'}</Text>
               <Text style={EditProfileStyles.headerTextLike}>{'23:45.08'}</Text>
             </View>
             <Image

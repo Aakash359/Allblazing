@@ -231,7 +231,9 @@ export const ConnectUserTypeStyles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   wrapper: {
-    flex: 1, marginBottom: Constants.BaseStyle.scale(50), marginTop: Constants.BaseStyle.scale(20),
+    flex: 1,
+    marginBottom: Constants.BaseStyle.scale(50),
+    marginTop: Constants.BaseStyle.scale(20),
   },
 });
 
@@ -346,8 +348,9 @@ export const LoginStyles = StyleSheet.create({
   },
   loginText: {
     color: Constants.Colors.WHITE,
+    height: 50,
     marginHorizontal: Constants.BaseStyle.scale(10),
-
+    width: 50,
     ...Constants.Fonts.Regular,
   },
   logo: {

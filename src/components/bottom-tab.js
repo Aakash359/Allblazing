@@ -12,22 +12,22 @@ export const BottomTab = () => {
     <View style={BottomTabsStyles.tabs}>
       <TouchableOpacity style={BottomTabsStyles.tab}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarHome} />
-        <Text style={BottomTabsStyles.tabText}>{i18('home')}</Text>
+        <Text style={BottomTabsStyles.tabText}>{i18('Home')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={BottomTabsStyles.tab}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarFeed} />
-        <Text style={BottomTabsStyles.tabText}>{i18('discover')}</Text>
+        <Text style={BottomTabsStyles.tabText}>{i18('Discover')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[BottomTabsStyles.tab, BottomTabsStyles.add]}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarAdd} />
       </TouchableOpacity>
       <TouchableOpacity style={BottomTabsStyles.tab}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarChat} />
-        <Text style={BottomTabsStyles.tabText}>{i18('chat')}</Text>
+        <Text style={BottomTabsStyles.tabText}>{i18('Chat')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={BottomTabsStyles.tab}>
         <Image style={BottomTabsStyles.image} source={Constants.Images.tabBarProfile} />
-        <Text style={BottomTabsStyles.tabText}>{i18('me')}</Text>
+        <Text style={BottomTabsStyles.tabText}>{i18('MyProfile')}</Text>
       </TouchableOpacity>
     </View>
   );

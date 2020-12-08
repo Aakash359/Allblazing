@@ -118,7 +118,7 @@ class Login extends Component {
               <TouchableOpacity
                 style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
                 activeOpacity={0.7}
-                onPress={() => navigate('Dashboard')}
+                onPress={() => navigate('Home')}
               >
                 <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Login'}</Text>
               </TouchableOpacity>

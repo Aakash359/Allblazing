@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 // import Geolocation from '@react-native-community/geolocation';
@@ -18,7 +18,7 @@ const Location = () => {
 
   return (
     <View style={CommonStyles.container}>
-      <View style={ConnectUserTypeStyles.wrapper}>
+      <ScrollView style={ConnectUserTypeStyles.wrapper}>
         <StepBar count={5} selected={[0, 1, 2, 3, 4]} />
 
         <View>
@@ -39,7 +39,7 @@ const Location = () => {
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Share My Location'}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

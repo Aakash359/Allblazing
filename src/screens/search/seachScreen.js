@@ -10,6 +10,8 @@ import Constants from '../../constants';
 function SearchSeceen() {
   const navigation = useNavigation();
   const [search, setSearch] = useState(false);
+  const [filter, setFilter] = useState('All');
+  const filterList = ['All', 'Race', 'Train', 'Group', 'Runner'];
 
   const renderItem = () => <SingleEvent />;
 
@@ -22,6 +24,17 @@ function SearchSeceen() {
         <Text style={SearchScreen.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
+  );
+
+  const filterData = ({ item }) => (
+    // <View style={}>
+    <TouchableOpacity
+      style={[SearchScreen.optionalSectionView, { backgroundColor: item === filter ? Constants.Colors.GREY_CIRCLE : Constants.Colors.SECONDARY_COLOR }]}
+      onPress={() => { setFilter(item); }}
+    >
+      <Text style={SearchScreen.optionalSection1}>{item}</Text>
+    </TouchableOpacity>
+    // </View>
   );
 
   return (
@@ -46,25 +59,37 @@ function SearchSeceen() {
               }}
             />
           </View>
-          <View>
-            {renderHeader({
-              navigation, route: 'Runners', title: 'Runners',
-            })}
-            <FlatList
-              data={[1, 2, 3, 4]}
-              renderItem={() => <InviteFriend />}
-              keyExtractor={(item, index) => index}
-            />
-            {renderHeader({
-              navigation, route: 'Events', title: 'Events',
-            })}
-            <FlatList
-              scrollEnabled={false}
-              data={[1]}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index}
-            />
-          </View>
+          {search.length >= 2 ? (
+            <View>
+              <View>
+                <FlatList
+                  data={filterList}
+                  contentContainerStyle={SearchScreen.sectionMainView}
+                  renderItem={filterData}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={(item, index) => index}
+                />
+              </View>
+              {renderHeader({
+                navigation, route: 'Runners', title: 'Runners',
+              })}
+              <FlatList
+                data={[1, 2, 3, 4]}
+                renderItem={() => <InviteFriend />}
+                keyExtractor={(item, index) => index}
+              />
+              {renderHeader({
+                navigation, route: 'Events', title: 'Events',
+              })}
+              <FlatList
+                scrollEnabled={false}
+                data={[1]}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index}
+              />
+            </View>
+          ) : null }
         </ScrollView>
       </SafeAreaView>
     </>

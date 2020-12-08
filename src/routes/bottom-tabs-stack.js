@@ -6,22 +6,30 @@ import { BottomTab } from '../components';
 import Constants from '../constants';
 import Home from '../screens/home';
 import MyProfile from '../screens/profile/myProfile';
-import { BottomTabsStyles, HeaderStyles } from '../styles';
+import { BottomTabsStyles, HeaderStyles, CommonStyles } from '../styles';
 import Username from '../screens/onboarding/user-name';
 import Userage from '../screens/onboarding/user-age';
 import ConnectUserType from '../screens/onboarding/connect-user-type';
+import UserPersonalBest from '../screens/onboarding/user-personal-best';
 // import Recent5KTime from '../../screens/onboarding/recent-5k-time';
 import Distance from '../screens/onboarding/distance';
 import Location from '../screens/onboarding/location';
 import InviteFriends from '../screens/home/invite-friends';
 import Runners from '../screens/home/runners';
-// import Dashboard from './bottom-tabs-stack';
+import EditLocation from '../screens/onboarding/edit-location';
 import Events from '../screens/events';
 import UserProfile from '../screens/userProfile/userProfile';
 import FollowersList from '../screens/profile/followersList';
 import FollowingList from '../screens/profile/followingList';
 import EditProfile from '../screens/profile/EditProfile';
 import SearchScreen from '../screens/search/seachScreen';
+import Notification from '../screens/home/notifications';
+// import Dashboard from './bottom-tabs-stack';
+import Filter from '../screens/filter';
+import StaticContent from '../screens/static-content';
+import SingleEventDetail from '../screens/events/detail';
+import FeedScreen from '../screens/discover/feed';
+import FeedDetailScreen from '../screens/discover/feedDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +65,16 @@ const homeNavigator = () => (
       component={Recent5KTime}
     /> */}
     <HomeStack.Screen
+      name="UserPersonalBest"
+      component={UserPersonalBest}
+      options={({ route }) => ({
+        headerBackTitleVisible: false,
+        headerShown: !!route?.params?.title,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: route?.params?.title || '',
+      })}
+    />
+    <HomeStack.Screen
       name="Distance"
       options={options}
       component={Distance}
@@ -71,31 +89,84 @@ const homeNavigator = () => (
       options={options}
       component={Home}
     />
+    {/* <HomeStack.Screen
+      name="Dashboard"
+      options={options}
+      component={Dashboard}
+    /> */}
+    <HomeStack.Screen
+      name="EditLocation"
+      component={EditLocation}
+      options={() => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Edit Location',
+      })}
+    />
     <HomeStack.Screen
       name="Events"
       component={Events}
-      options={{
+      options={({
+        navigation, route,
+      }) => ({
         headerBackTitleVisible: false,
         headerRight: () => (
           <View style={HeaderStyles.row}>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} /></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+              <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.setParams({ isMapView: !route?.params?.isMapView })}>
+              <Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} />
+            </TouchableOpacity>
           </View>
         ),
         headerTintColor: Constants.Colors.WHITE,
-      }}
+      })}
     />
     <HomeStack.Screen
       name="InviteFriends"
       component={InviteFriends}
-      options={{
+      options={({ route }) => ({
         headerBackTitleVisible: false,
-        headerRight: () => (
+        headerRight: () => (route?.params?.title ? null : (
           <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
+        )),
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: route?.params?.title || 'Strava Users',
+      })}
+    />
+    <HomeStack.Screen
+      name="Filter"
+      component={Filter}
+      options={({ navigation }) => ({
+        headerBackTitleVisible: false,
+        headerLeft: null,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
+          </TouchableOpacity>
         ),
         headerTintColor: Constants.Colors.WHITE,
-        headerTitle: 'Strava Users',
-      }}
+        headerTitle: 'Filters',
+      })}
+    />
+    <HomeStack.Screen
+      name="SingleEventDetail"
+      component={SingleEventDetail}
+      options={() => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Event Details',
+      })}
+    />
+    <HomeStack.Screen
+      name="StaticContent"
+      component={StaticContent}
+      options={({ route }) => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: route?.params?.title || '',
+      })}
     />
     <HomeStack.Screen
       name="Runners"
@@ -108,6 +179,58 @@ const homeNavigator = () => (
             <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} /></TouchableOpacity>
           </View>
         ),
+      }}
+    />
+    <HomeStack.Screen
+      name="SearchScreen"
+      component={SearchScreen}
+      options={{
+        headerBackTitleVisible: false,
+        headerRight: () => (
+          <View style={HeaderStyles.row}>
+            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+          </View>
+        ),
+        headerTitle: 'Search',
+      }}
+    />
+    <HomeStack.Screen
+      name="Notification"
+      component={Notification}
+      options={{
+        headerBackTitleVisible: false,
+        headerRight: () => (
+          <View style={HeaderStyles.row}>
+            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.crossIcon} source={Constants.Images.close} /></TouchableOpacity>
+          </View>
+        ),
+        headerTitle: 'Notifications',
+      }}
+    />
+    <HomeStack.Screen
+      name="FeedScreen"
+      component={FeedScreen}
+      options={{
+        headerBackTitleVisible: false,
+        headerRight: () => (
+          <View style={HeaderStyles.row}>
+            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+          </View>
+        ),
+        headerTitle: 'Feed',
+      }}
+    />
+    <HomeStack.Screen
+      name="FeedDetailScreen"
+      component={FeedDetailScreen}
+      options={{
+        headerBackTitleVisible: false,
+        headerRight: () => (
+          <View style={HeaderStyles.row}>
+            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+          </View>
+        ),
+        headerTitle: 'FeedDetail',
       }}
     />
   </HomeStack.Navigator>
