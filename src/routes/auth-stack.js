@@ -9,44 +9,44 @@ import ForgotPassword from '../screens/onboarding/forgot-password';
 import OTP from '../screens/onboarding/otp-verification';
 import Register from '../screens/onboarding/register';
 import StaticContent from '../screens/static-content';
-import Username from '../screens/onboarding/user-name';
-import Userage from '../screens/onboarding/user-age';
-import UserGender from '../screens/onboarding/user-gender';
-import ConnectUserType from '../screens/onboarding/connect-user-type';
-import UserPersonalBest from '../screens/onboarding/user-personal-best';
-import UserMotto from '../screens/onboarding/user-motto';
-import Distance from '../screens/onboarding/distance';
+import Username from '../screens/user-profile/user-name';
+import Userage from '../screens/user-profile/user-age';
+import UserGender from '../screens/user-profile/user-gender';
+import ConnectUserType from '../screens/user-profile/connect-user-type';
+import UserPersonalBest from '../screens/user-profile/user-personal-best';
+import UserMotto from '../screens/user-profile/user-motto';
+import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
 import Constants from '../constants';
 import { CommonStyles } from '../styles';
 
-const Stack = createStackNavigator();
+const AuthStack = createStackNavigator();
 const options = { headerShown: false };
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator headerMode="screen" initialRouteName="SelectLanguage">
-      <Stack.Screen
+    <AuthStack.Navigator headerMode="screen" initialRouteName="SelectLanguage">
+      <AuthStack.Screen
         name="SelectLanguage"
         options={options}
         component={SelectLanguage}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Welcome"
         options={options}
         component={Welcome}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Intro"
         options={options}
         component={Intro}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Login"
         options={options}
         component={Login}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="ForgotPassword"
         options={({ navigation }) => ({
           headerBackTitleVisible: false,
@@ -61,7 +61,7 @@ export default function MainNavigator() {
         })}
         component={ForgotPassword}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="OTP"
         component={OTP}
         options={({ navigation }) => ({
@@ -76,7 +76,7 @@ export default function MainNavigator() {
           headerTitle: null,
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Register"
         component={Register}
         options={({ navigation }) => ({
@@ -91,7 +91,7 @@ export default function MainNavigator() {
           headerTitle: null,
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="StaticContent"
         component={StaticContent}
         options={({ route }) => ({
@@ -100,7 +100,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Username"
         component={Username}
         options={({ route }) => ({
@@ -110,7 +110,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Userage"
         component={Userage}
         options={({ route }) => ({
@@ -120,7 +120,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="UserGender"
         component={UserGender}
         options={() => ({
@@ -129,7 +129,7 @@ export default function MainNavigator() {
           headerTitle: 'Edit Gender',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="UserMotto"
         component={UserMotto}
         options={() => ({
@@ -138,12 +138,12 @@ export default function MainNavigator() {
           headerTitle: 'Edit Motto',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="ConnectUserType"
         options={options}
         component={ConnectUserType}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="UserPersonalBest"
         component={UserPersonalBest}
         options={({ route }) => ({
@@ -153,16 +153,16 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Distance"
         options={options}
         component={Distance}
       />
-      <Stack.Screen
+      <AuthStack.Screen
         name="Location"
         options={options}
         component={Location}
       />
-    </Stack.Navigator>
+    </AuthStack.Navigator>
   );
 }

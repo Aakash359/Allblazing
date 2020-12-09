@@ -3,20 +3,7 @@ import { findNodeHandle, Platform, TextInput, View, Text, Image, TouchableOpacit
 import { bool, func, shape } from 'prop-types';
 import Constants from '../constants';
 import { CommonStyles, BlockUserStyles, AuthStyle, ForgotPassStyles } from '../styles';
-
-const reasons = [{
-  label: 'Inappropriate messages',
-  value: 'Inappropriate messages',
-}, {
-  label: 'Inappropriate photos/videos',
-  value: 'Inappropriate photos/videos',
-}, {
-  label: 'Feels like spam',
-  value: 'Feels like spam',
-}, {
-  label: 'Other',
-  value: 'Other',
-}];
+import { blockReportReasons } from '../data';
 
 class BlockUser extends React.Component {
   descriptionRef = React.createRef();
@@ -79,7 +66,7 @@ class BlockUser extends React.Component {
               {params?.isBlockPage ? 'Why are you blocking them?' : 'Is this person bothering you? Tell us what they did'}
             </Text>
           </View>
-          {reasons.map((t) => (
+          {blockReportReasons.map((t) => (
             <TouchableOpacity
               key={t.value}
               style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}

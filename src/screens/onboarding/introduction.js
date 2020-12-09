@@ -43,7 +43,7 @@ class Introduction extends Component {
     return (
       <View style={CommonStyles.container}>
         <View style={IntroductionStyles.wrapper}>
-          { itemSelected === 0 && <IntroCard selected={[0]} image={Constants.Images.intro1} title="Connect with other runners in your area" />}
+          {itemSelected === 0 && <IntroCard selected={[0]} image={Constants.Images.intro1} title="Connect with other runners in your area" />}
           {itemSelected === 1 && <IntroCard selected={[0, 1]} image={Constants.Images.intro2} title="Train or race together" />}
           {itemSelected === 2 && <IntroCard selected={[0, 1, 2]} image={Constants.Images.intro3} title="Capture and share the  experience" />}
           {itemSelected === 2 ? (

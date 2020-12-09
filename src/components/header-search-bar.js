@@ -23,14 +23,6 @@ function SearchBar() {
       </View>
     </View>
   );
-
-  // SearchBar.propTypes = {
-  //   keyword: string.isRequired,
-  //   onChangeText: func.isRequired,
-  //   style: ViewPropTypes.style,
-  // };
-
-  // SearchBar.defaultProps = { style: {} };
 }
 
 export default SearchBar;

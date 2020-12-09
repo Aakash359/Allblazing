@@ -3,30 +3,12 @@ import { TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Constants from '../constants';
 import { CommonStyles, FilterStyles } from '../styles';
-
-const levels = [{
-  color: Constants.Colors.LIGHT_BLUE,
-  value: 1,
-}, {
-  color: Constants.Colors.LIGHT_RED,
-  value: 2,
-}, {
-  color: Constants.Colors.LIGHT_YELLOW,
-  value: 3,
-}, {
-  color: Constants.Colors.LIGHT_PINK,
-  value: 4,
-}, {
-  color: Constants.Colors.DARK_YELLOW,
-  value: 5,
-}, {
-  color: Constants.Colors.LIGHT_GREEN,
-  value: 6,
-}];
+import { distanceList, levels } from '../data';
 
 const Filter = () => {
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [connect, setConnectType] = React.useState('train');
+  const [distance, setDistance] = React.useState(null);
   const [gender, setGender] = React.useState('male');
 
   return (
@@ -60,16 +42,26 @@ const Filter = () => {
             <Text style={FilterStyles.subHeader}>Race</Text>
           </TouchableOpacity>
         </View>
-        <Text style={FilterStyles.header}>Level*</Text>
-        <View style={[FilterStyles.row, FilterStyles.connectRow, FilterStyles.levelsContainer]}>
-          {levels.map((level) => (
-            <TouchableOpacity key={level.value} activeOpacity={0.7} style={[FilterStyles.level, { backgroundColor: level.color }]}>
-              <Text style={FilterStyles.levelColor}>
-                {`Level ${level.value}`}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <Text style={FilterStyles.header}>{connect === 'train' ? 'Level*' : 'Distance to race'}</Text>
+        {connect === 'train' ? (
+          <View style={[FilterStyles.row, FilterStyles.connectRow, FilterStyles.levelsContainer]}>
+            {levels.map((level) => (
+              <TouchableOpacity key={level.value} activeOpacity={0.7} style={[FilterStyles.level, { backgroundColor: level.color }]}>
+                <Text style={FilterStyles.levelColor}>
+                  {`Level ${level.value}`}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <View style={[FilterStyles.row, FilterStyles.connectRow, FilterStyles.levelsContainer]}>
+            {distanceList.map((dis) => (
+              <TouchableOpacity key={dis.value} activeOpacity={0.7} style={[FilterStyles.race, dis.value === distance && FilterStyles.raceActive]} onPress={() => setDistance(dis.value)}>
+                <Text style={[FilterStyles.raceText, dis.value === distance && FilterStyles.raceActiveText]}>{`${dis.label}`}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
         <Text style={FilterStyles.header}>Gender</Text>
         <View style={[FilterStyles.row, FilterStyles.connectRow]}>
           <TouchableOpacity onPress={() => setGender('male')} activeOpacity={0.7} style={FilterStyles.radio}>

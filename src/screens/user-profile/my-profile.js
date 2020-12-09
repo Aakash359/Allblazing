@@ -4,9 +4,9 @@ import { View, Image, Text, TouchableOpacity, FlatList, ImageBackground } from '
 import { useNavigation } from '@react-navigation/native';
 import { MyProfileStyles } from '../../styles';
 import Constants from '../../constants';
-import PBScreen from './pbScreen';
-import LikeScreen from './likeScreen';
-import GoalScreen from './goalsScreen';
+import PBScreen from './pb-screen';
+import LikeScreen from './like-screen';
+import GoalScreen from './goals-screen';
 
 function MyProfile() {
   const navigation = useNavigation();
