@@ -21,7 +21,7 @@ function EditProfile() {
           <View style={EditProfileStyles.overlappingStyle}>
             <TouchableOpacity>
               <Image
-                source={Constants.Images.edit}
+                source={Constants.Images.closeRound}
                 resizeMode='contain'
                 style={EditProfileStyles.icon}
               />
