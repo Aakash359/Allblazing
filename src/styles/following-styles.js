@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   flatList: {
     flexDirection: 'column',
     justifyContent: 'space-around',
-    // backgroundColor: Constants.Colors.CARD_GREY,
   },
   listView: {
     borderRadius: 12,

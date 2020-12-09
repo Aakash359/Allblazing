@@ -60,7 +60,7 @@ function MyProfile() {
                     onPress={() => { navigation.navigate('EditProfile'); }}
                   >
                     <Image
-                      source={Constants.Images.closeRound}
+                      source={Constants.Images.edit}
                       resizeMode='contain'
                       style={MyProfileStyles.icon}
                     />

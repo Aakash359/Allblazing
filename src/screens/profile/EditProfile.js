@@ -32,7 +32,7 @@ function EditProfile() {
           <View style={EditProfileStyles.headerViewLike}>
             <Text style={EditProfileStyles.headerTextLike}>{'Kelly Norman'}</Text>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>
@@ -40,21 +40,21 @@ function EditProfile() {
           <View style={EditProfileStyles.headerViewLike}>
             <Text style={EditProfileStyles.headerTextLike}>{'25 Years'}</Text>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>
           <View style={EditProfileStyles.headerViewLike}>
             <Text style={EditProfileStyles.headerTextLike}>{'Gender'}</Text>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>
           <View style={EditProfileStyles.headerViewLike}>
             <Text numberOfLines={2} style={[EditProfileStyles.headerTextLike, { ...Constants.Fonts.Regular }]}>{'121 Dazzy Cir, Santee, SC 29142, United State'}</Text>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>
@@ -64,14 +64,14 @@ function EditProfile() {
               <Text style={EditProfileStyles.headerTextLike}>{'23:45.08'}</Text>
             </View>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>
           <View style={EditProfileStyles.headerViewLike}>
             <Text style={[EditProfileStyles.headerTextLike, { ...Constants.Fonts.Regular }]}>{'Problems are not stop signs, they are guidelines'}</Text>
             <Image
-              source={Constants.Images.closeRound}
+              source={Constants.Images.edit}
               style={EditProfileStyles.icon}
             />
           </View>

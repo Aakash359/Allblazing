@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native';
-import { FollowersStyles } from '../../styles';
+import { FollowingStyles } from '../../styles';
 import Constants from '../../constants';
 
 function FollowingList() {
-  // const navigation = useNavigation();
   const [search, setSearch] = useState(false);
 
   const list = [
@@ -56,44 +55,39 @@ function FollowingList() {
     },
   ];
   const renderItem = ({ item }) => (
-    // <View style={}>
     <TouchableOpacity
-      style={[FollowersStyles.sectionView]}
-      // onPress={() =>{}}
+      style={FollowingStyles.sectionView}
     >
-      <View style={[FollowersStyles.listView, { backgroundColor: item.image }]} />
+      <View style={[FollowingStyles.listView, { backgroundColor: item.image }]} />
       <View>
-        <Text style={FollowersStyles.nameText}>{item.name}</Text>
-        <Text style={FollowersStyles.locationText}>{item.location}</Text>
+        <Text style={FollowingStyles.nameText}>{item.name}</Text>
+        <Text style={FollowingStyles.locationText}>{item.location}</Text>
       </View>
     </TouchableOpacity>
-    // </View>
   );
 
   return (
     <>
-      <ScrollView style={FollowersStyles.container}>
-        <View style={FollowersStyles.searchView}>
+      <ScrollView style={FollowingStyles.container}>
+        <View style={FollowingStyles.searchView}>
           <Image
             source={Constants.Images.search}
-            style={FollowersStyles.searchIcon}
+            style={FollowingStyles.searchIcon}
           />
           <TextInput
-            placeholder="Search Followers (48)"
+            placeholder="Search Following (123)"
             placeholderTextColor='#ccc'
             value={search}
             autoCapitalize="none"
             autoCorrect={false}
-            // underlineColorAndroid='#ccc'
             onChangeText={(text) => {
               setSearch(text);
             }}
           />
         </View>
         <FlatList
-          // style={MyProfileStyles.sectionMainView}
           scrollEnabled={false}
-          contentContainerStyle={FollowersStyles.flatList}
+          contentContainerStyle={FollowingStyles.flatList}
           data={list}
           renderItem={renderItem}
         />
