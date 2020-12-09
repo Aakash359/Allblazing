@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import Username from '../screens/onboarding/user-name';
 import Userage from '../screens/onboarding/user-age';
 import UserGender from '../screens/onboarding/user-gender';
@@ -18,11 +18,15 @@ import InviteFriends from '../screens/home/invite-friends';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
+import SearchScreen from '../screens/search/seachScreen';
 import StaticContent from '../screens/static-content';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
+import Notification from '../screens/home/notifications';
+import FeedScreen from '../screens/discover/feed';
 import { CommonStyles, HeaderStyles } from '../styles';
+import FeedDetailScreen from '../screens/discover/feedDetail';
 
 const Stack = createStackNavigator();
 const options = { headerShown: false };
@@ -171,6 +175,58 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
         })}
+      />
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            </View>
+          ),
+          headerTitle: 'Search',
+        }}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.crossIcon} source={Constants.Images.close} /></TouchableOpacity>
+            </View>
+          ),
+          headerTitle: 'Notifications',
+        }}
+      />
+      <Stack.Screen
+        name="FeedScreen"
+        component={FeedScreen}
+        options={{
+          headerBackTitleVisible: true,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            </View>
+          ),
+          headerTitle: 'Feed',
+        }}
+      />
+      <Stack.Screen
+        name="FeedDetailScreen"
+        component={FeedDetailScreen}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            </View>
+          ),
+          headerTitle: 'Feed',
+        }}
       />
       <Stack.Screen
         name="ChangePassword"

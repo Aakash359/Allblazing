@@ -4,12 +4,19 @@ import Constants from '../constants';
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  crossIcon: {
+    height: 16,
+    marginRight: 20,
+    width: 16,
+  },
   filterIcon: {
     height: 20,
+    marginRight: 10,
     width: 20,
   },
   headerRightTextStyle: {

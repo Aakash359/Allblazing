@@ -33,9 +33,8 @@ export default function App() {
 }
 const dashBoardstyles = StyleSheet.create({
   dashboardContainer: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    // eslint-disable-next-line sort-keys
-    alignItems: 'center',
   },
 });
