@@ -17,6 +17,7 @@ const Images = {
   close: require('../assets/close2x.png'),
   closeRound: require('../assets/closeRound.png'),
   coaching: require('../assets/coaching.png'),
+  edit: require('../assets/edit.png'),
   email: require('../assets/mail2x.png'),
   eyeoff: require('../assets/eyeoff2x.png'),
   eyeon: require('../assets/eye2x.png'),
