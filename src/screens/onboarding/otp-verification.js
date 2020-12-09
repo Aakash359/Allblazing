@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, KeyboardAwareScrollView } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { func, shape } from 'prop-types';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as actions from '../../actions/user-action-types';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, OTPStyles } from '../../styles';

@@ -1,6 +1,5 @@
 import React from 'react';
-import { findNodeHandle, Platform, TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { findNodeHandle, Platform, TextInput, View, Text, Image, TouchableOpacity, KeyboardAwareScrollView } from 'react-native';
 import { bool, func, shape } from 'prop-types';
 import Constants from '../constants';
 import { CommonStyles, BlockUserStyles, AuthStyle, ForgotPassStyles } from '../styles';
