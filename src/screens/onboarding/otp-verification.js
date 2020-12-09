@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, KeyboardAwareScrollView } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { func, shape } from 'prop-types';
-import { ScrollView } from 'react-native-gesture-handler';
 import * as actions from '../../actions/user-action-types';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, OTPStyles } from '../../styles';
@@ -15,12 +14,9 @@ class OTP extends Component {
   }
 
   onVerify = () => {
-    const {
-      loginSuccess, navigation: { navigate },
-    } = this.props;
+    const { navigation: { navigate } } = this.props;
 
-    loginSuccess();
-    setTimeout(() => navigate('Username'), 500);
+    navigate('Username');
   }
 
   render() {
@@ -28,7 +24,7 @@ class OTP extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <ScrollView
+        <KeyboardAwareScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
@@ -42,9 +38,9 @@ class OTP extends Component {
           <OTPInputView
             style={OTPStyles.inputView}
             pinCount={4}
-            keyboardType="phone-pad"
+            keyboardType='number-pad'
             onCodeChanged={(code) => { this.setState({ otp: code }); }}
-            autoFocusOnLoad
+            autoFocusOnLoad={false}
             codeInputFieldStyle={OTPStyles.input}
             code={otp}
             codeInputHighlightStyle={OTPStyles.inputHighlight}
@@ -60,14 +56,13 @@ class OTP extends Component {
               <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
 }
 
 OTP.propTypes = {
-  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

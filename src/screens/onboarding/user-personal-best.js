@@ -60,7 +60,7 @@ class UserPersonalBest extends Component {
           <View style={ConnectUserTypeStyles.wrapper}>
             {!params?.isEditMode && <StepBar count={5} selected={[0, 1, 2, 3]} />}
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              {!params?.isEditMode && <Text style={ConnectUserTypeStyles.input}>{'What is your recent 5km time?'}</Text>}
+              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{'What is your recent 5km time?'}</Text>}
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
@@ -69,7 +69,7 @@ class UserPersonalBest extends Component {
                   onPress={() => this.onTypeChange(t.value)}
                 >
                   <Text style={Repeat5KStyles.buttonText}>{'     '}</Text>
-                  <Text style={Repeat5KStyles.buttonText}>{t.label}</Text>
+                  <Text style={[Repeat5KStyles.buttonText, time === t.label && Repeat5KStyles.active]}>{t.label}</Text>
                   {time === t.value ? <Ionicons name="checkmark-sharp" size={25} color={Constants.Colors.BLACK} style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
                 </TouchableOpacity>
               ))}
@@ -80,7 +80,7 @@ class UserPersonalBest extends Component {
               </TouchableOpacity>
             ) : (
               <View style={Repeat5KStyles.buttonsWrapper}>
-                <View style={ConnectUserTypeStyles.buttons}>
+                <View style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
                   <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
                     <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
                   </TouchableOpacity>

@@ -3,13 +3,13 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import times from 'lodash/times';
 import { bool, func, string } from 'prop-types';
 import { WheelPicker } from 'react-native-wheel-picker-android';
-import AnimatedModal from './animate-modal';
-import { AuthStyle, PopupStyles, OTPStyles } from '../styles';
-import Constants from '../constants';
+import AnimatedModal from '../animate-modal';
+import { AuthStyle, PopupStyles, OTPStyles } from '../../styles';
+import Constants from '../../constants';
 
-const hours = times(24, (i) => (i > 9 ? `${i}` : `0${i}`));
-const minutes = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
-const seconds = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
+const hours = times(23, (i) => ((i + 1) > 9 ? `${i + 1}` : `0${i + 1}`));
+const minutes = times(59, (i) => (i + 1 > 9 ? `${i + 1}` : `0${i + 1}`));
+const seconds = times(59, (i) => (i + 1 > 9 ? `${i + 1}` : `0${i + 1}`));
 
 const TimePicker = ({
   hour,

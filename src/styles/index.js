@@ -10,6 +10,7 @@ import { AuthStyle,
   RegisterStyle,
   Repeat5KStyles,
   LanguageStyles,
+  DistanceStyles,
   UsernameStyle,
   WelcomeStyles } from './auth-styles';
 import BottomTabsStyles from './bottom-tab.styles';
@@ -37,6 +38,7 @@ import NotificationStyles from './notification-styles';
 import FeedStyles from './feed-styles';
 import FeedDetailStyles from './feedDetail-styles';
 import SettingStyles from './setting-styles';
+import BlockUserStyles from './block-user-styles';
 
 export {
   RunnersStyles,
@@ -51,10 +53,12 @@ export {
   EditProfileStyles,
   SearchScreen,
   AuthStyle,
+  BlockUserStyles,
   BottomTabsStyles,
   CommonStyles,
   ConnectUserTypeStyles,
   ContactUSStyles,
+  DistanceStyles,
   EventDetailStyles,
   EventMapStyles,
   FilterStyles,

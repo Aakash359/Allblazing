@@ -1,57 +1,55 @@
-import { normalize } from '../utilities/responsive-fonts';
-
 const Fonts = {
   ExtraLarge: {
     fontFamily: 'SFProRounded-Regular',
-    fontSize: normalize(18),
+    fontSize: 28,
   },
   ExtraLargeBold: {
     fontFamily: 'SFProRounded-Bold',
-    fontSize: normalize(18),
+    fontSize: 28,
     fontWeight: 'bold',
   },
   ExtraLargeMedium: {
     fontFamily: 'SFProRounded-Medium',
-    fontSize: normalize(16),
+    fontSize: 28,
   },
   Large: {
     fontFamily: 'SFProRounded-Regular',
-    fontSize: normalize(14),
+    fontSize: 18,
   },
   LargeBold: {
     fontFamily: 'SFProRounded-Bold',
-    fontSize: normalize(14),
+    fontSize: 18,
     fontWeight: 'bold',
   },
   LargeMedium: {
     fontFamily: 'SFProRounded-Medium',
-    fontSize: normalize(14),
+    fontSize: 18,
   },
   Regular: {
     fontFamily: 'SFProRounded-Regular',
-    fontSize: normalize(12),
+    fontSize: 16,
   },
   RegularBold: {
     fontFamily: 'SFProRounded-Bold',
-    fontSize: normalize(12),
+    fontSize: 16,
     fontWeight: 'bold',
   },
   RegularMedium: {
     fontFamily: 'SFProRounded-Medium',
-    fontSize: normalize(12),
+    fontSize: 16,
   },
   Small: {
     fontFamily: 'SFProRounded-Regular',
-    fontSize: normalize(10),
+    fontSize: 14,
   },
   SmallBold: {
     fontFamily: 'SFProRounded-Bold',
-    fontSize: normalize(10),
+    fontSize: 14,
     fontWeight: 'bold',
   },
   SmallMedium: {
     fontFamily: 'SFProRounded-Medium',
-    fontSize: normalize(10),
+    fontSize: 14,
   },
 };
 

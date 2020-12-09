@@ -7,13 +7,7 @@ import Constants from '../constants';
 import Home from '../screens/home';
 import MyProfile from '../screens/profile/myProfile';
 import { BottomTabsStyles, HeaderStyles, CommonStyles } from '../styles';
-import Username from '../screens/onboarding/user-name';
-import Userage from '../screens/onboarding/user-age';
-import ConnectUserType from '../screens/onboarding/connect-user-type';
-import UserPersonalBest from '../screens/onboarding/user-personal-best';
 // import Recent5KTime from '../../screens/onboarding/recent-5k-time';
-import Distance from '../screens/onboarding/distance';
-import Location from '../screens/onboarding/location';
 import InviteFriends from '../screens/home/invite-friends';
 import Runners from '../screens/home/runners';
 import EditLocation from '../screens/onboarding/edit-location';
@@ -24,7 +18,6 @@ import FollowingList from '../screens/profile/followingList';
 import EditProfile from '../screens/profile/EditProfile';
 import SearchScreen from '../screens/search/seachScreen';
 import Notification from '../screens/home/notifications';
-// import Dashboard from './bottom-tabs-stack';
 import Filter from '../screens/filter';
 import StaticContent from '../screens/static-content';
 import SingleEventDetail from '../screens/events/detail';
@@ -39,51 +32,18 @@ const AddStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
+function Discover() {
+  return (
+    <View>
+      <Text style={BottomTabsStyles.label}>{'Discover'}</Text>
+    </View>
+  );
+}
+
 const options = { headerShown: false };
 
 const homeNavigator = () => (
-
   <HomeStack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
-    <HomeStack.Screen
-      name="Username"
-      options={options}
-      component={Username}
-    />
-    <HomeStack.Screen
-      name="Userage"
-      options={options}
-      component={Userage}
-    />
-    <HomeStack.Screen
-      name="ConnectUserType"
-      options={options}
-      component={ConnectUserType}
-    />
-    {/* <HomeStack.Screen
-      name="Recent5KTime"
-      options={options}
-      component={Recent5KTime}
-    /> */}
-    <HomeStack.Screen
-      name="UserPersonalBest"
-      component={UserPersonalBest}
-      options={({ route }) => ({
-        headerBackTitleVisible: false,
-        headerShown: !!route?.params?.title,
-        headerTintColor: Constants.Colors.WHITE,
-        headerTitle: route?.params?.title || '',
-      })}
-    />
-    <HomeStack.Screen
-      name="Distance"
-      options={options}
-      component={Distance}
-    />
-    <HomeStack.Screen
-      name="Location"
-      options={options}
-      component={Location}
-    />
     <HomeStack.Screen
       name="Home"
       options={options}
@@ -237,14 +197,44 @@ const homeNavigator = () => (
 );
 
 const discoverNavigator = () => (
-  <DiscoverStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' />
+  <DiscoverStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+    <DiscoverStack.Screen
+      name="Discover"
+      component={Discover}
+      options={() => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Discover',
+      })}
+    />
+  </DiscoverStack.Navigator>
 );
 
 const createNavigator = () => (
-  <AddStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' />
+  <AddStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+    <AddStack.Screen
+      name="Discover"
+      component={Discover}
+      options={() => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Add',
+      })}
+    />
+  </AddStack.Navigator>
 );
 const chatNavigator = () => (
-  <ChatStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' />
+  <ChatStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+    <ChatStack.Screen
+      name="Discover"
+      component={Discover}
+      options={() => ({
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Chat',
+      })}
+    />
+  </ChatStack.Navigator>
 );
 
 const profileNavigator = () => (
@@ -337,19 +327,6 @@ const profileNavigator = () => (
 // }
 
 const TabNavigator = () => {
-  const getTabBarVisibility = (route) => {
-    const routeName = route.state
-      ? route.state.routes[route.state.index].name
-      : '';
-    // const routeName = route.name;
-
-    if (routeName === 'Username' || routeName === 'Userage' || routeName === 'ConnectUserType' || routeName === 'Recent5KTime'
-        || routeName === 'Distance' || routeName === 'Location') {
-      return false;
-    }
-
-    return true;
-  };
   const tabBarOptions = {
     activeBackgroundColor: Constants.Colors.SECONDARY_COLOR,
     activeTintColor: Constants.Colors.WHITE,
@@ -372,31 +349,11 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
-      <Tab.Screen
-        options={({ route }) => ({ tabBarVisible: getTabBarVisibility(route) })}
-        name="Home"
-        component={homeNavigator}
-      />
-      <Tab.Screen
-        options={({ route }) => ({ tabBarVisible: getTabBarVisibility(route) })}
-        name="Discover"
-        component={discoverNavigator}
-      />
-      <Tab.Screen
-        options={({ route }) => ({ tabBarVisible: getTabBarVisibility(route) })}
-        name="Create"
-        component={createNavigator}
-      />
-      <Tab.Screen
-        options={({ route }) => ({ tabBarVisible: getTabBarVisibility(route) })}
-        name="Chat"
-        component={chatNavigator}
-      />
-      <Tab.Screen
-        options={({ route }) => ({ tabBarVisible: getTabBarVisibility(route) })}
-        name="MyProfile"
-        component={profileNavigator}
-      />
+      <Tab.Screen name="Home" component={homeNavigator} />
+      <Tab.Screen name="Discover" component={discoverNavigator} />
+      <Tab.Screen name="Create" component={createNavigator} />
+      <Tab.Screen name="Chat" component={chatNavigator} />
+      <Tab.Screen name="MyProfile" component={profileNavigator} />
     </Tab.Navigator>
   );
 };

@@ -10,6 +10,17 @@ const styles = {
     marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 2,
     textAlign: 'left',
   },
+  blockBtn: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: Constants.BaseStyle.scale(45),
+    marginVertical: Constants.BaseStyle.MARGIN / 2,
+    paddingHorizontal: Constants.BaseStyle.MARGIN,
+  },
+  blockIcon: {
+    height: Constants.BaseStyle.scale(20),
+    width: Constants.BaseStyle.scale(20),
+  },
   bottomContainer: {
     backgroundColor: Constants.Colors.TRANSLUCENT,
     flex: 1,
@@ -23,6 +34,17 @@ const styles = {
     left: 0,
     position: 'absolute',
     right: 0,
+  },
+  btnSubtitle: {
+    ...Constants.Fonts.Small,
+    color: Constants.Colors.PRIVCYTEXT,
+    marginTop: Constants.BaseStyle.scale(5),
+    paddingHorizontal: Constants.BaseStyle.MARGIN,
+  },
+  btnTitle: {
+    ...Constants.Fonts.LargeBold,
+    color: Constants.Colors.WHITE,
+    paddingHorizontal: Constants.BaseStyle.MARGIN,
   },
   buttonStyle: {
     alignSelf: 'center',
@@ -90,7 +112,7 @@ const styles = {
     textAlign: 'center',
   },
   hourLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '2%',
     textAlign: 'left',
@@ -131,7 +153,7 @@ const styles = {
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 80,
   },
   minuteLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '24%',
     textAlign: 'left',
@@ -151,13 +173,21 @@ const styles = {
     color: Constants.Colors.WHITE,
     fontSize: 26,
   },
+  moreOptionsContainer: { alignItems: 'center' },
+  moreOptionsWrapper: {
+    borderRadius: Constants.BaseStyle.scale(10),
+    paddingHorizontal: 0,
+    paddingVertical: Constants.BaseStyle.MARGIN,
+    width: '90%',
+  },
   picker: {
     height: 180,
     width: Constants.BaseStyle.scale(50),
   },
   pickerItem: {
+    ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(20),
+    fontSize: 20,
   },
   pickersContainer: {
     alignItems: 'center',
@@ -166,6 +196,10 @@ const styles = {
     justifyContent: 'space-between',
     marginTop: Constants.BaseStyle.scale(2),
     padding: Constants.BaseStyle.scale(10),
+  },
+  reportIcon: {
+    height: Constants.BaseStyle.scale(20),
+    width: Constants.BaseStyle.scale(20),
   },
   row: {
     flexDirection: 'row',
@@ -180,7 +214,7 @@ const styles = {
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 60,
   },
   secondLabel: {
-    ...Constants.Fonts.Small,
+    ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
     marginLeft: '26%',
     textAlign: 'left',

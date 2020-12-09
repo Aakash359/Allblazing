@@ -43,6 +43,7 @@ export const AuthStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
     width: '90%',
   },
+  langHeaderText: { fontSize: 28 },
   loginTouchable: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -83,8 +84,9 @@ export const AuthStyle = StyleSheet.create({
     width: '90%',
   },
   selectText: {
-    ...Constants.Fonts.ExtraLarge,
+    ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
+    fontSize: 28,
     marginLeft: Constants.BaseStyle.scale(5),
     marginVertical: Constants.BaseStyle.scale(0),
   },
@@ -162,6 +164,10 @@ export const UsernameStyle = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
   },
+  ageBlur: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR2,
+  },
   ageButton: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -185,7 +191,7 @@ export const UsernameStyle = StyleSheet.create({
   input: {
     ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
-    fontWeight: 'bold',
+    fontSize: 28,
     marginTop: Constants.BaseStyle.scale(40),
     textAlign: 'center',
     width: '80%',
@@ -228,8 +234,10 @@ export const ConnectUserTypeStyles = StyleSheet.create({
   input: {
     ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
+    fontSize: 28,
     marginTop: Constants.BaseStyle.scale(40),
     textAlign: 'center',
+    width: '90%',
   },
   inputWrapper: {
     alignItems: 'center',
@@ -243,20 +251,30 @@ export const ConnectUserTypeStyles = StyleSheet.create({
 });
 
 export const Repeat5KStyles = StyleSheet.create({
+  active: { ...Constants.Fonts.RegularBold },
   buttonText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.BLACK,
   },
   buttonsWrapper: {
     flexDirection: 'column-reverse',
+    marginTop: Constants.BaseStyle.scale(70),
+  },
+  header: { width: '80%' },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(200) },
+});
+
+export const DistanceStyles = StyleSheet.create({
+  buttonsWrapper: {
+    flexDirection: 'column-reverse',
     marginTop: Constants.BaseStyle.scale(100),
   },
-  saveBtn: { marginTop: Constants.BaseStyle.scale(200) },
 });
 
 export const ForgotPassStyles = StyleSheet.create({
   buttonText: {
     ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
     marginHorizontal: Constants.BaseStyle.scale(40),
     textAlign: 'center',
   },
@@ -270,12 +288,14 @@ export const ForgotPassStyles = StyleSheet.create({
 
 export const WelcomeStyles = StyleSheet.create({
   description: {
-    ...Constants.Fonts.Regular,
+    ...Constants.Fonts.ExtraLarge,
+    fontSize: 18,
     marginHorizontal: Constants.BaseStyle.scale(30),
     textAlign: 'center',
   },
   headerText: {
     ...Constants.Fonts.ExtraLargeBold,
+    fontSize: 42,
     paddingVertical: Constants.BaseStyle.scale(10),
   },
   headerWrapper: {
@@ -287,6 +307,11 @@ export const WelcomeStyles = StyleSheet.create({
   rightImage: {
     alignSelf: 'flex-end', height: Constants.BaseStyle.scale(80),
   },
+  subHeaderText: {
+    ...Constants.Fonts.ExtraLargeBold,
+    fontSize: 28,
+    paddingVertical: Constants.BaseStyle.scale(10),
+  },
   wrapper: {
     alignItems: 'center', flex: 0.9, justifyContent: 'center', marginTop: Constants.BaseStyle.scale(30),
   },
@@ -296,7 +321,7 @@ export const OTPStyles = StyleSheet.create({
   button: {
     alignItems: 'center', margin: Constants.BaseStyle.scale(10),
   },
-  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(400) },
+  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(360) },
   header: {
     marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
   },
@@ -423,7 +448,7 @@ export const LoginStyles = StyleSheet.create({
 });
 
 export const LocationStyles = StyleSheet.create({
-  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(70) },
+  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(50) },
   currentLocationText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,

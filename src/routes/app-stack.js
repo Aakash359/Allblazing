@@ -20,6 +20,7 @@ import Events from '../screens/events';
 import Filter from '../screens/filter';
 import SearchScreen from '../screens/search/seachScreen';
 import StaticContent from '../screens/static-content';
+import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
 import Notification from '../screens/home/notifications';
@@ -32,7 +33,7 @@ const options = { headerShown: false };
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Settings" mode='card'>
+    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
       <Stack.Screen
         name="Username"
         component={Username}
@@ -261,6 +262,21 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Settings',
+        })}
+      />
+      <Stack.Screen
+        name="BlockReportUser"
+        component={BlockReportUser}
+        options={({ navigation }) => ({
+          headerBackTitleVisible: false,
+          headerLeft: null,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
+            </TouchableOpacity>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
         })}
       />
     </Stack.Navigator>

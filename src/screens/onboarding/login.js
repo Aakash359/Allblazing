@@ -44,12 +44,9 @@ class Login extends Component {
   }
 
   onLogin = () => {
-    const {
-      loginSuccess, navigation: { navigate },
-    } = this.props;
+    const { loginSuccess } = this.props;
 
     loginSuccess();
-    this.timer = setTimeout(() => navigate('Dashboard'), 500);
   }
 
   render() {

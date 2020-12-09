@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
+import { AuthStyle, DistanceStyles, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
 import { StepBar, TimePicker } from '../../components';
 
 const times = [{
@@ -102,7 +102,7 @@ class Distance extends Component {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={Repeat5KStyles.buttonsWrapper}>
+            <View style={[Repeat5KStyles.buttonsWrapper, DistanceStyles.buttonsWrapper]}>
               <View style={ConnectUserTypeStyles.buttons}>
                 <TouchableOpacity
                   style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
