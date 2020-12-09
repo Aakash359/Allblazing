@@ -4,26 +4,7 @@ import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { AuthStyle, DistanceStyles, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
 import { StepBar, TimePicker } from '../../components';
-
-const times = [{
-  label: '200 m',
-  value: '200m',
-}, {
-  label: '400 m',
-  value: '400m',
-}, {
-  label: '1 km',
-  value: '1km',
-}, {
-  label: '1 mile',
-  value: '1mile',
-}, {
-  label: '5 km',
-  value: '5km',
-}, {
-  label: '10 km',
-  value: '10km',
-}];
+import { distanceList } from '../../data';
 
 class Distance extends Component {
   constructor() {
@@ -89,7 +70,7 @@ class Distance extends Component {
             <StepBar count={5} selected={[0, 1, 2, 3, 4]} />
             <View style={ConnectUserTypeStyles.inputWrapper}>
               <Text style={ConnectUserTypeStyles.input}>{'Distance to race'}</Text>
-              {times.map((t) => (
+              {distanceList.map((t) => (
                 <TouchableOpacity
                   key={t.value}
                   style={ConnectUserTypeStyles.button}

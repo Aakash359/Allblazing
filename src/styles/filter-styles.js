@@ -49,6 +49,24 @@ const styles = StyleSheet.create({
     color: Constants.Colors.BLACK,
   },
   levelsContainer: { flexWrap: 'wrap' },
+  race: {
+    alignItems: 'center',
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
+    borderRadius: Constants.BaseStyle.scale(8),
+    height: 35,
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(10),
+    width: '31%',
+  },
+  raceActive: { backgroundColor: Constants.Colors.TEXT_COLOR2 },
+  raceActiveText: {
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+  },
+  raceText: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR2,
+  },
   radio: {
     alignItems: 'center', flexDirection: 'row', width: '50%',
   },

@@ -1,23 +1,20 @@
 import React from 'react';
 import { View, Image, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { RunnersStyles } from '../../styles';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { MapViewStyles, RunnersStyles } from '../../styles';
 import Constants from '../../constants';
+import Map from '../events/map-view';
 
 function Runners() {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  return (
+  return route?.params?.isMapView ? <Map showEvents={false} style={MapViewStyles.map} onMarkerPress={() => {}} onEventPress={() => {}} /> : (
     <View style={RunnersStyles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('UserProfile')}
-        style={RunnersStyles.mainView}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={RunnersStyles.mainView}>
         <View>
           <ImageBackground
             source={Constants.Images.profilePic}
-            // resizeMode='contain'
             imageStyle={RunnersStyles.borderStyle}
             style={RunnersStyles.profileIcon}
           >

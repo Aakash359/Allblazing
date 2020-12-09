@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { TouchableOpacity, Text, View, Image, ViewPropTypes } from 'react-native';
-import { func } from 'prop-types';
+import { bool, func } from 'prop-types';
 import { MapViewStyles } from '../../styles';
 import Constants from '../../constants';
 
@@ -100,7 +100,7 @@ class EventsMap extends React.Component {
   render() {
     const { region } = this.state;
     const {
-      onMarkerPress, style, onEventPress,
+      onMarkerPress, style, onEventPress, showEvents,
     } = this.props;
 
     return (
@@ -123,7 +123,7 @@ class EventsMap extends React.Component {
             </View>
           </Marker>
         ))}
-        {events.map((marker, index) => (
+        {showEvents && events.map((marker, index) => (
           <Marker
             key={`custom-marker-${index}`}
             coordinate={marker.coordinate}
@@ -132,7 +132,6 @@ class EventsMap extends React.Component {
             {this.renderCustomMarker(marker)}
           </Marker>
         ))}
-
       </MapView>
     );
   }
@@ -141,8 +140,12 @@ class EventsMap extends React.Component {
 EventsMap.propTypes = {
   onEventPress: func.isRequired,
   onMarkerPress: func.isRequired,
+  showEvents: bool,
   style: ViewPropTypes.style,
 };
-EventsMap.defaultProps = { style: {} };
+EventsMap.defaultProps = {
+  showEvents: true,
+  style: {},
+};
 
 export default EventsMap;

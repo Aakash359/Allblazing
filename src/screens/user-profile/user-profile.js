@@ -6,7 +6,7 @@ import { ProfileStyles } from '../../styles';
 // import ProfileUnlock from './myProfile';
 // import PBScreen from './USERPbScreen';
 // import LikeScreen from './userLikeScreen';
-import UserGoalScreen from './userGoalsScreen';
+import UserGoalScreen from './user-goals';
 
 import Constants from '../../constants';
 import profileStyles from '../../styles/profile-styles';

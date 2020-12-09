@@ -47,7 +47,7 @@ class Home extends React.Component {
             keyExtractor={(item, index) => `${index}`}
           />
           {this.renderHeader({
-            navigate, payload: { hasCheckBox: true }, route: 'InviteFriends', title: 'Runners Near Me',
+            navigate, payload: { hasCheckBox: true }, route: 'Runners', title: 'Runners Near Me',
           })}
           <FlatList
             data={[1, 2, 3]}

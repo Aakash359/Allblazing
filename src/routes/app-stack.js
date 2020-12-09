@@ -1,40 +1,41 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
-import Username from '../screens/onboarding/user-name';
-import Userage from '../screens/onboarding/user-age';
-import UserGender from '../screens/onboarding/user-gender';
-import ConnectUserType from '../screens/onboarding/connect-user-type';
-import UserPersonalBest from '../screens/onboarding/user-personal-best';
-import UserMotto from '../screens/onboarding/user-motto';
-import Distance from '../screens/onboarding/distance';
+import { CommonStyles, HeaderStyles } from '../styles';
+import Username from '../screens/user-profile/user-name';
+import Userage from '../screens/user-profile/user-age';
+import UserGender from '../screens/user-profile/user-gender';
+import ConnectUserType from '../screens/user-profile/connect-user-type';
+import UserPersonalBest from '../screens/user-profile/user-personal-best';
+import UserMotto from '../screens/user-profile/user-motto';
+import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
-import ChangePassword from '../screens/onboarding/change-password';
-import ContactUS from '../screens/onboarding/contact-us';
-import ChangeLanguage from '../screens/onboarding/change-language';
-import EditLocation from '../screens/onboarding/edit-location';
-import Settings from '../screens/onboarding/settings';
+import ChangePassword from '../screens/user-profile/change-password';
+import ContactUS from '../screens/user-profile/contact-us';
+import ChangeLanguage from '../screens/user-profile/change-language';
+import EditLocation from '../screens/user-profile/edit-location';
+import Settings from '../screens/user-profile/settings';
 import InviteFriends from '../screens/home/invite-friends';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
-import SearchScreen from '../screens/search/seachScreen';
+import SearchScreen from '../screens/search';
 import StaticContent from '../screens/static-content';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
 import Constants from '../constants';
 import Notification from '../screens/home/notifications';
 import FeedScreen from '../screens/discover/feed';
-import { CommonStyles, HeaderStyles } from '../styles';
-import FeedDetailScreen from '../screens/discover/feedDetail';
+import FeedDetailScreen from '../screens/discover/feed-detail';
+import LiveStream from '../screens/streams';
 
-const Stack = createStackNavigator();
+const AppStack = createStackNavigator();
 const options = { headerShown: false };
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
-      <Stack.Screen
+    <AppStack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
+      <AppStack.Screen
         name="Username"
         component={Username}
         options={({ route }) => ({
@@ -44,7 +45,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Userage"
         component={Userage}
         options={({ route }) => ({
@@ -54,7 +55,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="UserGender"
         component={UserGender}
         options={() => ({
@@ -63,7 +64,7 @@ export default function MainNavigator() {
           headerTitle: 'Edit Gender',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="UserMotto"
         component={UserMotto}
         options={() => ({
@@ -72,12 +73,12 @@ export default function MainNavigator() {
           headerTitle: 'Edit Motto',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="ConnectUserType"
         options={options}
         component={ConnectUserType}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="UserPersonalBest"
         component={UserPersonalBest}
         options={({ route }) => ({
@@ -87,22 +88,22 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Distance"
         options={options}
         component={Distance}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Location"
         options={options}
         component={Location}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Dashboard"
         options={options}
         component={Dashboard}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="EditLocation"
         component={EditLocation}
         options={() => ({
@@ -111,7 +112,7 @@ export default function MainNavigator() {
           headerTitle: 'Edit Location',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Events"
         component={Events}
         options={({
@@ -131,7 +132,7 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="InviteFriends"
         component={InviteFriends}
         options={({ route }) => ({
@@ -143,7 +144,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || 'Strava Users',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Filter"
         component={Filter}
         options={({ navigation }) => ({
@@ -158,7 +159,7 @@ export default function MainNavigator() {
           headerTitle: 'Filters',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="SingleEventDetail"
         component={SingleEventDetail}
         options={() => ({
@@ -167,7 +168,7 @@ export default function MainNavigator() {
           headerTitle: 'Event Details',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="StaticContent"
         component={StaticContent}
         options={({ route }) => ({
@@ -176,7 +177,7 @@ export default function MainNavigator() {
           headerTitle: route?.params?.title || '',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options={{
@@ -189,7 +190,7 @@ export default function MainNavigator() {
           headerTitle: 'Search',
         }}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Notification"
         component={Notification}
         options={{
@@ -202,7 +203,7 @@ export default function MainNavigator() {
           headerTitle: 'Notifications',
         }}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="FeedScreen"
         component={FeedScreen}
         options={{
@@ -215,7 +216,7 @@ export default function MainNavigator() {
           headerTitle: 'Feed',
         }}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="FeedDetailScreen"
         component={FeedDetailScreen}
         options={{
@@ -228,7 +229,7 @@ export default function MainNavigator() {
           headerTitle: 'Feed',
         }}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="ChangePassword"
         component={ChangePassword}
         options={() => ({
@@ -237,7 +238,7 @@ export default function MainNavigator() {
           headerTitle: 'Change Password',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="ContactUS"
         component={ContactUS}
         options={() => ({
@@ -246,7 +247,7 @@ export default function MainNavigator() {
           headerTitle: 'Contact Us',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="ChangeLanguage"
         component={ChangeLanguage}
         options={() => ({
@@ -255,7 +256,7 @@ export default function MainNavigator() {
           headerTitle: 'Change Language',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="Settings"
         component={Settings}
         options={() => ({
@@ -264,7 +265,7 @@ export default function MainNavigator() {
           headerTitle: 'Settings',
         })}
       />
-      <Stack.Screen
+      <AppStack.Screen
         name="BlockReportUser"
         component={BlockReportUser}
         options={({ navigation }) => ({
@@ -279,6 +280,11 @@ export default function MainNavigator() {
           headerTitle: null,
         })}
       />
-    </Stack.Navigator>
+      <AppStack.Screen
+        name="LiveStream"
+        component={LiveStream}
+        options={options}
+      />
+    </AppStack.Navigator>
   );
 }

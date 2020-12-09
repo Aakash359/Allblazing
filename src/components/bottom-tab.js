@@ -14,7 +14,7 @@ const getTabImage = (name, active) => {
   }
 
   if (name === 'Create') {
-    return active ? Constants.Images.tabBarAddActive : Constants.Images.tabBarAdd;
+    return Constants.Images.tabBarAdd;
   }
 
   if (name === 'Chat') {
