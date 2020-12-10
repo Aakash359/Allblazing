@@ -54,6 +54,7 @@ const Images = {
   search: require('../assets/search.png'),
   selectedHeart: require('../assets/selectedHeart.png'),
   settings: require('../assets/settings.png'),
+  share: require('../assets/share.png'),
   slectLangLogo2x: require('../assets/slectLangLogo2x.png'),
   tabBarAdd: require('../assets/tabbar_add.png'),
   tabBarChat: require('../assets/tabbar_chat.png'),

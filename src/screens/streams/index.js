@@ -1,9 +1,10 @@
 import React from 'react';
-import { ImageBackground, Platform, View, Text, Image, TouchableOpacity } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ImageBackground, View, Text, Image, TouchableOpacity, Keyboard } from 'react-native';
+import Share from 'react-native-share';
+import { bool, func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { InputField } from '../../components';
-import { CommonStyles, StreamStyles } from '../../styles';
+import { AuthStyle, StreamStyles } from '../../styles';
 import { wearableOptions } from '../../data';
 
 class CreateStream extends React.Component {
@@ -14,11 +15,35 @@ class CreateStream extends React.Component {
     super(props);
 
     this.state = {
+      height: Constants.BaseStyle.scale(310),
+      isFocused: false,
       selected: [],
       title: '',
       toggle: false,
     };
   }
+
+  componentDidMount() {
+    Keyboard.addListener('keyboardDidShow', this.onKeyboardOpen);
+    Keyboard.addListener('keyboardDidHide', this.onKeyboardHide);
+  }
+
+  componentWillUnmount() {
+    Keyboard.removeListener('keyboardDidShow', this.onKeyboardOpen);
+    Keyboard.removeListener('keyboardDidHide', this.onKeyboardHide);
+  }
+
+  onKeyboardOpen = () => {
+    const { toggle } = this.state;
+
+    this.setState({ height: toggle ? Constants.BaseStyle.scale(490) : Constants.BaseStyle.scale(480) });
+  };
+
+  onKeyboardHide = () => {
+    const { toggle } = this.state;
+
+    this.setState({ height: toggle ? Constants.BaseStyle.scale(400) : Constants.BaseStyle.scale(310) });
+  };
 
   onSelect = (payload) => {
     const { selected } = this.state;
@@ -36,41 +61,167 @@ class CreateStream extends React.Component {
     this.setState({ selected: values });
   };
 
+  onOutsideClick = () => {
+    const { isFocused } = this.state;
+
+    if (isFocused) {
+      Keyboard.dismiss();
+    }
+  };
+
+  onToggle = () => {
+    const { toggle } = this.state;
+    const value = !toggle;
+    const height = value ? Constants.BaseStyle.scale(460) : Constants.BaseStyle.scale(310);
+
+    this.setState({
+      height, toggle: value,
+    });
+
+    Keyboard.dismiss();
+  }
+
+  onLiveStream = () => {
+    const {
+      navigation: { setParams }, route: { params },
+    } = this.props;
+    const payload = {};
+
+    if (params?.isStreamStarted) {
+      payload.isStreamStarted = false;
+      payload.isFinished = true;
+    } else {
+      payload.isStreamStarted = true;
+    }
+
+    setParams(payload);
+    Keyboard.dismiss();
+  };
+
+  onShare = () => {
+    Share.open({
+      message: 'test',
+      title: 'Allblazing',
+      url: 'https://google.com',
+    })
+      // eslint-disable-next-line no-console
+      .then((res) => console.log(res))
+      // eslint-disable-next-line no-console
+      .catch((err) => console.log(err));
+  };
+
   render() {
     const {
-      selected, title, toggle,
+      height, selected, title, toggle,
     } = this.state;
+    const { route: { params } } = this.props;
 
     return (
-      <View style={CommonStyles.container}>
+      <TouchableOpacity activeOpacity={1} style={StreamStyles.container} onPress={this.onOutsideClick}>
         <ImageBackground style={StreamStyles.background} source={Constants.Images.liveStream}>
-          <View style={StreamStyles.wrapper}>
-            <KeyboardAwareScrollView
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-              keyboardShouldPersistTaps="always"
-            >
-              <InputField value={title} placeholder="Title of your stream" onChangeText={(text) => this.setState({ title: text })} />
-              <View style={[StreamStyles.row, StreamStyles.switchContainer]}>
-                <Text style={StreamStyles.subHeader}>Show wearable health data</Text>
-                <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ toggle: !toggle })}>
-                  <Image source={toggle ? Constants.Images.toggleOn : Constants.Images.toggleOff} style={StreamStyles.switch} />
+          <View style={StreamStyles.row}>
+            {params?.isStreamStarted && (
+              <View style={StreamStyles.header}>
+                <Text style={StreamStyles.headerText}>Live</Text>
+                <Text style={StreamStyles.headerText}>02:05</Text>
+              </View>
+            )}
+            {params?.isFinished ? (
+              <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
+                <TouchableOpacity activeOpacity={0.7} onPress={this.onShare}>
+                  <Image resizeMode='contain' source={Constants.Images.share} style={StreamStyles.camera} />
                 </TouchableOpacity>
               </View>
-              <View style={[StreamStyles.row, StreamStyles.connectRow, StreamStyles.levelsContainer]}>
-                {wearableOptions.map((dis) => (
-                  <TouchableOpacity onPress={() => this.onSelect(dis.value)} key={dis.value} activeOpacity={0.7} style={[StreamStyles.race, selected.includes(dis.value) && StreamStyles.raceActive]}>
-                    <Text style={[StreamStyles.raceText, selected.includes(dis.value) && StreamStyles.raceActiveText]}>{`${dis.label}`}</Text>
-                  </TouchableOpacity>
-                ))}
+            ) : (
+              <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
+                <TouchableOpacity activeOpacity={0.7}>
+                  <Image resizeMode='contain' source={Constants.Images.rotate} style={StreamStyles.camera} />
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.7}>
+                  <Image resizeMode='contain' source={Constants.Images.rotate} style={StreamStyles.camera} />
+                </TouchableOpacity>
               </View>
-            </KeyboardAwareScrollView>
+            )}
           </View>
+          {(params?.isStreamStarted || params?.isFinished) ? (
+            <View style={StreamStyles.button}>
+              {params?.isFinished ? (
+                <View style={StreamStyles.row}>
+                  <TouchableOpacity
+                    style={[AuthStyle.loginTouchable, StreamStyles.deleteBtn]}
+                    activeOpacity={0.7}
+                    onPress={this.onLiveStream}
+                  >
+                    <Text style={[AuthStyle.buttonText, StreamStyles.deleteBtnText]}>{'Delete'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[AuthStyle.loginTouchable, StreamStyles.homeBtn]}
+                    activeOpacity={0.7}
+                    onPress={this.onLiveStream}
+                  >
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Home'}</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+                  activeOpacity={0.7}
+                  onPress={this.onLiveStream}
+                >
+                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Finish'}</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ) : (
+            <View activeOpacity={1} style={[StreamStyles.wrapper, { height }]}>
+              <InputField
+                value={title}
+                placeholder="Title of your stream"
+                onChangeText={(text) => this.setState({ title: text })}
+                onFocus={() => this.setState({ isFocused: true })}
+                onBlur={() => this.setState({ isFocused: false })}
+              />
+              <View style={[StreamStyles.row, StreamStyles.switchContainer, toggle && StreamStyles.switchContainerOn]}>
+                <Text style={StreamStyles.subHeader}>Show wearable health data</Text>
+                <TouchableOpacity activeOpacity={0.7} onPress={this.onToggle}>
+                  <Image resizeMode='contain' source={toggle ? Constants.Images.toggleOn : Constants.Images.toggleOff} style={StreamStyles.switch} />
+                </TouchableOpacity>
+              </View>
+              {toggle && (
+                <View style={StreamStyles.row}>
+                  {wearableOptions.map((dis) => (
+                    <TouchableOpacity
+                      onPress={() => this.onSelect(dis.value)}
+                      key={dis.value}
+                      activeOpacity={0.7}
+                      style={[StreamStyles.race, selected.includes(dis.value) && StreamStyles.raceActive]}
+                    >
+                      <Text style={[StreamStyles.raceText, selected.includes(dis.value) && StreamStyles.raceActiveText]}>{`${dis.label}`}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+              <TouchableOpacity
+                style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+                activeOpacity={0.7}
+                onPress={this.onLiveStream}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Live Stream'}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </ImageBackground>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
+
+CreateStream.propTypes = {
+  navigation: shape({
+    navigate: func,
+    setParams: func,
+  }).isRequired,
+  route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+};
 
 export default CreateStream;

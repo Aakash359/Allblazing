@@ -37,6 +37,15 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>whatsapp</string>
+    <string>mailto</string>
+		<string>facebook</string>
+		<string>instagram</string>
+  </array>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<string>true</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Please allow us to access your media gallery to be able to send photos or update your profile picture.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
