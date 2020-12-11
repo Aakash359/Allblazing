@@ -8,3 +8,6 @@ export const showLoader = createAction(SHOW_LOADER);
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const showToast = createAction(SHOW_TOAST);
+
+export const SET_LANGUAGE = 'SET_LANGUAGE';
+export const setLanguage = createAction(SET_LANGUAGE);

@@ -1,30 +1,8 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { en, fr } from './locales';
-
-// const languageDetector = {
-//   async: true,
-//   cacheUserLanguage: (locale) => {
-//     AsyncStorage.setItem(LOCALE_PERSISTENCE_KEY, locale);
-//   },
-//   detect: async (language) => {
-//     const persistedLocale = await AsyncStorage.getItem(LOCALE_PERSISTENCE_KEY);
-
-//     if (!persistedLocale) {
-//       // Find best available language from the resource ones
-
-//       // Return detected locale or default language
-//       return language('en');
-//     }
-
-//     return language(persistedLocale);
-//   },
-//   init: () => {},
-//   type: 'languageDetector',
-// };
+import { en, du } from './locales';
 
 i18next
-  // .use(languageDetector)
   .use(initReactI18next)
   .init({
     cleanCode: true,
@@ -33,8 +11,8 @@ i18next
     lng: 'en',
     react: { useSuspense: false },
     resources: {
+      du: { translation: du },
       en: { translation: en },
-      fr: { translation: fr },
     },
   });
 

@@ -75,8 +75,8 @@ function SearchSeceen() {
                 navigation, route: 'Runners', title: 'Runners',
               })}
               <FlatList
-                data={[1, 2, 3, 4]}
-                renderItem={() => <InviteFriend />}
+                data={[Constants.Images.inviteUser2, Constants.Images.inviteUser1, Constants.Images.inviteUser3]}
+                renderItem={({ item }) => <InviteFriend image={item} />}
                 keyExtractor={(item, index) => index}
               />
               {renderHeader({

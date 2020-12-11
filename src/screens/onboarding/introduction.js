@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func, shape } from 'prop-types';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { withTranslation } from 'react-i18next';
 import { IntroCard } from '../../components';
 import { AuthStyle, CommonStyles, IntroductionStyles } from '../../styles';
 import Constants from '../../constants';
@@ -39,39 +40,39 @@ class Introduction extends Component {
 
   render() {
     const { itemSelected } = this.state;
+    const { t: translate } = this.props;
 
     return (
       <View style={CommonStyles.container}>
         <View style={IntroductionStyles.wrapper}>
-          {itemSelected === 0 && <IntroCard selected={[0]} image={Constants.Images.intro1} title="Connect with other runners in your area" />}
-          {itemSelected === 1 && <IntroCard selected={[0, 1]} image={Constants.Images.intro2} title="Train or race together" />}
-          {itemSelected === 2 && <IntroCard selected={[0, 1, 2]} image={Constants.Images.intro3} title="Capture and share the  experience" />}
+          {itemSelected === 0 && <IntroCard selected={[0]} image={Constants.Images.intro1} title={translate('introduction.connect')} />}
+          {itemSelected === 1 && <IntroCard selected={[0, 1]} image={Constants.Images.intro2} title={translate('introduction.train')} />}
+          {itemSelected === 2 && <IntroCard selected={[0, 1, 2]} image={Constants.Images.intro3} title={translate('introduction.capture')} />}
           {itemSelected === 2 ? (
             <View style={IntroductionStyles.buttonsWrapper2}>
               <TouchableOpacity
                 style={AuthStyle.introButton2}
                 onPress={this.onNext}
               >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Get Started'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Get Started')}</Text>
               </TouchableOpacity>
             </View>
           )
             : (
               <View style={IntroductionStyles.buttonsWrapper}>
-
                 <TouchableOpacity
                   style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
                   activeOpacity={0.7}
                   onPress={this.onBack}
                 >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={AuthStyle.introButton}
                   onPress={this.onNext}
                 >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -87,6 +88,7 @@ Introduction.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default Introduction;
+export default withTranslation()(Introduction);
