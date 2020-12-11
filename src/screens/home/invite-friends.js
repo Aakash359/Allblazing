@@ -6,10 +6,10 @@ import { InviteFriend } from '../../components';
 import Constants from '../../constants';
 
 class InviteFriends extends React.Component {
-  renderItem = () => {
+  renderItem = ({ item }) => {
     const { route: { params } } = this.props;
 
-    return <InviteFriend hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} />;
+    return <InviteFriend hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} item={item} />;
   }
 
   render() {
@@ -18,7 +18,7 @@ class InviteFriends extends React.Component {
     return (
       <View style={HomeStyles.container}>
         <FlatList
-          data={[1, 2, 3, 4, 5]}
+          data={[Constants.Images.inviteUser2, Constants.Images.inviteUser1, Constants.Images.inviteUser3]}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
         />

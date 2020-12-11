@@ -1,6 +1,7 @@
 import React from 'react';
 import { ImageBackground, View, Text, Image, TouchableOpacity, Keyboard } from 'react-native';
 import Share from 'react-native-share';
+import { CommonActions } from '@react-navigation/native';
 import { bool, func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { InputField } from '../../components';
@@ -98,16 +99,30 @@ class CreateStream extends React.Component {
     Keyboard.dismiss();
   };
 
-  onShare = () => {
-    Share.open({
-      message: 'test',
-      title: 'Allblazing',
-      url: 'https://google.com',
-    })
+  onShare = async () => {
+    try {
+      const options = {
+        message: 'test',
+        title: 'Allblazing',
+        url: 'https://google.com',
+      };
+
+      await Share.open(options);
+    } catch (e) {
       // eslint-disable-next-line no-console
-      .then((res) => console.log(res))
-      // eslint-disable-next-line no-console
-      .catch((err) => console.log(err));
+      console.log('sharing error ', e);
+    }
+  };
+
+  onDelete = () => {
+    const { navigation } = this.props;
+    const options = {
+      index: 0,
+      routes: [{ name: 'Dashboard' }],
+    };
+    const action = CommonActions.reset(options);
+
+    navigation.dispatch(action);
   };
 
   render() {
@@ -135,7 +150,7 @@ class CreateStream extends React.Component {
             ) : (
               <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
                 <TouchableOpacity activeOpacity={0.7}>
-                  <Image resizeMode='contain' source={Constants.Images.rotate} style={StreamStyles.camera} />
+                  <Image resizeMode='contain' source={Constants.Images.flash} style={StreamStyles.flash} />
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7}>
                   <Image resizeMode='contain' source={Constants.Images.rotate} style={StreamStyles.camera} />
@@ -150,26 +165,29 @@ class CreateStream extends React.Component {
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.deleteBtn]}
                     activeOpacity={0.7}
-                    onPress={this.onLiveStream}
+                    onPress={this.onDelete}
                   >
                     <Text style={[AuthStyle.buttonText, StreamStyles.deleteBtnText]}>{'Delete'}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.homeBtn]}
                     activeOpacity={0.7}
-                    onPress={this.onLiveStream}
+                    onPress={this.onDelete}
                   >
                     <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Home'}</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity
-                  style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
-                  activeOpacity={0.7}
-                  onPress={this.onLiveStream}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Finish'}</Text>
-                </TouchableOpacity>
+                <View>
+                  {toggle && <Image resizeMode='contain' source={Constants.Images.health} style={StreamStyles.healthData} />}
+                  <TouchableOpacity
+                    style={[AuthStyle.loginTouchable, StreamStyles.finishBtn]}
+                    activeOpacity={0.7}
+                    onPress={this.onLiveStream}
+                  >
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Finish'}</Text>
+                  </TouchableOpacity>
+                </View>
               )}
             </View>
           ) : (

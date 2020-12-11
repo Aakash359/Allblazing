@@ -378,9 +378,7 @@ export const LoginStyles = StyleSheet.create({
   },
   loginText: {
     color: Constants.Colors.WHITE,
-    height: 50,
     marginHorizontal: Constants.BaseStyle.scale(10),
-    width: 50,
     ...Constants.Fonts.Regular,
   },
   logo: {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
 import { BottomTab } from '../components';
 import Constants from '../constants';
 import ChatStack from './chat-stack';
@@ -31,14 +32,18 @@ const tabProps = {
   tabBarOptions,
 };
 
-const TabNavigator = () => (
-  <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
-    <Tab.Screen name="Home" component={HomeNavigator} />
-    <Tab.Screen name="Discover" component={DiscoverStack} />
-    <Tab.Screen name="Create" component={CreatePostStack} />
-    <Tab.Screen name="Chat" component={ChatStack} />
-    <Tab.Screen name="Me" component={ProfileStack} />
-  </Tab.Navigator>
-);
+const TabNavigator = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
+      <Tab.Screen options={{ tabBarLabel: t('Home') }} name="Home" component={HomeNavigator} />
+      <Tab.Screen options={{ tabBarLabel: t('Discover') }} name="Discover" component={DiscoverStack} />
+      <Tab.Screen options={{ tabBarLabel: t('Create') }} name="Create" component={CreatePostStack} />
+      <Tab.Screen options={{ tabBarLabel: t('Chat') }} name="Chat" component={ChatStack} />
+      <Tab.Screen options={{ tabBarLabel: t('Me') }} name="Me" component={ProfileStack} />
+    </Tab.Navigator>
+  );
+};
 
 export default TabNavigator;

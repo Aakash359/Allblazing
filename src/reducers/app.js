@@ -1,7 +1,7 @@
-import { HIDE_LOADER, SHOW_LOADER } from '../actions/app-action-types';
+import { HIDE_LOADER, SHOW_LOADER, SET_LANGUAGE } from '../actions/app-action-types';
 
 const initialState = {
-  locale: 'en',
+  locale: null,
   type: 'loader',
   visible: false,
 };
@@ -20,6 +20,12 @@ export default function app(state = initialState, {
       return {
         type: payload || 'loader',
         visible: true,
+      };
+
+    case SET_LANGUAGE:
+      return {
+        ...state,
+        locale: payload,
       };
 
     default:

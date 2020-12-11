@@ -13,7 +13,7 @@ const styles = {
   },
   camera: {
     height: 25,
-    marginHorizontal: Constants.BaseStyle.scale(10),
+    marginLeft: Constants.BaseStyle.scale(15),
     width: 25,
   },
   container: {
@@ -28,6 +28,15 @@ const styles = {
     width: '48%',
   },
   deleteBtnText: { color: '#25283D' },
+  finishBtn: {
+    backgroundColor: Constants.Colors.TEXT_COLOR,
+    marginTop: Constants.BaseStyle.scale(0),
+  },
+  flash: {
+    height: 35,
+    marginBottom: -Constants.BaseStyle.scale(4),
+    width: 35,
+  },
   header: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.BLUE,
@@ -46,6 +55,11 @@ const styles = {
     ...Constants.Fonts.SmallBold,
     color: Constants.Colors.WHITE,
     marginHorizontal: Constants.BaseStyle.scale(2),
+  },
+  healthData: {
+    height: Constants.BaseStyle.scale(200),
+    marginHorizontal: Constants.BaseStyle.scale(10),
+    width: '94%',
   },
   homeBtn: {
     backgroundColor: Constants.Colors.TEXT_COLOR2,
