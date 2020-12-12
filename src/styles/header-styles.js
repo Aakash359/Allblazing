@@ -5,7 +5,6 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.PRIMARY,
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

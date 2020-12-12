@@ -1,21 +1,12 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from '../constants';
-import { BottomTabsStyles } from '../styles';
+import Discover from '../screens/discover';
 
 const DiscoverStack = createStackNavigator();
 
-function Discover() {
-  return (
-    <View>
-      <Text style={BottomTabsStyles.label}>{'Discover'}</Text>
-    </View>
-  );
-}
-
 const DiscoverNavigator = () => (
-  <DiscoverStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+  <DiscoverStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='Discover'>
     <DiscoverStack.Screen
       name="Discover"
       component={Discover}

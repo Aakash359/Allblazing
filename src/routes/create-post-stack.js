@@ -15,7 +15,7 @@ function CreatePost() {
 }
 
 const CreatePostNavigator = () => (
-  <CreatePostStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+  <CreatePostStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='CreatePost'>
     <CreatePostStack.Screen
       name="CreatePost"
       component={CreatePost}

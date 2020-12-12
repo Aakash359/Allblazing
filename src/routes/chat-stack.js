@@ -15,7 +15,7 @@ function Chat() {
 }
 
 const ChatNavigator = () => (
-  <ChatStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+  <ChatStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='Chat'>
     <ChatStack.Screen
       name="Chat"
       component={Chat}

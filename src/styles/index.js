@@ -40,6 +40,7 @@ import FeedDetailStyles from './feed-detail-styles';
 import SettingStyles from './setting-styles';
 import BlockUserStyles from './block-user-styles';
 import StreamStyles from './stream-styles';
+import InvitePopupStyles from './invite-popup-styles';
 
 export {
   RunnersStyles,
@@ -70,6 +71,7 @@ export {
   InputStyles,
   IntroductionStyles,
   InviteFriendsStyles,
+  InvitePopupStyles,
   LanguageStyles,
   LocationStyles,
   LoginStyles,

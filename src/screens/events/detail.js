@@ -16,10 +16,10 @@ class SingleEventDetail extends React.Component {
 
     if (params?.isMember) {
       const payload = {
-        hasCheckBox: false, hasTick: true, title: 'My Friends',
+        hasCheckBox: false, hasTick: true, routeName: 'SingleEventDetail', title: 'My Friends',
       };
 
-      navigate('InviteFriends', payload);
+      navigate('StravaUsers', payload);
     } else {
       setParams({ isMember: true });
     }
@@ -92,7 +92,7 @@ class SingleEventDetail extends React.Component {
           {params?.isInviteSent && (
             <View style={EventDetailStyles.margin}>
               <FlatList
-                data={[1, 2, 3]}
+                data={[1]}
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => `${index}`}
               />

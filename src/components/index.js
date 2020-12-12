@@ -6,7 +6,7 @@ import SingleEvent from './events/single-event';
 import InvitedUser from './events/invited-user';
 import AnimatedModal from './animate-modal';
 import BottomTab from './bottom-tab';
-import ForgotPasswordModal from './forgot-password-modal';
+import SuccessPopup from './popups/success-popup';
 import IntroCard from './intro-card';
 import InputField from './input-field';
 import Loader from './loader';
@@ -15,12 +15,13 @@ import SettingItem from './setting-item';
 import InviteFriend from './invite-friend';
 import HeaderSearchBar from './header-search-bar';
 import UserImages from './user-images';
+import InviteOptionPopup from './popups/invite-options-popup';
 
 export {
   AgePicker,
   AnimatedModal,
   BottomTab,
-  ForgotPasswordModal,
+  SuccessPopup,
   HeaderSearchBar,
   IntroCard,
   InputField,
@@ -34,4 +35,5 @@ export {
   UserImages,
   LogoutPopup,
   MoreOptionsPopup,
+  InviteOptionPopup,
 };

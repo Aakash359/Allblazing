@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Modal, TouchableOpacity, Text, Image } from 'react-native';
-import { func, bool } from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import Constants from '../constants';
+import { func, bool, string } from 'prop-types';
+import { withTranslation } from 'react-i18next';
+import Constants from '../../constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,9 +13,8 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   header: {
-    ...Constants.Fonts.Regular,
+    ...Constants.Fonts.Large,
     color: Constants.Colors.TEXT_COLOR_WHITE,
-    fontSize: Constants.BaseStyle.scale(14),
     margin: Constants.BaseStyle.scale(5),
     textAlign: 'center',
   },
@@ -34,12 +33,10 @@ export const styles = StyleSheet.create({
   okButtonTextStyle: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
-    fontSize: Constants.BaseStyle.scale(14),
   },
   resendText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
-    fontSize: Constants.BaseStyle.scale(14),
     margin: Constants.BaseStyle.scale(5),
     textAlign: 'center',
   },
@@ -55,39 +52,45 @@ export const styles = StyleSheet.create({
   },
 });
 
-const ForgotPasswordModal = ({
+const SuccessPopup = ({
+  hasResendBtn,
+  instructions,
   visible,
   onClick,
-}) => {
-  const { t: translate } = useTranslation();
-
-  return (
-    <Modal visible={visible} animationType="fade" transparent>
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <Image
-            source={Constants.Images.checkmark}
-            resizeMode='contain'
-            style={styles.image}
-          />
-          <Text style={styles.header}>{'Password reset link successfully shared to your email "xyz@gmail.com"'}</Text>
-          <TouchableOpacity onPress={onClick} style={styles.okButton}>
-            <Text style={styles.okButtonTextStyle}>{translate('ok')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
+  onResend,
+  t: translate,
+}) => (
+  <Modal visible={visible} animationType="fade" transparent>
+    <View style={styles.container}>
+      <View style={styles.wrapper}>
+        <Image source={Constants.Images.checkmark} resizeMode='contain' style={styles.image} />
+        <Text style={styles.header}>{instructions}</Text>
+        <TouchableOpacity onPress={onClick} style={styles.okButton}>
+          <Text style={styles.okButtonTextStyle}>{translate('Ok')}</Text>
+        </TouchableOpacity>
+        {hasResendBtn && (
+          <TouchableOpacity activeOpacity={0.7} onPress={onResend}>
             <Text style={styles.resendText}>{translate('Resend Link')}</Text>
           </TouchableOpacity>
-        </View>
+        )}
       </View>
-    </Modal>
-  );
-};
+    </View>
+  </Modal>
+);
 
-ForgotPasswordModal.propTypes = {
+SuccessPopup.propTypes = {
+  hasResendBtn: bool,
+  instructions: string.isRequired,
   onClick: func.isRequired,
+  onResend: func,
+  t: func.isRequired,
   visible: bool,
 };
 
-ForgotPasswordModal.defaultProps = { visible: false };
+SuccessPopup.defaultProps = {
+  hasResendBtn: false,
+  onResend: null,
+  visible: false,
+};
 
-export default ForgotPasswordModal;
+export default withTranslation()(SuccessPopup);

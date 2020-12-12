@@ -1,5 +1,6 @@
 import React from 'react';
-import { findNodeHandle, Platform, TextInput, View, Text, Image, TouchableOpacity, KeyboardAwareScrollView } from 'react-native';
+import { Platform, TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { bool, func, shape } from 'prop-types';
 import Constants from '../constants';
 import { CommonStyles, BlockUserStyles, AuthStyle, ForgotPassStyles } from '../styles';
@@ -14,33 +15,9 @@ class BlockUser extends React.Component {
 
     this.state = {
       description: '',
-      reason: '',
+      reason: null,
     };
   }
-
-  handleScrollView = (ref) => {
-    const scrollResponder = this.scrollViewRef.current.getScrollResponder();
-
-    if (ref.current) {
-      setTimeout(() => {
-        scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-          ref,
-          (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 20,
-          true,
-        );
-      }, 300);
-    }
-  };
-
-  resetScrollView = (ref) => {
-    if (ref.current) {
-      const scrollResponder = this.scrollViewRef.current.getScrollResponder();
-
-      setTimeout(() => {
-        scrollResponder.scrollResponderScrollNativeHandleToKeyboard(ref, 0, true);
-      }, 300);
-    }
-  };
 
   render() {
     const {
@@ -54,7 +31,6 @@ class BlockUser extends React.Component {
     return (
       <View style={CommonStyles.container}>
         <KeyboardAwareScrollView
-          ref={this.scrollViewRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
@@ -82,7 +58,6 @@ class BlockUser extends React.Component {
             <View style={[CommonStyles.textAreaWrapper, BlockUserStyles.textAreaWrapper]}>
               <TextInput
                 multiline
-                ref={this.descriptionRef}
                 maxLength={450}
                 numberOfLines={20}
                 style={CommonStyles.textArea}
@@ -90,17 +65,15 @@ class BlockUser extends React.Component {
                 value={description}
                 onChangeText={(text) => this.setState({ description: text })}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
-                onFocus={() => {
-                  this.handleScrollView(findNodeHandle(this.descriptionRef.current));
-                }}
-                onBlur={() => {
-                  this.resetScrollView(findNodeHandle(this.descriptionRef.current));
-                }}
               />
             </View>
           )}
-          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, reason === 'Other' ? BlockUserStyles.saveBtnWithTextInput : BlockUserStyles.saveBtn]} onPress={() => goBack()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[AuthStyle.saveBtn, reason == null && BlockUserStyles.saveBtnColor, reason === 'Other' ? BlockUserStyles.saveBtnWithTextInput : BlockUserStyles.saveBtn]}
+            onPress={() => goBack()}
+          >
+            <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{'Save'}</Text>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
       </View>

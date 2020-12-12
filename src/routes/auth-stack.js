@@ -8,7 +8,7 @@ import Login from '../screens/onboarding/login';
 import ForgotPassword from '../screens/onboarding/forgot-password';
 import OTP from '../screens/onboarding/otp-verification';
 import Register from '../screens/onboarding/register';
-import StaticContent from '../screens/static-content';
+import StaticContent from '../screens/settings/static-content';
 import Username from '../screens/user-profile/user-name';
 import Userage from '../screens/user-profile/user-age';
 import UserGender from '../screens/user-profile/user-gender';

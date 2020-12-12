@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
   heading: {
-    ...Constants.Fonts.RegularBold,
-    color: Constants.Colors.WHITE,
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
   icon: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: 8,
     marginHorizontal: Constants.BaseStyle.scale(20),
-    marginTop: Constants.BaseStyle.scale(20),
+    marginTop: Constants.BaseStyle.scale(10),
     paddingVertical: Constants.BaseStyle.scale(10),
   },
   location: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     color: Constants.Colors.WHITE,
   },
   rightHeading: {
-    ...Constants.Fonts.Regular,
+    ...Constants.Fonts.SmallBold,
     color: Constants.Colors.LIGHT_BLUE,
     marginRight: Constants.BaseStyle.scale(10),
   },

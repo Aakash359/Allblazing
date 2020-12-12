@@ -2,31 +2,33 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { CommonStyles, HeaderStyles } from '../styles';
+import Constants from '../constants';
 import Username from '../screens/user-profile/user-name';
 import Userage from '../screens/user-profile/user-age';
 import UserGender from '../screens/user-profile/user-gender';
 import ConnectUserType from '../screens/user-profile/connect-user-type';
 import UserPersonalBest from '../screens/user-profile/user-personal-best';
 import UserMotto from '../screens/user-profile/user-motto';
+import UserProfile from '../screens/user-profile/user-profile';
 import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
-import ChangePassword from '../screens/user-profile/change-password';
-import ContactUS from '../screens/user-profile/contact-us';
-import ChangeLanguage from '../screens/user-profile/change-language';
+import ChangePassword from '../screens/settings/change-password';
+import ContactUS from '../screens/settings/contact-us';
+import ChangeLanguage from '../screens/settings/change-language';
 import EditLocation from '../screens/user-profile/edit-location';
-import Settings from '../screens/user-profile/settings';
-import InviteFriends from '../screens/home/invite-friends';
+import Settings from '../screens/settings';
+import InviteFriends from '../screens/settings/invite-friends';
+import StravaUsers from '../screens/settings/invite-friends/strava-users';
 import Dashboard from './bottom-tabs-stack';
 import Events from '../screens/events';
 import Filter from '../screens/filter';
 import SearchScreen from '../screens/search';
-import StaticContent from '../screens/static-content';
+import StaticContent from '../screens/settings/static-content';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
-import Constants from '../constants';
-import Notification from '../screens/home/notifications';
-import FeedScreen from '../screens/discover/feed';
+import Notifications from '../screens/home/notifications';
 import FeedDetailScreen from '../screens/discover/feed-detail';
+import Runners from '../screens/home/runners';
 import LiveStream from '../screens/streams';
 
 const AppStack = createStackNavigator();
@@ -141,6 +143,18 @@ export default function MainNavigator() {
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
           )),
           headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || 'Invite Friends',
+        })}
+      />
+      <AppStack.Screen
+        name="StravaUsers"
+        component={StravaUsers}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+          headerRight: () => (route?.params?.title ? null : (
+            <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
+          )),
+          headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Strava Users',
         })}
       />
@@ -178,21 +192,8 @@ export default function MainNavigator() {
         })}
       />
       <AppStack.Screen
-        name="SearchScreen"
-        component={SearchScreen}
-        options={{
-          headerBackTitleVisible: false,
-          headerRight: () => (
-            <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
-            </View>
-          ),
-          headerTitle: 'Search',
-        }}
-      />
-      <AppStack.Screen
-        name="Notification"
-        component={Notification}
+        name="Notifications"
+        component={Notifications}
         options={{
           headerBackTitleVisible: false,
           headerRight: () => (
@@ -201,32 +202,6 @@ export default function MainNavigator() {
             </View>
           ),
           headerTitle: 'Notifications',
-        }}
-      />
-      <AppStack.Screen
-        name="FeedScreen"
-        component={FeedScreen}
-        options={{
-          headerBackTitleVisible: true,
-          headerRight: () => (
-            <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
-            </View>
-          ),
-          headerTitle: 'Feed',
-        }}
-      />
-      <AppStack.Screen
-        name="FeedDetailScreen"
-        component={FeedDetailScreen}
-        options={{
-          headerBackTitleVisible: false,
-          headerRight: () => (
-            <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
-            </View>
-          ),
-          headerTitle: 'Feed',
         }}
       />
       <AppStack.Screen
@@ -284,6 +259,71 @@ export default function MainNavigator() {
         name="LiveStream"
         component={LiveStream}
         options={options}
+      />
+      <AppStack.Screen
+        name="Runners"
+        component={Runners}
+        options={({
+          navigation, route,
+        }) => ({
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+                <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.setParams({ isMapView: !route?.params?.isMapView })}>
+                <Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} />
+              </TouchableOpacity>
+            </View>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Runners',
+        })}
+      />
+      <AppStack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            </View>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Search',
+        }}
+      />
+      <AppStack.Screen
+        name="FeedDetailScreen"
+        component={FeedDetailScreen}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            </View>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Feed Detail',
+        }}
+      />
+      <AppStack.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={({ navigation }) => ({
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.setParams({ visible: true })}>
+                <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.more} />
+              </TouchableOpacity>
+            </View>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
+        })}
       />
     </AppStack.Navigator>
   );

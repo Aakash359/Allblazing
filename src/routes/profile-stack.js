@@ -14,7 +14,7 @@ import SearchScreen from '../screens/search';
 const ProfileStack = createStackNavigator();
 
 const ProfileNavigator = () => (
-  <ProfileStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card'>
+  <ProfileStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='MyProfile'>
     <ProfileStack.Screen
       name="MyProfile"
       component={MyProfile}

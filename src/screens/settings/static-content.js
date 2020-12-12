@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import { StaticContentStyles } from '../styles';
+import { StaticContentStyles } from '../../styles';
 
 const StaticContent = () => (
   <View style={StaticContentStyles.container}>

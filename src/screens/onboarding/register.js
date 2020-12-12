@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View,
-  findNodeHandle,
   TouchableOpacity,
   Platform,
   Text,
@@ -90,8 +89,6 @@ export default class Register extends Component {
                 ref={this.emailRef}
                 keyboardType="email-address"
                 onChangeText={(text) => this.setState({ email: text })}
-                onFocus={() => this.handleScrollView(findNodeHandle(this.emailRef.current))}
-                onBlur={() => this.resetScrollView(findNodeHandle(this.emailRef.current))}
                 onSubmitEditing={() => this.passwordRef.current.focus()}
               />
               <View style={RegisterStyle.passwordInput}>
@@ -104,12 +101,6 @@ export default class Register extends Component {
                   value={password}
                   onChangeText={(text) => this.setState({ password: text })}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
-                  onFocus={() => {
-                    this.handleScrollView(findNodeHandle(this.passwordRef.current));
-                  }}
-                  onBlur={() => {
-                    this.resetScrollView(findNodeHandle(this.passwordRef.current));
-                  }}
                   onSubmitEditing={this.onContinue}
                 />
                 <TouchableOpacity onPress={() => this.setState({ isPasswordVisible: !isPasswordVisible })}>

@@ -9,10 +9,10 @@ export const InvitedUser = () => {
   return (
     <View activeOpacity={0.7} onPress={() => setCheck(!checked)} style={[InviteFriendsStyles.invitedUserContainer]}>
       <View style={[InviteFriendsStyles.userWrapper, InviteFriendsStyles.invitedUserWrapper]}>
-        <Image source={{ uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' }} style={[InviteFriendsStyles.userImage, InviteFriendsStyles.invitedUserImage]} />
+        <Image source={Constants.Images.inviteUser2} style={[InviteFriendsStyles.userImage, InviteFriendsStyles.invitedUserImage]} />
         <View>
           <Text style={[InviteFriendsStyles.username, InviteFriendsStyles.padding]}>Shane Watson</Text>
-          <Text style={[InviteFriendsStyles.location, InviteFriendsStyles.padding]}>You have invited to record the live stream</Text>
+          <Text style={InviteFriendsStyles.invitedUserDescription}>You have invited to record the live stream</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} source={Constants.Images.check} resizeMode='contain' style={[InviteFriendsStyles.pendingBtn]}>
