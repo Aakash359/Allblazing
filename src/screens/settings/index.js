@@ -24,7 +24,9 @@ const settingList = [{
 },
 {
   label: 'Invite Friends',
-  payload: { hasCheckBox: true },
+  payload: {
+    hasCheckBox: true, title: 'Invite Friends',
+  },
   route: 'InviteFriends',
 },
 {

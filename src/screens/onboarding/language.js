@@ -60,11 +60,11 @@ class Language extends Component {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={[AuthStyle.loginTouchable, { backgroundColor: locale === '' ? Constants.Colors.SECONDARY_COLOR : Constants.Colors.TEXT_COLOR2 }]}
+          style={[AuthStyle.loginTouchable, { backgroundColor: locale === null ? Constants.Colors.SECONDARY_COLOR : Constants.Colors.TEXT_COLOR2 }]}
           activeOpacity={0.7}
           onPress={() => this.onContinue()}
         >
-          <Text style={[AuthStyle.buttonText, { color: locale === '' ? Constants.Colors.TEXT_COLOR2 : Constants.Colors.TEXT_COLOR_WHITE }]}>{translate('language.Select & Continue')}</Text>
+          <Text style={[AuthStyle.buttonText, { color: locale === null ? Constants.Colors.TEXT_COLOR2 : Constants.Colors.TEXT_COLOR_WHITE }]}>{translate('language.Select & Continue')}</Text>
         </TouchableOpacity>
       </View>
     );

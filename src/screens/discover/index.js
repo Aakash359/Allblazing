@@ -5,30 +5,29 @@ import { useNavigation } from '@react-navigation/native';
 import { FollowersStyles, FeedStyles } from '../../styles';
 import Constants from '../../constants';
 
+const list = [{
+  image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+},
+{
+  image: Constants.Images.user2, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+},
+{
+  image: Constants.Images.user3, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+},
+{
+  image: Constants.Images.user4, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+},
+{
+  image: Constants.Images.user5, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+},
+{
+  image: Constants.Images.user6, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+}];
+
 function FeedScreen() {
   const navigation = useNavigation();
   const [like, setLike] = useState(false);
 
-  const list = [
-    {
-      image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-    {
-      image: Constants.Images.user2, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-    {
-      image: Constants.Images.user3, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-    {
-      image: Constants.Images.user4, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-    {
-      image: Constants.Images.user5, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-    {
-      image: Constants.Images.user6, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
-    },
-  ];
   const renderItem = ({ item }) => (
     <View>
       <TouchableOpacity
@@ -98,6 +97,7 @@ function FeedScreen() {
           renderItem={filterData}
           horizontal
           showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => `1-${index}`}
         />
         <FlatList
           // style={MyProfileStyles.sectionMainView}
@@ -105,6 +105,7 @@ function FeedScreen() {
           contentContainerStyle={FollowersStyles.flatList}
           data={list}
           renderItem={renderItem}
+          keyExtractor={(item, index) => `2-${index}`}
         />
       </ScrollView>
 

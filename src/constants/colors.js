@@ -42,7 +42,7 @@ const Colors = {
   TEXT_COLOR: '#909090',
   TEXT_COLOR2: '#636363',
   TEXT_COLOR_WHITE: '#ECECEC',
-  TRANSLUCENT: 'rgba(0,0,0,.7)',
+  TRANSLUCENT: 'rgba(0,0,0,.3)',
   TRANSPARENT: 'transparent',
   WARNING: '#FFFF00',
   WHITE: '#FFFFFF',

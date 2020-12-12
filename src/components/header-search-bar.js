@@ -17,7 +17,7 @@ function SearchBar() {
         <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('SearchScreen')}>
           <Image resizeMode='contain' style={HeaderStyles.searchIcon} source={Constants.Images.search} />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Notification')}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Notifications')}>
           <Image resizeMode='contain' style={HeaderStyles.notificationIcon} source={Constants.Images.notifications} />
         </TouchableOpacity>
       </View>

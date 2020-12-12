@@ -33,7 +33,7 @@ const MoreOptionsPopup = ({
         )}
         { hasBlockBtn && (
           <>
-            <View style={CommonStyles.divider} />
+            {hasUnFollowBtn && <View style={CommonStyles.divider} />}
             <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
               <Image source={Constants.Images.block} style={PopupStyles.blockIcon} />
               <View>
@@ -45,7 +45,7 @@ const MoreOptionsPopup = ({
         )}
         {hasReportBtn && (
           <>
-            <View style={CommonStyles.divider} />
+            {hasBlockBtn && <View style={CommonStyles.divider} />}
             <TouchableOpacity activeOpacity={0.7} onPress={onReport} style={PopupStyles.blockBtn}>
               <Image source={Constants.Images.report} style={PopupStyles.reportIcon} />
               <View>

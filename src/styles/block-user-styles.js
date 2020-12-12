@@ -7,6 +7,7 @@ export default StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(40),
   },
   saveBtn: { marginTop: Constants.BaseStyle.scale(250) },
+  saveBtnColor: { backgroundColor: Constants.Colors.SECONDARY_COLOR },
   saveBtnWithTextInput: { marginTop: Constants.BaseStyle.scale(30) },
   subtitle: {
     ...Constants.Fonts.Regular,
