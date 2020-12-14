@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import { BottomTab } from '../components';
 import Constants from '../constants';
+import { BottomTabsStyles } from '../styles';
 import ChatStack from './chat-stack';
 import CreatePostStack from './create-post-stack';
 import DiscoverStack from './discover-stack';
 import HomeNavigator from './home-stack';
 import ProfileStack from './profile-stack';
-import { BottomTabsStyles } from '../styles';
 
 const Tab = createBottomTabNavigator();
 

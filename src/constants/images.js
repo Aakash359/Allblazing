@@ -7,6 +7,7 @@ const Images = {
   addUser: require('../assets/add-user.png'),
   arrowLeft: require('../assets/arrow_left.png'),
   arrowRight: require('../assets/arrow_right.png'),
+  back: require('../assets/back.png'),
   block: require('../assets/block.png'),
   blueLocation: require('../assets/blue-location.png'),
   calendar: require('../assets/calendar.png'),
@@ -39,6 +40,7 @@ const Images = {
   imageGallery: require('../assets/imageGallery.png'),
   imageIcon: require('../assets/imageIcon.png'),
   insta: require('../assets/insta2x.png'),
+
   intro1: require('../assets/w1_img.png'),
   intro2: require('../assets/w2_img.png'),
   intro3: require('../assets/w3_img.png'),
@@ -71,6 +73,8 @@ const Images = {
   runners: require('../assets/runners.png'),
   search: require('../assets/search.png'),
   selectedHeart: require('../assets/selectedHeart.png'),
+  send: require('../assets/send.png'),
+
   settings: require('../assets/settings.png'),
   share: require('../assets/share.png'),
   slectLangLogo2x: require('../assets/slectLangLogo2x.png'),
