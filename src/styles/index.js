@@ -40,10 +40,17 @@ import FeedDetailStyles from './feed-detail-styles';
 import SettingStyles from './setting-styles';
 import BlockUserStyles from './block-user-styles';
 import StreamStyles from './stream-styles';
+import LiveFeedStyles from './live-feed-styles';
+import CreateGroupStyles from './create-group-styles';
+import AddMemberStyles from './add-member-styles';
+import CreateNewStyles from './create-new-styles';
+import CreateEventStyles from './create-event-styles';
+import CreatePostStyles from './create-post-styles';
 import InvitePopupStyles from './invite-popup-styles';
 
 export {
   RunnersStyles,
+  AddMemberStyles,
   ProfileStyles,
   MyProfileStyles,
   SectionStyles,
@@ -59,6 +66,10 @@ export {
   BottomTabsStyles,
   CommonStyles,
   ConnectUserTypeStyles,
+  CreateGroupStyles,
+  CreatePostStyles,
+  CreateNewStyles,
+  CreateEventStyles,
   ContactUSStyles,
   DistanceStyles,
   EventDetailStyles,
@@ -75,6 +86,7 @@ export {
   LanguageStyles,
   LocationStyles,
   LoginStyles,
+  LiveFeedStyles,
   MapViewStyles,
   MottoStyles,
   OTPStyles,
