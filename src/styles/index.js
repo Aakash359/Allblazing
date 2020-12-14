@@ -39,6 +39,7 @@ import FeedStyles from './feed-styles';
 import FeedDetailStyles from './feed-detail-styles';
 import SettingStyles from './setting-styles';
 import BlockUserStyles from './block-user-styles';
+import ChatStyles from './chat-styles';
 import StreamStyles from './stream-styles';
 import LiveFeedStyles from './live-feed-styles';
 import CreateGroupStyles from './create-group-styles';
@@ -64,6 +65,7 @@ export {
   AuthStyle,
   BlockUserStyles,
   BottomTabsStyles,
+  ChatStyles,
   CommonStyles,
   ConnectUserTypeStyles,
   CreateGroupStyles,
@@ -98,4 +100,5 @@ export {
   Repeat5KStyles,
   UsernameStyle,
   WelcomeStyles,
+
 };

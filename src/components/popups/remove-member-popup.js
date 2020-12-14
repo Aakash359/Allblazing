@@ -5,15 +5,15 @@ import Constants from '../../constants';
 import { AuthStyle, PopupStyles, OTPStyles } from '../../styles';
 import AnimatedModal from '../animate-modal';
 
-const LogoutPopup = ({
+const RemoveMemberPopup = ({
   onCancel, onLogout,
 }) => (
 
   <AnimatedModal visible>
     <View style={PopupStyles.container}>
       <View style={PopupStyles.wrapper}>
-        <Text style={PopupStyles.header}>{'Logout'}</Text>
-        <Text style={PopupStyles.subHeader}>{'Are you sure you want to logout?'}</Text>
+        <Text style={PopupStyles.header}>{'Remove Memeber'}</Text>
+        <Text style={PopupStyles.subHeader}>{'Are you sure you want to remove this member?'}</Text>
         <TouchableOpacity
           style={[AuthStyle.loginTouchable, {
             backgroundColor: Constants.Colors.TEXT_COLOR2, width: Constants.BaseStyle.scale(200),
@@ -31,9 +31,9 @@ const LogoutPopup = ({
   </AnimatedModal>
 );
 
-LogoutPopup.propTypes = {
+RemoveMemberPopup.propTypes = {
   onCancel: func.isRequired,
   onLogout: func.isRequired,
 };
 
-export default LogoutPopup;
+export default RemoveMemberPopup;

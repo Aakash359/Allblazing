@@ -374,6 +374,7 @@ export const LoginStyles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginBottom: Constants.BaseStyle.scale(30),
     marginHorizontal: Constants.BaseStyle.scale(10),
+
     ...Constants.Fonts.Regular,
   },
   loginText: {
@@ -433,6 +434,7 @@ export const LoginStyles = StyleSheet.create({
     height: Constants.BaseStyle.scale(40),
     width: Constants.BaseStyle.scale(40),
   },
+
   socialIconsWrapper: {
     alignItems: 'center',
     flexDirection: 'row',

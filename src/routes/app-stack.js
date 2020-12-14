@@ -26,8 +26,9 @@ import SearchScreen from '../screens/search';
 import StaticContent from '../screens/settings/static-content';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
-import Notifications from '../screens/home/notifications';
+
 import FeedDetailScreen from '../screens/discover/feed-detail';
+import Notifications from '../screens/home/notifications';
 import Runners from '../screens/home/runners';
 import LiveStream from '../screens/streams';
 

@@ -12,6 +12,20 @@ export default StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
     width: '90%',
   },
+  chatCount: {
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: Constants.BaseStyle.scale(13),
+    height: Constants.BaseStyle.scale(26),
+    justifyContent: 'center',
+    margin: Constants.BaseStyle.scale(10),
+    width: Constants.BaseStyle.scale(26),
+
+  },
+  chatText: {
+    ...Constants.Fonts.RegularBold,
+    color: Constants.Colors.WHITE,
+    textAlign: 'center',
+  },
   code: {
     ...Constants.Fonts.LargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
