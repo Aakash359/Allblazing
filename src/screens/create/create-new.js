@@ -6,7 +6,7 @@ import Constants from '../../constants';
 import { HomeStyles, CreateNewStyles } from '../../styles';
 import { HeaderSearchBar, SingleEvent } from '../../components';
 
-class Home extends React.Component {
+class CreateNew extends React.Component {
   constructor(props) {
     super(props);
 
@@ -94,7 +94,7 @@ class Home extends React.Component {
                 <Text style={CreateNewStyles.modalText}>{'Create Post'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => navigate('LiveFeed')}
                 style={CreateNewStyles.tagView}
               >
                 <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />
@@ -108,11 +108,11 @@ class Home extends React.Component {
   }
 }
 
-Home.propTypes = {
+CreateNew.propTypes = {
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
 };
 
-export default Home;
+export default CreateNew;

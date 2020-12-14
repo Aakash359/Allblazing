@@ -7,12 +7,13 @@ import CreateNew from '../screens/create/create-new';
 import CreateGroup from '../screens/create/create-group';
 import AddMember from '../screens/create/add-member';
 import CreateEvent from '../screens/create/create-event';
+import LiveFeed from '../screens/discover/live-feed';
 import CreatePost from '../screens/create/create-post';
 
 const CreatePostStack = createStackNavigator();
 
 const CreatePostNavigator = () => (
-  <CreatePostStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='CreatePost'>
+  <CreatePostStack.Navigator keyboardHandlingEnabled headerMode='screen' mode='card' initialRouteName='CreateNew'>
     <CreatePostStack.Screen
       name="CreateNew"
       component={CreateNew}
@@ -20,7 +21,7 @@ const CreatePostNavigator = () => (
         headerBackTitleVisible: false,
         headerShown: false,
         headerTintColor: Constants.Colors.WHITE,
-        headerTitle: 'CreateNew',
+        headerTitle: 'Create New',
       }}
     />
     <CreatePostStack.Screen
@@ -29,7 +30,7 @@ const CreatePostNavigator = () => (
       options={() => ({
         headerBackTitleVisible: false,
         headerTintColor: Constants.Colors.WHITE,
-        headerTitle: 'Create Post',
+        headerTitle: 'Create Group',
       })}
     />
     <CreatePostStack.Screen
@@ -63,6 +64,15 @@ const CreatePostNavigator = () => (
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Create Post',
       })}
+    />
+    <CreatePostStack.Screen
+      name="LiveFeed"
+      component={LiveFeed}
+      options={{
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: 'Live',
+      }}
     />
   </CreatePostStack.Navigator>
 );

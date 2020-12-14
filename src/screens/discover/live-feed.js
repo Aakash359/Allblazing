@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
+import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView } from 'react-native';
 import { LiveFeedStyles } from '../../styles';
 import Constants from '../../constants';
 
@@ -40,8 +40,7 @@ function LiveFeed() {
   );
 
   return (
-    <View style={LiveFeedStyles.container}>
-      {/* <View style={LiveFeedStyles.mainView}> */}
+    <ScrollView style={[LiveFeedStyles.container]}>
       <View>
         <ImageBackground
           source={Constants.Images.liveImg}
@@ -103,7 +102,7 @@ function LiveFeed() {
         data={comment}
         renderItem={renderItem}
       />
-    </View>
+    </ScrollView>
   );
 }
 
