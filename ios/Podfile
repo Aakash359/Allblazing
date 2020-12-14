@@ -16,7 +16,7 @@ target 'RunFast' do
   pod 'Google-Maps-iOS-Utils'
   pod 'Flipper-Folly', '~> 2.2.0'
 
-  
+
   target 'RunFastTests' do
     inherit! :complete
     # Pods for testing
