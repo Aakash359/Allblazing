@@ -32,7 +32,7 @@ function FeedScreen() {
     <View>
       <TouchableOpacity
         style={[FollowersStyles.sectionView]}
-        onPress={() => { navigation.navigate('FeedDetailScreen', { data: item }); }}
+        onPress={() => { navigation.navigate('FeedDetailScreen'); }}
       >
         <View style={[FeedStyles.listView]}>
           <View style={FeedStyles.innerView}>
@@ -74,18 +74,15 @@ function FeedScreen() {
   );
 
   const filterData = ({ item }) => (
-    // <View style={}>
     <TouchableOpacity
       style={[FeedStyles.optionalSectionView]}
-      // onPress={() => { setFilter(item); }}
+      onPress={() => { navigation.navigate('LiveFeed'); }}
     >
       <Image
         source={item.image}
         style={FeedStyles.userImage}
       />
-      {/* <Text style={FeedStyles.optionalSection1}>{item.image}</Text> */}
     </TouchableOpacity>
-    // </View>
   );
 
   return (

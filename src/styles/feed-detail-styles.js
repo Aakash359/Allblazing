@@ -7,6 +7,11 @@ const {
 } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  arrowLeft: {
+    height: 20,
+    marginRight: 26,
+    width: 10,
+  },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
@@ -21,6 +26,7 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     height: 16,
+    marginRight: 6,
     width: 18,
   },
   heartView: {
