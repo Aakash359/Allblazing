@@ -9,6 +9,7 @@ import AddMember from '../screens/create/add-member';
 import CreateEvent from '../screens/create/create-event';
 import LiveFeed from '../screens/discover/live-feed';
 import CreatePost from '../screens/create/create-post';
+import GroupDetail from '../screens/chatsGroups/group-detail';
 
 const CreatePostStack = createStackNavigator();
 
@@ -72,6 +73,15 @@ const CreatePostNavigator = () => (
         headerBackTitleVisible: false,
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Live',
+      }}
+    />
+    <CreatePostStack.Screen
+      name="GroupDetail"
+      component={GroupDetail}
+      options={{
+        headerBackTitleVisible: false,
+        headerTintColor: Constants.Colors.WHITE,
+        headerTitle: '',
       }}
     />
   </CreatePostStack.Navigator>

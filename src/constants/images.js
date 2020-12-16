@@ -3,6 +3,7 @@
 
 const Images = {
   Screenshot: require('../assets/Screenshot.png'),
+  add: require('../assets/add.png'),
   addFriend: require('../assets/addFriend.png'),
   addUser: require('../assets/add-user.png'),
   arrowLeft: require('../assets/arrow_left.png'),
@@ -35,6 +36,7 @@ const Images = {
   goal2: require('../assets/goal2.png'),
   goal3: require('../assets/goal3.png'),
   greenLocation: require('../assets/green-location.png'),
+  groupDetails: require('../assets/groupDetails.png'),
   health: require('../assets/health.png'),
   heart: require('../assets/heart.png'),
   imageGallery: require('../assets/imageGallery.png'),

@@ -6,22 +6,22 @@ import { FollowersStyles, FeedStyles } from '../../styles';
 import Constants from '../../constants';
 
 const list = [{
-  image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 },
 {
-  image: Constants.Images.user2, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user2, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 },
 {
-  image: Constants.Images.user3, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user3, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 },
 {
-  image: Constants.Images.user4, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user4, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 },
 {
-  image: Constants.Images.user5, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user5, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 },
 {
-  image: Constants.Images.user6, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+  image: Constants.Images.user6, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
 }];
 
 function FeedScreen() {

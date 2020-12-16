@@ -11,7 +11,7 @@ function FeedDetailScreen() {
 
   const list = [
     {
-      image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 AM',
+      image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
     },
   ];
   const renderItem = ({ item }) => (

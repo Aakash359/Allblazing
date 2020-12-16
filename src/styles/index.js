@@ -48,6 +48,7 @@ import CreateNewStyles from './create-new-styles';
 import CreateEventStyles from './create-event-styles';
 import CreatePostStyles from './create-post-styles';
 import InvitePopupStyles from './invite-popup-styles';
+import GroupDetailStyles from './group-detail-styles';
 
 export {
   RunnersStyles,
@@ -75,6 +76,7 @@ export {
   ContactUSStyles,
   DistanceStyles,
   EventDetailStyles,
+  GroupDetailStyles,
   EventMapStyles,
   FilterStyles,
   ForgotPassStyles,
