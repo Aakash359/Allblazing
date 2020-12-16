@@ -49,15 +49,15 @@ class OTP extends Component {
               this.setState({ otp: code });
             }}
           />
-          <View style={OTPStyles.buttonsWrapper}>
-            <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} activeOpacity={0.7} onPress={this.onVerify}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={OTPStyles.button} onPress={() => {}}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
-            </TouchableOpacity>
-          </View>
         </KeyboardAwareScrollView>
+        <View style={OTPStyles.buttonsWrapper}>
+          <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} activeOpacity={0.7} onPress={this.onVerify}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={OTPStyles.button} onPress={() => {}}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

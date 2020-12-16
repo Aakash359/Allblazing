@@ -9,7 +9,8 @@ export default StyleSheet.create({
     borderRadius: Constants.BaseStyle.scale(6),
     height: Constants.BaseStyle.scale(45),
     justifyContent: 'center',
-    marginTop: Constants.BaseStyle.scale(20),
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
     width: '90%',
   },
   chatCount: {
@@ -19,7 +20,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     margin: Constants.BaseStyle.scale(10),
     width: Constants.BaseStyle.scale(26),
-
   },
   chatText: {
     ...Constants.Fonts.RegularBold,
@@ -54,6 +54,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   homeInviteBtn: {
+    marginBottom: Constants.BaseStyle.scale(10),
     marginTop: Constants.BaseStyle.scale(0),
     width: Constants.BaseStyle.scale(300),
   },
@@ -67,7 +68,10 @@ export default StyleSheet.create({
     marginHorizontal: Constants.BaseStyle.scale(20),
     width: Constants.BaseStyle.scale(20),
   },
-  inviteBtn: { marginTop: Constants.BaseStyle.scale(160) },
+  inviteBtn: {
+    marginBottom: Constants.BaseStyle.scale(10),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
   invitedUserContainer: {
     alignItems: 'center',
     flexDirection: 'row',

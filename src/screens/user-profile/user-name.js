@@ -35,32 +35,32 @@ class Username extends Component {
               {!params?.isEditMode && <Text style={UsernameStyle.input}>{'What\'s your Name?'}</Text>}
               <InputField value={name} placeholder="Full Name" onChangeText={(text) => this.setState({ name: text })} />
             </View>
-            <View style={UsernameStyle.buttonsWrapper}>
-              {params?.isEditMode ? (
-                <TouchableOpacity activeOpacity={0.7} style={AuthStyle.saveBtn} onPress={() => goBack()}>
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-                </TouchableOpacity>
-              ) : (
-                <View style={UsernameStyle.buttons}>
-                  <TouchableOpacity
-                    style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                    activeOpacity={0.7}
-                    onPress={() => goBack()}
-                  >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={AuthStyle.introButton}
-                    activeOpacity={0.7}
-                    onPress={() => navigate('Userage')}
-                  >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
           </View>
         </ScrollView>
+        <View style={UsernameStyle.buttonsWrapper}>
+          {params?.isEditMode ? (
+            <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, UsernameStyle.saveBtn]} onPress={() => goBack()}>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={UsernameStyle.buttons}>
+              <TouchableOpacity
+                style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+                activeOpacity={0.7}
+                onPress={() => goBack()}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={AuthStyle.introButton}
+                activeOpacity={0.7}
+                onPress={() => navigate('Userage')}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
       </View>
     );
   }

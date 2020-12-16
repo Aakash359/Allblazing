@@ -41,11 +41,11 @@ class Home extends React.Component {
           {this.renderHeader({
             navigate, payload: { hasCheckBox: true }, route: 'Runners', title: 'Runners Near Me',
           })}
-          <FlatList
+          {/* <FlatList
             data={[]}
             renderItem={({ item }) => <InviteFriend image={item} />}
             keyExtractor={(item, index) => `${index}`}
-          />
+          /> */}
           <Invite source='home' navigation={navigation} />
         </ScrollView>
       </View>

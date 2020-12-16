@@ -11,7 +11,7 @@ import GoalScreen from './goals-screen';
 function MyProfile() {
   const navigation = useNavigation();
   const [option, setOption] = useState('Goals');
-  const optionList = ['Goals', 'PB`s', 'Likes'];
+  const optionList = ['Goals', 'PB\'s', 'Likes'];
 
   const renderItem = ({ item }) => (
     // <View style={}>
@@ -28,7 +28,7 @@ function MyProfile() {
     if (data === 'Goals') {
       return <GoalScreen />;
     }
-    if (data === 'PB`s') {
+    if (data === 'PB\'s') {
       return <PBScreen />;
     }
     if (data === 'Likes') {

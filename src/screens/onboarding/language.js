@@ -72,7 +72,7 @@ class Language extends Component {
 }
 
 Language.propTypes = {
-  locale: string.isRequired,
+  locale: string,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
@@ -80,6 +80,8 @@ Language.propTypes = {
   setLanguage: func.isRequired,
   t: func.isRequired,
 };
+
+Language.defaultProps = { locale: null };
 
 const LanguageWithTranslation = withTranslation()(Language);
 

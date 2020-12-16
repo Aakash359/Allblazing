@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   centerItems: {
     alignItems: 'center',
     flex: 0.9,
-    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(35),
   },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,

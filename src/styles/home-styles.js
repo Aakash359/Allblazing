@@ -126,9 +126,7 @@ const styles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginBottom: Constants.BaseStyle.scale(10),
     paddingHorizontal: Constants.BaseStyle.scale(10),
-
   },
-
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
@@ -167,14 +165,21 @@ const styles = StyleSheet.create({
     color: Constants.Colors.TEXT_COLOR_WHITE,
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
-
   icon: {
-    height: 25, width: 25,
+    height: 20, width: 20,
   },
   iconText: {
     ...Constants.Fonts.Small,
     color: Constants.Colors.WHITE,
     paddingHorizontal: Constants.BaseStyle.scale(5),
+  },
+  iconWrapper: {
+    alignItems: 'center',
+    backgroundColor: Constants.Colors.GREY_CIRCLE,
+    borderRadius: 12.5,
+    height: 25,
+    justifyContent: 'center',
+    width: 25,
   },
   icons: {
     alignItems: 'center',

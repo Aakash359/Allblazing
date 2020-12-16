@@ -45,13 +45,12 @@ class BlockUser extends React.Component {
           {blockReportReasons.map((t) => (
             <TouchableOpacity
               key={t.value}
-              style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}
+              style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow, BlockUserStyles.button, t.value === 'Other' && reason === 'Other' && BlockUserStyles.otherBtn]}
               activeOpacity={0.7}
               onPress={() => this.setState({ reason: t.value })}
             >
-              <Text style={AuthStyle.buttonText}>{'     '}</Text>
-              <Text style={[AuthStyle.buttonLanguageText, reason === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
-              {reason === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
+              <Text style={[AuthStyle.buttonLanguageText, BlockUserStyles.buttonText, reason === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
+              {reason === t.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, BlockUserStyles.select]} />}
             </TouchableOpacity>
           ))}
           {reason === 'Other' && (
@@ -68,14 +67,14 @@ class BlockUser extends React.Component {
               />
             </View>
           )}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={[AuthStyle.saveBtn, reason == null && BlockUserStyles.saveBtnColor, reason === 'Other' ? BlockUserStyles.saveBtnWithTextInput : BlockUserStyles.saveBtn]}
-            onPress={() => goBack()}
-          >
-            <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{'Save'}</Text>
-          </TouchableOpacity>
         </KeyboardAwareScrollView>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={[AuthStyle.saveBtn, reason == null && BlockUserStyles.saveBtnColor, BlockUserStyles.saveBtn]}
+          onPress={() => goBack()}
+        >
+          <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{'Submit'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

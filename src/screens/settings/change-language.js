@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Image, View, TouchableOpacity, Text } from 'react-native';
+import { Platform, ScrollView, Image, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles, LanguageStyles, UsernameStyle } from '../../styles';
+import { AuthStyle, CommonStyles, ChangePassStyles, UsernameStyle } from '../../styles';
 
 const languages = [{
   label: 'English',
@@ -28,25 +28,33 @@ class ChangeLanguage extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <View style={UsernameStyle.wrapper}>
-          <View style={UsernameStyle.inputWrapper}>
-            {languages.map((t) => (
-              <TouchableOpacity
-                key={t.value}
-                style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}
-                activeOpacity={0.7}
-                onPress={() => this.onChange(t.value)}
-              >
-                <Text style={AuthStyle.buttonText}>{'     '}</Text>
-                <Text style={[AuthStyle.buttonLanguageText, language === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
-                {language === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
-              </TouchableOpacity>
-            ))}
+        <ScrollView
+          scrollEnabled
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
+          keyboardShouldPersistTaps="always"
+        >
+          <View style={UsernameStyle.wrapper}>
+            <View style={UsernameStyle.inputWrapper}>
+              {languages.map((t) => (
+                <TouchableOpacity
+                  key={t.value}
+                  style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}
+                  activeOpacity={0.7}
+                  onPress={() => this.onChange(t.value)}
+                >
+                  <Text style={AuthStyle.buttonText}>{'     '}</Text>
+                  <Text style={[AuthStyle.buttonLanguageText, language === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
+                  {language === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, LanguageStyles.saveBtn]} onPress={() => goBack()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
+        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, ChangePassStyles.saveBtn]} onPress={() => goBack()}>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -36,11 +36,11 @@ class EditLocation extends Component {
                 <AntIcon name="down" size={25} color="#5EC2CA" />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, LocationStyles.saveBtn]} onPress={() => goBack()}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
+        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, LocationStyles.saveBtn]} onPress={() => goBack()}>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

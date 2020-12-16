@@ -1,6 +1,7 @@
 import { AuthStyle,
   ContactUSStyles,
   ConnectUserTypeStyles,
+  ChangePassStyles,
   ForgotPassStyles,
   GenderStyles,
   OTPStyles,
@@ -102,5 +103,5 @@ export {
   Repeat5KStyles,
   UsernameStyle,
   WelcomeStyles,
-
+  ChangePassStyles,
 };

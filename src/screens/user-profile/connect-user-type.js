@@ -56,26 +56,26 @@ class ConnectUserType extends Component {
                 {type === 'race' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
               </TouchableOpacity>
             </View>
-            <View style={ConnectUserTypeStyles.buttonsWrapper}>
-              <View style={ConnectUserTypeStyles.buttons}>
-                <TouchableOpacity
-                  style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                  activeOpacity={0.7}
-                  onPress={() => goBack()}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={AuthStyle.introButton}
-                  activeOpacity={0.7}
-                  onPress={this.onPressNext}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
           </View>
         </ScrollView>
+        <View style={ConnectUserTypeStyles.buttonsWrapper}>
+          <View style={ConnectUserTypeStyles.buttons}>
+            <TouchableOpacity
+              style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+              activeOpacity={0.7}
+              onPress={() => goBack()}
+            >
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={AuthStyle.introButton}
+              activeOpacity={0.7}
+              onPress={this.onPressNext}
+            >
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }

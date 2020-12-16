@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -47,40 +47,47 @@ class Userage extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <View style={UsernameStyle.wrapper}>
-          {!params?.isEditMode && <StepBar count={5} selected={[0, 1]} />}
-          <View style={UsernameStyle.inputWrapper}>
-            {!params?.isEditMode && <Text style={UsernameStyle.input}>{'How old are you?'}</Text>}
-            <TouchableOpacity activeOpacity={1} style={UsernameStyle.ageButton} onPress={() => this.setState({ visible: true })}>
-              <Text style={age ? UsernameStyle.age : UsernameStyle.ageBlur}>{age || 'Age'}</Text>
-              <AntIcon name="down" size={25} color="#5EC2CA" />
-            </TouchableOpacity>
-          </View>
-          {params?.isEditMode ? (
-            <TouchableOpacity activeOpacity={0.7} style={AuthStyle.saveBtn} onPress={() => goBack()}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-            </TouchableOpacity>
-          ) : (
-            <View style={UsernameStyle.buttonsWrapper}>
-              <View style={UsernameStyle.buttons}>
-                <TouchableOpacity
-                  style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                  activeOpacity={0.7}
-                  onPress={() => goBack()}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={AuthStyle.introButton}
-                  activeOpacity={0.7}
-                  onPress={() => navigate('ConnectUserType')}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                </TouchableOpacity>
-              </View>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
+          keyboardShouldPersistTaps="always"
+        >
+          <View style={UsernameStyle.wrapper}>
+            {!params?.isEditMode && <StepBar count={5} selected={[0, 1]} />}
+            <View style={UsernameStyle.inputWrapper}>
+              {!params?.isEditMode && <Text style={UsernameStyle.input}>{'How old are you?'}</Text>}
+              <TouchableOpacity activeOpacity={1} style={UsernameStyle.ageButton} onPress={() => this.setState({ visible: true })}>
+                <Text style={age ? UsernameStyle.age : UsernameStyle.ageBlur}>{age || 'Age'}</Text>
+                <AntIcon name="down" size={25} color="#5EC2CA" />
+              </TouchableOpacity>
             </View>
-          )}
-        </View>
+          </View>
+        </ScrollView>
+        {params?.isEditMode ? (
+          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, UsernameStyle.saveBtn]} onPress={() => goBack()}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={UsernameStyle.buttonsWrapper}>
+            <View style={UsernameStyle.buttons}>
+              <TouchableOpacity
+                style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+                activeOpacity={0.7}
+                onPress={() => goBack()}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={AuthStyle.introButton}
+                activeOpacity={0.7}
+                onPress={() => navigate('ConnectUserType')}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
         {visible && (
           <AgePicker
             selectedValue={age}

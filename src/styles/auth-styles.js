@@ -184,10 +184,14 @@ export const UsernameStyle = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: Constants.BaseStyle.scale(15),
     marginHorizontal: Constants.BaseStyle.scale(20),
-    marginTop: Constants.BaseStyle.scale(400),
+    marginTop: Constants.BaseStyle.scale(10),
   },
-  buttonsWrapper: { flexDirection: 'column-reverse' },
+  buttonsWrapper: {
+    flexDirection: 'column-reverse',
+    marginTop: (Constants.BaseStyle.DEVICE_HEIGHT / 100) * 0,
+  },
   input: {
     ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
@@ -200,8 +204,13 @@ export const UsernameStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
   wrapper: {
-    flex: 1, marginBottom: Constants.BaseStyle.scale(50), marginTop: Constants.BaseStyle.scale(20),
+    flex: 1,
+    marginTop: Constants.BaseStyle.scale(20),
   },
 });
 
@@ -229,7 +238,8 @@ export const ConnectUserTypeStyles = StyleSheet.create({
   },
   buttonsWrapper: {
     flexDirection: 'column-reverse',
-    marginTop: Constants.BaseStyle.scale(320),
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
   },
   input: {
     ...Constants.Fonts.ExtraLargeBold,
@@ -258,16 +268,21 @@ export const Repeat5KStyles = StyleSheet.create({
   },
   buttonsWrapper: {
     flexDirection: 'column-reverse',
-    marginTop: Constants.BaseStyle.scale(70),
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(0),
   },
   header: { width: '80%' },
-  saveBtn: { marginTop: Constants.BaseStyle.scale(200) },
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
 });
 
 export const DistanceStyles = StyleSheet.create({
   buttonsWrapper: {
     flexDirection: 'column-reverse',
-    marginTop: Constants.BaseStyle.scale(100),
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(0),
   },
 });
 
@@ -296,21 +311,23 @@ export const WelcomeStyles = StyleSheet.create({
   headerText: {
     ...Constants.Fonts.ExtraLargeBold,
     fontSize: 42,
-    paddingVertical: Constants.BaseStyle.scale(10),
+    paddingTop: Constants.BaseStyle.scale(10),
   },
   headerWrapper: {
     alignItems: 'center', justifyContent: 'center', marginBottom: Constants.BaseStyle.scale(30),
   },
   leftImage: {
-    alignSelf: 'flex-start', height: Constants.BaseStyle.scale(80),
+    alignSelf: 'flex-start',
+    height: Constants.BaseStyle.scale(60),
   },
   rightImage: {
-    alignSelf: 'flex-end', height: Constants.BaseStyle.scale(80),
+    alignSelf: 'flex-end',
+    height: Constants.BaseStyle.scale(60),
   },
   subHeaderText: {
     ...Constants.Fonts.ExtraLargeBold,
     fontSize: 28,
-    paddingVertical: Constants.BaseStyle.scale(10),
+    paddingTop: Constants.BaseStyle.scale(0),
   },
   wrapper: {
     alignItems: 'center', flex: 0.9, justifyContent: 'center', marginTop: Constants.BaseStyle.scale(30),
@@ -321,7 +338,10 @@ export const OTPStyles = StyleSheet.create({
   button: {
     alignItems: 'center', margin: Constants.BaseStyle.scale(10),
   },
-  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(360) },
+  buttonsWrapper: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
   header: {
     marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
   },
@@ -348,7 +368,6 @@ export const LoginStyles = StyleSheet.create({
     color: Constants.Colors.TEXT_COLOR,
     ...Constants.Fonts.Regular,
   },
-
   accountWrapper: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -374,8 +393,11 @@ export const LoginStyles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginBottom: Constants.BaseStyle.scale(30),
     marginHorizontal: Constants.BaseStyle.scale(10),
-
     ...Constants.Fonts.Regular,
+  },
+  loginBtn: {
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    marginTop: Constants.BaseStyle.scale(0),
   },
   loginText: {
     color: Constants.Colors.WHITE,
@@ -443,17 +465,30 @@ export const LoginStyles = StyleSheet.create({
     marginVertical: Constants.BaseStyle.scale(30),
   },
   wrapper: {
-    flex: 0.9, marginTop: Constants.BaseStyle.scale(80),
+    flex: 0.9,
+    paddingTop: Constants.BaseStyle.scale(60),
   },
 });
 
 export const LocationStyles = StyleSheet.create({
-  buttonsWrapper: { marginTop: Constants.BaseStyle.scale(50) },
+  button: {
+    alignItems: 'center',
+    marginTop: Constants.BaseStyle.scale(20),
+  },
+  buttonsWrapper: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(0),
+  },
+  container: {
+    marginBottom: 0,
+    marginTop: Constants.BaseStyle.scale(20),
+  },
   currentLocationText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     marginLeft: Constants.BaseStyle.scale(10),
   },
+  inputWrapper: { marginTop: Constants.BaseStyle.scale(40) },
   location: { justifyContent: 'flex-start' },
   locationIcon: {
     height: 25, width: 26,
@@ -469,15 +504,42 @@ export const LocationStyles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.PRIVCYTEXT,
   },
-  saveBtn: { marginTop: Constants.BaseStyle.scale(350) },
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
 });
 
-export const GenderStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(400) } });
+export const GenderStyles = StyleSheet.create({
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
+});
 
-export const MottoStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(350) } });
+export const MottoStyles = StyleSheet.create({
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
+});
 
 export const ContactUSStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(300) } });
 
-export const LanguageStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(450) } });
+export const LanguageStyles = StyleSheet.create({
+  centerItems: {
+    alignItems: 'center',
+    flex: 0.9,
+    marginTop: Constants.BaseStyle.scale(100),
+  },
+  saveBtn: { marginTop: Constants.BaseStyle.scale(450) },
+});
+
+export const ChangePassStyles = StyleSheet.create({
+  saveBtn: {
+    marginBottom: Constants.BaseStyle.scale(15),
+    marginTop: Constants.BaseStyle.scale(10),
+  },
+});
 
 export default AuthStyle;

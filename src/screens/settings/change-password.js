@@ -76,6 +76,7 @@ export default class ChangePassword extends Component {
     return (
       <View style={CommonStyles.container}>
         <ScrollView
+          scrollEnabled
           ref={this.scrollViewRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -89,7 +90,7 @@ export default class ChangePassword extends Component {
                 ref={this.passwordRef}
                 style={RegisterStyle.password}
                 returnKeyType="next"
-                placeholder="Password"
+                placeholder="Old Password"
                 secureTextEntry={!visiblePasswords.includes('password')}
                 value={password}
                 onChangeText={(text) => this.setState({ password: text })}

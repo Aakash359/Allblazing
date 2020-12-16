@@ -57,20 +57,15 @@ class Login extends Component {
 
     return (
       <View style={CommonStyles.container}>
-        <View style={LoginStyles.wrapper}>
-          <ScrollView
-            style={LoginStyles.scollWrapper}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-            keyboardShouldPersistTaps="always"
-          >
 
-            <Image
-              source={Constants.Images.slectLangLogo2x}
-              resizeMode='contain'
-              style={LoginStyles.logo}
-            />
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
+          keyboardShouldPersistTaps="always"
+        >
+          <View style={LoginStyles.wrapper}>
+            <Image source={Constants.Images.slectLangLogo2x} resizeMode='contain' style={LoginStyles.logo} />
             <View>
               <InputField value={email} placeholder="Email" onChangeText={(text) => this.setState({ email: text })} />
               <View style={LoginStyles.passwordInput}>
@@ -121,7 +116,7 @@ class Login extends Component {
               </View>
 
               <TouchableOpacity
-                style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+                style={[AuthStyle.loginTouchable, LoginStyles.loginBtn]}
                 activeOpacity={0.7}
                 onPress={this.onLogin}
               >
@@ -140,9 +135,8 @@ class Login extends Component {
                 ))}
               </View>
             </View>
-          </ScrollView>
-        </View>
-
+          </View>
+        </ScrollView>
         <View style={LoginStyles.accountWrapper}>
           <Text style={LoginStyles.account}>{'Don\'t have account?'}</Text>
           <TouchableOpacity onPress={() => navigate('Register')}>
@@ -150,7 +144,6 @@ class Login extends Component {
           </TouchableOpacity>
         </View>
       </View>
-
     );
   }
 }
