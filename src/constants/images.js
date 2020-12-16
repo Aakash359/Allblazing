@@ -30,6 +30,8 @@ const Images = {
   fb: require('../assets/fb2x.png'),
   feedDetailImage: require('../assets/feedDetailImage.png'),
   feedImg: require('../assets/feedImg.png'),
+  female: require('../assets/female.png'),
+  femaleWhite: require('../assets/female-white.png'),
   filter: require('../assets/filters.png'),
   flash: require('../assets/flash.png'),
   goal1: require('../assets/goal1.png'),
@@ -42,7 +44,6 @@ const Images = {
   imageGallery: require('../assets/imageGallery.png'),
   imageIcon: require('../assets/imageIcon.png'),
   insta: require('../assets/insta2x.png'),
-
   intro1: require('../assets/w1_img.png'),
   intro2: require('../assets/w2_img.png'),
   intro3: require('../assets/w3_img.png'),
@@ -76,7 +77,6 @@ const Images = {
   search: require('../assets/search.png'),
   selectedHeart: require('../assets/selectedHeart.png'),
   send: require('../assets/send.png'),
-
   settings: require('../assets/settings.png'),
   share: require('../assets/share.png'),
   slectLangLogo2x: require('../assets/slectLangLogo2x.png'),

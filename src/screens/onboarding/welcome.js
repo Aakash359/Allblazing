@@ -47,7 +47,6 @@ class Welcome extends Component {
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Get Started')}</Text>
         </TouchableOpacity>
       </View>
-
     );
   }
 }

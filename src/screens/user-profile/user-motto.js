@@ -43,11 +43,11 @@ class UserMotto extends Component {
               </View>
               <Text style={RegisterStyle.mottoCount}>{`${motto.length}/60`}</Text>
             </View>
-            <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => goBack()}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
+        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => goBack()}>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

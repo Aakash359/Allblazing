@@ -74,24 +74,24 @@ class UserPersonalBest extends Component {
                 </TouchableOpacity>
               ))}
             </View>
-            {params?.isEditMode ? (
-              <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]} onPress={() => goBack()}>
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={Repeat5KStyles.buttonsWrapper}>
-                <View style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
-                  <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={AuthStyle.introButton} activeOpacity={0.7} onPress={() => navigate('Distance')}>
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
           </View>
         </ScrollView>
+        {params?.isEditMode ? (
+          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]} onPress={() => goBack()}>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={Repeat5KStyles.buttonsWrapper}>
+            <View style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
+              <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={AuthStyle.introButton} activeOpacity={0.7} onPress={() => navigate('Distance')}>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       </View>
     );
   }

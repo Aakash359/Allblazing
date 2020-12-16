@@ -17,13 +17,13 @@ function UserProfile() {
   const [followStatus, setFollowStatus] = useState(false);
 
   const [option, setOption] = useState('Goals');
-  const optionList = ['Goals', 'PB`s', 'Likes'];
+  const optionList = ['Goals', 'PB\'s', 'Likes'];
 
   const displayOptions = (data) => {
     if (data === 'Goals') {
       return <UserGoalScreen />;
     }
-    if (data === 'PB`s') {
+    if (data === 'PB\'s') {
       // return <PBScreen />;
     }
     if (data === 'Likes') {

@@ -22,8 +22,10 @@ export const SingleEvent = ({ onPress }) => (
     </Text>
     <View style={[HomeStyles.row, HomeStyles.usersRow]}>
       <View style={HomeStyles.icons}>
-        <Image source={constants.Images.fb} style={HomeStyles.icon} />
-        <Text style={HomeStyles.iconText}>{'Watching'}</Text>
+        <View style={HomeStyles.iconWrapper}>
+          <Image source={constants.Images.femaleWhite} style={HomeStyles.icon} />
+        </View>
+        <Text style={HomeStyles.iconText}>{'Women Only'}</Text>
       </View>
       <UserImages users={[1, 2, 3, 4, 5]} />
     </View>

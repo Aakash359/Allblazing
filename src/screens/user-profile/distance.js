@@ -83,26 +83,26 @@ class Distance extends Component {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={[Repeat5KStyles.buttonsWrapper, DistanceStyles.buttonsWrapper]}>
-              <View style={ConnectUserTypeStyles.buttons}>
-                <TouchableOpacity
-                  style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                  activeOpacity={0.7}
-                  onPress={() => goBack()}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={AuthStyle.introButton}
-                  activeOpacity={0.7}
-                  onPress={() => navigate('Location')}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
           </View>
         </ScrollView>
+        <View style={[Repeat5KStyles.buttonsWrapper, DistanceStyles.buttonsWrapper]}>
+          <View style={ConnectUserTypeStyles.buttons}>
+            <TouchableOpacity
+              style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+              activeOpacity={0.7}
+              onPress={() => goBack()}
+            >
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={AuthStyle.introButton}
+              activeOpacity={0.7}
+              onPress={() => navigate('Location')}
+            >
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         {visible && (
           <TimePicker
             visible
