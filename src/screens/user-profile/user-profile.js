@@ -66,7 +66,7 @@ function UserProfile() {
                   onPress={() => navigation.navigate('MyProfile')}
                 >
                   <Image
-                    source={Constants.Images.closeRound}
+                    source={Constants.Images.chat}
                     resizeMode='contain'
                     style={ProfileStyles.icon}
                   />
@@ -75,7 +75,7 @@ function UserProfile() {
                   onPress={() => setFollowStatus(!followStatus)}
                 >
                   <Image
-                    source={Constants.Images.chat}
+                    source={Constants.Images.add}
                     resizeMode='contain'
                     style={ProfileStyles.icon}
                   />

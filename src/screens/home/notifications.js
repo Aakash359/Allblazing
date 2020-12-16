@@ -9,7 +9,17 @@ function Notification() {
     {
       notificationHeader: 'Invitation to record live stream',
       notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
-      notificationTime: '10:30',
+      notificationTime: '10:30 am',
+    },
+    {
+      notificationHeader: 'Invitation to record live stream',
+      notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
+      notificationTime: '10:30 am',
+    },
+    {
+      notificationHeader: 'Invitation to record live stream',
+      notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
+      notificationTime: '10:30 am',
     },
     {
       notificationHeader: 'Invitation to record live stream',
@@ -19,17 +29,7 @@ function Notification() {
     {
       notificationHeader: 'Invitation to record live stream',
       notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
-      notificationTime: '10:30',
-    },
-    {
-      notificationHeader: 'Invitation to record live stream',
-      notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
-      notificationTime: '10:30',
-    },
-    {
-      notificationHeader: 'Invitation to record live stream',
-      notificationMessage: 'Kelly Norman sent you an invitation to record live stream',
-      notificationTime: '10:30',
+      notificationTime: '10:30 am',
     },
   ];
   const renderNotification = ({ item }) => (

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     height: 16,
-    marginRight: 6,
+    marginRight: 10,
     width: 18,
   },
   heartView: {

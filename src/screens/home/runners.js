@@ -24,19 +24,19 @@ function Runners() {
           </ImageBackground>
         </View>
         <Text style={RunnersStyles.heading}>{'Cameron Williamson, 23'}</Text>
-        <Text style={RunnersStyles.subHeading}>{'It always seems impossible until it`s done!'}</Text>
+        <Text style={RunnersStyles.subHeading}>It always seems impossible until it&#39;s done</Text>
         <View style={RunnersStyles.sectionMainView}>
           <View style={RunnersStyles.sectionView}>
             <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
             <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
           </View>
           <View style={RunnersStyles.sectionView}>
-            <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
-            <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
+            <Text style={RunnersStyles.section1}>{'Total distance'}</Text>
+            <Text style={RunnersStyles.section2}>{'200km'}</Text>
           </View>
           <View style={RunnersStyles.sectionView}>
-            <Text style={RunnersStyles.section1}>{'PB (5km)'}</Text>
-            <Text style={RunnersStyles.section2}>{'14:26.52'}</Text>
+            <Text style={RunnersStyles.section1}>{'Wins'}</Text>
+            <Text style={RunnersStyles.section2}>{'23/30'}</Text>
           </View>
         </View>
         <View style={RunnersStyles.iconView}>
