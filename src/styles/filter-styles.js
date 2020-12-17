@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   level: {
     alignItems: 'center',
     borderRadius: Constants.BaseStyle.scale(8),
-    height: 35,
+    height: 40,
     justifyContent: 'center',
     marginTop: Constants.BaseStyle.scale(10),
     width: '31%',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: Constants.BaseStyle.scale(8),
-    height: 35,
+    height: 40,
     justifyContent: 'center',
     marginTop: Constants.BaseStyle.scale(10),
     width: '31%',
