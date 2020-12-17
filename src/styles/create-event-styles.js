@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     color: Constants.Colors.TEXT_COLOR_WHITE,
     fontSize: Constants.BaseStyle.scale(16),
   },
+  groupTypeView: {
+    marginHorizontal: 10,
+    marginRight: 10,
+  },
   halfView: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
     borderRadius: 12,
@@ -75,11 +79,12 @@ const styles = StyleSheet.create({
     width: width * 0.9,
   },
   optionalSectionView: {
+    alignSelf: 'center',
     backgroundColor: Constants.Colors.CARD_GREY,
     borderRadius: 8,
     marginHorizontal: width * 0.01,
     marginVertical: width * 0.01,
-    width: width * 0.3,
+    width: width * 0.28,
   },
   optionalText: {
     alignSelf: 'center',

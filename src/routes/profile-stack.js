@@ -35,28 +35,36 @@ const ProfileNavigator = () => (
     <ProfileStack.Screen
       name="Runners"
       component={Runners}
-      options={{
+      options={({
+        navigation, route,
+      }) => ({
         headerBackTitleVisible: false,
         headerRight: () => (
           <View style={HeaderStyles.row}>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} /></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+              <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.setParams({ isMapView: !route?.params?.isMapView })}>
+              <Image resizeMode='contain' style={HeaderStyles.mapIcon} source={Constants.Images.map} />
+            </TouchableOpacity>
           </View>
         ),
-      }}
+      })}
     />
     <ProfileStack.Screen
       name="UserProfile"
       component={UserProfile}
-      options={{
+      options={({ navigation }) => ({
         headerBackTitleVisible: false,
         headerRight: () => (
           <View style={HeaderStyles.row}>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.threeDots} /></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+              <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.threeDots} />
+            </TouchableOpacity>
           </View>
         ),
         headerTitle: '',
-      }}
+      })}
     />
     <ProfileStack.Screen
       name="FollowersList"
@@ -85,15 +93,17 @@ const ProfileNavigator = () => (
     <ProfileStack.Screen
       name="SearchScreen"
       component={SearchScreen}
-      options={{
+      options={({ navigation }) => ({
         headerBackTitleVisible: false,
         headerRight: () => (
           <View style={HeaderStyles.row}>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+              <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+            </TouchableOpacity>
           </View>
         ),
         headerTitle: 'Search',
-      }}
+      })}
     />
   </ProfileStack.Navigator>
 );

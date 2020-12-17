@@ -115,7 +115,7 @@ function CreateEvent() {
             style={CreateEventStyles.groupName}
           />
         </View>
-        <View>
+        <View style={CreateEventStyles.groupTypeView}>
           <Text style={CreateEventStyles.groupType}>Group Type</Text>
           <FlatList
             numColumns={3}
