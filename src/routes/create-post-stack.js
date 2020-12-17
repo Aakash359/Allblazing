@@ -9,7 +9,7 @@ import AddMember from '../screens/create/add-member';
 import CreateEvent from '../screens/create/create-event';
 import LiveFeed from '../screens/discover/live-feed';
 import CreatePost from '../screens/create/create-post';
-import GroupDetail from '../screens/chatsGroups/group-detail';
+import GroupDetail from '../screens/chat/group-detail';
 
 const CreatePostStack = createStackNavigator();
 

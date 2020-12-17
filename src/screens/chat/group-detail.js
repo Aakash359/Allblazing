@@ -30,7 +30,6 @@ class GroupDetail extends React.Component {
           <ScrollView>
             <ImageBackground
               source={Constants.Images.groupDetails}
-              // resizeMode='contain'
               imageStyle={MyProfileStyles.borderRadius}
               style={MyProfileStyles.profileIcon}
             >

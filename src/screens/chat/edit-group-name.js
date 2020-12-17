@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-// import { bool, func, shape } from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HomeStyles, AuthStyle } from '../../styles';
 import { InputField } from '../../components';
@@ -19,7 +18,6 @@ class EditGroupName extends React.Component {
       <View style={HomeStyles.container}>
         <ScrollView>
           <InputField value={groupName} placeholder="Group Name" onChangeText={(text) => this.setState({ groupName: text })} />
-
         </ScrollView>
         <TouchableOpacity
           style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
