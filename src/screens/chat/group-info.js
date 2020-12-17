@@ -33,8 +33,7 @@ class GroupInfo extends React.Component {
           <ScrollView>
             <View>
               <ImageBackground
-                source={Constants.Images.imageGroupInfo}
-                // resizeMode='contain'
+                source={Constants.Images.inviteUser1}
                 imageStyle={ChatStyles.borderRadius}
                 style={ChatStyles.profileIcon}
               >

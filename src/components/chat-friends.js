@@ -14,7 +14,7 @@ export const ChatFriends = ({
 
   <TouchableOpacity activeOpacity={0.7} onPress={() => navigation(type === 'chat' ? 'ChatOneToOne' : 'ChatsGroup')} style={InviteFriendsStyles.container}>
     <View style={InviteFriendsStyles.userWrapper}>
-      <Image source={type === 'chat' ? { uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' } : Constants.Images.imageGroupInfo} style={InviteFriendsStyles.userImage} />
+      <Image source={type === 'chat' ? { uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' } : Constants.Images.inviteUser1} style={InviteFriendsStyles.userImage} />
       {type === 'chat' ? (
         <View>
           <Text style={InviteFriendsStyles.username}>Shane Watson</Text>

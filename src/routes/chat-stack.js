@@ -2,12 +2,11 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from '../constants';
 import Chats from '../screens/home/chats';
-import ChatOneToOne from '../screens/chatsGroups/chat-one-to-one';
-
-import ChatsGroup from '../screens/chatsGroups/chat-group';
-import GroupInfo from '../screens/chatsGroups/group-info';
-import EditGroupName from '../screens/chatsGroups/edit-group-name';
-import EditGroupDisc from '../screens/chatsGroups/edit-group-disc';
+import ChatOneToOne from '../screens/chat/chat-one-to-one';
+import ChatsGroup from '../screens/chat/chat-group';
+import GroupInfo from '../screens/chat/group-info';
+import EditGroupName from '../screens/chat/edit-group-name';
+import EditGroupDisc from '../screens/chat/edit-group-disc';
 
 const ChatStack = createStackNavigator();
 
