@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
+import { View, Image, Text, TouchableOpacity, FlatList, ImageBackground, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MyProfileStyles } from '../../styles';
 import Constants from '../../constants';
@@ -38,8 +38,8 @@ function MyProfile() {
 
   return (
     <>
-      <View style={MyProfileStyles.container}>
-        <View>
+      <SafeAreaView style={MyProfileStyles.container}>
+        <ScrollView>
           <TouchableOpacity>
             <View>
               <ImageBackground
@@ -102,9 +102,9 @@ function MyProfile() {
             keyExtractor={(id, index) => index.toString()}
           />
           {displayOptions(option)}
-        </View>
+        </ScrollView>
 
-      </View>
+      </SafeAreaView>
     </>
   );
 }

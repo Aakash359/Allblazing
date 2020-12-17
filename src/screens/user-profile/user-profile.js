@@ -62,9 +62,7 @@ function UserProfile() {
                   <Text style={ProfileStyles.heading}>{'Cameron Williamson, 23'}</Text>
                   <Text style={ProfileStyles.subHeading}>{'It always seems impossible until it`s done!'}</Text>
                 </View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('MyProfile')}
-                >
+                <TouchableOpacity>
                   <Image
                     source={Constants.Images.chat}
                     resizeMode='contain'

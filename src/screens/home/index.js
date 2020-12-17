@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity, View, Text, FlatList } from 'react-native';
+import { ScrollView, TouchableOpacity, View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { HomeStyles } from '../../styles';
-import { InviteFriend, HeaderSearchBar, SingleEvent } from '../../components';
+import { HeaderSearchBar, SingleEvent } from '../../components';
 import Invite from '../settings/invite-friends';
 
 class Home extends React.Component {

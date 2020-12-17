@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderTopLeftRadius: Constants.BaseStyle.scale(16),
     borderTopRightRadius: Constants.BaseStyle.scale(16),
-    height: '20%',
+    height: height * 0.22,
     paddingTop: Constants.BaseStyle.scale(20),
   },
   modalText: {

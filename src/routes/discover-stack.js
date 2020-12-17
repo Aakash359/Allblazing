@@ -14,16 +14,18 @@ const DiscoverNavigator = () => (
     <DiscoverStack.Screen
       name="Feed"
       component={Feed}
-      options={{
+      options={({ navigation }) => ({
         headerBackTitleVisible: false,
         headerRight: () => (
           <View style={HeaderStyles.row}>
-            <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+              <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+            </TouchableOpacity>
           </View>
         ),
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Feed',
-      }}
+      })}
     />
     <DiscoverStack.Screen
       name="FeedDetailScreen"

@@ -195,15 +195,18 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="Notifications"
         component={Notifications}
-        options={{
+        options={({ navigation }) => ({
           headerBackTitleVisible: false,
+          headerLeft: null,
           headerRight: () => (
             <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.crossIcon} source={Constants.Images.close} /></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
+                <Image resizeMode='contain' style={HeaderStyles.crossIcon} source={Constants.Images.close} />
+              </TouchableOpacity>
             </View>
           ),
           headerTitle: 'Notifications',
-        }}
+        })}
       />
       <AppStack.Screen
         name="ChangePassword"
@@ -285,30 +288,34 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="SearchScreen"
         component={SearchScreen}
-        options={{
+        options={({ navigation }) => ({
           headerBackTitleVisible: false,
           headerRight: () => (
             <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+                <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+              </TouchableOpacity>
             </View>
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Search',
-        }}
+        })}
       />
       <AppStack.Screen
         name="FeedDetailScreen"
         component={FeedDetailScreen}
-        options={{
+        options={({ navigation }) => ({
           headerBackTitleVisible: false,
           headerRight: () => (
             <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7}><Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} /></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
+                <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
+              </TouchableOpacity>
             </View>
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Feed Detail',
-        }}
+        })}
       />
       <AppStack.Screen
         name="UserProfile"
