@@ -6,17 +6,37 @@ const {
 } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  calendarIcon: {
+    height: 18,
+    width: 16,
+  },
+  clockIcon: {
+    height: 16,
+    width: 16,
+  },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
+  },
+  description: {
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.GREY_BORDER,
+    fontSize: Constants.BaseStyle.scale(16),
+    height: height * 0.15,
+    maxWidth: '100%',
+    paddingLeft: 5,
+    textAlignVertical: 'top',
+
   },
   eventType: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     fontSize: Constants.BaseStyle.scale(16),
-    margin: 20,
+    marginHorizontal: 20,
+    marginTop: 20,
   },
   groupName: {
+    textAlign: 'center',
     ...Constants.Fonts.Regular,
     color: Constants.Colors.GREY_BORDER,
     fontSize: Constants.BaseStyle.scale(16),
@@ -25,10 +45,11 @@ const styles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     fontSize: Constants.BaseStyle.scale(16),
+    marginVertical: 10,
   },
   groupTypeView: {
     marginHorizontal: 10,
-    marginRight: 10,
+    marginRight: 20,
   },
   halfView: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
@@ -50,12 +71,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   imageView: {
+    alignSelf: 'center',
     backgroundColor: Constants.Colors.CARD_GREY,
     borderRadius: 16,
     height: height * 0.3,
     justifyContent: 'center',
-    margin: 20,
-    paddingHorizontal: 16,
+    marginVertical: 20,
+    // paddingHorizontal: 16,
     width: width * 0.9,
   },
   innerContainer: { marginHorizontal: 6 },
@@ -71,12 +93,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   nextView: {
+    alignSelf: 'center',
     backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: 4,
     marginBottom: height * 0.05,
-    marginHorizontal: 10,
-    marginTop: height * 0.15,
+    marginTop: height * 0.05,
     padding: 15,
-    width: width * 0.9,
+    width: width * 0.8,
   },
   optionalSectionView: {
     alignSelf: 'center',
@@ -94,11 +117,13 @@ const styles = StyleSheet.create({
   rowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 20,
   },
   searchView: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
     borderRadius: 12,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     margin: 10,
     padding: 15,
   },

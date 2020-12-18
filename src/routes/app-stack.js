@@ -26,6 +26,13 @@ import SearchScreen from '../screens/search';
 import StaticContent from '../screens/settings/static-content';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
+import CreateEvent from '../screens/create/create-event';
+import CreateGroup from '../screens/create/create-group';
+import AddMember from '../screens/create/add-member';
+import LiveFeed from '../screens/discover/live-feed';
+import CreatePost from '../screens/create/create-post';
+import GroupDetail from '../screens/chat/group-detail';
+
 import FeedDetailScreen from '../screens/discover/feed-detail';
 import Notifications from '../screens/home/notifications';
 import Runners from '../screens/home/runners';
@@ -301,22 +308,6 @@ export default function MainNavigator() {
         })}
       />
       <AppStack.Screen
-        name="FeedDetailScreen"
-        component={FeedDetailScreen}
-        options={({ navigation }) => ({
-          headerBackTitleVisible: false,
-          headerRight: () => (
-            <View style={HeaderStyles.row}>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Filter')}>
-                <Image resizeMode='contain' style={HeaderStyles.filterIcon} source={Constants.Images.filter} />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Feed Detail',
-        })}
-      />
-      <AppStack.Screen
         name="UserProfile"
         component={UserProfile}
         options={({ navigation }) => ({
@@ -331,6 +322,75 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
         })}
+      />
+      <AppStack.Screen
+        name="CreateEvent"
+        component={CreateEvent}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Create Event',
+        })}
+      />
+      <AppStack.Screen
+        name="CreateGroup"
+        component={CreateGroup}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Create Group',
+        })}
+      />
+      <AppStack.Screen
+        name="AddMember"
+        component={AddMember}
+        options={{
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <View style={HeaderStyles.row}>
+              <Text style={HeaderStyles.headerRightTextStyle}>Select All</Text>
+            </View>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Add Member',
+        }}
+      />
+      <AppStack.Screen
+        name="CreatePost"
+        component={CreatePost}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Create Post',
+        })}
+      />
+      <AppStack.Screen
+        name="GroupDetail"
+        component={GroupDetail}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: '',
+        }}
+      />
+      <AppStack.Screen
+        name="FeedDetailScreen"
+        component={FeedDetailScreen}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerShown: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: '',
+        })}
+      />
+      <AppStack.Screen
+        name="LiveFeed"
+        component={LiveFeed}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Live',
+        }}
       />
     </AppStack.Navigator>
   );

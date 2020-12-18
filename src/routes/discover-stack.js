@@ -4,8 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Constants from '../constants';
 import { HeaderStyles } from '../styles';
 import Feed from '../screens/discover/index';
-import FeedDetailScreen from '../screens/discover/feed-detail';
-import LiveFeed from '../screens/discover/live-feed';
 
 const DiscoverStack = createStackNavigator();
 
@@ -26,25 +24,6 @@ const DiscoverNavigator = () => (
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Feed',
       })}
-    />
-    <DiscoverStack.Screen
-      name="FeedDetailScreen"
-      component={FeedDetailScreen}
-      options={() => ({
-        headerBackTitleVisible: false,
-        headerShown: false,
-        headerTintColor: Constants.Colors.WHITE,
-        headerTitle: '',
-      })}
-    />
-    <DiscoverStack.Screen
-      name="LiveFeed"
-      component={LiveFeed}
-      options={{
-        headerBackTitleVisible: false,
-        headerTintColor: Constants.Colors.WHITE,
-        headerTitle: 'Live',
-      }}
     />
   </DiscoverStack.Navigator>
 );

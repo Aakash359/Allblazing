@@ -18,6 +18,7 @@ const Images = {
   checkbox: require('../assets/checkbox2x.png'),
   checkmark: require('../assets/checkmark2x.png'),
   checkoff: require('../assets/checkoff2x.png'),
+  clock: require('../assets/clock.png'),
   close: require('../assets/close2x.png'),
   closeRound: require('../assets/closeRound.png'),
   coaching: require('../assets/coaching.png'),

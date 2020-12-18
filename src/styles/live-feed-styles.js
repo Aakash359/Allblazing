@@ -47,6 +47,12 @@ const styles = StyleSheet.create({
     fontSize: Constants.BaseStyle.scale(14),
     marginLeft: 8,
   },
+  groupName: {
+    textAlign: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.GREY_BORDER,
+    fontSize: Constants.BaseStyle.scale(16),
+  },
   heading: {
     ...Constants.Fonts.RegularBold,
     color: Constants.Colors.WHITE,
@@ -88,6 +94,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 46,
   },
+  messageIcon: {
+    height: 24,
+    width: 24,
+  },
   nameText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.GREY_BORDER,
@@ -113,6 +123,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: height * 0.3,
     width: width * 1,
+  },
+  searchView: {
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+    paddingBottom: 30,
   },
   sectionMainView: {
     alignItems: 'center',
