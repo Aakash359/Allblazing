@@ -50,10 +50,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   nextView: {
+    alignSelf: 'center',
     backgroundColor: Constants.Colors.TEXT_COLOR2,
+    borderRadius: 4,
     marginBottom: height * 0.05,
-    marginHorizontal: 10,
-    marginTop: height * 0.15,
+    marginTop: height * 0.05,
     padding: 15,
     width: width * 0.9,
   },

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   feedImg: {
     height: height * 0.9,
+    marginTop: 10,
     width,
   },
   flatList: {

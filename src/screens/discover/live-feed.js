@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView } from 'react-native';
+import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView, TextInput, SafeAreaView } from 'react-native';
 import { LiveFeedStyles } from '../../styles';
 import Constants from '../../constants';
 
 function LiveFeed() {
   const [like, setLike] = useState(false);
+  const [message, setMessage] = useState('');
 
   const comment = [
     {
@@ -40,69 +41,88 @@ function LiveFeed() {
   );
 
   return (
-    <ScrollView style={[LiveFeedStyles.container]}>
-      <View>
-        <ImageBackground
-          source={Constants.Images.liveImg}
-          style={LiveFeedStyles.profileIcon}
-        >
-          <Image
-            source={Constants.Images.liveLogo}
-            resizeMode='contain'
-            style={LiveFeedStyles.liveLogo}
-          />
-          <View style={LiveFeedStyles.overlappingStyle}>
-            <View style={LiveFeedStyles.flexRow}>
-              <View style={LiveFeedStyles.levelStyle}>
-                <Text style={LiveFeedStyles.liveText}>Live</Text>
+    <SafeAreaView style={[LiveFeedStyles.container]}>
+      <ScrollView>
+        <View>
+          <ImageBackground
+            source={Constants.Images.liveImg}
+            style={LiveFeedStyles.profileIcon}
+          >
+            <Image
+              source={Constants.Images.liveLogo}
+              resizeMode='contain'
+              style={LiveFeedStyles.liveLogo}
+            />
+            <View style={LiveFeedStyles.overlappingStyle}>
+              <View style={LiveFeedStyles.flexRow}>
+                <View style={LiveFeedStyles.levelStyle}>
+                  <Text style={LiveFeedStyles.liveText}>Live</Text>
+                </View>
+                <Text style={LiveFeedStyles.followerView}>{'187 Viewers'}</Text>
               </View>
-              <Text style={LiveFeedStyles.followerView}>{'187 Viewers'}</Text>
+              <TouchableOpacity
+                onPress={() => {}}
+              >
+                <Image
+                  source={Constants.Images.rotatePhone}
+                  resizeMode='contain'
+                  style={LiveFeedStyles.icon}
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => {}}
-            >
-              <Image
-                source={Constants.Images.rotatePhone}
-                resizeMode='contain'
-                style={LiveFeedStyles.icon}
-              />
-            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={LiveFeedStyles.sectionMainView}>
+          <View style={LiveFeedStyles.flexRow}>
+            <Image
+              source={Constants.Images.user1}
+              style={LiveFeedStyles.liveUserIcone}
+            />
+            <View style={LiveFeedStyles.sectionView}>
+              <Text style={LiveFeedStyles.heading}>{'Cameron Williamson, 23'}</Text>
+              <Text style={LiveFeedStyles.subHeading}>{'text'}</Text>
+            </View>
           </View>
-        </ImageBackground>
-      </View>
-      <View style={LiveFeedStyles.sectionMainView}>
-        <View style={LiveFeedStyles.flexRow}>
-          <Image
-            source={Constants.Images.user1}
-            style={LiveFeedStyles.liveUserIcone}
-          />
           <View style={LiveFeedStyles.sectionView}>
-            <Text style={LiveFeedStyles.heading}>{'Cameron Williamson, 23'}</Text>
-            <Text style={LiveFeedStyles.subHeading}>{'text'}</Text>
+            <View style={LiveFeedStyles.heartView}>
+              <TouchableOpacity
+                onPress={() => { setLike(!like); }}
+              >
+                <Image
+                  source={like ? Constants.Images.selectedHeart : Constants.Images.heart}
+                  style={LiveFeedStyles.heartIcon}
+                />
+              </TouchableOpacity>
+              <Text style={LiveFeedStyles.followText}>{'500'}</Text>
+            </View>
           </View>
         </View>
-        <View style={LiveFeedStyles.sectionView}>
-          <View style={LiveFeedStyles.heartView}>
-            <TouchableOpacity
-              onPress={() => { setLike(!like); }}
-            >
-              <Image
-                source={like ? Constants.Images.selectedHeart : Constants.Images.heart}
-                style={LiveFeedStyles.heartIcon}
-              />
-            </TouchableOpacity>
-            <Text style={LiveFeedStyles.followText}>{'500'}</Text>
-          </View>
+        <View>
+          <Text style={LiveFeedStyles.commentHeader}>{'Comments'}</Text>
         </View>
+        <FlatList
+          data={comment}
+          renderItem={renderItem}
+        />
+      </ScrollView>
+      <View style={LiveFeedStyles.searchView}>
+        <TextInput
+          placeholder="Write your message..."
+          placeholderTextColor={Constants.Colors.GREY_BORDER}
+          value={message}
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={(text) => {
+            setMessage(text);
+          }}
+          style={LiveFeedStyles.groupName}
+        />
+        <Image
+          source={Constants.Images.send}
+          style={LiveFeedStyles.messageIcon}
+        />
       </View>
-      <View>
-        <Text style={LiveFeedStyles.commentHeader}>{'Comments'}</Text>
-      </View>
-      <FlatList
-        data={comment}
-        renderItem={renderItem}
-      />
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
