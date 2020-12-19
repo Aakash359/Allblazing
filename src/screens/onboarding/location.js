@@ -23,10 +23,10 @@ const Location = () => {
         <Image source={Constants.Images.location} resizeMode='contain' style={LocationStyles.logo} />
       </ScrollView>
       <View style={LocationStyles.buttonsWrapper}>
-        <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => null}>
+        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={() => null}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Share My Location'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[OTPStyles.button, LocationStyles.button]} activeOpacity={0.7} onPress={() => goToSettings()}>
+        <TouchableOpacity activeOpacity={0.7} style={[OTPStyles.button, LocationStyles.button]} onPress={() => goToSettings()}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Select It Manually'}</Text>
         </TouchableOpacity>
       </View>

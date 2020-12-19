@@ -20,7 +20,7 @@ function SearchSeceen() {
   }) => (
     <View style={SearchScreen.content}>
       <Text style={SearchScreen.heading}>{title}</Text>
-      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigation.navigate(route)}>
+      <TouchableOpacity activeOpacity={0.7} hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigation.navigate(route)}>
         <Text style={SearchScreen.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
@@ -29,6 +29,7 @@ function SearchSeceen() {
   const filterData = ({ item }) => (
     // <View style={}>
     <TouchableOpacity
+      activeOpacity={0.7}
       style={[SearchScreen.optionalSectionView, { backgroundColor: item === filter ? Constants.Colors.GREY_CIRCLE : Constants.Colors.SECONDARY_COLOR }]}
       onPress={() => { setFilter(item); }}
     >
@@ -53,10 +54,10 @@ function SearchSeceen() {
               value={search}
               autoCapitalize="none"
               autoCorrect={false}
-              // underlineColorAndroid='#ccc'
               onChangeText={(text) => {
                 setSearch(text);
               }}
+              underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
           {search.length >= 2 ? (

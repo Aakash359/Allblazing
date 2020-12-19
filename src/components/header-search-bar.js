@@ -10,7 +10,7 @@ function SearchBar() {
 
   return (
     <View style={HeaderStyles.container}>
-      <TouchableOpacity style={HeaderStyles.input}>
+      <TouchableOpacity activeOpacity={0.7} style={HeaderStyles.input}>
         <Text style={[HeaderStyles.searchInput]}>{'Santee, United States'}</Text>
       </TouchableOpacity>
       <View style={HeaderStyles.row}>

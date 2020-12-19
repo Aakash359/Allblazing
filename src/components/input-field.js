@@ -18,6 +18,7 @@ const InputField = React.forwardRef((props, ref) => {
         value={value}
         onChangeText={onChangeText}
         {...inputProps}
+        underlineColorAndroid={Constants.Colors.TRANSPARENT}
       />
     </View>
   );

@@ -28,6 +28,7 @@ function AddMember() {
         renderItem={renderItem}
       />
       <TouchableOpacity
+        activeOpacity={0.7}
         onPress={() => navigation.navigate('AddMember')}
         style={AddMemberStyles.nextView}
       >

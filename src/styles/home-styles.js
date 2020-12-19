@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     marginRight: Constants.BaseStyle.scale(10),
     marginTop: Constants.BaseStyle.scale(10),
   },
+  spacing: { paddingTop: Constants.BaseStyle.scale(10) },
   title: {
     ...Constants.Fonts.RegularBold,
     color: Constants.Colors.BLACK,

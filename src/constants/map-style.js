@@ -111,14 +111,14 @@ const style = [
     elementType: 'geometry',
     featureType: 'water',
     stylers: [
-      { color: '#c9c9c9' },
+      { color: '#9BE0F1' },
     ],
   },
   {
     elementType: 'labels.text.fill',
     featureType: 'water',
     stylers: [
-      { color: '#9e9e9e' },
+      { color: '#9BE0F1' },
     ],
   },
 ];

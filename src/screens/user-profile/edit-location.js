@@ -24,7 +24,7 @@ class EditLocation extends Component {
             <View style={UsernameStyle.inputWrapper}>
               <TouchableOpacity activeOpacity={1} style={[UsernameStyle.ageButton, LocationStyles.location]}>
                 <Image source={Constants.Images.myLocation} style={LocationStyles.locationIcon} />
-                <Text style={LocationStyles.currentLocationText}>{'United State'}</Text>
+                <Text style={LocationStyles.currentLocationText}>{'Santee, United States'}</Text>
               </TouchableOpacity>
               <Text style={LocationStyles.orText}>{'or'}</Text>
               <TouchableOpacity activeOpacity={1} style={[UsernameStyle.ageButton, LocationStyles.margin]}>

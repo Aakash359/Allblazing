@@ -118,6 +118,7 @@ function LiveFeed() {
             setMessage(text);
           }}
           style={LiveFeedStyles.groupName}
+          underlineColorAndroid={Constants.Colors.TRANSPARENT}
         />
         <Image
           source={Constants.Images.send}

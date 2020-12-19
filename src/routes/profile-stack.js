@@ -32,6 +32,7 @@ const ProfileNavigator = () => (
         ),
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'My Profile',
+        headerTitleAlign: 'center',
       })}
     />
 
@@ -52,6 +53,7 @@ const ProfileNavigator = () => (
             </TouchableOpacity>
           </View>
         ),
+        headerTitleAlign: 'center',
       })}
     />
 
@@ -67,7 +69,8 @@ const ProfileNavigator = () => (
             </TouchableOpacity>
           </View>
         ),
-        headerTitle: '',
+        headerTitle: null,
+        headerTitleAlign: 'center',
       })}
     />
     <ProfileStack.Screen
@@ -76,6 +79,7 @@ const ProfileNavigator = () => (
       options={{
         headerBackTitleVisible: false,
         headerTitle: 'Followers',
+        headerTitleAlign: 'center',
       }}
     />
     <ProfileStack.Screen
@@ -84,6 +88,7 @@ const ProfileNavigator = () => (
       options={{
         headerBackTitleVisible: false,
         headerTitle: 'Following',
+        headerTitleAlign: 'center',
       }}
     />
     <ProfileStack.Screen
@@ -92,6 +97,7 @@ const ProfileNavigator = () => (
       options={{
         headerBackTitleVisible: false,
         headerTitle: 'Edit Profile',
+        headerTitleAlign: 'center',
       }}
     />
     <ProfileStack.Screen
@@ -107,6 +113,7 @@ const ProfileNavigator = () => (
           </View>
         ),
         headerTitle: 'Search',
+        headerTitleAlign: 'center',
       })}
     />
   </ProfileStack.Navigator>

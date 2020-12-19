@@ -64,9 +64,11 @@ class BlockUser extends React.Component {
                 value={description}
                 onChangeText={(text) => this.setState({ description: text })}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
+                underlineColorAndroid={Constants.Colors.TRANSPARENT}
               />
             </View>
           )}
+          <View style={BlockUserStyles.space} />
         </KeyboardAwareScrollView>
         <TouchableOpacity
           activeOpacity={0.7}

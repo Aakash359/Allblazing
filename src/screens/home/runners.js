@@ -11,7 +11,7 @@ function Runners() {
 
   return route?.params?.isMapView ? <Map showEvents={false} style={MapViewStyles.map} onMarkerPress={() => {}} onEventPress={() => {}} /> : (
     <View style={RunnersStyles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={RunnersStyles.mainView}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('UserProfile')} style={RunnersStyles.mainView}>
         <View>
           <ImageBackground
             source={Constants.Images.profilePic}

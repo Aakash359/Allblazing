@@ -58,6 +58,7 @@ class ContactUs extends Component {
                   onChangeText={this.onChangeText}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   onSubmitEditing={() => goBack()}
+                  underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
               </View>
             </View>

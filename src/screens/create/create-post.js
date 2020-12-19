@@ -24,6 +24,7 @@ function CreatePost() {
             style={CreatePostStyles.postImage}
           />
           <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() => setUpload(false)}
             style={CreatePostStyles.closeIconView}
           >
@@ -33,6 +34,7 @@ function CreatePost() {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() => navigation.navigate('AddMember')}
             style={CreatePostStyles.nextView}
           >
@@ -43,6 +45,7 @@ function CreatePost() {
         : (
           <View>
             <TouchableOpacity
+              activeOpacity={0.7}
               onPress={() => setUpload(true)}
               style={CreatePostStyles.optionView}
             >
@@ -55,6 +58,7 @@ function CreatePost() {
               <Text style={CreatePostStyles.imageText}>Open Camera</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.7}
               onPress={() => setUpload(true)}
               style={CreatePostStyles.optionView}
             >

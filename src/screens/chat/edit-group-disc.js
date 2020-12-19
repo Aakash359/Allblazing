@@ -31,6 +31,7 @@ class EditGroupDisc extends React.Component {
             placeholder="Group Name"
             onChangeText={(text) => this.setState({ groupDisc: text })}
             placeholderTextColor={Constants.Colors.TEXT_COLOR_WHITE}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
 

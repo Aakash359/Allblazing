@@ -15,6 +15,7 @@ const CreatePostNavigator = () => (
         headerShown: false,
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Create New',
+        headerTitleAlign: 'center',
       }}
     />
   </CreatePostStack.Navigator>

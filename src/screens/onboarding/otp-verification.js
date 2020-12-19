@@ -51,10 +51,10 @@ class OTP extends Component {
           />
         </KeyboardAwareScrollView>
         <View style={OTPStyles.buttonsWrapper}>
-          <TouchableOpacity style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} activeOpacity={0.7} onPress={this.onVerify}>
+          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={this.onVerify}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={OTPStyles.button} onPress={() => {}}>
+          <TouchableOpacity activeOpacity={0.7} style={OTPStyles.button} onPress={() => {}}>
             <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
           </TouchableOpacity>
         </View>

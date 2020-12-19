@@ -10,7 +10,7 @@ export const InviteFriend = ({
   const [checked, setCheck] = useState(false);
 
   return (
-    <View style={InviteFriendsStyles.container}>
+    <TouchableOpacity style={InviteFriendsStyles.container} activeOpacity={0.9} onPress={() => setCheck(!checked)}>
       <View style={InviteFriendsStyles.userWrapper}>
         <Image source={image} style={InviteFriendsStyles.userImage} />
         <View>
@@ -18,11 +18,11 @@ export const InviteFriend = ({
           <Text style={InviteFriendsStyles.location}>Santee, United States</Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.9} onPress={() => setCheck(!checked)}>
+      <View>
         {hasCheckBox && <Image source={checked ? Constants.Images.checkbox : Constants.Images.checkoff} resizeMode='contain' style={InviteFriendsStyles.icon} />}
         {hasTick && checked && <Image source={Constants.Images.check} resizeMode='contain' style={InviteFriendsStyles.icon} />}
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 

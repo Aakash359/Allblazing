@@ -102,8 +102,9 @@ export default class ChangePassword extends Component {
                   this.resetScrollView(findNodeHandle(this.passwordRef.current));
                 }}
                 onSubmitEditing={() => this.newPasswordRef.current.focus()}
+                underlineColorAndroid={Constants.Colors.TRANSPARENT}
               />
-              <TouchableOpacity onPress={() => this.onPasswordVisibilityChange('password')}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('password')}>
                 {visiblePasswords.includes('password')
                   ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
                   : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}
@@ -112,6 +113,7 @@ export default class ChangePassword extends Component {
             <View style={[RegisterStyle.passwordInput, AuthStyle.margin]}>
               <TextInput
                 maxLength={16}
+                underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 ref={this.newPasswordRef}
                 style={RegisterStyle.password}
                 returnKeyType="next"
@@ -128,7 +130,7 @@ export default class ChangePassword extends Component {
                 }}
                 onSubmitEditing={() => this.confirmPasswordRef.current.focus()}
               />
-              <TouchableOpacity onPress={() => this.onPasswordVisibilityChange('newPassword')}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('newPassword')}>
                 {visiblePasswords.includes('newPassword')
                   ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
                   : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}
@@ -152,8 +154,9 @@ export default class ChangePassword extends Component {
                   this.resetScrollView(findNodeHandle(this.passwordRef.current));
                 }}
                 onSubmitEditing={this.onContinue}
+                underlineColorAndroid={Constants.Colors.TRANSPARENT}
               />
-              <TouchableOpacity onPress={() => this.onPasswordVisibilityChange('confirmPassword')}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('confirmPassword')}>
                 {visiblePasswords.includes('confirmPassword')
                   ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
                   : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}

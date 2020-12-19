@@ -35,7 +35,7 @@ class InviteFriends extends React.Component {
     return (
       <View style={CommonStyles.container}>
         <Component>
-          <View style={HomeStyles.wrapper}>
+          <View style={[HomeStyles.wrapper, InviteFriendsStyles.overview]}>
             <Image resizeMode='contain' style={[InviteFriendsStyles.runners, source === 'home' && InviteFriendsStyles.homeRunners]} source={Constants.Images.runners} />
             <Text style={InviteFriendsStyles.description}>{'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}</Text>
             <View style={InviteFriendsStyles.row}>

@@ -26,7 +26,7 @@ class CreateNew extends React.Component {
   }) => (
     <View style={HomeStyles.content}>
       <Text style={HomeStyles.heading}>{title}</Text>
-      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
+      <TouchableOpacity activeOpacity={0.7} hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
         <Text style={HomeStyles.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
@@ -71,6 +71,7 @@ class CreateNew extends React.Component {
           <View style={CreateNewStyles.modalView}>
             <View style={CreateNewStyles.rowView}>
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={() => navigate('CreateGroup')}
                 style={CreateNewStyles.tagView}
               >
@@ -78,6 +79,7 @@ class CreateNew extends React.Component {
                 <Text style={CreateNewStyles.modalText}>{'Create Group'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={() => navigate('CreateEvent')}
                 style={CreateNewStyles.tagView}
               >
@@ -87,6 +89,7 @@ class CreateNew extends React.Component {
             </View>
             <View style={CreateNewStyles.rowView}>
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={() => navigate('CreatePost')}
                 style={CreateNewStyles.tagView}
               >
@@ -94,6 +97,7 @@ class CreateNew extends React.Component {
                 <Text style={CreateNewStyles.modalText}>{'Create Post'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={() => navigate('LiveFeed')}
                 style={CreateNewStyles.tagView}
               >

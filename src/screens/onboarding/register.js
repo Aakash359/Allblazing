@@ -102,8 +102,9 @@ export default class Register extends Component {
                   onChangeText={(text) => this.setState({ password: text })}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   onSubmitEditing={this.onContinue}
+                  underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
-                <TouchableOpacity onPress={() => this.setState({ isPasswordVisible: !isPasswordVisible })}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ isPasswordVisible: !isPasswordVisible })}>
                   {isPasswordVisible
                     ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
                     : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}

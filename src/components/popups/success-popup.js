@@ -65,7 +65,7 @@ const SuccessPopup = ({
       <View style={styles.wrapper}>
         <Image source={Constants.Images.checkmark} resizeMode='contain' style={styles.image} />
         <Text style={styles.header}>{instructions}</Text>
-        <TouchableOpacity onPress={onClick} style={styles.okButton}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onClick} style={styles.okButton}>
           <Text style={styles.okButtonTextStyle}>{translate('Ok')}</Text>
         </TouchableOpacity>
         {hasResendBtn && (

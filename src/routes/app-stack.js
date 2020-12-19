@@ -56,6 +56,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -66,6 +67,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -75,6 +77,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Edit Gender',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -84,6 +87,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Edit Motto',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -99,6 +103,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -123,6 +128,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Edit Location',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -143,6 +149,7 @@ export default function MainNavigator() {
             </View>
           ),
           headerTintColor: Constants.Colors.WHITE,
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -155,6 +162,7 @@ export default function MainNavigator() {
           )),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Invite Friends',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -167,6 +175,7 @@ export default function MainNavigator() {
           )),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Strava Users',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -176,12 +185,13 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerLeft: null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
               <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
             </TouchableOpacity>
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Filters',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -191,6 +201,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Event Details',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -245,6 +256,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -260,7 +272,9 @@ export default function MainNavigator() {
               </TouchableOpacity>
             </View>
           ),
+          headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Notifications',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -270,6 +284,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Change Password',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -279,6 +294,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Contact Us',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -288,6 +304,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Change Language',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -297,6 +314,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Settings',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -306,12 +324,13 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerLeft: null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
               <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
             </TouchableOpacity>
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -338,6 +357,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Runners',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -354,6 +374,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Search',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -370,6 +391,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -379,6 +401,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Create Event',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -388,6 +411,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Create Group',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -402,6 +426,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Add Member',
+          headerTitleAlign: 'center',
         }}
       />
       <AppStack.Screen
@@ -411,12 +436,18 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Create Post',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
         name="GroupDetail"
         component={GroupDetail}
-        options={{ headerShown: false }}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
+          headerTitleAlign: 'center',
+        }}
       />
       <AppStack.Screen
         name="FeedDetailScreen"
@@ -425,7 +456,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: '',
+          headerTitle: null,
         })}
       />
       <AppStack.Screen
@@ -435,6 +466,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Live',
+          headerTitleAlign: 'center',
         }}
       />
     </AppStack.Navigator>

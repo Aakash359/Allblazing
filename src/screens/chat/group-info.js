@@ -43,7 +43,7 @@ class GroupInfo extends React.Component {
                     <Text style={ChatStyles.heading}>{'Super Nova'}</Text>
                     <Text style={ChatStyles.subHeading}>{'18 Members'}</Text>
                   </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.7}>
                     <Image
                       source={Constants.Images.edit}
                       resizeMode='contain'
@@ -57,9 +57,9 @@ class GroupInfo extends React.Component {
             <View style={ChatStyles.groupNameContainer}>
               <View>
                 <Text style={ChatStyles.groupNameHeading}>{'Super Nova'}</Text>
-
               </View>
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={() => { navigate('EditGroupName'); }}
               >
                 <Image
@@ -74,6 +74,7 @@ class GroupInfo extends React.Component {
               <View style={ChatStyles.groupDiscInnerContainer}>
                 <Text style={ChatStyles.groupDiscHeading}>{'Discription'}</Text>
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   onPress={() => { navigate('EditGroupDisc'); }}
                 >
 

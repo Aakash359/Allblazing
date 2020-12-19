@@ -71,6 +71,7 @@ export const BottomTab = ({
 
       return (
         <TouchableOpacity
+          activeOpacity={0.7}
           key={route.key}
           style={styles}
           onPress={onPress}

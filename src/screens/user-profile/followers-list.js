@@ -58,6 +58,7 @@ function FollowersList() {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={FollowingStyles.sectionView}
+      activeOpacity={0.7}
     >
       <View style={[FollowingStyles.listView, { backgroundColor: item.image }]} />
       <View>
@@ -84,6 +85,7 @@ function FollowersList() {
             onChangeText={(text) => {
               setSearch(text);
             }}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <FlatList

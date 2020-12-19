@@ -85,7 +85,7 @@ class SingleEventDetail extends React.Component {
             </>
           )}
           {!params?.isInviteSent && (
-            <TouchableOpacity activeOpacity={0.7} style={EventDetailStyles.button} onPress={this.onPress}>
+            <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.inviteBtn]} onPress={this.onPress}>
               <Text style={EventDetailStyles.buttonText}>{params?.isMember ? 'Invite Friend To Record Live Stream' : 'Join'}</Text>
             </TouchableOpacity>
           )}
@@ -96,7 +96,7 @@ class SingleEventDetail extends React.Component {
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => `${index}`}
               />
-              <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.margin]}>
+              <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.margin, EventDetailStyles.inviteBtn]}>
                 <Text style={EventDetailStyles.buttonText}>{'Withdraw Request'}</Text>
               </TouchableOpacity>
             </View>

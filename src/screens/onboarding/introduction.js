@@ -51,6 +51,7 @@ class Introduction extends Component {
           {itemSelected === 2 ? (
             <View style={IntroductionStyles.buttonsWrapper2}>
               <TouchableOpacity
+                activeOpacity={0.7}
                 style={AuthStyle.introButton2}
                 onPress={this.onNext}
               >
@@ -69,6 +70,7 @@ class Introduction extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   style={AuthStyle.introButton}
                   onPress={this.onNext}
                 >

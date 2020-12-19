@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
 import Constants from '../constants';
 
 export default StyleSheet.create({
@@ -32,6 +33,7 @@ export default StyleSheet.create({
   tabText: {
     ...Constants.Fonts.Small,
     color: Constants.Colors.TEXT_COLOR2,
+    ...Platform.select({ android: { fontSize: 13 } }),
     paddingTop: 3,
   },
   tabs: {
