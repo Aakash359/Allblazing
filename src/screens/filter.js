@@ -25,11 +25,11 @@ const Filter = () => {
           <View style={FilterStyles.input}>
             <TextInput
               placeholder="Search location"
-              placeholderTextColor='#ccc'
+              placeholderTextColor={Constants.Colors.TEXT_COLOR}
               autoCapitalize="none"
               autoCorrect={false}
-              underlineColorAndroid='#ccc'
               style={FilterStyles.searchInput}
+              underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
           <Text style={FilterStyles.header}>Connect</Text>

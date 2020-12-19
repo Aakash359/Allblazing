@@ -52,7 +52,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerLeft: null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
               <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
             </TouchableOpacity>
           ),
@@ -68,7 +68,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerLeft: null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
               <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
             </TouchableOpacity>
           ),
@@ -83,7 +83,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerLeft: null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
               <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
             </TouchableOpacity>
           ),
@@ -108,6 +108,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -118,6 +119,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -151,6 +153,7 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen

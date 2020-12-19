@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: Constants.BaseStyle.scale(20),
     marginHorizontal: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(100),
   },
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     height: Constants.BaseStyle.scale(45),
     marginHorizontal: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(20),
-    padding: Constants.BaseStyle.scale(10),
+    paddingHorizontal: Constants.BaseStyle.scale(10),
     textAlign: 'left',
   },
   level: {

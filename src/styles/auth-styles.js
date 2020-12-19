@@ -279,10 +279,17 @@ export const Repeat5KStyles = StyleSheet.create({
 });
 
 export const DistanceStyles = StyleSheet.create({
+  button: {
+    alignItems: 'center', justifyContent: 'center',
+  },
+  buttonText: { textAlign: 'center' },
   buttonsWrapper: {
     flexDirection: 'column-reverse',
     marginBottom: Constants.BaseStyle.scale(15),
     marginTop: Constants.BaseStyle.scale(0),
+  },
+  select: {
+    position: 'absolute', right: Constants.BaseStyle.scale(5),
   },
 });
 
@@ -503,6 +510,7 @@ export const LocationStyles = StyleSheet.create({
   orText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.PRIVCYTEXT,
+    marginBottom: Constants.BaseStyle.scale(10),
   },
   saveBtn: {
     marginBottom: Constants.BaseStyle.scale(15),

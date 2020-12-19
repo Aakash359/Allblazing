@@ -18,7 +18,7 @@ class Home extends React.Component {
   }) => (
     <View style={HomeStyles.content}>
       <Text style={HomeStyles.heading}>{title}</Text>
-      <TouchableOpacity hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
+      <TouchableOpacity activeOpacity={0.7} hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigate(route, payload)}>
         <Text style={HomeStyles.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>

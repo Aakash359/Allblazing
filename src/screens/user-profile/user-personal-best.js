@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { bool, func, shape } from 'prop-types';
-import { AuthStyle, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
+import { AuthStyle, CommonStyles, ConnectUserTypeStyles, DistanceStyles, Repeat5KStyles } from '../../styles';
 import { StepBar } from '../../components';
 import Constants from '../../constants';
 
@@ -64,13 +64,20 @@ class UserPersonalBest extends Component {
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
-                  style={[ConnectUserTypeStyles.button, { backgroundColor: t.color }]}
+                  style={[ConnectUserTypeStyles.button, DistanceStyles.button, { backgroundColor: t.color }]}
                   activeOpacity={0.7}
                   onPress={() => this.onTypeChange(t.value)}
                 >
                   <Text style={Repeat5KStyles.buttonText}>{'     '}</Text>
-                  <Text style={[Repeat5KStyles.buttonText, time === t.label && Repeat5KStyles.active]}>{t.label}</Text>
-                  {time === t.value ? <Ionicons name="checkmark-sharp" size={25} color={Constants.Colors.BLACK} style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
+                  <Text style={[Repeat5KStyles.buttonText, DistanceStyles.buttonText, time === t.label && Repeat5KStyles.active]}>{t.label}</Text>
+                  {time === t.value && (
+                    <Ionicons
+                      name="checkmark-sharp"
+                      size={25}
+                      color={Constants.Colors.BLACK}
+                      style={[AuthStyle.checkImg, DistanceStyles.select]}
+                    />
+                  )}
                 </TouchableOpacity>
               ))}
             </View>

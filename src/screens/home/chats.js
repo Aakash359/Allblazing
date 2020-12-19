@@ -35,13 +35,13 @@ class Chats extends React.Component {
       <View style={HomeStyles.chatHeaderContainer}>
 
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
-          <TouchableOpacity onPress={() => this.onTabPress('0')}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('0')}>
             <Text style={[HomeStyles.chatText, { color: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Friends'}</Text>
           </TouchableOpacity>
 
         </View>
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
-          <TouchableOpacity onPress={() => this.onTabPress('1')}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('1')}>
             <Text style={[HomeStyles.chatText, { color: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Groups'}</Text>
           </TouchableOpacity>
 

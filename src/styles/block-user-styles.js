@@ -27,6 +27,7 @@ export default StyleSheet.create({
   select: {
     position: 'absolute', right: Constants.BaseStyle.scale(5),
   },
+  space: { marginTop: Constants.BaseStyle.scale(10) },
   subtitle: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,

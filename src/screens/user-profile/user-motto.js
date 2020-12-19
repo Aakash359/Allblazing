@@ -39,6 +39,7 @@ class UserMotto extends Component {
                   value={motto}
                   onChangeText={this.onChangeText}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
+                  underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
               </View>
               <Text style={RegisterStyle.mottoCount}>{`${motto.length}/60`}</Text>

@@ -17,9 +17,7 @@ class ChatOneToOne extends React.Component {
     if (item.index % 2 === 0) {
       return (
         <View style={HomeStyles.ChatOneToOneContainerOuter2}>
-
           <View style={HomeStyles.ChatOneToOneContainer2}>
-
             <Text style={[InviteFriendsStyles.username]}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </Text>
@@ -28,11 +26,9 @@ class ChatOneToOne extends React.Component {
             ]}
             >
               {'10:36am'}
-
             </Text>
           </View>
           <View style={HomeStyles.ChatTrinangleRight} />
-
         </View>
       );
     }
@@ -42,23 +38,16 @@ class ChatOneToOne extends React.Component {
         <View style={HomeStyles.ChatTrinangleLeft} />
         <View style={HomeStyles.ChatOneToOneContainer}>
           <Text style={[InviteFriendsStyles.username]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </Text>
-          <Text style={[InviteFriendsStyles.location,
-            ChatStyles.chatTimeText,
-          ]}
-          >
-            {'04:36pm'}
-          </Text>
+          <Text style={[InviteFriendsStyles.location, ChatStyles.chatTimeText]}>{'04:36pm'}</Text>
         </View>
       </View>
     );
   }
 
   renderHeader = ({ goBack }) => (
-
     <View style={HomeStyles.ChatOneToOneHeader}>
-
       <View style={[InviteFriendsStyles.userWrapper]}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
           <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>
         <Image
@@ -74,10 +63,9 @@ class ChatOneToOne extends React.Component {
           <Text style={InviteFriendsStyles.location}>Santee</Text>
         </View>
       </View>
-      <TouchableOpacity onPress={() => this.setState({ visible: true })}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
         <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
       </TouchableOpacity>
-
     </View>
 
   );
@@ -110,10 +98,9 @@ class ChatOneToOne extends React.Component {
               value={message}
               placeholder="Write your message..."
               placeholderTextColor={Constants.Colors.TEXT_COLOR}
-              // eslint-disable-next-line react/jsx-props-no-multi-spaces
               onChangeText={(text) => this.setState({ message: text })}
+              underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
-
             <TouchableOpacity>
               <Image
                 source={Constants.Images.send}
@@ -125,7 +112,6 @@ class ChatOneToOne extends React.Component {
                 }}
               />
             </TouchableOpacity>
-
           </View>
         </View>
         <MoreOptionsPopup
@@ -152,7 +138,6 @@ ChatOneToOne.propTypes = {
     setParams: func,
 
   }).isRequired,
-  // route: shape({ params: shape({ isMapView: bool }) }).isRequired,
 };
 
 export default ChatOneToOne;

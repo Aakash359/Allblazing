@@ -14,14 +14,13 @@ function MyProfile() {
   const optionList = ['Goals', 'PB\'s', 'Likes'];
 
   const renderItem = ({ item }) => (
-    // <View style={}>
     <TouchableOpacity
+      activeOpacity={0.7}
       style={[MyProfileStyles.sectionView, { backgroundColor: item === option ? Constants.Colors.GRAY : Constants.Colors.PRIMARY }]}
       onPress={() => { setOption(item); }}
     >
       <Text style={MyProfileStyles.section1}>{item}</Text>
     </TouchableOpacity>
-    // </View>
   );
 
   const displayOptions = (data) => {
@@ -40,7 +39,7 @@ function MyProfile() {
     <>
       <SafeAreaView style={MyProfileStyles.container}>
         <ScrollView>
-          <TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
             <View>
               <ImageBackground
                 source={Constants.Images.profilePic}
@@ -57,6 +56,7 @@ function MyProfile() {
                     <Text style={MyProfileStyles.subHeading}>{'It always seems impossible until it`s done!'}</Text>
                   </View>
                   <TouchableOpacity
+                    activeOpacity={0.7}
                     onPress={() => { navigation.navigate('EditProfile'); }}
                   >
                     <Image
@@ -71,6 +71,7 @@ function MyProfile() {
           </TouchableOpacity>
           <View style={MyProfileStyles.headerMainView}>
             <TouchableOpacity
+              activeOpacity={0.7}
               onPress={() => { navigation.navigate('FollowersList'); }}
               style={MyProfileStyles.headerView}
             >
@@ -78,17 +79,18 @@ function MyProfile() {
               <Text style={MyProfileStyles.section1}>{'Followers'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={0.7}
               onPress={() => { navigation.navigate('FollowingList'); }}
               style={MyProfileStyles.headerView}
             >
               <Text style={MyProfileStyles.section2}>{'127'}</Text>
               <Text style={MyProfileStyles.section1}>{'Following'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={MyProfileStyles.headerView}>
+            <TouchableOpacity activeOpacity={0.7} style={MyProfileStyles.headerView}>
               <Text style={MyProfileStyles.section2}>{'3K'}</Text>
               <Text style={MyProfileStyles.section1}>{'Posts'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { navigation.navigate('ChatsGroup'); }} style={MyProfileStyles.headerViewEnd}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => { navigation.navigate('ChatsGroup'); }} style={MyProfileStyles.headerViewEnd}>
               <Text style={MyProfileStyles.section2}>{'5'}</Text>
               <Text style={MyProfileStyles.section1}>{'Groups'}</Text>
             </TouchableOpacity>

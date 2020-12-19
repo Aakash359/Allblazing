@@ -23,6 +23,7 @@ const DiscoverNavigator = () => (
         ),
         headerTintColor: Constants.Colors.WHITE,
         headerTitle: 'Feed',
+        headerTitleAlign: 'center',
       })}
     />
   </DiscoverStack.Navigator>

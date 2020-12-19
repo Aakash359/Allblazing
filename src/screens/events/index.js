@@ -36,11 +36,14 @@ class Events extends React.Component {
     return (
       <View style={HomeStyles.container}>
         {params?.isMapView ? (<Map style={MapViewStyles.map} onMarkerPress={this.onMarkerPress} onEventPress={this.onEventPress} />) : (
-          <FlatList
-            data={[1, 2, 3]}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => `${index}`}
-          />
+          <>
+            <FlatList
+              data={[1, 2, 3]}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => `${index}`}
+            />
+            <View style={HomeStyles.spacing} />
+          </>
         )}
         {params?.isMapView && visible && this.renderEventPopup()}
       </View>

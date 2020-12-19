@@ -32,25 +32,22 @@ function UserProfile() {
   };
 
   const renderItem = ({ item }) => (
-    // <View style={}>
     <TouchableOpacity
+      activeOpacity={0.7}
       style={[ProfileStyles.optionalSectionView, { backgroundColor: item === option ? Constants.Colors.GRAY : Constants.Colors.PRIMARY }]}
       onPress={() => { setOption(item); }}
     >
       <Text style={ProfileStyles.optionalSection1}>{item}</Text>
     </TouchableOpacity>
-    // </View>
   );
 
   return (
     <View style={ProfileStyles.container}>
-      {/* <View style={ProfileStyles.mainView}> */}
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7}>
           <View>
             <ImageBackground
               source={Constants.Images.profilePic}
-              // resizeMode='contain'
               imageStyle={ProfileStyles.borderRadius}
               style={ProfileStyles.profileIcon}
             >
@@ -62,7 +59,7 @@ function UserProfile() {
                   <Text style={ProfileStyles.heading}>{'Cameron Williamson, 23'}</Text>
                   <Text style={ProfileStyles.subHeading}>{'It always seems impossible until it`s done!'}</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.7}>
                   <Image
                     source={Constants.Images.chat}
                     resizeMode='contain'
@@ -70,6 +67,7 @@ function UserProfile() {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   onPress={() => setFollowStatus(!followStatus)}
                 >
                   <Image
@@ -106,7 +104,6 @@ function UserProfile() {
         {followStatus ? (
           <View>
             <FlatList
-            // style={MyProfileStyles.sectionMainView}
               scrollEnabled={false}
               contentContainerStyle={ProfileStyles.sectionMainView}
               data={optionList}

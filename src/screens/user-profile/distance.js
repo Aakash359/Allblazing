@@ -73,13 +73,20 @@ class Distance extends Component {
               {distanceList.map((t) => (
                 <TouchableOpacity
                   key={t.value}
-                  style={ConnectUserTypeStyles.button}
+                  style={[ConnectUserTypeStyles.button, DistanceStyles.button]}
                   activeOpacity={0.7}
                   onPress={() => this.onTypeChange(t.value)}
                 >
-                  <Text style={ConnectUserTypeStyles.buttonText}>{'     '}</Text>
-                  <Text style={[ConnectUserTypeStyles.buttonText, { color: time === t.value ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{t.label}</Text>
-                  {time === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
+                  <Text
+                    style={[
+                      ConnectUserTypeStyles.buttonText,
+                      DistanceStyles.buttonText,
+                      { color: time === t.value ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 },
+                    ]}
+                  >
+                    {t.label}
+                  </Text>
+                  {time === t.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, DistanceStyles.select]} />}
                 </TouchableOpacity>
               ))}
             </View>

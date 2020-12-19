@@ -56,9 +56,10 @@ const styles = {
     backgroundColor: Constants.Colors.PRIMARY,
     borderRadius: Constants.BaseStyle.scale(5),
     height: Constants.BaseStyle.scale(220),
-    marginVertical: Constants.BaseStyle.scale(20),
+    marginBottom: Constants.BaseStyle.scale(20),
     width: '100%',
   },
+  inviteBtn: { marginBottom: Constants.BaseStyle.scale(20) },
   live: {
     height: 25,
     width: 25,

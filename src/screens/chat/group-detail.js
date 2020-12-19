@@ -20,16 +20,13 @@ class GroupDetail extends React.Component {
   }
 
   renderHeader = ({ goBack }) => (
-
     <View style={HomeStyles.ChatOneToOneHeader}>
-
       <View style={[InviteFriendsStyles.userWrapper]}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
           <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>
-
       </View>
-      <TouchableOpacity onPress={() => this.setState({ visible: true })}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
         <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
       </TouchableOpacity>
     </View>
@@ -119,6 +116,7 @@ class GroupDetail extends React.Component {
               />
             </View>
             <TouchableOpacity
+              activeOpacity={0.7}
               style={GroupDetailStyles.nextView}
             >
               <Text style={GroupDetailStyles.nextText}>Next</Text>

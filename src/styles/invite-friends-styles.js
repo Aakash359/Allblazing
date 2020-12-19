@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
 import Constants from '../constants';
 
 export default StyleSheet.create({
@@ -85,6 +86,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     fontSize: 12,
     marginTop: Constants.BaseStyle.scale(5),
+    maxWidth: '90%',
     paddingLeft: Constants.BaseStyle.scale(10),
     textAlign: 'left',
   },
@@ -99,6 +101,7 @@ export default StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(5),
     paddingLeft: Constants.BaseStyle.scale(20),
   },
+  namePadding: { paddingLeft: Constants.BaseStyle.scale(0) },
   padding: {
     paddingLeft: Constants.BaseStyle.scale(10),
     textAlign: 'left',
@@ -112,9 +115,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderColor: Constants.Colors.LIGHT_ORANGE,
     borderWidth: 1,
+    flex: 0.3,
     height: 24,
     justifyContent: 'center',
-    width: 60,
   },
   row: {
     alignItems: 'center',
@@ -129,14 +132,21 @@ export default StyleSheet.create({
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(120),
     justifyContent: 'center',
-    marginTop: Constants.BaseStyle.scale(200),
+    ...Platform.select({
+      android: { marginTop: Constants.BaseStyle.scale(200) },
+      ios: { marginTop: Constants.BaseStyle.scale(150) },
+    }),
     width: Constants.BaseStyle.scale(300),
+  },
+  userDetailView: {
+    alignItems: 'center', flexDirection: 'row', justifyContent: 'center',
   },
   userImage: {
     borderRadius: 10,
     height: '100%',
     width: Constants.BaseStyle.scale(70),
   },
+  userInformation: { flex: 0.6 },
   userWrapper: {
     alignItems: 'center',
     borderRadius: 5,

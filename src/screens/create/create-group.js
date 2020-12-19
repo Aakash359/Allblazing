@@ -14,6 +14,7 @@ function CreateGroup() {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
+      activeOpacity={0.7}
       style={[CreateGroupStyles.optionalSectionView, { backgroundColor: item === option ? Constants.Colors.GRAY : Constants.Colors.CARD_GREY }]}
       onPress={() => { setOption(item); }}
     >
@@ -42,6 +43,7 @@ function CreateGroup() {
               setName(text);
             }}
             style={CreateGroupStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <View>
@@ -55,6 +57,7 @@ function CreateGroup() {
           />
         </View>
         <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => navigation.navigate('AddMember')}
           style={CreateGroupStyles.nextView}
         >

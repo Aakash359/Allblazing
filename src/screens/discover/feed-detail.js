@@ -19,6 +19,7 @@ function FeedDetailScreen() {
       <View style={[FeedDetailStyles.listView]}>
         <View style={FeedDetailStyles.innerView}>
           <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() => navigation.goBack()}
           >
             <Image
@@ -37,6 +38,7 @@ function FeedDetailScreen() {
         </View>
         <View style={FeedDetailStyles.heartView}>
           <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() => { setLike(!like); }}
           >
             <Image

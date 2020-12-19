@@ -22,7 +22,7 @@ function CreateEvent() {
         </View>
         <View style={CreateEventStyles.liveEventView}>
           <Text style={CreateEventStyles.groupType}>Live Event</Text>
-          <TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
             <Image
               source={Constants.Images.toggleOff}
               style={CreateEventStyles.imageIcon}
@@ -31,27 +31,27 @@ function CreateEvent() {
         </View>
         <Text style={CreateEventStyles.eventType}>Event Type</Text>
         <View style={CreateEventStyles.rowStyle}>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Individual</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Group</Text>
           </TouchableOpacity>
         </View>
         <Text style={CreateEventStyles.eventType}>Event Category</Text>
         <View style={CreateEventStyles.rowStyle}>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Running</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Racing</Text>
           </TouchableOpacity>
         </View>
         <View style={CreateEventStyles.rowStyle}>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Coach</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={CreateEventStyles.halfView}>
+          <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
             <Text style={CreateEventStyles.groupName}>Club</Text>
           </TouchableOpacity>
         </View>
@@ -67,6 +67,7 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <View style={CreateEventStyles.searchView}>
@@ -80,6 +81,7 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
           <Image
             source={Constants.Images.calendar}
@@ -97,6 +99,7 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
           <Image
             source={Constants.Images.clock}
@@ -114,6 +117,7 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <View style={CreateEventStyles.searchView}>
@@ -127,6 +131,7 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.groupName}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <View style={CreateEventStyles.searchView}>
@@ -142,9 +147,11 @@ function CreateEvent() {
               setName(text);
             }}
             style={CreateEventStyles.description}
+            underlineColorAndroid={Constants.Colors.TRANSPARENT}
           />
         </View>
         <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => navigation.navigate('AddMember')}
           style={CreateEventStyles.nextView}
         >

@@ -10,14 +10,16 @@ export const InvitedUser = () => {
     <View activeOpacity={0.7} onPress={() => setCheck(!checked)} style={[InviteFriendsStyles.invitedUserContainer]}>
       <View style={[InviteFriendsStyles.userWrapper, InviteFriendsStyles.invitedUserWrapper]}>
         <Image source={Constants.Images.inviteUser2} style={[InviteFriendsStyles.userImage, InviteFriendsStyles.invitedUserImage]} />
-        <View>
-          <Text style={[InviteFriendsStyles.username, InviteFriendsStyles.padding]}>Shane Watson</Text>
-          <Text style={InviteFriendsStyles.invitedUserDescription}>You have invited to record the live stream</Text>
+        <View style={InviteFriendsStyles.userDetailView}>
+          <View style={InviteFriendsStyles.userInformation}>
+            <Text style={[InviteFriendsStyles.username, InviteFriendsStyles.namePadding]}>Shane Watson</Text>
+            <Text style={[InviteFriendsStyles.invitedUserDescription, InviteFriendsStyles.namePadding]}>You have invited to record the live stream</Text>
+          </View>
+          <TouchableOpacity activeOpacity={0.7} source={Constants.Images.check} resizeMode='contain' style={[InviteFriendsStyles.pendingBtn]}>
+            <Text style={InviteFriendsStyles.pending}>Pending</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.7} source={Constants.Images.check} resizeMode='contain' style={[InviteFriendsStyles.pendingBtn]}>
-        <Text style={InviteFriendsStyles.pending}>Pending</Text>
-      </TouchableOpacity>
     </View>
   );
 };

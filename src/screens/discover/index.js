@@ -31,6 +31,7 @@ function FeedScreen() {
   const renderItem = ({ item }) => (
     <View>
       <TouchableOpacity
+        activeOpacity={0.7}
         style={[FollowersStyles.sectionView]}
         onPress={() => { navigation.navigate('FeedDetailScreen'); }}
       >
@@ -46,6 +47,7 @@ function FeedScreen() {
             </View>
           </View>
           <TouchableOpacity
+            activeOpacity={0.7}
             style={FeedStyles.heartView}
             onPress={() => { setLike(!like); navigation.navigate('FeedDetailScreen', { data: item }); }}
           >
@@ -59,6 +61,7 @@ function FeedScreen() {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
+        activeOpacity={0.7}
         onPress={() => { setLike(!like); navigation.navigate('FeedDetailScreen', { data: item }); }}
       >
         <Image
@@ -75,6 +78,7 @@ function FeedScreen() {
 
   const filterData = ({ item }) => (
     <TouchableOpacity
+      activeOpacity={0.7}
       style={[FeedStyles.optionalSectionView]}
       onPress={() => { navigation.navigate('LiveFeed'); }}
     >

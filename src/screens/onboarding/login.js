@@ -76,39 +76,30 @@ class Login extends Component {
                   value={password}
                   onChangeText={(text) => this.setState({ password: text })}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
+                  underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
                 {isShow ? (
-                  <TouchableOpacity onPress={() => this.setState({ isShow: !isShow })}>
+                  <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ isShow: !isShow })}>
                     <Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity onPress={() => this.setState({ isShow: !isShow })}>
+                  <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ isShow: !isShow })}>
                     <Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />
                   </TouchableOpacity>
                 ) }
               </View>
               <View style={LoginStyles.remember}>
                 <View style={LoginStyles.row}>
-                  {isRemember ? (
-                    <TouchableOpacity onPress={() => this.setState({ isRemember: !isRemember })} style={{ }}>
-                      <Image
-                        source={Constants.Images.checkbox}
-                        resizeMode='contain'
-                        style={LoginStyles.rememberIcon}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity onPress={() => this.setState({ isRemember: !isRemember })}>
-                      <Image
-                        source={Constants.Images.checkoff}
-                        resizeMode='contain'
-                        style={LoginStyles.rememberIcon}
-                      />
-                    </TouchableOpacity>
-                  )}
+                  <TouchableOpacity activeOpacity={1} onPress={() => this.setState({ isRemember: !isRemember })}>
+                    <Image
+                      source={isRemember ? Constants.Images.checkbox : Constants.Images.checkoff}
+                      resizeMode='contain'
+                      style={LoginStyles.rememberIcon}
+                    />
+                  </TouchableOpacity>
                   <Text style={LoginStyles.rememberText}>{'Remember me'}</Text>
                 </View>
-                <TouchableOpacity onPress={() => navigate('ForgotPassword')}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('ForgotPassword')}>
                   <Text style={[AuthStyle.buttonText, LoginStyles.forgotPasswordText]}>
                     {'Forgot password?'}
                   </Text>
@@ -129,7 +120,7 @@ class Login extends Component {
               </View>
               <View style={LoginStyles.socialIconsWrapper}>
                 {socialIcons.map((social) => (
-                  <TouchableOpacity key={social.name}>
+                  <TouchableOpacity activeOpacity={0.7} key={social.name}>
                     <Image source={social.icon} resizeMode='contain' style={LoginStyles.socialIcon} />
                   </TouchableOpacity>
                 ))}
@@ -139,7 +130,7 @@ class Login extends Component {
         </ScrollView>
         <View style={LoginStyles.accountWrapper}>
           <Text style={LoginStyles.account}>{'Don\'t have account?'}</Text>
-          <TouchableOpacity onPress={() => navigate('Register')}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('Register')}>
             <Text style={LoginStyles.createAccount}>{'Create account'}</Text>
           </TouchableOpacity>
         </View>
