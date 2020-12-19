@@ -96,8 +96,11 @@ function UserProfile() {
             <Text style={ProfileStyles.section1}>{'Posts'}</Text>
           </View>
           <View style={ProfileStyles.sectionViewEnd}>
-            <Text style={ProfileStyles.section2}>{'5'}</Text>
-            <Text style={ProfileStyles.section1}>{'Groups'}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('ChatsGroup')}>
+              <Text style={ProfileStyles.section2}>{'5'}</Text>
+              <Text style={ProfileStyles.section1}>{'Groups'}</Text>
+            </TouchableOpacity>
+
           </View>
         </View>
         {followStatus ? (

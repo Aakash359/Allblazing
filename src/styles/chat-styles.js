@@ -175,12 +175,26 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     marginTop: '20%',
   },
+  optionalSection1: {
+    alignSelf: 'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+    fontSize: Constants.BaseStyle.scale(12),
+  },
+
+  optionalSectionView: {
+    borderRadius: Constants.BaseStyle.scale(5),
+    marginTop: Constants.BaseStyle.scale(20),
+    paddingHorizontal: Constants.BaseStyle.scale(20),
+    paddingVertical: Constants.BaseStyle.scale(10),
+  },
+
   overlappingStyle: {
     alignItems: 'flex-end',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 16,
+    margin: Constants.BaseStyle.scale(10),
   },
   profileIcon: {
     alignSelf: 'center',
@@ -189,7 +203,14 @@ export default StyleSheet.create({
     marginVertical: 30,
     width: width * 0.9,
   },
-
+  sectionMainView: {
+    borderBottomWidth: 0,
+    borderColor: Constants.Colors.WHITE,
+    borderTopWidth: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 10,
+  },
   subHeading: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,

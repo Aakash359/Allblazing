@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   },
   ChatTrinangleLeft: {
     alignSelf: 'flex-end',
-    backgroundColor: Constants.ColorsTRANSPARENT,
-    borderRightColor: Constants.ColorsTRANSPARENT,
+    backgroundColor: Constants.Colors.TRANSPARENT,
+    borderRightColor: Constants.Colors.TRANSPARENT,
     borderRightWidth: Constants.BaseStyle.scale(10),
     borderStyle: 'solid',
     borderTopColor: Constants.Colors.TEXT_COLOR2,
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
   },
   ChatTrinangleRight: {
     alignSelf: 'flex-end',
-    backgroundColor: Constants.ColorsTRANSPARENT,
-    borderRightColor: Constants.ColorsTRANSPARENT,
+    backgroundColor: Constants.Colors.TRANSPARENT,
+    borderRightColor: Constants.Colors.TRANSPARENT,
     borderRightWidth: Constants.BaseStyle.scale(15),
     borderStyle: 'solid',
     borderTopColor: Constants.Colors.SECONDARY_COLOR,

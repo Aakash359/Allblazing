@@ -10,9 +10,9 @@ export const ChatGroup = ({
   navigation,
 
 }) => (
-  <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('GroupInfo')} style={InviteFriendsStyles.container}>
+  <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('GroupDetail')} style={InviteFriendsStyles.container}>
     <View style={InviteFriendsStyles.userWrapper}>
-      <Image source={Constants.Images.inviteUser1} style={InviteFriendsStyles.userImage} />
+      <Image source={Constants.Images.groupDetails} style={InviteFriendsStyles.userImage} />
       <View>
         <Text style={InviteFriendsStyles.username}>Super Nova</Text>
         <Text style={InviteFriendsStyles.location}>Mike,santee, watson and 38 others</Text>

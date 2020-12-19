@@ -33,7 +33,7 @@ class GroupInfo extends React.Component {
           <ScrollView>
             <View>
               <ImageBackground
-                source={Constants.Images.inviteUser1}
+                source={Constants.Images.groupDetails}
                 imageStyle={ChatStyles.borderRadius}
                 style={ChatStyles.profileIcon}
               >
@@ -43,9 +43,7 @@ class GroupInfo extends React.Component {
                     <Text style={ChatStyles.heading}>{'Super Nova'}</Text>
                     <Text style={ChatStyles.subHeading}>{'18 Members'}</Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => { navigate('EditProfile'); }}
-                  >
+                  <TouchableOpacity>
                     <Image
                       source={Constants.Images.edit}
                       resizeMode='contain'

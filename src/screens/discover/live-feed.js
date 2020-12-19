@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView, TextInput, SafeAreaView } from 'react-native';
 import { LiveFeedStyles } from '../../styles';
 import Constants from '../../constants';
+import { PermisionPopup } from '../../components';
 
 function LiveFeed() {
   const [like, setLike] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
   const [message, setMessage] = useState('');
 
   const comment = [
@@ -122,6 +124,12 @@ function LiveFeed() {
           style={LiveFeedStyles.messageIcon}
         />
       </View>
+      { showPopup && (
+        <PermisionPopup
+          onLogout={() => setShowPopup(!showPopup)}
+          onCancel={() => setShowPopup(false)}
+        />
+      )}
     </SafeAreaView>
   );
 }

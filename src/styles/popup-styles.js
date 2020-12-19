@@ -180,6 +180,7 @@ const styles = {
     paddingVertical: Constants.BaseStyle.MARGIN,
     width: '90%',
   },
+
   picker: {
     height: 180,
     width: Constants.BaseStyle.scale(50),
@@ -196,6 +197,12 @@ const styles = {
     justifyContent: 'space-between',
     marginTop: Constants.BaseStyle.scale(2),
     padding: Constants.BaseStyle.scale(10),
+  },
+  premissionCamera: {
+    alignSelf: 'center',
+    height: Constants.BaseStyle.scale(60),
+    width: Constants.BaseStyle.scale(60),
+
   },
   reportIcon: {
     height: Constants.BaseStyle.scale(20),
@@ -244,6 +251,11 @@ const styles = {
     backgroundColor: Constants.Colors.PRIMARY,
     borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
     padding: Constants.BaseStyle.MARGIN,
+  },
+  wrapperPermission: {
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    borderRadius: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 3,
+    padding: Constants.BaseStyle.MARGIN2,
   },
   yearLabel: {
     marginLeft: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 15,

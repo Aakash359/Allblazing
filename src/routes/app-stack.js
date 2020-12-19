@@ -24,6 +24,9 @@ import Events from '../screens/events';
 import Filter from '../screens/filter';
 import SearchScreen from '../screens/search';
 import StaticContent from '../screens/settings/static-content';
+import ChatOneToOne from '../screens/chat/chat-one-to-one';
+import ChatsGroup from '../screens/chat/chat-group';
+import GroupInfo from '../screens/chat/group-info';
 import BlockReportUser from '../screens/block-report-user';
 import SingleEventDetail from '../screens/events/detail';
 import CreateEvent from '../screens/create/create-event';
@@ -32,7 +35,8 @@ import AddMember from '../screens/create/add-member';
 import LiveFeed from '../screens/discover/live-feed';
 import CreatePost from '../screens/create/create-post';
 import GroupDetail from '../screens/chat/group-detail';
-
+import EditGroupName from '../screens/chat/edit-group-name';
+import EditGroupDisc from '../screens/chat/edit-group-disc';
 import FeedDetailScreen from '../screens/discover/feed-detail';
 import Notifications from '../screens/home/notifications';
 import Runners from '../screens/home/runners';
@@ -187,6 +191,51 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Event Details',
+        })}
+      />
+      <AppStack.Screen
+        name="ChatOneToOne"
+        component={ChatOneToOne}
+        options={{ headerShown: false }}
+      />
+      <AppStack.Screen
+        name="ChatsGroup"
+        component={ChatsGroup}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || 'Groups',
+        })}
+      />
+      <AppStack.Screen
+        name="EditGroupName"
+        component={EditGroupName}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || 'Edit Group Name',
+        })}
+      />
+      <AppStack.Screen
+        name="EditGroupDisc"
+        component={EditGroupDisc}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || 'Edit Description',
+        })}
+      />
+      <AppStack.Screen
+        name="GroupInfo"
+        component={GroupInfo}
+        options={({ route }) => ({
+          headerBackTitleVisible: false,
+
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: route?.params?.title || '',
         })}
       />
       <AppStack.Screen
@@ -367,11 +416,7 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="GroupDetail"
         component={GroupDetail}
-        options={{
-          headerBackTitleVisible: false,
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: '',
-        }}
+        options={{ headerShown: false }}
       />
       <AppStack.Screen
         name="FeedDetailScreen"

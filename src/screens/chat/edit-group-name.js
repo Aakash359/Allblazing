@@ -20,7 +20,9 @@ class EditGroupName extends React.Component {
           <InputField value={groupName} placeholder="Group Name" onChangeText={(text) => this.setState({ groupName: text })} />
         </ScrollView>
         <TouchableOpacity
-          style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+          style={[AuthStyle.loginTouchable, {
+            backgroundColor: Constants.Colors.TEXT_COLOR2, marginBottom: Constants.BaseStyle.scale(15),
+          }]}
           activeOpacity={0.7}
           onPress={this.onLogin}
         >
