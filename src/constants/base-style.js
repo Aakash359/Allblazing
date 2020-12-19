@@ -42,6 +42,7 @@ const BaseStyle = {
   },
   IS_TABLET: !(y / x > 1.6),
   MARGIN: (x / 100) * 5,
+  MARGIN2: (x / 100) * 2,
   MARGINHORIZONTAL: (x / 100) * 5,
   MARGINVERTICAL: (y / 100) * 2,
   PADDING: (x / 100) * 5,

@@ -4,7 +4,7 @@ import LogoutPopup from './popups/logout-popup';
 import MoreOptionsPopup from './popups/more-options-popup';
 import RemoveMemberPopup from './popups/remove-member-popup';
 import SuccessPopup from './popups/success-popup';
-
+import PermisionPopup from './popups/permission-popup';
 import TimePicker from './popups/time-picker';
 import SingleEvent from './events/single-event';
 import InvitedUser from './events/invited-user';
@@ -36,6 +36,7 @@ export {
   InvitedUser,
   ChatFriends,
   Loader,
+  PermisionPopup,
   RemoveMemberPopup,
   SettingItem,
   SingleEvent,

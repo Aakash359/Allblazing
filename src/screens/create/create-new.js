@@ -74,14 +74,14 @@ class CreateNew extends React.Component {
                 onPress={() => navigate('CreateGroup')}
                 style={CreateNewStyles.tagView}
               >
-                <Image style={CreateNewStyles.icons} source={Constants.Images.createGroups} />
+                <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />
                 <Text style={CreateNewStyles.modalText}>{'Create Group'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigate('CreateEvent')}
                 style={CreateNewStyles.tagView}
               >
-                <Image style={CreateNewStyles.icons} source={Constants.Images.createEvent} />
+                <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />
                 <Text style={CreateNewStyles.modalText}>{'Create Event'}</Text>
               </TouchableOpacity>
             </View>
@@ -90,14 +90,14 @@ class CreateNew extends React.Component {
                 onPress={() => navigate('CreatePost')}
                 style={CreateNewStyles.tagView}
               >
-                <Image style={CreateNewStyles.icons} source={Constants.Images.createPost} />
+                <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />
                 <Text style={CreateNewStyles.modalText}>{'Create Post'}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigate('LiveFeed')}
                 style={CreateNewStyles.tagView}
               >
-                <Image style={CreateNewStyles.icons} source={Constants.Images.goLive} />
+                <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />
                 <Text style={CreateNewStyles.modalText}>{'Go Live'}</Text>
               </TouchableOpacity>
             </View>

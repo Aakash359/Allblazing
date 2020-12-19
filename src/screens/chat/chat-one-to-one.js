@@ -2,13 +2,15 @@ import React from 'react';
 import { View, FlatList, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 import { func, shape } from 'prop-types';
 import { CommonStyles, HomeStyles, InviteFriendsStyles, ChatStyles } from '../../styles';
-
+import { MoreOptionsPopup } from '../../components';
 import Constants from '../../constants';
 
 class ChatOneToOne extends React.Component {
   constructor() {
     super();
-    this.state = { message: '' };
+    this.state = {
+      message: '', visible: false,
+    };
   }
 
   renderItem = (item) => {
@@ -72,7 +74,7 @@ class ChatOneToOne extends React.Component {
           <Text style={InviteFriendsStyles.location}>Santee</Text>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.setState({ visible: true })}>
         <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
       </TouchableOpacity>
 
@@ -81,8 +83,14 @@ class ChatOneToOne extends React.Component {
   );
 
   render() {
-    const { navigation: { goBack } } = this.props;
-    const { message } = this.state;
+    const {
+      navigation: {
+        goBack, navigate,
+      },
+    } = this.props;
+    const {
+      message, visible,
+    } = this.state;
 
     return (
       <View style={HomeStyles.container}>
@@ -120,6 +128,18 @@ class ChatOneToOne extends React.Component {
 
           </View>
         </View>
+        <MoreOptionsPopup
+          hasUnFollowBtn={false}
+          visible={visible}
+          onBlock={() => {
+            this.setState({ visible: false });
+            navigate('BlockReportUser', { isBlockPage: true });
+          }}
+          onReport={() => {
+            this.setState({ visible: false });
+            navigate('BlockReportUser', { isBlockPage: false });
+          }}
+        />
       </View>
     );
   }

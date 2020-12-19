@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import Constants from '../constants';
+
 import MyProfile from '../screens/user-profile/my-profile';
 import { HeaderStyles } from '../styles';
 import Runners from '../screens/home/runners';
@@ -32,6 +34,7 @@ const ProfileNavigator = () => (
         headerTitle: 'My Profile',
       })}
     />
+
     <ProfileStack.Screen
       name="Runners"
       component={Runners}
@@ -51,6 +54,7 @@ const ProfileNavigator = () => (
         ),
       })}
     />
+
     <ProfileStack.Screen
       name="UserProfile"
       component={UserProfile}

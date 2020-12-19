@@ -7,9 +7,13 @@ import AnimatedModal from '../animate-modal';
 
 const MoreOptionsPopup = ({
   blockBtnTitle, blockBtnSubtitle,
+
   hasBlockBtn,
   hasReportBtn,
   hasUnFollowBtn,
+  leaveGroup,
+  leaveGroupTitle,
+  leaveGroupSubTitle,
   onBlock,
   onReport,
   onUnfollow,
@@ -43,6 +47,19 @@ const MoreOptionsPopup = ({
             </TouchableOpacity>
           </>
         )}
+        { leaveGroup && (
+          <>
+            {hasUnFollowBtn && <View style={CommonStyles.divider} />}
+            <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
+              <Image source={Constants.Images.exit} style={PopupStyles.blockIcon} />
+              <View>
+                <Text style={PopupStyles.btnTitle}>{leaveGroupTitle}</Text>
+                <Text style={PopupStyles.btnSubtitle}>{leaveGroupSubTitle}</Text>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+        {leaveGroup && <View style={CommonStyles.divider} />}
         {hasReportBtn && (
           <>
             {hasBlockBtn && <View style={CommonStyles.divider} />}
@@ -66,6 +83,10 @@ MoreOptionsPopup.propTypes = {
   hasBlockBtn: bool,
   hasReportBtn: bool,
   hasUnFollowBtn: bool,
+  leaveGroup: bool,
+  leaveGroupSubTitle: bool,
+  leaveGroupTitle: bool,
+
   onBlock: func,
   onReport: func,
   onUnfollow: func,
@@ -82,6 +103,10 @@ MoreOptionsPopup.defaultProps = {
   hasBlockBtn: true,
   hasReportBtn: true,
   hasUnFollowBtn: true,
+  leaveGroup: false,
+  leaveGroupSubTitle: 'you will not longer to get the notofication about group events',
+  leaveGroupTitle: 'Leave Group',
+
   onBlock: null,
   onReport: null,
   onUnfollow: null,

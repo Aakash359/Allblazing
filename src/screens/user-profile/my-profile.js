@@ -88,7 +88,7 @@ function MyProfile() {
               <Text style={MyProfileStyles.section2}>{'3K'}</Text>
               <Text style={MyProfileStyles.section1}>{'Posts'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={MyProfileStyles.headerViewEnd}>
+            <TouchableOpacity onPress={() => { navigation.navigate('ChatsGroup'); }} style={MyProfileStyles.headerViewEnd}>
               <Text style={MyProfileStyles.section2}>{'5'}</Text>
               <Text style={MyProfileStyles.section1}>{'Groups'}</Text>
             </TouchableOpacity>
