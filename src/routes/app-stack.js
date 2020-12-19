@@ -252,6 +252,7 @@ export default function MainNavigator() {
           headerTitleAlign: 'center',
         })}
       />
+
       <AppStack.Screen
         name="StaticContent"
         component={StaticContent}
@@ -445,12 +446,7 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="GroupDetail"
         component={GroupDetail}
-        options={{
-          headerBackTitleVisible: false,
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: null,
-          headerTitleAlign: 'center',
-        }}
+        options={{ headerShown: false }}
       />
       <AppStack.Screen
         name="FeedDetailScreen"

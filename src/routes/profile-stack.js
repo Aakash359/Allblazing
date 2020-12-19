@@ -35,6 +35,7 @@ const ProfileNavigator = () => (
         headerTitleAlign: 'center',
       })}
     />
+
     <ProfileStack.Screen
       name="Runners"
       component={Runners}
@@ -55,6 +56,7 @@ const ProfileNavigator = () => (
         headerTitleAlign: 'center',
       })}
     />
+
     <ProfileStack.Screen
       name="UserProfile"
       component={UserProfile}
