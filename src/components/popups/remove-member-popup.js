@@ -13,7 +13,7 @@ const RemoveMemberPopup = ({
     <View style={PopupStyles.container}>
       <View style={PopupStyles.wrapper}>
         {leaveGroup ? <Text style={PopupStyles.header}>{'Leave Group'}</Text> : <Text style={PopupStyles.header}>{'Remove Memeber'}</Text>}
-        {leaveGroup ? <Text style={PopupStyles.subHeader}>{'Are you sure you want to leave group?'}</Text>
+        {leaveGroup ? <Text style={PopupStyles.subHeader}>{'Are you sure you want to leave this group?'}</Text>
           : <Text style={PopupStyles.subHeader}>{'Are you sure you want to remove this member?'}</Text>}
         <TouchableOpacity
           style={[AuthStyle.loginTouchable, {

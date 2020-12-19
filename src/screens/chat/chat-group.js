@@ -37,13 +37,13 @@ class ChatsGroup extends React.Component {
     return (
       <View style={HomeStyles.chatHeaderContainer}>
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('0')}>
-            <Text style={[HomeStyles.chatText, { color: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'My Group'}</Text>
+          <TouchableOpacity onPress={() => this.onTabPress('0')}>
+            <Text style={[HomeStyles.chatText, { color: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'My Groups'}</Text>
           </TouchableOpacity>
         </View>
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('1')}>
-            <Text style={[HomeStyles.chatText, { color: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'All Group'}</Text>
+          <TouchableOpacity onPress={() => this.onTabPress('1')}>
+            <Text style={[HomeStyles.chatText, { color: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'All Groups'}</Text>
           </TouchableOpacity>
         </View>
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '2' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
