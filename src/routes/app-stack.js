@@ -207,16 +207,19 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="ChatOneToOne"
         component={ChatOneToOne}
-        options={{ headerShown: false }}
+        options={{
+          header: null,
+          headerShown: false,
+        }}
       />
       <AppStack.Screen
         name="ChatsGroup"
         component={ChatsGroup}
         options={({ route }) => ({
           headerBackTitleVisible: false,
-
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Groups',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -224,9 +227,9 @@ export default function MainNavigator() {
         component={EditGroupName}
         options={({ route }) => ({
           headerBackTitleVisible: false,
-
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Edit Group Name',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -234,9 +237,9 @@ export default function MainNavigator() {
         component={EditGroupDisc}
         options={({ route }) => ({
           headerBackTitleVisible: false,
-
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || 'Edit Description',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -244,9 +247,9 @@ export default function MainNavigator() {
         component={GroupInfo}
         options={({ route }) => ({
           headerBackTitleVisible: false,
-
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen
@@ -457,6 +460,7 @@ export default function MainNavigator() {
           headerShown: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
       />
       <AppStack.Screen

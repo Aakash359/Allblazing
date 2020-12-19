@@ -31,11 +31,10 @@ const ProfileNavigator = () => (
           </View>
         ),
         headerTintColor: Constants.Colors.WHITE,
-        headerTitle: 'My Profile',
+        headerTitle: 'Me',
         headerTitleAlign: 'center',
       })}
     />
-
     <ProfileStack.Screen
       name="Runners"
       component={Runners}
@@ -56,7 +55,6 @@ const ProfileNavigator = () => (
         headerTitleAlign: 'center',
       })}
     />
-
     <ProfileStack.Screen
       name="UserProfile"
       component={UserProfile}

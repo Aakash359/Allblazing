@@ -58,6 +58,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
         component={ForgotPassword}
       />
@@ -74,6 +75,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -89,6 +91,7 @@ export default function MainNavigator() {
           ),
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -98,6 +101,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -129,6 +133,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Edit Gender',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen
@@ -138,6 +143,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Edit Motto',
+          headerTitleAlign: 'center',
         })}
       />
       <AuthStack.Screen

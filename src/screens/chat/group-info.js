@@ -72,7 +72,7 @@ class GroupInfo extends React.Component {
             </View>
             <View style={ChatStyles.groupDiscContainer}>
               <View style={ChatStyles.groupDiscInnerContainer}>
-                <Text style={ChatStyles.groupDiscHeading}>{'Discription'}</Text>
+                <Text style={ChatStyles.groupDiscHeading}>{'Description'}</Text>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => { navigate('EditGroupDisc'); }}

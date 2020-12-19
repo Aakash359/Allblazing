@@ -17,11 +17,7 @@ class Chats extends React.Component {
     } = this.props;
     const { activeTab } = this.state;
 
-    if (activeTab === '0') {
-      return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type="chat" />;
-    }
-
-    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type="groups" />;
+    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} />;
   }
 
   onTabPress = (val) => {
@@ -33,20 +29,16 @@ class Chats extends React.Component {
 
     return (
       <View style={HomeStyles.chatHeaderContainer}>
-
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
           <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('0')}>
             <Text style={[HomeStyles.chatText, { color: activeTab === '0' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Friends'}</Text>
           </TouchableOpacity>
-
         </View>
         <View style={[HomeStyles.chatHeader, { borderBottomColor: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>
           <TouchableOpacity activeOpacity={0.7} onPress={() => this.onTabPress('1')}>
             <Text style={[HomeStyles.chatText, { color: activeTab === '1' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Groups'}</Text>
           </TouchableOpacity>
-
         </View>
-
       </View>
     );
   }
