@@ -14,6 +14,10 @@ const styles = {
     marginTop: Constants.BaseStyle.scale(20),
     textAlign: 'center',
   },
+  popup: {
+    height: '100%',
+    width: '100%',
+  },
   row: {
     alignItems: 'center',
     flexDirection: 'row',

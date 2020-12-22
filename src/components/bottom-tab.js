@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TouchableOpacity, Text, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { arrayOf, func, shape, string } from 'prop-types';
 import { BottomTabsStyles } from '../styles';
 import Constants from '../constants';
@@ -82,7 +82,7 @@ export const BottomTab = ({
           testID={options.tabBarTestID}
         >
           <Image style={BottomTabsStyles.image} source={currentImage} />
-          {label !== 'Create' && (<Text style={[BottomTabsStyles.tabText, isFocused && BottomTabsStyles.active]}>{label}</Text>)}
+          {/* {label !== 'Create' && (<Text style={[BottomTabsStyles.tabText, isFocused && BottomTabsStyles.active]}>{label}</Text>)} */}
         </TouchableOpacity>
       );
     })}

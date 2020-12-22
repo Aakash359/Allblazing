@@ -136,6 +136,7 @@ class GroupDetail extends React.Component {
               this.setState({ visible: false });
               navigate('BlockReportUser', { isBlockPage: false });
             }}
+            onClose={() => this.setState({ visible: false })}
           />
           { removeMemberPopup && (
             <RemoveMemberPopup

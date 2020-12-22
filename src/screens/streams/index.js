@@ -103,7 +103,7 @@ class CreateStream extends React.Component {
     try {
       const options = {
         message: 'test',
-        title: 'Allblazing',
+        title: 'AllBlazing',
         url: 'https://google.com',
       };
 

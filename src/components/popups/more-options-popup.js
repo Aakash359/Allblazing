@@ -2,18 +2,19 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { bool, func, string } from 'prop-types';
 import Constants from '../../constants';
-import { CommonStyles, PopupStyles } from '../../styles';
+import { CommonStyles, InvitePopupStyles, PopupStyles } from '../../styles';
 import AnimatedModal from '../animate-modal';
 
 const MoreOptionsPopup = ({
-  blockBtnTitle, blockBtnSubtitle,
-
+  blockBtnTitle,
+  blockBtnSubtitle,
   hasBlockBtn,
   hasReportBtn,
   hasUnFollowBtn,
   leaveGroup,
   leaveGroupTitle,
   leaveGroupSubTitle,
+  onClose,
   onBlock,
   onReport,
   onUnfollow,
@@ -24,56 +25,58 @@ const MoreOptionsPopup = ({
   visible,
 }) => (
   <AnimatedModal visible={visible}>
-    <View style={[PopupStyles.container, PopupStyles.moreOptionsContainer]}>
-      <View style={[PopupStyles.wrapper, PopupStyles.moreOptionsWrapper]}>
-        { hasUnFollowBtn && (
-          <TouchableOpacity activeOpacity={0.7} onPress={onUnfollow} style={PopupStyles.blockBtn}>
-            <Image source={Constants.Images.addUser} style={PopupStyles.blockIcon} />
-            <View>
-              <Text style={PopupStyles.btnTitle}>{unfollowBtnTitle}</Text>
-              <Text style={PopupStyles.btnSubtitle}>{unfollowBtnSubtitle}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-        { hasBlockBtn && (
-          <>
-            {hasUnFollowBtn && <View style={CommonStyles.divider} />}
-            <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
-              <Image source={Constants.Images.block} style={PopupStyles.blockIcon} />
+    <TouchableOpacity style={InvitePopupStyles.popup} onPress={onClose}>
+      <View style={[PopupStyles.container, PopupStyles.moreOptionsContainer]}>
+        <View style={[PopupStyles.wrapper, PopupStyles.moreOptionsWrapper]}>
+          { hasUnFollowBtn && (
+            <TouchableOpacity activeOpacity={0.7} onPress={onUnfollow} style={PopupStyles.blockBtn}>
+              <Image source={Constants.Images.addUser} style={PopupStyles.blockIcon} />
               <View>
-                <Text style={PopupStyles.btnTitle}>{blockBtnTitle}</Text>
-                <Text style={PopupStyles.btnSubtitle}>{blockBtnSubtitle}</Text>
+                <Text style={PopupStyles.btnTitle}>{unfollowBtnTitle}</Text>
+                <Text style={PopupStyles.btnSubtitle}>{unfollowBtnSubtitle}</Text>
               </View>
             </TouchableOpacity>
-          </>
-        )}
-        { leaveGroup && (
-          <>
-            {hasUnFollowBtn && <View style={CommonStyles.divider} />}
-            <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
-              <Image source={Constants.Images.exit} style={PopupStyles.blockIcon} />
-              <View>
-                <Text style={PopupStyles.btnTitle}>{leaveGroupTitle}</Text>
-                <Text style={PopupStyles.btnSubtitle}>{leaveGroupSubTitle}</Text>
-              </View>
-            </TouchableOpacity>
-          </>
-        )}
-        {leaveGroup && <View style={CommonStyles.divider} />}
-        {hasReportBtn && (
-          <>
-            {hasBlockBtn && <View style={CommonStyles.divider} />}
-            <TouchableOpacity activeOpacity={0.7} onPress={onReport} style={PopupStyles.blockBtn}>
-              <Image source={Constants.Images.report} style={PopupStyles.reportIcon} />
-              <View>
-                <Text style={PopupStyles.btnTitle}>{reportBtnTitle}</Text>
-                <Text style={PopupStyles.btnSubtitle}>{reportBtnSubtitle}</Text>
-              </View>
-            </TouchableOpacity>
-          </>
-        )}
+          )}
+          { hasBlockBtn && (
+            <>
+              {hasUnFollowBtn && <View style={CommonStyles.divider} />}
+              <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
+                <Image source={Constants.Images.block} style={PopupStyles.blockIcon} />
+                <View>
+                  <Text style={PopupStyles.btnTitle}>{blockBtnTitle}</Text>
+                  <Text style={PopupStyles.btnSubtitle}>{blockBtnSubtitle}</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+          { leaveGroup && (
+            <>
+              {hasUnFollowBtn && <View style={CommonStyles.divider} />}
+              <TouchableOpacity activeOpacity={0.7} onPress={onBlock} style={PopupStyles.blockBtn}>
+                <Image source={Constants.Images.exit} style={PopupStyles.blockIcon} />
+                <View>
+                  <Text style={PopupStyles.btnTitle}>{leaveGroupTitle}</Text>
+                  <Text style={PopupStyles.btnSubtitle}>{leaveGroupSubTitle}</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+          {leaveGroup && <View style={CommonStyles.divider} />}
+          {hasReportBtn && (
+            <>
+              {hasBlockBtn && <View style={CommonStyles.divider} />}
+              <TouchableOpacity activeOpacity={0.7} onPress={onReport} style={PopupStyles.blockBtn}>
+                <Image source={Constants.Images.report} style={PopupStyles.reportIcon} />
+                <View>
+                  <Text style={PopupStyles.btnTitle}>{reportBtnTitle}</Text>
+                  <Text style={PopupStyles.btnSubtitle}>{reportBtnSubtitle}</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   </AnimatedModal>
 );
 
@@ -86,8 +89,8 @@ MoreOptionsPopup.propTypes = {
   leaveGroup: bool,
   leaveGroupSubTitle: bool,
   leaveGroupTitle: bool,
-
   onBlock: func,
+  onClose: func.isRequired,
   onReport: func,
   onUnfollow: func,
   reportBtnSubtitle: string,
@@ -106,7 +109,6 @@ MoreOptionsPopup.defaultProps = {
   leaveGroup: false,
   leaveGroupSubTitle: 'you will not longer to get the notofication about group events',
   leaveGroupTitle: 'Leave Group',
-
   onBlock: null,
   onReport: null,
   onUnfollow: null,

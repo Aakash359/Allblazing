@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
   },
   image: {
-    height: '90%', width: '100%',
+    height: '85%',
+    width: '100%',
   },
   title: {
     ...Constants.Fonts.ExtraLargeBold,
@@ -25,7 +26,8 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(100),
     justifyContent: 'center',
-    width: '70%',
+    marginTop: Constants.BaseStyle.scale(20),
+    width: '80%',
   },
 });
 

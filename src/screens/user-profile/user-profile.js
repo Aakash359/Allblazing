@@ -136,6 +136,7 @@ function UserProfile() {
             navigation.setParams({ visible: false });
             navigation.navigate('BlockReportUser', { isBlockPage: false });
           }}
+          onClose={() => navigation.setParams({ visible: false })}
         />
       )}
     </View>

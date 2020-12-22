@@ -55,9 +55,10 @@ class InviteFriends extends React.Component {
         </TouchableOpacity>
         {visible && (
           <InviteOptionPopup
-            onFacebook={() => {}}
+            onFacebook={() => this.setState({ visible: false })}
             onStrava={this.onStrava}
-            onWhatsApp={() => {}}
+            onWhatsApp={() => this.setState({ visible: false })}
+            onClose={() => this.setState({ visible: false })}
           />
         )}
       </View>

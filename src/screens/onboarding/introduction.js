@@ -48,6 +48,8 @@ class Introduction extends Component {
           {itemSelected === 0 && <IntroCard selected={[0]} image={Constants.Images.intro1} title={translate('introduction.connect')} />}
           {itemSelected === 1 && <IntroCard selected={[0, 1]} image={Constants.Images.intro2} title={translate('introduction.train')} />}
           {itemSelected === 2 && <IntroCard selected={[0, 1, 2]} image={Constants.Images.intro3} title={translate('introduction.capture')} />}
+        </View>
+        <View style={IntroductionStyles.buttons}>
           {itemSelected === 2 ? (
             <View style={IntroductionStyles.buttonsWrapper2}>
               <TouchableOpacity
@@ -58,27 +60,24 @@ class Introduction extends Component {
                 <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Get Started')}</Text>
               </TouchableOpacity>
             </View>
-          )
-            : (
-              <View style={IntroductionStyles.buttonsWrapper}>
-                <TouchableOpacity
-                  style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
-                  activeOpacity={0.7}
-                  onPress={this.onBack}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={AuthStyle.introButton}
-                  onPress={this.onNext}
-                >
-                  <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-
+          ) : (
+            <View style={IntroductionStyles.buttonsWrapper}>
+              <TouchableOpacity
+                style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+                activeOpacity={0.7}
+                onPress={this.onBack}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={AuthStyle.introButton}
+                onPress={this.onNext}
+              >
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     );
