@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
 const styles = StyleSheet.create({
+  buttons: {
+    flex: 0.1,
+    paddingBottom: 10,
+  },
   buttonsWrapper: {
     flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: Constants.BaseStyle.scale(20),
   },

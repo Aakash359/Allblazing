@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Allblazing extends React.Component {
+class AllBlazing extends React.Component {
   unsubscribe = null;
   constructor(props) {
     super(props);
@@ -60,4 +60,4 @@ class Allblazing extends React.Component {
   }
 }
 
-export default Allblazing;
+export default AllBlazing;

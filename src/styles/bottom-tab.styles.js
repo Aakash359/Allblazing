@@ -7,10 +7,10 @@ export default StyleSheet.create({
   add: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.WHITE,
-    borderRadius: 30,
-    height: 60,
+    borderRadius: 23,
+    height: 46,
     justifyContent: 'center',
-    width: 60,
+    width: 46,
   },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
@@ -42,7 +42,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     flexDirection: 'row',
-    height: 80,
+    height: 60,
     justifyContent: 'space-between',
     paddingHorizontal: 5,
     width: '100%',

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { func, shape } from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles, WelcomeStyles } from '../../styles';
+import { AuthStyle, CommonStyles, IntroductionStyles, WelcomeStyles } from '../../styles';
 
 class Welcome extends Component {
   constructor() {
@@ -11,14 +11,13 @@ class Welcome extends Component {
     this.state = {};
   }
 
-  onContinue = () => {
-    const { navigation: { navigate } } = this.props;
-
-    navigate('Intro');
-  }
-
   render() {
-    const { t: translate } = this.props;
+    const {
+      navigation: {
+        goBack, navigate,
+      },
+      t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -39,13 +38,22 @@ class Welcome extends Component {
             <Text style={[AuthStyle.buttonText, WelcomeStyles.description]}>{translate('welcome.Capture and share the experience')}</Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
-          activeOpacity={0.7}
-          onPress={() => this.onContinue()}
-        >
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Get Started')}</Text>
-        </TouchableOpacity>
+        <View style={[IntroductionStyles.buttonsWrapper, WelcomeStyles.buttons]}>
+          <TouchableOpacity
+            style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+            activeOpacity={0.7}
+            onPress={() => goBack()}
+          >
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+            onPress={() => navigate('Intro')}
+          >
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Get Started')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

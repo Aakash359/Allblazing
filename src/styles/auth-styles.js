@@ -309,6 +309,11 @@ export const ForgotPassStyles = StyleSheet.create({
 });
 
 export const WelcomeStyles = StyleSheet.create({
+  buttons: {
+    alignItems: 'flex-end',
+    flex: 0.1,
+    paddingBottom: 10,
+  },
   description: {
     ...Constants.Fonts.ExtraLarge,
     fontSize: 18,
@@ -318,10 +323,12 @@ export const WelcomeStyles = StyleSheet.create({
   headerText: {
     ...Constants.Fonts.ExtraLargeBold,
     fontSize: 42,
-    paddingTop: Constants.BaseStyle.scale(10),
+    paddingTop: Constants.BaseStyle.scale(0),
   },
   headerWrapper: {
-    alignItems: 'center', justifyContent: 'center', marginBottom: Constants.BaseStyle.scale(30),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: Constants.BaseStyle.scale(30),
   },
   leftImage: {
     alignSelf: 'flex-start',
@@ -337,7 +344,7 @@ export const WelcomeStyles = StyleSheet.create({
     paddingTop: Constants.BaseStyle.scale(0),
   },
   wrapper: {
-    alignItems: 'center', flex: 0.9, justifyContent: 'center', marginTop: Constants.BaseStyle.scale(30),
+    alignItems: 'center', flex: 0.9, justifyContent: 'center', marginTop: Constants.BaseStyle.scale(0),
   },
 });
 
@@ -535,6 +542,11 @@ export const MottoStyles = StyleSheet.create({
 export const ContactUSStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(300) } });
 
 export const LanguageStyles = StyleSheet.create({
+  button: {
+    alignItems: 'flex-end',
+    flex: 0.1,
+    paddingBottom: 10,
+  },
   centerItems: {
     alignItems: 'center',
     flex: 0.9,

@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles } from '../../styles';
+import { AuthStyle, CommonStyles, LanguageStyles } from '../../styles';
 import * as actions from '../../actions/app-action-types';
 
 class Language extends Component {
@@ -59,13 +59,15 @@ class Language extends Component {
             {locale === 'du' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={[AuthStyle.loginTouchable, { backgroundColor: locale === null ? Constants.Colors.SECONDARY_COLOR : Constants.Colors.TEXT_COLOR2 }]}
-          activeOpacity={0.7}
-          onPress={() => this.onContinue()}
-        >
-          <Text style={[AuthStyle.buttonText, { color: locale === null ? Constants.Colors.TEXT_COLOR2 : Constants.Colors.TEXT_COLOR_WHITE }]}>{translate('language.Select & Continue')}</Text>
-        </TouchableOpacity>
+        <View style={LanguageStyles.button}>
+          <TouchableOpacity
+            style={[AuthStyle.loginTouchable, { backgroundColor: locale === null ? Constants.Colors.SECONDARY_COLOR : Constants.Colors.TEXT_COLOR2 }]}
+            activeOpacity={0.7}
+            onPress={() => this.onContinue()}
+          >
+            <Text style={[AuthStyle.buttonText, { color: locale === null ? Constants.Colors.TEXT_COLOR2 : Constants.Colors.TEXT_COLOR_WHITE }]}>{translate('language.Select & Continue')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

@@ -14,7 +14,7 @@ const PermisionPopup = ({
       <View style={PopupStyles.wrapperPermission}>
         <Image source={Constants.Images.camera2} resizeMode='contain' style={PopupStyles.premissionCamera} />
         <Text style={PopupStyles.subHeader}>{'Allow camera access  for'}</Text>
-        <Text style={PopupStyles.subHeader}>{'Allblazing'}</Text>
+        <Text style={PopupStyles.subHeader}>{'AllBlazing'}</Text>
         <TouchableOpacity
           style={[AuthStyle.loginTouchable, {
             backgroundColor: Constants.Colors.TEXT_COLOR2, width: Constants.BaseStyle.scale(200),
