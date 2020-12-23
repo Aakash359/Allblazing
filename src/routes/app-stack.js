@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { CommonStyles, HeaderStyles } from '../styles';
 import Constants from '../constants';
 import Username from '../screens/user-profile/user-name';
@@ -46,6 +47,8 @@ const AppStack = createStackNavigator();
 const options = { headerShown: false };
 
 export default function MainNavigator() {
+  const { t: translate } = useTranslation();
+
   return (
     <AppStack.Navigator keyboardHandlingEnabled headerMode='screen' initialRouteName="Dashboard" mode='card'>
       <AppStack.Screen
@@ -76,7 +79,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Edit Gender',
+          headerTitle: translate('Edit Gender'),
           headerTitleAlign: 'center',
         })}
       />
@@ -86,7 +89,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Edit Motto',
+          headerTitle: translate('Edit Motto'),
           headerTitleAlign: 'center',
         })}
       />
@@ -127,7 +130,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Edit Location',
+          headerTitle: translate('profile.Edit Location'),
           headerTitleAlign: 'center',
         })}
       />
@@ -149,6 +152,7 @@ export default function MainNavigator() {
             </View>
           ),
           headerTintColor: Constants.Colors.WHITE,
+          headerTitle: translate('events.title'),
           headerTitleAlign: 'center',
         })}
       />
@@ -161,7 +165,7 @@ export default function MainNavigator() {
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
           )),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || 'Invite Friends',
+          headerTitle: route?.params?.title || translate('settings.Invite Friends'),
           headerTitleAlign: 'center',
         })}
       />
@@ -174,7 +178,7 @@ export default function MainNavigator() {
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
           )),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || 'Strava Users',
+          headerTitle: route?.params?.title || translate('settings.Strava Users'),
           headerTitleAlign: 'center',
         })}
       />
@@ -190,7 +194,7 @@ export default function MainNavigator() {
             </TouchableOpacity>
           ),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Filters',
+          headerTitle: translate('filters.Filters'),
           headerTitleAlign: 'center',
         })}
       />
@@ -200,7 +204,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Event Details',
+          headerTitle: translate('events.Event Details'),
           headerTitleAlign: 'center',
         })}
       />
@@ -259,7 +263,7 @@ export default function MainNavigator() {
         options={({ route }) => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(route.params.title) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -287,7 +291,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Change Password',
+          headerTitle: translate('settings.Change Password'),
           headerTitleAlign: 'center',
         })}
       />
@@ -297,7 +301,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Contact Us',
+          headerTitle: translate('settings.Contact Us'),
           headerTitleAlign: 'center',
         })}
       />
@@ -307,7 +311,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Change Language',
+          headerTitle: translate('settings.Change Language'),
           headerTitleAlign: 'center',
         })}
       />
@@ -317,7 +321,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Settings',
+          headerTitle: translate('settings.Settings'),
           headerTitleAlign: 'center',
         })}
       />

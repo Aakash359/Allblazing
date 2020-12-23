@@ -8,10 +8,11 @@ import { View,
   ScrollView,
   TextInput } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { AuthStyle, CommonStyles, RegisterStyle } from '../../styles';
 import Constants from '../../constants';
 
-export default class ChangePassword extends Component {
+class ChangePassword extends Component {
   passwordRef = React.createRef();
   newPasswordRef = React.createRef();
   confirmPasswordRef = React.createRef();
@@ -72,6 +73,7 @@ export default class ChangePassword extends Component {
     const {
       confirmPassword, password, newPassword, visiblePasswords,
     } = this.state;
+    const { t: translate } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -90,7 +92,7 @@ export default class ChangePassword extends Component {
                 ref={this.passwordRef}
                 style={RegisterStyle.password}
                 returnKeyType="next"
-                placeholder="Old Password"
+                placeholder={translate('password.OldPassword')}
                 secureTextEntry={!visiblePasswords.includes('password')}
                 value={password}
                 onChangeText={(text) => this.setState({ password: text })}
@@ -117,7 +119,7 @@ export default class ChangePassword extends Component {
                 ref={this.newPasswordRef}
                 style={RegisterStyle.password}
                 returnKeyType="next"
-                placeholder="New Password"
+                placeholder={translate('password.NewPassword')}
                 secureTextEntry={!visiblePasswords.includes('newPassword')}
                 value={newPassword}
                 onChangeText={(text) => this.setState({ newPassword: text })}
@@ -142,7 +144,7 @@ export default class ChangePassword extends Component {
                 ref={this.confirmPasswordRef}
                 style={RegisterStyle.password}
                 returnKeyType="done"
-                placeholder="Confirm Password"
+                placeholder={translate('password.ConfirmPassword')}
                 secureTextEntry={!visiblePasswords.includes('confirmPassword')}
                 value={confirmPassword}
                 onChangeText={(text) => this.setState({ confirmPassword: text })}
@@ -165,7 +167,7 @@ export default class ChangePassword extends Component {
           </View>
         </ScrollView>
         <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -177,4 +179,7 @@ ChangePassword.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
+
+export default withTranslation()(ChangePassword);

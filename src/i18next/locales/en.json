@@ -1,4 +1,17 @@
-{   
+{
+  "Finish": "Finish",
+  "Gender": "Gender",
+  "Male": "Male",
+  "Female": "Female",
+  "Apply": "Apply",
+  "ResetAll": "Reset All",
+  "Please describe here...": "Please describe here...",
+  "Block": "Block",
+  "Report": "Block",
+  "Select Your Age": "Select Your Age",
+  "HR": "HR",
+  "MIN": "MIN",
+  "SEC": "SEC",
   "Get Started": "Get Started",
   "Cancel": "Cancel",
   "Ok": "Ok",
@@ -55,6 +68,7 @@
   "or login using": "or login using",
   "Don't have an account": "Don't have an account?",
   "Create Account": "Create Account",
+  "What is your recent 1km time?": "What is your recent 1km time?",
   "introduction": {
     "connect": "Connect with other runners in your area",
     "train": "Train or race together",
@@ -71,6 +85,7 @@
     "Capture and share the experience": "Capture and share the experience"
   },
   "events": {
+    "title": "Events",
     "Women Only": "Women Only",
     "Private": "Private",
     "Watching": "Watching",
@@ -80,7 +95,6 @@
     "Racing": "Racing",
     "Members are watching": "Members are watching",
     "Withdraw Request": "Withdraw Request",
-    "Events": "Events",
     "Pending": "Pending",
     "Reject": "Reject",
     "Accept": "Accept",
@@ -94,17 +108,13 @@
   "filters": {
     "Filters": "Filters",
     "Near Me": "Near Me",
-    "Search location": "Search location",
+    "SearchLocation": "Search location",
+    "Location": "Location",
     "Connect": "Connect",
     "Train": "Train",
     "Race": "Race",
     "Level": "Level",
-    "Gender": "Gender",
-    "Male": "Male",
-    "Female": "Female",
-    "Apply": "Apply",
-    "Reset All": "Reset All",
-    "Distance to race": "Distance to race"
+    "Distance": "Distance to race"
   },
   "runners": {
     "Runners Near Me": "Runners Near Me",
@@ -112,16 +122,6 @@
     "Wins": "Wins",
     "Private Account": "Private Account",
     "Private Account Instructions": "Follow this account to see photos and videos"
-  },
-  "block": {
-    "Block User": "Block User",
-    "Block User Instructions": "Why are you blocking them?",
-    "Report User": "Report User",
-    "Report User Instructions": "Tell us what they did",
-    "Inappropriate messages": "Inappropriate messages",
-    "Inappropriate photos/videos": "Inappropriate photos/videos",
-    "Feels like spam": "Feels like spam",
-    "Other": "Other"
   },
   "feed": {},
   "profile": {
@@ -140,23 +140,27 @@
     "Edit Name": "Edit Name",
     "Edit Age": "Edit Age",
     "Age": "Age",
-    "Edit Gender": "Edit Gender",
     "Male": "Male",
     "Female": "Female",
     "Other": "Other",
     "or": "or",
     "Edit Location": "Edit Location",
-    "Edit Personal Best": "Edit Personal Best"
+    "Edit Personal Best": "Edit Personal Best",
+    "Edit Gender": "Edit Gender",
+    "Edit Motto": "Edit Motto"
   },
   "contactus": {
     "Subject": "Subject",
     "Description": "Description"
   },
   "settings": {
+    "Settings": "Settings",
     "Notifications": "Notifications",
     "Change Language": "Change Language",
     "Change Password": "Change Password",
     "Invite Friends": "Invite Friends",
+    "InviteFriendsDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Strava Users": "Strava Users",
     "Contact Us": "Contact Us",
     "About Us": "About Us",
     "Safety Policy": "Safety Policy",
@@ -164,6 +168,49 @@
     "Terms & Conditions": "Terms & Conditions",
     "Logout": "Logout",
     "LogoutConfirmation": "Are you sure you want to logout?",
-    "Invite send successfully": "Invite sent successfully"
+    "Invite send successfully": "Invite sent successfully",
+    "Share to": "Share to",
+    "Strava": "Strava",
+    "Facebook": "Facebook",
+    "WhatsApp": "WhatsApp"
+  },
+  "actions": {
+    "blockBtnTitle": "Block User",
+    "blockBtnSubtitle": "Why are you blocking them?",
+    "leaveGroupTitle": "Leave Group",
+    "leaveGroupSubTitle": "you will not longer to get the notification about group events",
+    "reportBtnTitle": "Report User",
+    "reportBtnSubtitle": "Tell us what they did",
+    "reportConfirmation": "'Is this person bothering you? Tell us what they did'",
+    "unfollowBtnTitle": "Unfollow",
+    "unfollowBtnSubtitle": "You will stop seeing post in your feed"
+  },
+  "blockReasons": {
+    "messages": "Inappropriate messages",
+    "other": "Other",
+    "spam": "Feels like spam",
+    "videos": "Inappropriate photos/videos"
+  },
+  "password": {
+    "OldPassword": "Old Password",
+    "NewPassword": "New Password",
+    "ConfirmPassword": "Confirm Password"
+  },
+  "streams": {
+    "Live": "Live",
+    "Title": "Title of your stream",
+    "Wearable": "Show wearable health data",
+    "LiveStream": "Live Stream"
+  },
+  "wearableOptions": {
+    "Pace": "Avg. Pace",
+    "Distance": "Distance",
+    "DistanceToGo": "Distance To Go",
+    "CurrentPace": "Current Pace",
+    "HillGradient": "Hill Gradient",
+    "HeartRate": "Heart Rate",
+    "AvgHeartRate": "Avg. Heart Rate",
+    "HeartRateZone": "Heart Rate Zone",
+    "Watts": "Watts"
   }
 }

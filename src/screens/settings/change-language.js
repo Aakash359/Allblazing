@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, Image, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, ChangePassStyles, UsernameStyle } from '../../styles';
 
@@ -24,7 +25,10 @@ class ChangeLanguage extends Component {
 
   render() {
     const { language } = this.state;
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack },
+      t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -53,7 +57,7 @@ class ChangeLanguage extends Component {
           </View>
         </ScrollView>
         <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, ChangePassStyles.saveBtn]} onPress={() => goBack()}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -65,6 +69,7 @@ ChangeLanguage.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default ChangeLanguage;
+export default withTranslation()(ChangeLanguage);

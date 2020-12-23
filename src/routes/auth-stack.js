@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import SelectLanguage from '../screens/onboarding/language';
 import Welcome from '../screens/onboarding/welcome';
 import Intro from '../screens/onboarding/introduction';
@@ -11,10 +12,8 @@ import Register from '../screens/onboarding/register';
 import StaticContent from '../screens/settings/static-content';
 import Username from '../screens/user-profile/user-name';
 import Userage from '../screens/user-profile/user-age';
-import UserGender from '../screens/user-profile/user-gender';
 import ConnectUserType from '../screens/user-profile/connect-user-type';
 import UserPersonalBest from '../screens/user-profile/user-personal-best';
-import UserMotto from '../screens/user-profile/user-motto';
 import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
 import Constants from '../constants';
@@ -24,6 +23,8 @@ const AuthStack = createStackNavigator();
 const options = { headerShown: false };
 
 export default function MainNavigator() {
+  const { t: translate } = useTranslation();
+
   return (
     <AuthStack.Navigator headerMode="screen" initialRouteName="SelectLanguage">
       <AuthStack.Screen
@@ -100,7 +101,7 @@ export default function MainNavigator() {
         options={({ route }) => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(route.params.title) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -123,26 +124,6 @@ export default function MainNavigator() {
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: route?.params?.title || '',
-          headerTitleAlign: 'center',
-        })}
-      />
-      <AuthStack.Screen
-        name="UserGender"
-        component={UserGender}
-        options={() => ({
-          headerBackTitleVisible: false,
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Edit Gender',
-          headerTitleAlign: 'center',
-        })}
-      />
-      <AuthStack.Screen
-        name="UserMotto"
-        component={UserMotto}
-        options={() => ({
-          headerBackTitleVisible: false,
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Edit Motto',
           headerTitleAlign: 'center',
         })}
       />

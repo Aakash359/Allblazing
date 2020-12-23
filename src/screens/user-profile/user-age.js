@@ -3,15 +3,10 @@ import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native
 import { bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import lodash from 'lodash';
 import Constants from '../../constants';
 import { AgePicker, StepBar } from '../../components';
 import { AuthStyle, CommonStyles, UsernameStyle } from '../../styles';
 import * as actions from '../../actions/user-action-types';
-
-const ageRange = lodash.times(60, (val) => ({
-  label: `${val + 14}`, value: val + 14,
-}));
 
 class Userage extends Component {
   constructor() {
@@ -91,7 +86,6 @@ class Userage extends Component {
         {visible && (
           <AgePicker
             selectedValue={age}
-            items={ageRange}
             onConfirm={this.onAgeChange}
             onClose={() => this.setState({ visible: false })}
           />

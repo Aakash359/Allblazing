@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 55,
   },
+  switchOn: { marginRight: Constants.BaseStyle.scale(10) },
   wrapper: { backgroundColor: Constants.Colors.PRIMARY },
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, TextInput, View, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, Platform, TextInput, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
-import { ScrollView } from 'react-native-gesture-handler';
+import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, ContactUSStyles, UsernameStyle } from '../../styles';
 import { InputField } from '../../components';
@@ -26,7 +26,9 @@ class ContactUs extends Component {
     const {
       description, subject,
     } = this.state;
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -40,7 +42,7 @@ class ContactUs extends Component {
           <View style={UsernameStyle.wrapper}>
             <View style={UsernameStyle.inputWrapper}>
               <InputField
-                placeholder='Subject'
+                placeholder={translate('contactus.Subject')}
                 returnKeyType="next"
                 value={subject}
                 onChangeText={(text) => this.setState({ subject: text })}
@@ -53,7 +55,7 @@ class ContactUs extends Component {
                   maxLength={500}
                   numberOfLines={15}
                   style={CommonStyles.textArea}
-                  placeholder="Description"
+                  placeholder={translate('contactus.Description')}
                   value={description}
                   onChangeText={this.onChangeText}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
@@ -63,7 +65,7 @@ class ContactUs extends Component {
               </View>
             </View>
             <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, ContactUSStyles.saveBtn]} onPress={() => goBack()}>
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Submit'}</Text>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Submit')}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -77,6 +79,7 @@ ContactUs.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default ContactUs;
+export default withTranslation()(ContactUs);

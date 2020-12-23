@@ -62,7 +62,7 @@ class StravaUsers extends React.Component {
           keyExtractor={(item, index) => `${index}`}
         />
         <TouchableOpacity activeOpacity={0.7} style={InviteFriendsStyles.button} onPress={() => this.setState({ visible: true })}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Send Invite'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{t('Send Invite')}</Text>
         </TouchableOpacity>
         <SuccessPopup
           hasResendBtn={false}

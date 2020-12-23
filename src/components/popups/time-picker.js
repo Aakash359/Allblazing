@@ -1,15 +1,16 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import times from 'lodash/times';
-import { bool, func, string } from 'prop-types';
+import { bool, func, number, oneOfType, string } from 'prop-types';
 import { WheelPicker } from 'react-native-wheel-picker-android';
+import { withTranslation } from 'react-i18next';
 import AnimatedModal from '../animate-modal';
 import { AuthStyle, PopupStyles, OTPStyles } from '../../styles';
 import Constants from '../../constants';
 
-const hours = times(23, (i) => ((i + 1) > 9 ? `${i + 1}` : `0${i + 1}`));
-const minutes = times(59, (i) => (i + 1 > 9 ? `${i + 1}` : `0${i + 1}`));
-const seconds = times(59, (i) => (i + 1 > 9 ? `${i + 1}` : `0${i + 1}`));
+const hours = times(24, (i) => ((i) > 9 ? `${i}` : `0${i}`));
+const minutes = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
+const seconds = times(60, (i) => (i > 9 ? `${i}` : `0${i}`));
 
 const TimePicker = ({
   hour,
@@ -19,16 +20,17 @@ const TimePicker = ({
   onValueChange,
   second,
   visible,
+  t: translate,
 }) => (
   <AnimatedModal visible={visible}>
     <View style={PopupStyles.container}>
       <View style={PopupStyles.wrapper}>
-        <Text style={PopupStyles.header}>{'What is your recent 1km time?'}</Text>
+        <Text style={PopupStyles.header}>{translate('What is your recent 1km time?')}</Text>
         <View style={PopupStyles.divider} />
         <View style={PopupStyles.pickersContainer}>
-          <Text style={PopupStyles.hourLabel}>{'HH'}</Text>
-          <Text style={PopupStyles.minuteLabel}>{'MM'}</Text>
-          <Text style={PopupStyles.secondLabel}>{'SS'}</Text>
+          <Text style={PopupStyles.hourLabel}>{translate('HR')}</Text>
+          <Text style={PopupStyles.minuteLabel}>{translate('MIN')}</Text>
+          <Text style={PopupStyles.secondLabel}>{translate('SEC')}</Text>
         </View>
         <View style={PopupStyles.divider} />
         <View style={PopupStyles.pickersContainer}>
@@ -62,10 +64,10 @@ const TimePicker = ({
           activeOpacity={0.7}
           onPress={onPress}
         >
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Ok'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Ok')}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={OTPStyles.button} onPress={onClose} activeOpacity={0.7}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Cancel'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Cancel')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -73,12 +75,13 @@ const TimePicker = ({
 );
 
 TimePicker.propTypes = {
-  hour: string.isRequired,
-  minute: string.isRequired,
+  hour: oneOfType([string.isRequired, number.isRequired]).isRequired,
+  minute: oneOfType([string.isRequired, number.isRequired]).isRequired,
   onClose: func,
   onPress: func,
   onValueChange: func,
-  second: string.isRequired,
+  second: oneOfType([string.isRequired, number.isRequired]).isRequired,
+  t: func.isRequired,
   visible: bool,
 };
 
@@ -89,4 +92,4 @@ TimePicker.defaultProps = {
   visible: false,
 };
 
-export default TimePicker;
+export default withTranslation()(TimePicker);

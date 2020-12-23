@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
 import Constants from '../constants';
 
 const styles = {
@@ -189,6 +190,12 @@ const styles = {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     fontSize: 20,
+    ...Platform.select({
+      android: {
+        fontSize: 30,
+        height: 60,
+      },
+    }),
   },
   pickersContainer: {
     alignItems: 'center',

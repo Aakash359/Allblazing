@@ -8,54 +8,54 @@ import * as actions from '../../actions/user-action-types';
 
 const settingList = [{
   hasArrow: false,
-  label: 'Notifications',
+  label: 'settings.Notifications',
   payload: {},
   route: 'Notifications',
 },
 {
-  label: 'Change Language',
+  label: 'settings.Change Language',
   payload: {},
   route: 'ChangeLanguage',
 },
 {
-  label: 'Change Password',
+  label: 'settings.Change Password',
   payload: {},
   route: 'ChangePassword',
 },
 {
-  label: 'Invite Friends',
+  label: 'settings.Invite Friends',
   payload: {
     hasCheckBox: true, title: 'Invite Friends',
   },
   route: 'InviteFriends',
 },
 {
-  label: 'Contact Us',
+  label: 'settings.Contact Us',
   payload: { title: 'Contact Us' },
   route: 'ContactUS',
 },
 {
-  label: 'About Us',
-  payload: { title: 'About Us' },
+  label: 'settings.About Us',
+  payload: { title: 'settings.About Us' },
   route: 'StaticContent',
 },
 {
-  label: 'Safety Policy',
-  payload: { title: 'Safety Policy' },
+  label: 'settings.Safety Policy',
+  payload: { title: 'settings.Safety Policy' },
   route: 'StaticContent',
 },
 {
-  label: 'Privacy Policy',
-  payload: { title: 'Privacy Policy' },
+  label: 'settings.Privacy Policy',
+  payload: { title: 'settings.Privacy Policy' },
   route: 'StaticContent',
 },
 {
-  label: 'Terms & Conditions',
-  payload: { title: 'Terms & Conditions' },
+  label: 'settings.Terms & Conditions',
+  payload: { title: 'settings.Terms & Conditions' },
   route: 'StaticContent',
 },
 {
-  label: 'Logout',
+  label: 'settings.Logout',
   payload: {},
   route: 'logout',
 }];
