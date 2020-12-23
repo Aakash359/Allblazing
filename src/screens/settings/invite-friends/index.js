@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, Image, TouchableOpacity, Text } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { func, shape, string } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { CommonStyles, AuthStyle, HomeStyles, InviteFriendsStyles } from '../../../styles';
 import { InviteOptionPopup } from '../../../components';
 import Constants from '../../../constants';
@@ -29,7 +30,9 @@ class InviteFriends extends React.Component {
 
   render() {
     const { visible } = this.state;
-    const { source } = this.props;
+    const {
+      source, t: translate,
+    } = this.props;
     const Component = source === 'home' ? View : ScrollView;
 
     return (
@@ -37,7 +40,7 @@ class InviteFriends extends React.Component {
         <Component>
           <View style={[HomeStyles.wrapper, InviteFriendsStyles.overview]}>
             <Image resizeMode='contain' style={[InviteFriendsStyles.runners, source === 'home' && InviteFriendsStyles.homeRunners]} source={Constants.Images.runners} />
-            <Text style={InviteFriendsStyles.description}>{'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'}</Text>
+            <Text style={InviteFriendsStyles.description}>{translate('settings.InviteFriendsDescription')}</Text>
             <View style={InviteFriendsStyles.row}>
               <Text style={InviteFriendsStyles.code}>{'ALLBLAZING123456'}</Text>
               <TouchableOpacity activeOpacity={0.7} onPress={() => Clipboard.setString('ALLBLAZING123456')}>
@@ -51,7 +54,7 @@ class InviteFriends extends React.Component {
           style={[InviteFriendsStyles.button, InviteFriendsStyles.inviteBtn, source === 'home' && InviteFriendsStyles.homeInviteBtn]}
           onPress={() => this.setState({ visible: true })}
         >
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Invite Friends'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('settings.Invite Friends')}</Text>
         </TouchableOpacity>
         {visible && (
           <InviteOptionPopup
@@ -68,12 +71,13 @@ class InviteFriends extends React.Component {
 
 InviteFriends.propTypes = {
   navigation: shape({
-    navigate: func,
-    setParams: func,
+    navigate: func.isRequired,
+    setParams: func.isRequired,
   }).isRequired,
   source: string,
+  t: func.isRequired,
 };
 
 InviteFriends.defaultProps = { source: null };
 
-export default InviteFriends;
+export default withTranslation()(InviteFriends);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform, TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { bool, func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Constants from '../constants';
 import { CommonStyles, BlockUserStyles, AuthStyle, ForgotPassStyles } from '../styles';
 import { blockReportReasons } from '../data';
@@ -26,6 +27,7 @@ class BlockUser extends React.Component {
     const {
       navigation: { goBack },
       route: { params },
+      t: translate,
     } = this.props;
 
     return (
@@ -37,20 +39,20 @@ class BlockUser extends React.Component {
           keyboardShouldPersistTaps="always"
         >
           <View style={[ForgotPassStyles.wrapper, BlockUserStyles.container]}>
-            <Text style={BlockUserStyles.title}>{`${params?.isBlockPage ? 'Block' : 'Report'} User`}</Text>
+            <Text style={BlockUserStyles.title}>{`${params?.isBlockPage ? translate('actions.blockBtnTitle') : translate('actions.reportBtnTitle')}`}</Text>
             <Text style={BlockUserStyles.subtitle}>
-              {params?.isBlockPage ? 'Why are you blocking them?' : 'Is this person bothering you? Tell us what they did'}
+              {params?.isBlockPage ? translate('actions.blockBtnSubtitle') : translate('actions.reportConfirmation')}
             </Text>
           </View>
-          {blockReportReasons.map((t) => (
+          {blockReportReasons.map((singleElement) => (
             <TouchableOpacity
-              key={t.value}
-              style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow, BlockUserStyles.button, t.value === 'Other' && reason === 'Other' && BlockUserStyles.otherBtn]}
+              key={singleElement.value}
+              style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow, BlockUserStyles.button, singleElement.value === 'Other' && reason === 'Other' && BlockUserStyles.otherBtn]}
               activeOpacity={0.7}
-              onPress={() => this.setState({ reason: t.value })}
+              onPress={() => this.setState({ reason: singleElement.value })}
             >
-              <Text style={[AuthStyle.buttonLanguageText, BlockUserStyles.buttonText, reason === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
-              {reason === t.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, BlockUserStyles.select]} />}
+              <Text style={[AuthStyle.buttonLanguageText, BlockUserStyles.buttonText, reason === singleElement.value ? AuthStyle.buttonActiveText : {}]}>{translate(singleElement.label)}</Text>
+              {reason === singleElement.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, BlockUserStyles.select]} />}
             </TouchableOpacity>
           ))}
           {reason === 'Other' && (
@@ -60,7 +62,7 @@ class BlockUser extends React.Component {
                 maxLength={450}
                 numberOfLines={20}
                 style={CommonStyles.textArea}
-                placeholder="Please describe here..."
+                placeholder={translate('Please describe here...')}
                 value={description}
                 onChangeText={(text) => this.setState({ description: text })}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
@@ -75,7 +77,7 @@ class BlockUser extends React.Component {
           style={[AuthStyle.saveBtn, reason == null && BlockUserStyles.saveBtnColor, BlockUserStyles.saveBtn]}
           onPress={() => goBack()}
         >
-          <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{'Submit'}</Text>
+          <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{translate('Submit')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -88,6 +90,7 @@ BlockUser.propTypes = {
     goBack: func.isRequired,
   }).isRequired,
   route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  t: func.isRequired,
 };
 
-export default BlockUser;
+export default withTranslation()(BlockUser);

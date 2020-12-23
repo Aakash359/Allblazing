@@ -80,6 +80,7 @@ const styles = {
     height: 35,
     justifyContent: 'center',
     marginTop: Constants.BaseStyle.scale(10),
+    padding: Constants.BaseStyle.scale(10),
     width: '31%',
   },
   raceActive: { backgroundColor: Constants.Colors.TEXT_COLOR2 },
@@ -87,6 +88,7 @@ const styles = {
   raceText: {
     ...Constants.Fonts.Small,
     color: Constants.Colors.TEXT_COLOR2,
+    textAlign: 'center',
   },
   row: {
     alignItems: 'center',

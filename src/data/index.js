@@ -41,45 +41,45 @@ export const distanceList = [{
 }];
 
 export const blockReportReasons = [{
-  label: 'Inappropriate messages',
+  label: 'blockReasons.messages',
   value: 'Inappropriate messages',
 }, {
-  label: 'Inappropriate photos/videos',
+  label: 'blockReasons.videos',
   value: 'Inappropriate photos/videos',
 }, {
-  label: 'Feels like spam',
+  label: 'blockReasons.spam',
   value: 'Feels like spam',
 }, {
-  label: 'Other',
+  label: 'blockReasons.other',
   value: 'Other',
 }];
 
 export const wearableOptions = [{
-  label: 'Avg. Pace',
+  label: 'wearableOptions.Pace',
   value: 'Avg. Pace',
 }, {
-  label: 'Distance',
+  label: 'wearableOptions.Distance',
   value: 'Distance',
 }, {
-  label: 'Distance To Go',
+  label: 'wearableOptions.DistanceToGo',
   value: 'Distance To Go',
 }, {
-  label: 'Current Pace',
+  label: 'wearableOptions.CurrentPace',
   value: 'Current Pace',
 }, {
-  label: 'Hill Gradient',
+  label: 'wearableOptions.HillGradient',
   value: 'Hill Gradient',
 }, {
-  label: 'Heart Rate',
+  label: 'wearableOptions.HeartRate',
   value: 'Heart Rate',
 }, {
-  label: 'Avg. Heart Rate',
+  label: 'wearableOptions.AvgHeartRate',
   value: 'Avg. Heart Rate',
 }, {
-  label: 'Heart Rate Zone',
+  label: 'wearableOptions.HeartRateZone',
   value: 'Heart Rate Zone',
 }, {
-  label: 'Watts',
+  label: 'wearableOptions.Watts',
   value: 'Watts',
 }];
 

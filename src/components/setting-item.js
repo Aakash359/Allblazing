@@ -1,17 +1,18 @@
 import { bool, func, string } from 'prop-types';
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, Image } from 'react-native';
+import { withTranslation } from 'react-i18next';
 import Constants from '../constants';
 import { SettingStyles } from '../styles';
 
 export const SettingItem = ({
-  hasArrow, label, onPress,
+  hasArrow, label, onPress, t: translate,
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
 
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onPress} style={SettingStyles.container}>
-      <Text style={SettingStyles.title}>{label}</Text>
+      <Text style={SettingStyles.title}>{translate(label)}</Text>
       {hasArrow ? (
         <Image
           source={Constants.Images.arrowRight}
@@ -31,8 +32,9 @@ SettingItem.propTypes = {
   hasArrow: bool,
   label: string.isRequired,
   onPress: func.isRequired,
+  t: func.isRequired,
 };
 
 SettingItem.defaultProps = { hasArrow: true };
 
-export default SettingItem;
+export default withTranslation()(SettingItem);

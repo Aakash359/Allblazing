@@ -55,7 +55,7 @@ class CreateNew extends React.Component {
           <View style={CreateNewStyles.bottomView}>
 
             <Image style={CreateNewStyles.runnerImage} source={Constants.Images.runnerImage} />
-            <Text style={CreateNewStyles.modalText}>{'No runners avilable in nearby area'}</Text>
+            <Text style={CreateNewStyles.modalText}>{'No runners available in nearby area'}</Text>
           </View>
         </View>
         <Modal
@@ -98,7 +98,7 @@ class CreateNew extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => navigate('LiveFeed')}
+                onPress={() => navigate('LiveStream')}
                 style={CreateNewStyles.tagView}
               >
                 <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />

@@ -3,6 +3,7 @@ import { ImageBackground, View, Text, Image, TouchableOpacity, Keyboard } from '
 import Share from 'react-native-share';
 import { CommonActions } from '@react-navigation/native';
 import { bool, func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
 import { InputField } from '../../components';
 import { AuthStyle, StreamStyles } from '../../styles';
@@ -102,7 +103,7 @@ class CreateStream extends React.Component {
   onShare = async () => {
     try {
       const options = {
-        message: 'test',
+        message: 'This is for development purpose only. We will update this once app is live',
         title: 'AllBlazing',
         url: 'https://google.com',
       };
@@ -129,7 +130,10 @@ class CreateStream extends React.Component {
     const {
       height, selected, title, toggle,
     } = this.state;
-    const { route: { params } } = this.props;
+    const {
+      route: { params },
+      t: translate,
+    } = this.props;
 
     return (
       <TouchableOpacity activeOpacity={1} style={StreamStyles.container} onPress={this.onOutsideClick}>
@@ -137,7 +141,7 @@ class CreateStream extends React.Component {
           <View style={StreamStyles.row}>
             {params?.isStreamStarted && (
               <View style={StreamStyles.header}>
-                <Text style={StreamStyles.headerText}>Live</Text>
+                <Text style={StreamStyles.headerText}>{translate('streams.Live')}</Text>
                 <Text style={StreamStyles.headerText}>02:05</Text>
               </View>
             )}
@@ -167,14 +171,14 @@ class CreateStream extends React.Component {
                     activeOpacity={0.7}
                     onPress={this.onDelete}
                   >
-                    <Text style={[AuthStyle.buttonText, StreamStyles.deleteBtnText]}>{'Delete'}</Text>
+                    <Text style={[AuthStyle.buttonText, StreamStyles.deleteBtnText]}>{translate('Delete')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.homeBtn]}
                     activeOpacity={0.7}
                     onPress={this.onDelete}
                   >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Home'}</Text>
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Home')}</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
@@ -185,7 +189,7 @@ class CreateStream extends React.Component {
                     activeOpacity={0.7}
                     onPress={this.onLiveStream}
                   >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Finish'}</Text>
+                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Finish')}</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -194,27 +198,27 @@ class CreateStream extends React.Component {
             <View activeOpacity={1} style={[StreamStyles.wrapper, { height }]}>
               <InputField
                 value={title}
-                placeholder="Title of your stream"
+                placeholder={translate('streams.Title')}
                 onChangeText={(text) => this.setState({ title: text })}
                 onFocus={() => this.setState({ isFocused: true })}
                 onBlur={() => this.setState({ isFocused: false })}
               />
               <View style={[StreamStyles.row, StreamStyles.switchContainer, toggle && StreamStyles.switchContainerOn]}>
-                <Text style={StreamStyles.subHeader}>Show wearable health data</Text>
+                <Text style={StreamStyles.subHeader}>{translate('streams.Wearable')}</Text>
                 <TouchableOpacity activeOpacity={0.7} onPress={this.onToggle}>
                   <Image resizeMode='contain' source={toggle ? Constants.Images.toggleOn : Constants.Images.toggleOff} style={StreamStyles.switch} />
                 </TouchableOpacity>
               </View>
               {toggle && (
                 <View style={StreamStyles.row}>
-                  {wearableOptions.map((dis) => (
+                  {wearableOptions.map((wearable) => (
                     <TouchableOpacity
-                      onPress={() => this.onSelect(dis.value)}
-                      key={dis.value}
+                      onPress={() => this.onSelect(wearable.value)}
+                      key={wearable.value}
                       activeOpacity={0.7}
-                      style={[StreamStyles.race, selected.includes(dis.value) && StreamStyles.raceActive]}
+                      style={[StreamStyles.race, selected.includes(wearable.value) && StreamStyles.raceActive]}
                     >
-                      <Text style={[StreamStyles.raceText, selected.includes(dis.value) && StreamStyles.raceActiveText]}>{`${dis.label}`}</Text>
+                      <Text style={[StreamStyles.raceText, selected.includes(wearable.value) && StreamStyles.raceActiveText]}>{translate(wearable.label)}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -224,7 +228,7 @@ class CreateStream extends React.Component {
                 activeOpacity={0.7}
                 onPress={this.onLiveStream}
               >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Live Stream'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('streams.LiveStream')}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -236,10 +240,11 @@ class CreateStream extends React.Component {
 
 CreateStream.propTypes = {
   navigation: shape({
-    navigate: func,
-    setParams: func,
+    navigate: func.isRequired,
+    setParams: func.isRequired,
   }).isRequired,
   route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  t: func.isRequired,
 };
 
-export default CreateStream;
+export default withTranslation()(CreateStream);
