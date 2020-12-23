@@ -87,6 +87,10 @@ function CreateEvent() {
             source={Constants.Images.calendar}
             style={CreateEventStyles.calendarIcon}
           />
+          <Image
+            source={Constants.Images.calendar}
+            style={CreateEventStyles.calendarIcon}
+          />
         </View>
         <View style={CreateEventStyles.searchView}>
           <TextInput
@@ -100,6 +104,10 @@ function CreateEvent() {
             }}
             style={CreateEventStyles.groupName}
             underlineColorAndroid={Constants.Colors.TRANSPARENT}
+          />
+          <Image
+            source={Constants.Images.clock}
+            style={CreateEventStyles.clockIcon}
           />
           <Image
             source={Constants.Images.clock}
