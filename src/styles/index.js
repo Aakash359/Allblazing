@@ -50,6 +50,7 @@ import CreateEventStyles from './create-event-styles';
 import CreatePostStyles from './create-post-styles';
 import InvitePopupStyles from './invite-popup-styles';
 import GroupDetailStyles from './group-detail-styles';
+import LiveFeedRotateStyles from './live-feed-rotate-styles';
 
 export {
   RunnersStyles,
@@ -104,4 +105,5 @@ export {
   UsernameStyle,
   WelcomeStyles,
   ChangePassStyles,
+  LiveFeedRotateStyles,
 };

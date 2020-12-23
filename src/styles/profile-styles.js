@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
   },
   sectionMainView: {
     borderBottomWidth: 1,
-    borderColor: Constants.Colors.WHITE,
+    borderColor: Constants.Colors.GREY_CIRCLE,
     borderTopWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
   },
   sectionView: {
-    borderColor: Constants.Colors.WHITE,
+    borderColor: Constants.Colors.GREY_CIRCLE,
     borderRightWidth: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,

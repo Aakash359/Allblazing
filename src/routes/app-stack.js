@@ -450,7 +450,12 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="GroupDetail"
         component={GroupDetail}
-        options={{ headerShown: false }}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: '',
+          headerTitleAlign: 'center',
+        }}
       />
       <AppStack.Screen
         name="FeedDetailScreen"
@@ -461,8 +466,10 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
           headerTitleAlign: 'center',
+
         })}
       />
+
       <AppStack.Screen
         name="LiveFeed"
         component={LiveFeed}
