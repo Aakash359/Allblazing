@@ -21,22 +21,22 @@ export const levels = [{
 }];
 
 export const distanceList = [{
-  label: '200 m',
+  label: 'distance.200m',
   value: '200m',
 }, {
-  label: '400 m',
+  label: 'distance.400m',
   value: '400m',
 }, {
-  label: '1 km',
+  label: 'distance.1km',
   value: '1km',
 }, {
-  label: '1 mile',
+  label: 'distance.1mile',
   value: '1mile',
 }, {
-  label: '5 km',
+  label: 'distance.5km',
   value: '5km',
 }, {
-  label: '10 km',
+  label: 'distance.10km',
   value: '10km',
 }];
 
@@ -81,6 +81,32 @@ export const wearableOptions = [{
 }, {
   label: 'wearableOptions.Watts',
   value: 'Watts',
+}];
+
+export const times = [{
+  color: Constants.Colors.LIGHT_BLUE,
+  label: '< 18 minutes',
+  value: 'lessThan18Minutes',
+}, {
+  color: Constants.Colors.LIGHT_RED,
+  label: 'recent5KTimes.between18and20',
+  value: 'between18and20',
+}, {
+  color: Constants.Colors.LIGHT_YELLOW,
+  label: 'recent5KTimes.between20and23',
+  value: 'between20and23',
+}, {
+  color: Constants.Colors.LIGHT_PINK,
+  label: 'recent5KTimes.between23and26',
+  value: 'between23and26',
+}, {
+  color: Constants.Colors.DARK_YELLOW,
+  label: 'recent5KTimes.between26and30',
+  value: 'between26and30',
+}, {
+  color: Constants.Colors.LIGHT_GREEN,
+  label: 'recent5KTimes.moreThan30',
+  value: 'moreThan30',
 }];
 
 export default levels;

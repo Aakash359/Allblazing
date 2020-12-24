@@ -91,6 +91,13 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     width: '100%',
   },
+  select: {
+    height: null,
+    marginRight: null,
+    position: 'absolute',
+    right: 5,
+    width: null,
+  },
   subHeader: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,

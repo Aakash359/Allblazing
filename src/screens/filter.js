@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { func } from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import Constants from '../constants';
-import { CommonStyles, FilterStyles } from '../styles';
+import { AuthStyle, CommonStyles, FilterStyles } from '../styles';
 import { distanceList, levels } from '../data';
 
 const Filter = ({ t: translate }) => {
@@ -12,6 +12,7 @@ const Filter = ({ t: translate }) => {
   const [connect, setConnectType] = React.useState('train');
   const [distance, setDistance] = React.useState(null);
   const [gender, setGender] = React.useState('male');
+  const [selectedLevel, setLevel] = React.useState(null);
 
   return (
     <View style={CommonStyles.container}>
@@ -57,10 +58,18 @@ const Filter = ({ t: translate }) => {
           {connect === 'train' ? (
             <View style={[FilterStyles.row, FilterStyles.connectRow, FilterStyles.levelsContainer]}>
               {levels.map((level) => (
-                <TouchableOpacity key={level.value} activeOpacity={0.7} style={[FilterStyles.level, { backgroundColor: level.color }]}>
+                <TouchableOpacity key={level.value} activeOpacity={0.7} style={[FilterStyles.level, { backgroundColor: level.color }]} onPress={() => setLevel(level.value)}>
                   <Text style={FilterStyles.levelColor}>
                     {`${translate('filters.Level')} ${level.value}`}
                   </Text>
+                  {selectedLevel === level.value && (
+                    <Ionicons
+                      name="checkmark-sharp"
+                      size={18}
+                      color={Constants.Colors.BLACK}
+                      style={[AuthStyle.checkImg, FilterStyles.select]}
+                    />
+                  )}
                 </TouchableOpacity>
               ))}
             </View>
@@ -68,7 +77,7 @@ const Filter = ({ t: translate }) => {
             <View style={[FilterStyles.row, FilterStyles.connectRow, FilterStyles.levelsContainer]}>
               {distanceList.map((dis) => (
                 <TouchableOpacity key={dis.value} activeOpacity={0.7} style={[FilterStyles.race, dis.value === distance && FilterStyles.raceActive]} onPress={() => setDistance(dis.value)}>
-                  <Text style={[FilterStyles.raceText, dis.value === distance && FilterStyles.raceActiveText]}>{`${dis.label}`}</Text>
+                  <Text style={[FilterStyles.raceText, dis.value === distance && FilterStyles.raceActiveText]}>{translate(dis.label)}</Text>
                 </TouchableOpacity>
               ))}
             </View>

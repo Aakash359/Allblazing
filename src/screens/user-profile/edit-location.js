@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, View, Image, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native-gesture-handler';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Constants from '../../constants';
@@ -10,7 +11,9 @@ class EditLocation extends Component {
   onChangeText = () => {}
 
   render() {
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -39,7 +42,7 @@ class EditLocation extends Component {
           </View>
         </ScrollView>
         <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, LocationStyles.saveBtn]} onPress={() => goBack()}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -51,6 +54,7 @@ EditLocation.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default EditLocation;
+export default withTranslation()(EditLocation);

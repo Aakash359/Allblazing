@@ -1,15 +1,13 @@
-/* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ProfileStyles } from '../../styles';
-// import ProfileUnlock from './myProfile';
-// import PBScreen from './USERPbScreen';
-// import LikeScreen from './userLikeScreen';
 import UserGoalScreen from './user-goals';
 import Constants from '../../constants';
 import { MoreOptionsPopup } from '../../components';
 import profileStyles from '../../styles/profile-styles';
+
+const optionList = ['Goals', 'PB\'s', 'Likes'];
 
 function UserProfile() {
   const navigation = useNavigation();
@@ -17,19 +15,8 @@ function UserProfile() {
   const [followStatus, setFollowStatus] = useState(false);
 
   const [option, setOption] = useState('Goals');
-  const optionList = ['Goals', 'PB\'s', 'Likes'];
 
-  const displayOptions = (data) => {
-    if (data === 'Goals') {
-      return <UserGoalScreen />;
-    }
-    if (data === 'PB\'s') {
-      // return <PBScreen />;
-    }
-    if (data === 'Likes') {
-      // return <LikeScreen />;
-    }
-  };
+  const displayOptions = () => <UserGoalScreen />;
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -120,7 +107,7 @@ function UserProfile() {
               style={ProfileStyles.lockedIcon}
             />
             <Text style={ProfileStyles.bottomHeader}>{'Private Account'}</Text>
-            <Text style={ProfileStyles.bottomHeader2}>{'Follow this account to see photos and videos'}</Text>
+            <Text style={ProfileStyles.bottomHeader2}>{'Follow this account to see photos and videos.'}</Text>
           </View>
         )}
       </View>

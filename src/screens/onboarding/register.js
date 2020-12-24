@@ -7,11 +7,12 @@ import { View,
   ScrollView,
   TextInput } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { InputField } from '../../components';
 import { AuthStyle, CommonStyles, RegisterStyle } from '../../styles';
 import Constants from '../../constants';
 
-export default class Register extends Component {
+class Register extends Component {
   emailRef = React.createRef();
   passwordRef = React.createRef();
   scrollViewRef = React.createRef();
@@ -61,6 +62,7 @@ export default class Register extends Component {
     const {
       email, password, isPasswordVisible,
     } = this.state;
+    const { t: translate } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -78,14 +80,14 @@ export default class Register extends Component {
                 fontSize: Constants.BaseStyle.scale(30),
               }}
               >
-                Sign Up
+                {translate('Sign Up')}
               </Text>
             </View>
             <View>
               <InputField
                 value={email}
                 returnKeyType="next"
-                placeholder="Email"
+                placeholder={translate('Email')}
                 ref={this.emailRef}
                 keyboardType="email-address"
                 onChangeText={(text) => this.setState({ email: text })}
@@ -96,7 +98,7 @@ export default class Register extends Component {
                   ref={this.passwordRef}
                   style={RegisterStyle.password}
                   returnKeyType="done"
-                  placeholder="Password"
+                  placeholder={translate('Password')}
                   secureTextEntry={!isPasswordVisible}
                   value={password}
                   onChangeText={(text) => this.setState({ password: text })}
@@ -112,19 +114,19 @@ export default class Register extends Component {
               </View>
             </View>
             <View style={RegisterStyle.textLinkView}>
-              <Text style={RegisterStyle.textSmallStyle}>{'By signing up, you agree to our'}</Text>
-              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'Privacy Policy')}>
-                <Text style={RegisterStyle.textSmallLinkStyle}>{' Privacy Policy '}</Text>
+              <Text style={RegisterStyle.textSmallStyle}>{translate('SignUpInstructions')}</Text>
+              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'settings.Privacy Policy')}>
+                <Text style={RegisterStyle.textSmallLinkStyle}>{` ${translate('settings.Privacy Policy')} `}</Text>
               </TouchableOpacity>
-              <Text style={RegisterStyle.textSmallStyle}>and</Text>
-              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'Terms & Conditions')}>
-                <Text style={RegisterStyle.textSmallLinkStyle}>{' Terms & Conditions.'}</Text>
+              <Text style={RegisterStyle.textSmallStyle}>{translate('and')}</Text>
+              <TouchableOpacity activeOpacity={1} onPress={this.onStaticRoutes('StaticContent', 'settings.Terms & Conditions')}>
+                <Text style={RegisterStyle.textSmallLinkStyle}>{` ${translate('settings.Terms & Conditions')} `}</Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
         <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Sign Up'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Sign Up')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -136,4 +138,7 @@ Register.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
+
+export default withTranslation()(Register);

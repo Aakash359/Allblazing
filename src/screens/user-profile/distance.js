@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
 import { AuthStyle, DistanceStyles, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
 import { StepBar, TimePicker } from '../../components';
@@ -55,6 +56,7 @@ class Distance extends Component {
       navigation: {
         goBack, navigate,
       },
+      t: translate,
     } = this.props;
 
     return (
@@ -69,7 +71,7 @@ class Distance extends Component {
           <View style={ConnectUserTypeStyles.wrapper}>
             <StepBar count={5} selected={[0, 1, 2, 3, 4]} />
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              <Text style={ConnectUserTypeStyles.input}>{'Distance to race'}</Text>
+              <Text style={ConnectUserTypeStyles.input}>{translate('distance.title')}</Text>
               {distanceList.map((t) => (
                 <TouchableOpacity
                   key={t.value}
@@ -84,7 +86,7 @@ class Distance extends Component {
                       { color: time === t.value ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 },
                     ]}
                   >
-                    {t.label}
+                    {translate(t.label)}
                   </Text>
                   {time === t.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, DistanceStyles.select]} />}
                 </TouchableOpacity>
@@ -99,14 +101,14 @@ class Distance extends Component {
               activeOpacity={0.7}
               onPress={() => goBack()}
             >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={AuthStyle.introButton}
               activeOpacity={0.7}
               onPress={() => navigate('Location')}
             >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -131,6 +133,7 @@ Distance.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default Distance;
+export default withTranslation()(Distance);

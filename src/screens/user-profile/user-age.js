@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { bool, func, shape } from 'prop-types';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Constants from '../../constants';
 import { AgePicker, StepBar } from '../../components';
@@ -38,6 +39,7 @@ class Userage extends Component {
         goBack, navigate,
       },
       route: { params },
+      t: translate,
     } = this.props;
 
     return (
@@ -51,9 +53,9 @@ class Userage extends Component {
           <View style={UsernameStyle.wrapper}>
             {!params?.isEditMode && <StepBar count={5} selected={[0, 1]} />}
             <View style={UsernameStyle.inputWrapper}>
-              {!params?.isEditMode && <Text style={UsernameStyle.input}>{'How old are you?'}</Text>}
+              {!params?.isEditMode && <Text style={UsernameStyle.input}>{translate('How old are you?')}</Text>}
               <TouchableOpacity activeOpacity={1} style={UsernameStyle.ageButton} onPress={() => this.setState({ visible: true })}>
-                <Text style={age ? UsernameStyle.age : UsernameStyle.ageBlur}>{age || 'Age'}</Text>
+                <Text style={age ? UsernameStyle.age : UsernameStyle.ageBlur}>{age || translate('Age')}</Text>
                 <AntIcon name="down" size={25} color="#5EC2CA" />
               </TouchableOpacity>
             </View>
@@ -61,7 +63,7 @@ class Userage extends Component {
         </ScrollView>
         {params?.isEditMode ? (
           <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, UsernameStyle.saveBtn]} onPress={() => goBack()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
           </TouchableOpacity>
         ) : (
           <View style={UsernameStyle.buttonsWrapper}>
@@ -71,14 +73,14 @@ class Userage extends Component {
                 activeOpacity={0.7}
                 onPress={() => goBack()}
               >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={AuthStyle.introButton}
                 activeOpacity={0.7}
                 onPress={() => navigate('ConnectUserType')}
               >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -101,6 +103,7 @@ Userage.propTypes = {
     goBack: func.isRequired,
   }).isRequired,
   route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  t: func.isRequired,
 };
 
-export default connect(null, { logoutSuccess: actions.logoutSuccess })(Userage);
+export default connect(null, { logoutSuccess: actions.logoutSuccess })(withTranslation()(Userage));

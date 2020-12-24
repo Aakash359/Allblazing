@@ -30,7 +30,7 @@ class ForgotPassword extends Component {
     return (
       <View style={CommonStyles.container}>
         <View style={ForgotPassStyles.wrapper}>
-          <Text style={AuthStyle.selectText}>Forgot Password</Text>
+          <Text style={AuthStyle.selectText}>{t('Forgot Password')}</Text>
           <Text style={[AuthStyle.buttonText, ForgotPassStyles.buttonText]}>
             {t('Forgot Password Instructions')}
           </Text>

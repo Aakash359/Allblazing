@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, ConnectUserTypeStyles } from '../../styles';
 import { StepBar } from '../../components';
@@ -28,7 +29,9 @@ class ConnectUserType extends Component {
 
   render() {
     const { type } = this.state;
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -36,14 +39,14 @@ class ConnectUserType extends Component {
           <View style={ConnectUserTypeStyles.wrapper}>
             <StepBar count={5} selected={[0, 1, 2]} />
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              <Text style={ConnectUserTypeStyles.input}>{'Connect with other runners to...?'}</Text>
+              <Text style={ConnectUserTypeStyles.input}>{translate('profile.ConnectTitle')}</Text>
               <TouchableOpacity
                 style={[AuthStyle.loginTouchable, AuthStyle.loginTouchableRow]}
                 activeOpacity={0.7}
                 onPress={() => this.onTypeChange('train')}
               >
                 <Text style={AuthStyle.buttonText}>{'     '}</Text>
-                <Text style={[AuthStyle.buttonText, { color: type === 'train' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Train'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: type === 'train' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{translate('Train')}</Text>
                 {type === 'train' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
               </TouchableOpacity>
               <TouchableOpacity
@@ -52,7 +55,7 @@ class ConnectUserType extends Component {
                 onPress={() => this.onTypeChange('race')}
               >
                 <Text style={AuthStyle.buttonText}>{'     '}</Text>
-                <Text style={[AuthStyle.buttonText, { color: type === 'race' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{'Race'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: type === 'race' ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 }]}>{translate('Race')}</Text>
                 {type === 'race' ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
               </TouchableOpacity>
             </View>
@@ -65,14 +68,14 @@ class ConnectUserType extends Component {
               activeOpacity={0.7}
               onPress={() => goBack()}
             >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={AuthStyle.introButton}
               activeOpacity={0.7}
               onPress={this.onPressNext}
             >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -86,6 +89,7 @@ ConnectUserType.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default ConnectUserType;
+export default withTranslation()(ConnectUserType);

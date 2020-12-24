@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Image, View, TouchableOpacity, Text } from 'react-native';
+import { withTranslation } from 'react-i18next';
 import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, GenderStyles, UsernameStyle } from '../../styles';
@@ -27,7 +28,9 @@ class UserGender extends Component {
 
   render() {
     const { gender } = this.state;
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -42,7 +45,7 @@ class UserGender extends Component {
                   onPress={() => this.onChange(t.value)}
                 >
                   <Text style={AuthStyle.buttonText}>{'     '}</Text>
-                  <Text style={[AuthStyle.buttonLanguageText, gender === t.value ? AuthStyle.buttonActiveText : {}]}>{t.label}</Text>
+                  <Text style={[AuthStyle.buttonLanguageText, gender === t.value ? AuthStyle.buttonActiveText : {}]}>{translate(t.label)}</Text>
                   {gender === t.value ? <Image source={Constants.Images.check} resizeMode='contain' style={AuthStyle.checkImg} /> : <Text style={AuthStyle.checkImg}>{}</Text>}
                 </TouchableOpacity>
               ))}
@@ -50,7 +53,7 @@ class UserGender extends Component {
           </View>
         </ScrollView>
         <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, GenderStyles.saveBtn]} onPress={() => goBack()}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -62,6 +65,7 @@ UserGender.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default UserGender;
+export default withTranslation()(UserGender);

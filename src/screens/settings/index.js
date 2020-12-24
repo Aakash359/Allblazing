@@ -25,13 +25,13 @@ const settingList = [{
 {
   label: 'settings.Invite Friends',
   payload: {
-    hasCheckBox: true, title: 'Invite Friends',
+    hasCheckBox: true, title: 'settings.Invite Friends',
   },
   route: 'InviteFriends',
 },
 {
   label: 'settings.Contact Us',
-  payload: { title: 'Contact Us' },
+  payload: { title: 'settings.Contact Us' },
   route: 'ContactUS',
 },
 {
@@ -77,7 +77,7 @@ class Settings extends Component {
   onPress = (data) => {
     const { navigation: { navigate } } = this.props;
 
-    if (data.label === 'Logout') {
+    if (data.route === 'logout') {
       this.setState({ logoutPopup: true });
 
       return;

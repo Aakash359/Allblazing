@@ -2,6 +2,7 @@
 import React from 'react';
 import { ScrollView, FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
 import { bool, func, shape } from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { CommonStyles, InviteFriendsStyles, EventDetailStyles } from '../../styles';
 import Constants from '../../constants';
 import { InvitedUser, UserImages } from '../../components';
@@ -16,7 +17,7 @@ class SingleEventDetail extends React.Component {
 
     if (params?.isMember) {
       const payload = {
-        hasCheckBox: false, hasTick: true, routeName: 'SingleEventDetail', title: 'My Friends',
+        hasCheckBox: false, hasTick: true, routeName: 'SingleEventDetail', title: 'events.MyFriends',
       };
 
       navigate('StravaUsers', payload);
@@ -28,7 +29,9 @@ class SingleEventDetail extends React.Component {
   renderItem = () => <InvitedUser onPress={this.onEventPress} />
 
   render() {
-    const { route: { params } } = this.props;
+    const {
+      route: { params }, t: translate,
+    } = this.props;
 
     return (
       <View style={[CommonStyles.container, EventDetailStyles.container]}>
@@ -38,14 +41,14 @@ class SingleEventDetail extends React.Component {
             <Image resizeMode='contain' source={{ uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' }} style={InviteFriendsStyles.userImage} />
             <View style={EventDetailStyles.userInformation}>
               <Text style={EventDetailStyles.username}>John Doe</Text>
-              <Text style={EventDetailStyles.subtitle}>Individual Event</Text>
+              <Text style={EventDetailStyles.subtitle}>{translate('events.IndividualEvent')}</Text>
             </View>
           </View>
           <View style={EventDetailStyles.divider} />
           <View style={EventDetailStyles.row}>
             <Image resizeMode='contain' source={Constants.Images.live} style={EventDetailStyles.live} />
             <View style={[EventDetailStyles.row]}>
-              <Text style={[EventDetailStyles.eventType, EventDetailStyles.marginLeft]}>Racing</Text>
+              <Text style={[EventDetailStyles.eventType, EventDetailStyles.marginLeft]}>{translate('events.Racing')}</Text>
               <Text style={[EventDetailStyles.subtitle, EventDetailStyles.marginLeft]}>{'(1 Km)'}</Text>
             </View>
           </View>
@@ -61,24 +64,24 @@ class SingleEventDetail extends React.Component {
             <Text style={[EventDetailStyles.subtitle, EventDetailStyles.marginLeft]}>{'11:00 AM, 20 Oct 2020'}</Text>
           </View>
           <View style={EventDetailStyles.divider} />
-          <Text style={EventDetailStyles.header}>Description</Text>
+          <Text style={EventDetailStyles.header}>{translate('events.Description')}</Text>
           <Text style={EventDetailStyles.eventDescription}>{'Emily and Maaike go head to head over 1km. For more info on the runners\' stats.'}</Text>
           <View style={EventDetailStyles.divider} />
           <View style={[EventDetailStyles.members]}>
             <UserImages style={EventDetailStyles.memberImages} users={[1, 2, 3, 4, 5]} />
-            <Text style={EventDetailStyles.subtitle}>{'Members are watching'}</Text>
+            <Text style={EventDetailStyles.subtitle}>{translate('events.Members are watching')}</Text>
           </View>
           <View style={EventDetailStyles.divider} />
           {!params?.isMember && (
             <>
-              <Text style={EventDetailStyles.header}>Invitation To Record Live Stream</Text>
+              <Text style={EventDetailStyles.header}>{translate('events.invitation')}</Text>
               <Text style={EventDetailStyles.eventDescription}>Kelly Norman sent you an invitation to record live stream</Text>
               <View style={[EventDetailStyles.row, EventDetailStyles.buttons, EventDetailStyles.margin]}>
                 <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.acceptRejectBtn]}>
-                  <Text style={EventDetailStyles.buttonText}>Reject</Text>
+                  <Text style={EventDetailStyles.buttonText}>{translate('events.Reject')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.acceptRejectBtn]}>
-                  <Text style={EventDetailStyles.buttonText}>Accept</Text>
+                  <Text style={EventDetailStyles.buttonText}>{translate('events.Accept')}</Text>
                 </TouchableOpacity>
               </View>
               <View style={EventDetailStyles.divider} />
@@ -86,7 +89,7 @@ class SingleEventDetail extends React.Component {
           )}
           {!params?.isInviteSent && (
             <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.inviteBtn]} onPress={this.onPress}>
-              <Text style={EventDetailStyles.buttonText}>{params?.isMember ? 'Invite Friend To Record Live Stream' : 'Join'}</Text>
+              <Text style={EventDetailStyles.buttonText}>{params?.isMember ? translate('events.invite') : translate('events.Join')}</Text>
             </TouchableOpacity>
           )}
           {params?.isInviteSent && (
@@ -97,7 +100,7 @@ class SingleEventDetail extends React.Component {
                 keyExtractor={(item, index) => `${index}`}
               />
               <TouchableOpacity activeOpacity={0.7} style={[EventDetailStyles.button, EventDetailStyles.margin, EventDetailStyles.inviteBtn]}>
-                <Text style={EventDetailStyles.buttonText}>{'Withdraw Request'}</Text>
+                <Text style={EventDetailStyles.buttonText}>{translate('events.Withdraw Request')}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -113,6 +116,7 @@ SingleEventDetail.propTypes = {
     setParams: func,
   }).isRequired,
   route: shape({ params: shape({ isMapView: bool }) }).isRequired,
+  t: func.isRequired,
 };
 
-export default SingleEventDetail;
+export default withTranslation()(SingleEventDetail);
