@@ -42,6 +42,9 @@ import FeedDetailScreen from '../screens/discover/feed-detail';
 import Notifications from '../screens/home/notifications';
 import Runners from '../screens/home/runners';
 import LiveStream from '../screens/streams';
+import FollowersList from '../screens/user-profile/followers-list';
+import FollowingList from '../screens/user-profile/following-list';
+import EditProfile from '../screens/user-profile/edit-profile';
 
 const AppStack = createStackNavigator();
 const options = { headerShown: false };
@@ -58,7 +61,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -69,7 +72,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -79,7 +82,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: translate('Edit Gender'),
+          headerTitle: translate('profile.Edit Gender'),
           headerTitleAlign: 'center',
         })}
       />
@@ -89,7 +92,7 @@ export default function MainNavigator() {
         options={() => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: translate('Edit Motto'),
+          headerTitle: translate('profile.Edit Motto'),
           headerTitleAlign: 'center',
         })}
       />
@@ -105,7 +108,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -165,7 +168,7 @@ export default function MainNavigator() {
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
           )),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || translate('settings.Invite Friends'),
+          headerTitle: route?.params?.title ? translate(route.params.title) : translate('settings.Invite Friends'),
           headerTitleAlign: 'center',
         })}
       />
@@ -178,7 +181,7 @@ export default function MainNavigator() {
             <TouchableOpacity activeOpacity={0.7}><Text style={HeaderStyles.headerRightTextStyle}>Select All</Text></TouchableOpacity>
           )),
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || translate('settings.Strava Users'),
+          headerTitle: route?.params?.title ? translate(route.params.title) : translate('settings.Strava Users'),
           headerTitleAlign: 'center',
         })}
       />
@@ -256,7 +259,6 @@ export default function MainNavigator() {
           headerTitleAlign: 'center',
         })}
       />
-
       <AppStack.Screen
         name="StaticContent"
         component={StaticContent}
@@ -466,10 +468,8 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
           headerTitleAlign: 'center',
-
         })}
       />
-
       <AppStack.Screen
         name="LiveFeed"
         component={LiveFeed}
@@ -477,6 +477,36 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: 'Live',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <AppStack.Screen
+        name="FollowersList"
+        component={FollowersList}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Followers',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <AppStack.Screen
+        name="FollowingList"
+        component={FollowingList}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Following',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <AppStack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          headerBackTitleVisible: false,
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: 'Edit Profile',
           headerTitleAlign: 'center',
         }}
       />

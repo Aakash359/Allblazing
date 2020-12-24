@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Image, TextInput, ScrollView, Platform } from 'react-native';
 import { func, shape } from 'prop-types';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { InputField } from '../../components';
 import { AuthStyle, CommonStyles, LoginStyles } from '../../styles';
 import Constants from '../../constants';
@@ -53,11 +54,12 @@ class Login extends Component {
     const {
       email, password, isShow, isRemember,
     } = this.state;
-    const { navigation: { navigate } } = this.props;
+    const {
+      navigation: { navigate }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
-
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -67,11 +69,11 @@ class Login extends Component {
           <View style={LoginStyles.wrapper}>
             <Image source={Constants.Images.slectLangLogo2x} resizeMode='contain' style={LoginStyles.logo} />
             <View>
-              <InputField value={email} placeholder="Email" onChangeText={(text) => this.setState({ email: text })} />
+              <InputField value={email} placeholder={translate('Email')} onChangeText={(text) => this.setState({ email: text })} />
               <View style={LoginStyles.passwordInput}>
                 <TextInput
                   style={LoginStyles.password}
-                  placeholder="Password"
+                  placeholder={translate('Password')}
                   secureTextEntry={!isShow}
                   value={password}
                   onChangeText={(text) => this.setState({ password: text })}
@@ -97,11 +99,11 @@ class Login extends Component {
                       style={LoginStyles.rememberIcon}
                     />
                   </TouchableOpacity>
-                  <Text style={LoginStyles.rememberText}>{'Remember me'}</Text>
+                  <Text style={LoginStyles.rememberText}>{translate('Remember me')}</Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('ForgotPassword')}>
                   <Text style={[AuthStyle.buttonText, LoginStyles.forgotPasswordText]}>
-                    {'Forgot password?'}
+                    {`${translate('Forgot password')}?`}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -111,11 +113,11 @@ class Login extends Component {
                 activeOpacity={0.7}
                 onPress={this.onLogin}
               >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Login'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Login')}</Text>
               </TouchableOpacity>
               <View style={LoginStyles.orContainer}>
                 <Image source={Constants.Images.line} resizeMode='contain' style={{ width: Constants.BaseStyle.scale(80) }} />
-                <Text style={LoginStyles.loginText}>{'or login using'}</Text>
+                <Text style={LoginStyles.loginText}>{translate('or login using')}</Text>
                 <Image source={Constants.Images.line} resizeMode='contain' style={{ width: Constants.BaseStyle.scale(80) }} />
               </View>
               <View style={LoginStyles.socialIconsWrapper}>
@@ -129,9 +131,9 @@ class Login extends Component {
           </View>
         </ScrollView>
         <View style={LoginStyles.accountWrapper}>
-          <Text style={LoginStyles.account}>{'Don\'t have account?'}</Text>
+          <Text style={LoginStyles.account}>{translate('Do not have account?')}</Text>
           <TouchableOpacity activeOpacity={0.7} onPress={() => navigate('Register')}>
-            <Text style={LoginStyles.createAccount}>{'Create account'}</Text>
+            <Text style={LoginStyles.createAccount}>{translate('Create account')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -145,6 +147,7 @@ Login.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default connect(null, { loginSuccess: actions.loginSuccess })(Login);
+export default connect(null, { loginSuccess: actions.loginSuccess })(withTranslation()(Login));

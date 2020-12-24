@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     color: Constants.Colors.GREY_BORDER,
     fontSize: Constants.BaseStyle.scale(16),
     marginTop: 10,
+    maxWidth: '96%',
+    textAlign: 'center',
   },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
@@ -103,16 +105,16 @@ const styles = StyleSheet.create({
     fontSize: Constants.BaseStyle.scale(14),
   },
   sectionMainView: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.8,
     borderColor: Constants.Colors.GREY_CIRCLE,
-    borderTopWidth: 1,
+    borderTopWidth: 0.8,
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
   },
   sectionView: {
     borderColor: Constants.Colors.GREY_CIRCLE,
-    borderRightWidth: 1,
+    borderRightWidth: 0.8,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -124,9 +126,7 @@ const styles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(12),
-    // alignSelf: 'center',
   },
-
 });
 
 export default StyleSheet.create(styles);

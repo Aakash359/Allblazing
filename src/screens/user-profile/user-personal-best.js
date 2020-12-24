@@ -1,36 +1,12 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { withTranslation } from 'react-i18next';
 import { bool, func, shape } from 'prop-types';
 import { AuthStyle, CommonStyles, ConnectUserTypeStyles, DistanceStyles, Repeat5KStyles } from '../../styles';
 import { StepBar } from '../../components';
 import Constants from '../../constants';
-
-const times = [{
-  color: Constants.Colors.LIGHT_BLUE,
-  label: '< 18 minutes',
-  value: 'lessThan18Minutes',
-}, {
-  color: Constants.Colors.LIGHT_RED,
-  label: '18-20 minutes',
-  value: 'between18and20',
-}, {
-  color: Constants.Colors.LIGHT_YELLOW,
-  label: '20-23 minutes',
-  value: 'between20and23',
-}, {
-  color: Constants.Colors.LIGHT_PINK,
-  label: '23-26 minutes',
-  value: 'between23and26',
-}, {
-  color: Constants.Colors.DARK_YELLOW,
-  label: '26-30 minutes',
-  value: 'between26and30',
-}, {
-  color: Constants.Colors.LIGHT_GREEN,
-  label: '> 30 minutes/Unknown',
-  value: 'moreThan30',
-}];
+import { times } from '../../data';
 
 class UserPersonalBest extends Component {
   constructor() {
@@ -47,6 +23,7 @@ class UserPersonalBest extends Component {
         goBack, navigate,
       },
       route: { params },
+      t: translate,
     } = this.props;
 
     return (
@@ -60,7 +37,7 @@ class UserPersonalBest extends Component {
           <View style={ConnectUserTypeStyles.wrapper}>
             {!params?.isEditMode && <StepBar count={5} selected={[0, 1, 2, 3]} />}
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{'What is your recent 5km time?'}</Text>}
+              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{translate('PersonalBest')}</Text>}
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
@@ -68,8 +45,7 @@ class UserPersonalBest extends Component {
                   activeOpacity={0.7}
                   onPress={() => this.onTypeChange(t.value)}
                 >
-                  <Text style={Repeat5KStyles.buttonText}>{'     '}</Text>
-                  <Text style={[Repeat5KStyles.buttonText, DistanceStyles.buttonText, time === t.label && Repeat5KStyles.active]}>{t.label}</Text>
+                  <Text style={[Repeat5KStyles.buttonText, DistanceStyles.buttonText, time === t.value && Repeat5KStyles.active]}>{translate(t.label)}</Text>
                   {time === t.value && (
                     <Ionicons
                       name="checkmark-sharp"
@@ -85,16 +61,16 @@ class UserPersonalBest extends Component {
         </ScrollView>
         {params?.isEditMode ? (
           <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]} onPress={() => goBack()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
           </TouchableOpacity>
         ) : (
           <View style={Repeat5KStyles.buttonsWrapper}>
             <View style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
               <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Back'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={AuthStyle.introButton} activeOpacity={0.7} onPress={() => navigate('Distance')}>
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Next'}</Text>
+                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -110,6 +86,7 @@ UserPersonalBest.propTypes = {
     goBack: func.isRequired,
   }).isRequired,
   route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  t: func.isRequired,
 };
 
-export default UserPersonalBest;
+export default withTranslation()(UserPersonalBest);

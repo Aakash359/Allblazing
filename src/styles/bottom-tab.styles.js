@@ -12,6 +12,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     width: 46,
   },
+  addContainer: {
+    flex: 1,
+    padding: 10,
+  },
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
@@ -44,7 +48,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     justifyContent: 'space-between',
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
     width: '100%',
   },
 });

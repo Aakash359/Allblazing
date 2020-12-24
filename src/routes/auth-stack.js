@@ -101,7 +101,7 @@ export default function MainNavigator() {
         options={({ route }) => ({
           headerBackTitleVisible: false,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title ? translate(route.params.title) : '',
+          headerTitle: route?.params?.title ? translate(`settings.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -112,7 +112,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -123,7 +123,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />
@@ -139,7 +139,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: !!route?.params?.title,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: route?.params?.title || '',
+          headerTitle: route?.params?.title ? translate(`profile.${route.params.title}`) : '',
           headerTitleAlign: 'center',
         })}
       />

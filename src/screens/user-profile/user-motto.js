@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, TextInput, View, TouchableOpacity, Text } from 'react-native';
+import { withTranslation } from 'react-i18next';
 import { func, shape } from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import Constants from '../../constants';
@@ -17,7 +18,9 @@ class UserMotto extends Component {
 
   render() {
     const { motto } = this.state;
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: { goBack }, t: translate,
+    } = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -35,7 +38,7 @@ class UserMotto extends Component {
                   maxLength={60}
                   numberOfLines={15}
                   style={CommonStyles.textArea}
-                  placeholder="Motto"
+                  placeholder={translate('profile.Motto')}
                   value={motto}
                   onChangeText={this.onChangeText}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
@@ -47,7 +50,7 @@ class UserMotto extends Component {
           </View>
         </ScrollView>
         <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => goBack()}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Save'}</Text>
+          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -59,6 +62,7 @@ UserMotto.propTypes = {
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
+  t: func.isRequired,
 };
 
-export default UserMotto;
+export default withTranslation()(UserMotto);

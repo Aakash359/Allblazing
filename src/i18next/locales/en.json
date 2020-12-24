@@ -1,14 +1,18 @@
 {
+  "Full Name": "Full Name",
+  "Your FullName?": "What's your Name?",
   "Finish": "Finish",
   "Gender": "Gender",
   "Male": "Male",
   "Female": "Female",
+  "Other": "Other",
   "Apply": "Apply",
   "ResetAll": "Reset All",
   "Please describe here...": "Please describe here...",
   "Block": "Block",
   "Report": "Block",
   "Select Your Age": "Select Your Age",
+  "Age": "Age",
   "HR": "HR",
   "MIN": "MIN",
   "SEC": "SEC",
@@ -30,7 +34,7 @@
   "View All": "View All",
   "No": "No",
   "Sign Up": "Sign Up",
-  "Sign Up Instructions": "By signing up, you agree to our",
+  "SignUpInstructions": "By signing up, you agree to our",
   "and": "and",
   "Privacy Policy": "Privacy Policy",
   "Terms & Conditions": "Terms & Conditions",
@@ -66,7 +70,7 @@
   "Forgot Password Instructions": "Please enter your registered email address to reset your password",
   "Forgot Password Success" : "Password reset link successfully shared to your email",
   "or login using": "or login using",
-  "Don't have an account": "Don't have an account?",
+  "Do not have account?": "Don't have an account?",
   "Create Account": "Create Account",
   "What is your recent 1km time?": "What is your recent 1km time?",
   "introduction": {
@@ -91,7 +95,7 @@
     "Watching": "Watching",
     "Description": "Description",
     "Event Details": "Event Details",
-    "Individual Event": "Individual Event",
+    "IndividualEvent": "Individual Event",
     "Racing": "Racing",
     "Members are watching": "Members are watching",
     "Withdraw Request": "Withdraw Request",
@@ -103,7 +107,8 @@
     "Training": "Training",
     "invite": "Invite Friend To Record Live Stream",
     "invited": "You have invited to record the live stream",
-    "invitation": "Invitation To Record Live Stream"
+    "invitation": "Invitation To Record Live Stream",
+    "MyFriends": "My Friends"
   },
   "filters": {
     "Filters": "Filters",
@@ -146,8 +151,15 @@
     "or": "or",
     "Edit Location": "Edit Location",
     "Edit Personal Best": "Edit Personal Best",
+    "PersonalBest": "What is your recent 5km time?",
     "Edit Gender": "Edit Gender",
-    "Edit Motto": "Edit Motto"
+    "Motto": "Motto",
+    "Edit Motto": "Edit Motto",
+    "ConnectTitle": "Connect with other runners to...?",
+    "Share My Location": "Share My Location",
+    "Select It Manually": "Select It Manually",
+    "TurnOnLocation": "Turn on location",
+    "TurnOnLocationDescription": "Find runners closer to you by enabling your location."
   },
   "contactus": {
     "Subject": "Subject",
@@ -212,5 +224,22 @@
     "AvgHeartRate": "Avg. Heart Rate",
     "HeartRateZone": "Heart Rate Zone",
     "Watts": "Watts"
+  },
+  "recent5KTimes": {
+    "lessThan18Minutes": "< 18 minutes",
+    "between18and20": "18-20 minutes",
+    "between20and23": "20-23 minutes",
+    "between23and26": "23-26 minutes",
+    "between26and30": "26-30 minutes",
+    "moreThan30": "> 30 minutes/Unknown"
+  },
+  "distance": {
+    "title": "Distance to race",
+    "200m": "200 m",
+    "400m": "400 m",
+    "1km": "1 km",
+    "5km": "5 km",
+    "10km": "10 km",
+    "1mile": "1 mile"
   }
 }

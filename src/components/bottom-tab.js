@@ -66,14 +66,29 @@ export const BottomTab = ({
         });
       };
 
-      const styles = label === 'Create' ? BottomTabsStyles.add : BottomTabsStyles.tab;
       const currentImage = getTabImage(label, isFocused);
 
-      return (
+      return label === 'Create' ? (
+        <View style={BottomTabsStyles.addContainer}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            key={route.key}
+            style={BottomTabsStyles.add}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+          >
+            <Image style={BottomTabsStyles.image} source={currentImage} />
+          </TouchableOpacity>
+        </View>
+      ) : (
         <TouchableOpacity
           activeOpacity={0.7}
           key={route.key}
-          style={styles}
+          style={BottomTabsStyles.tab}
           onPress={onPress}
           onLongPress={onLongPress}
           accessibilityRole="button"
@@ -82,7 +97,6 @@ export const BottomTab = ({
           testID={options.tabBarTestID}
         >
           <Image style={BottomTabsStyles.image} source={currentImage} />
-          {/* {label !== 'Create' && (<Text style={[BottomTabsStyles.tabText, isFocused && BottomTabsStyles.active]}>{label}</Text>)} */}
         </TouchableOpacity>
       );
     })}

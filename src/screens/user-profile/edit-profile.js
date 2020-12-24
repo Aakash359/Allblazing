@@ -32,7 +32,7 @@ function EditProfile() {
         <View style={EditProfileStyles.containerLikes}>
           <View style={EditProfileStyles.headerViewLike}>
             <Text style={EditProfileStyles.headerTextLike}>{'Kelly Norman'}</Text>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => onNavigate('Username', 'Edit name')}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => onNavigate('Username', 'Edit Name')}>
               <Image source={Constants.Images.edit} style={EditProfileStyles.icon} />
             </TouchableOpacity>
           </View>
