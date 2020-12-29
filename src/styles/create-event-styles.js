@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.05,
     marginTop: height * 0.05,
     padding: 15,
-    width: width * 0.8,
+    width: width * 0.9,
   },
   optionalSectionView: {
     alignSelf: 'center',

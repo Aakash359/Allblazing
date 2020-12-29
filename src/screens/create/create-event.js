@@ -41,10 +41,10 @@ function CreateEvent() {
         <Text style={CreateEventStyles.eventType}>Event Category</Text>
         <View style={CreateEventStyles.rowStyle}>
           <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
-            <Text style={CreateEventStyles.groupName}>Running</Text>
+            <Text style={CreateEventStyles.groupName}>Train</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7} style={CreateEventStyles.halfView}>
-            <Text style={CreateEventStyles.groupName}>Racing</Text>
+            <Text style={CreateEventStyles.groupName}>Race</Text>
           </TouchableOpacity>
         </View>
         <View style={CreateEventStyles.rowStyle}>

@@ -468,8 +468,10 @@ export default function MainNavigator() {
           headerTintColor: Constants.Colors.WHITE,
           headerTitle: null,
           headerTitleAlign: 'center',
+
         })}
       />
+
       <AppStack.Screen
         name="LiveFeed"
         component={LiveFeed}
