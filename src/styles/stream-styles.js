@@ -7,7 +7,7 @@ const styles = {
     width: Constants.BaseStyle.DEVICE_WIDTH,
   },
   button: {
-    bottom: 100,
+    bottom: (Constants.BaseStyle.DEVICE_HEIGHT * 12) / 100,
     position: 'absolute',
     width: '100%',
   },
@@ -43,10 +43,11 @@ const styles = {
     flexDirection: 'row',
     height: 36,
     justifyContent: 'center',
-    width: 112,
+    marginRight: -Constants.BaseStyle.scale(5),
+    width: 60,
   },
   headerIcons: {
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
     marginHorizontal: Constants.BaseStyle.scale(0),
@@ -54,7 +55,6 @@ const styles = {
   headerText: {
     ...Constants.Fonts.SmallBold,
     color: Constants.Colors.WHITE,
-    marginHorizontal: Constants.BaseStyle.scale(2),
   },
   healthData: {
     height: Constants.BaseStyle.scale(200),
@@ -72,6 +72,10 @@ const styles = {
     marginLeft: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(5),
     width: '100%',
+  },
+  logo: {
+    height: 25,
+    width: 25,
   },
   race: {
     alignItems: 'center',
