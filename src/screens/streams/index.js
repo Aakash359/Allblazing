@@ -17,7 +17,7 @@ class CreateStream extends React.Component {
     super(props);
 
     this.state = {
-      height: Constants.BaseStyle.scale(310),
+      height: (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100,
       isFocused: false,
       selected: [],
       title: '',
@@ -36,15 +36,13 @@ class CreateStream extends React.Component {
   }
 
   onKeyboardOpen = () => {
-    const { toggle } = this.state;
-
-    this.setState({ height: toggle ? Constants.BaseStyle.scale(490) : Constants.BaseStyle.scale(480) });
+    this.setState({ height: (Constants.BaseStyle.DEVICE_HEIGHT * 58) / 100 });
   };
 
   onKeyboardHide = () => {
     const { toggle } = this.state;
 
-    this.setState({ height: toggle ? Constants.BaseStyle.scale(400) : Constants.BaseStyle.scale(310) });
+    this.setState({ height: toggle ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100 : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100 });
   };
 
   onSelect = (payload) => {
@@ -74,7 +72,7 @@ class CreateStream extends React.Component {
   onToggle = () => {
     const { toggle } = this.state;
     const value = !toggle;
-    const height = value ? Constants.BaseStyle.scale(460) : Constants.BaseStyle.scale(310);
+    const height = value ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100 : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100;
 
     this.setState({
       height, toggle: value,
@@ -140,10 +138,7 @@ class CreateStream extends React.Component {
         <ImageBackground style={StreamStyles.background} source={Constants.Images.liveStream}>
           <View style={StreamStyles.row}>
             {params?.isStreamStarted && (
-              <View style={StreamStyles.header}>
-                <Text style={StreamStyles.headerText}>{translate('streams.Live')}</Text>
-                <Text style={StreamStyles.headerText}>02:05</Text>
-              </View>
+              <Image resizeMode='contain' source={Constants.Images.liveLogo} style={StreamStyles.logo} />
             )}
             {params?.isFinished ? (
               <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
@@ -153,6 +148,11 @@ class CreateStream extends React.Component {
               </View>
             ) : (
               <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
+                {params?.isStreamStarted && (
+                  <View style={StreamStyles.header}>
+                    <Text style={StreamStyles.headerText}>02:05</Text>
+                  </View>
+                )}
                 <TouchableOpacity activeOpacity={0.7}>
                   <Image resizeMode='contain' source={Constants.Images.flash} style={StreamStyles.flash} />
                 </TouchableOpacity>
