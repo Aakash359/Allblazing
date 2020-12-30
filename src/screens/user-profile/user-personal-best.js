@@ -37,7 +37,7 @@ class UserPersonalBest extends Component {
           <View style={ConnectUserTypeStyles.wrapper}>
             {!params?.isEditMode && <StepBar count={5} selected={[0, 1, 2, 3]} />}
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{translate('PersonalBest')}</Text>}
+              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{translate('profile.PersonalBest')}</Text>}
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
