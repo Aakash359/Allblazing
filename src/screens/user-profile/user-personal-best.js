@@ -1,28 +1,78 @@
-import React, { Component } from 'react';
-import { Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
+import React, {Component} from 'react';
+import {Platform, ScrollView, View, TouchableOpacity, Text,Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { withTranslation } from 'react-i18next';
-import { bool, func, shape } from 'prop-types';
-import { AuthStyle, CommonStyles, ConnectUserTypeStyles, DistanceStyles, Repeat5KStyles } from '../../styles';
-import { StepBar } from '../../components';
+import {withTranslation} from 'react-i18next';
+import {bool, func, shape} from 'prop-types';
+import {
+  AuthStyle,
+  CommonStyles,
+  ConnectUserTypeStyles,
+  DistanceStyles,
+  Repeat5KStyles,
+} from '../../styles';
+import {StepBar} from '../../components';
 import Constants from '../../constants';
-import { times } from '../../data';
+import {times} from '../../data';
+import {setUserRecentTime} from '../../helpers/auth';
+import API from '../../constants/baseApi';
+import axios from 'axios';
+import connect from 'react-redux/lib/connect/connect';
+import { setTime } from '../../reducers/baseServices/profile';
 
 class UserPersonalBest extends Component {
   constructor() {
     super();
-    this.state = { time: null };
+    this.state = {time: null};
   }
+  TimeStore = () => {
+    if (this.state.time === null) {
+      Alert.alert('', 'Please Select  Recent time', '');
+    } else {
+      setUserRecentTime(this.state.time);
+      this.props.navigation.navigate('Distance');
+    }
+  };
+  onTypeChange = (payload) => this.setState({time: payload});
 
-  onTypeChange = (payload) => this.setState({ time: payload })
-
-  render() {
-    const { time } = this.state;
+  onSave = () => {
+    const {addTime} = this.props;
     const {
-      navigation: {
-        goBack, navigate,
-      },
-      route: { params },
+      navigation: {navigate},
+    } = this.props;
+    const {time} = this.state;
+
+    const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+
+    if (this.state.time === '') {
+      Alert.alert('', 'Please Select your Age', '');
+    } else {
+      axios
+        .post(
+          API.UPDATE_PROFILE,
+          {
+            time: time,
+          },
+          config,
+        )
+        .then((response) => {
+          if (response?.data?.code === 200) {
+            Alert.alert('', response?.data?.message ?? '');
+            addTime(time);
+            console.log('age:==>',time);
+            navigate('EditProfile');
+          }
+        });
+    }
+  };
+  render() {
+    const {time} = this.state;
+    const {
+      navigation: {goBack, navigate},
+      route: {params},
       t: translate,
     } = this.props;
 
@@ -32,20 +82,36 @@ class UserPersonalBest extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={ConnectUserTypeStyles.wrapper}>
-            {!params?.isEditMode && <StepBar count={5} selected={[0, 1, 2, 3]} />}
+            {!params?.isEditMode && (
+              <StepBar count={5} selected={[0, 1, 2, 3]} />
+            )}
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              {!params?.isEditMode && <Text style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>{translate('profile.PersonalBest')}</Text>}
+              {!params?.isEditMode && (
+                <Text
+                  style={[ConnectUserTypeStyles.input, Repeat5KStyles.header]}>
+                  {translate('profile.PersonalBest')}
+                </Text>
+              )}
               {times.map((t) => (
                 <TouchableOpacity
                   key={t.value}
-                  style={[ConnectUserTypeStyles.button, DistanceStyles.button, { backgroundColor: t.color }]}
+                  style={[
+                    ConnectUserTypeStyles.button,
+                    DistanceStyles.button,
+                    {backgroundColor: t.color},
+                  ]}
                   activeOpacity={0.7}
-                  onPress={() => this.onTypeChange(t.value)}
-                >
-                  <Text style={[Repeat5KStyles.buttonText, DistanceStyles.buttonText, time === t.value && Repeat5KStyles.active]}>{translate(t.label)}</Text>
+                  onPress={() => this.onTypeChange(t.value)}>
+                  <Text
+                    style={[
+                      Repeat5KStyles.buttonText,
+                      DistanceStyles.buttonText,
+                      time === t.value && Repeat5KStyles.active,
+                    ]}>
+                    {translate(t.label)}
+                  </Text>
                   {time === t.value && (
                     <Ionicons
                       name="checkmark-sharp"
@@ -60,17 +126,47 @@ class UserPersonalBest extends Component {
           </View>
         </ScrollView>
         {params?.isEditMode ? (
-          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]} onPress={() => goBack()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]}
+            onPress={() => this.onSave()}>
+            <Text
+              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {translate('Save')}
+            </Text>
           </TouchableOpacity>
         ) : (
           <View style={Repeat5KStyles.buttonsWrapper}>
-            <View style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
-              <TouchableOpacity style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]} activeOpacity={0.7} onPress={() => goBack()}>
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
+            <View
+              style={[ConnectUserTypeStyles.buttons, Repeat5KStyles.buttons]}>
+              <TouchableOpacity
+                style={[
+                  AuthStyle.introButton,
+                  {backgroundColor: Constants.Colors.TRANSPARENT},
+                ]}
+                activeOpacity={0.7}
+                onPress={() => goBack()}>
+                <Text
+                  style={[
+                    AuthStyle.buttonText,
+                    {color: Constants.Colors.WHITE},
+                  ]}>
+                  {translate('Back')}
+                </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={AuthStyle.introButton} activeOpacity={0.7} onPress={() => navigate('Distance')}>
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
+              <TouchableOpacity
+                style={AuthStyle.introButton}
+                activeOpacity={0.7}
+                onPress={() => this.TimeStore()}
+                // onPress={() => navigate('Distance')}
+              >
+                <Text
+                  style={[
+                    AuthStyle.buttonText,
+                    {color: Constants.Colors.WHITE},
+                  ]}>
+                  {translate('Next')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -81,12 +177,28 @@ class UserPersonalBest extends Component {
 }
 
 UserPersonalBest.propTypes = {
+  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
   }).isRequired,
-  route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  route: shape({params: shape({isEditMode: bool})}).isRequired,
   t: func.isRequired,
 };
 
-export default withTranslation()(UserPersonalBest);
+// export default withTranslation()(UserPersonalBest);
+
+
+const mapStateToProps = ({auth: {email}}) => ({
+  email,
+});
+
+const mapDispatchToProps = {
+  addTime: (params) => setTime(params),
+  // loginSuccess: actions.loginSuccess,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(UserPersonalBest));

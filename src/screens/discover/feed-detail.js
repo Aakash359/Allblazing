@@ -1,17 +1,22 @@
 
 import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute} from '@react-navigation/native';
 import { FollowersStyles, FeedDetailStyles } from '../../styles';
 import Constants from '../../constants';
+import moment from 'moment';
 
-function FeedDetailScreen() {
+
+function FeedDetailScreen({route}) {
   const navigation = useNavigation();
   const [like, setLike] = useState(false);
+  const { authername, likecount, post,Time,likeStatus} = route.params;
+
+
 
   const list = [
     {
-      image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
+      image: Constants.Images.user1
     },
   ];
   const renderItem = ({ item }) => (
@@ -32,8 +37,8 @@ function FeedDetailScreen() {
             style={FeedDetailStyles.userImage}
           />
           <View style={FeedDetailStyles.nameView}>
-            <Text style={FollowersStyles.nameText}>{item.name}</Text>
-            <Text style={FollowersStyles.locationText}>{item.time}</Text>
+            <Text style={FollowersStyles.nameText}>{authername}</Text>
+            <Text style={FollowersStyles.locationText}>{moment(Time).format('LT')}</Text>
           </View>
         </View>
         <View style={FeedDetailStyles.heartView}>
@@ -42,15 +47,15 @@ function FeedDetailScreen() {
             onPress={() => { setLike(!like); }}
           >
             <Image
-              source={like ? Constants.Images.selectedHeart : Constants.Images.heart}
+              source={likeStatus > 0 ? Constants.Images.selectedHeart : Constants.Images.heart}
               style={FeedDetailStyles.heartIcon}
             />
           </TouchableOpacity>
-          <Text style={FollowersStyles.nameText}>{item.likeNumber}</Text>
+          <Text style={FollowersStyles.nameText}>{likecount}</Text>
         </View>
       </View>
       <Image
-        source={Constants.Images.feedDetailImage}
+        source={{ uri: post }}
         style={FeedDetailStyles.feedImg}
       />
     </View>

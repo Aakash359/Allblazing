@@ -1,47 +1,55 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
-import { func, shape, string } from 'prop-types';
-import { withTranslation } from 'react-i18next';
-import { CommonActions } from '@react-navigation/native';
-import { AuthStyle, HomeStyles, InviteFriendsStyles } from '../../../styles';
-import { InviteFriend, SuccessPopup } from '../../../components';
+import {View, FlatList, TouchableOpacity, Text} from 'react-native';
+import {func, shape, string} from 'prop-types';
+import {withTranslation} from 'react-i18next';
+import {CommonActions} from '@react-navigation/native';
+import {AuthStyle, HomeStyles, InviteFriendsStyles} from '../../../styles';
+import {InviteFriend, SuccessPopup} from '../../../components';
 import Constants from '../../../constants';
 
 class StravaUsers extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false };
+    this.state = {visible: false};
   }
 
-  renderItem = ({ item }) => {
-    const { route: { params } } = this.props;
+  renderItem = ({item}) => {
+    const {
+      route: {params},
+    } = this.props;
 
-    return <InviteFriend hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} image={item} />;
-  }
+    return (
+      <InviteFriend
+        hasCheckBox={params?.hasCheckBox}
+        hasTick={params?.hasTick}
+        image={item}
+      />
+    );
+  };
 
   onSend = () => {
     const {
       navigation,
-      navigation: {
-        goBack, navigate,
-      }, route: { params },
+      navigation: {goBack, navigate},
+      route: {params},
     } = this.props;
 
-    this.setState({ visible: false }, () => {
+    this.setState({visible: false}, () => {
       if (params?.routeName) {
         const payload = params.routePayload || {};
 
         if (params.routeName === 'Dashboard') {
           const options = {
             index: 0,
-            routes: [{ name: 'Dashboard' }],
+            routes: [{name: 'Dashboard'}],
           };
           const action = CommonActions.reset(options);
 
           navigation.dispatch(action);
         } else {
           navigate(params.routeName, {
-            ...payload, isInviteSent: true,
+            ...payload,
+            isInviteSent: true,
           });
         }
       } else {
@@ -51,18 +59,27 @@ class StravaUsers extends React.Component {
   };
 
   render() {
-    const { visible } = this.state;
-    const { t } = this.props;
+    const {visible} = this.state;
+    const {t} = this.props;
 
     return (
       <View style={HomeStyles.container}>
         <FlatList
-          data={[Constants.Images.inviteUser2, Constants.Images.inviteUser1, Constants.Images.inviteUser3]}
+          data={[
+            Constants.Images.inviteUser2,
+            Constants.Images.inviteUser1,
+            Constants.Images.inviteUser3,
+          ]}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
         />
-        <TouchableOpacity activeOpacity={0.7} style={InviteFriendsStyles.button} onPress={() => this.setState({ visible: true })}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{t('Send Invite')}</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={InviteFriendsStyles.button}
+          onPress={() => this.setState({visible: true})}>
+          <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+            {t('Send Invite')}
+          </Text>
         </TouchableOpacity>
         <SuccessPopup
           hasResendBtn={false}
@@ -80,7 +97,7 @@ StravaUsers.propTypes = {
     navigate: func.isRequired,
     setParams: func.isRequired,
   }).isRequired,
-  route: shape({ params: shape({ routeName: string }) }).isRequired,
+  route: shape({params: shape({routeName: string})}).isRequired,
   t: func.isRequired,
 };
 

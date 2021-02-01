@@ -1,23 +1,51 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bool } from 'prop-types';
 import AuthStack from './auth-stack';
 import AppStack from './app-stack';
+import { setLoginDetails } from '../reducers/baseServices/auth';
+import { withTranslation } from 'react-i18next';
+import {getAuthToken} from '../helpers/auth';
 
-const RootStack = createStackNavigator();
 
-const AppNavigator = ({ isAuthorized }) => (
-  <RootStack.Navigator initialRouteName='AuthStack' headerMode="none">
-    {isAuthorized
-      ? <RootStack.Screen name='AppStack' component={AppStack} />
-      : <RootStack.Screen name='AuthStack' component={AuthStack} />}
-  </RootStack.Navigator>
-);
 
-AppNavigator.propTypes = { isAuthorized: bool };
-AppNavigator.defaultProps = { isAuthorized: true };
+class AppNavigator extends Component {
 
-const mapStateToProps = (state) => ({ isAuthorized: state.user.isAuthorized });
+  
+  constructor(props) {
+    super(props);
 
-export default connect(mapStateToProps)(AppNavigator);
+    this.state = {
+      accessToken: ''
+    };
+
+    this._loadAccessToken();
+  }
+
+  _loadAccessToken = async () => {
+    const token = await getAuthToken();
+    this.setState({ accessToken: token });
+  }
+
+ 
+  render() {
+    // const {token} = this.props;
+    console.log("==========>>>.Token",this.state.accessToken);
+    return this.state.accessToken ? <AppStack/> : <AuthStack/> ;
+  }
+  
+};
+
+const mapStateToProps = ({auth: {token}}) => ({
+  token,
+});
+
+const mapDispatchToProps = {
+  addLoginDetail: (params) => setLoginDetails(params),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(AppNavigator));

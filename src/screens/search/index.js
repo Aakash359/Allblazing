@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, ScrollView, TextInput, SafeAreaView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { SingleEvent, InviteFriend } from '../../components';
-import { SearchScreen } from '../../styles';
+import React, {useState} from 'react';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+  TextInput,
+  SafeAreaView,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {SingleEvent, InviteFriend} from '../../components';
+import {SearchScreen} from '../../styles';
 // import ProfileUnlock from './myProfile';
 
 import Constants from '../../constants';
@@ -15,24 +24,34 @@ function SearchSeceen() {
 
   const renderItem = () => <SingleEvent />;
 
-  const renderHeader = ({
-    route, title,
-  }) => (
+  const renderHeader = ({route, title}) => (
     <View style={SearchScreen.content}>
       <Text style={SearchScreen.heading}>{title}</Text>
-      <TouchableOpacity activeOpacity={0.7} hitSlop={Constants.BaseStyle.HALF_HIT_SLOP} onPress={() => navigation.navigate(route)}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        hitSlop={Constants.BaseStyle.HALF_HIT_SLOP}
+        onPress={() => navigation.navigate(route)}>
         <Text style={SearchScreen.rightHeading}>{'View All'}</Text>
       </TouchableOpacity>
     </View>
   );
 
-  const filterData = ({ item }) => (
+  const filterData = ({item}) => (
     // <View style={}>
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[SearchScreen.optionalSectionView, { backgroundColor: item === filter ? Constants.Colors.GREY_CIRCLE : Constants.Colors.SECONDARY_COLOR }]}
-      onPress={() => { setFilter(item); }}
-    >
+      style={[
+        SearchScreen.optionalSectionView,
+        {
+          backgroundColor:
+            item === filter
+              ? Constants.Colors.GREY_CIRCLE
+              : Constants.Colors.SECONDARY_COLOR,
+        },
+      ]}
+      onPress={() => {
+        setFilter(item);
+      }}>
       <Text style={SearchScreen.optionalSection1}>{item}</Text>
     </TouchableOpacity>
     // </View>
@@ -73,15 +92,23 @@ function SearchSeceen() {
                 />
               </View>
               {renderHeader({
-                navigation, route: 'Runners', title: 'Runners',
+                navigation,
+                route: 'Runners',
+                title: 'Runners',
               })}
               <FlatList
-                data={[Constants.Images.inviteUser2, Constants.Images.inviteUser1, Constants.Images.inviteUser3]}
-                renderItem={({ item }) => <InviteFriend image={item} />}
+                data={[
+                  Constants.Images.inviteUser2,
+                  Constants.Images.inviteUser1,
+                  Constants.Images.inviteUser3,
+                ]}
+                renderItem={({item}) => <InviteFriend image={item} />}
                 keyExtractor={(item, index) => index}
               />
               {renderHeader({
-                navigation, route: 'Events', title: 'Events',
+                navigation,
+                route: 'Events',
+                title: 'Events',
               })}
               <FlatList
                 scrollEnabled={false}
@@ -90,7 +117,7 @@ function SearchSeceen() {
                 keyExtractor={(item, index) => index}
               />
             </View>
-          ) : null }
+          ) : null}
         </ScrollView>
       </SafeAreaView>
     </>

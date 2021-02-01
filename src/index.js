@@ -8,11 +8,14 @@ import configureStore from './config/configure-store';
 import Root from './root';
 import Constants from './constants';
 import { Loader } from './components';
+import { applyMiddleware, createStore } from 'redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 
 const {
-  store, persistor,
+   persistor,
 } = configureStore();
-
+const store = createStore(reducers, {}, applyMiddleware(thunk));
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Constants.Colors.PRIMARY,

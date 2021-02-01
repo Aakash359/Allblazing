@@ -1,27 +1,110 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {View, TouchableOpacity, Text, Platform, Alert} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import { func, shape } from 'prop-types';
+import {func, shape} from 'prop-types';
 import * as actions from '../../actions/user-action-types';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles, OTPStyles } from '../../styles';
+import {AuthStyle, CommonStyles, OTPStyles} from '../../styles';
+import axios from 'axios';
+import API from '../../constants/baseApi';
+import { setOtpToken, getUserId } from '../../helpers/auth';
 
 class OTP extends Component {
   constructor() {
     super();
-    this.state = { otp: '' };
+    this.state = {otp: ''};
   }
 
   onVerify = () => {
-    const { navigation: { navigate } } = this.props;
+    const {
+      navigation: {navigate},
+    } = this.props;
 
     navigate('Username');
-  }
+  };
+
+  // verify OTP
+  _handleVerify = async() => {
+    const {
+      navigation: {navigate},
+    } = this.props;
+
+    const {otp} = this.state;
+    if (otp.length < 4) {
+      Alert.alert(
+        '',
+        'Please fill otp!',
+        
+      );
+      return;
+    }
+    const UserId = await getUserId();
+   console.log('UserId===>',UserId);
+
+    axios
+      .post(API.VERIFY_OTP, {
+        user_id: UserId,
+        otp: otp,
+      })
+      .then((response) => {
+        if (response?.data?.code === 401) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+        }
+        if (response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+          setOtpToken(response?.data?.data?.data?.token);
+          console.log('otptoken=======>',response?.data?.data?.data?.token);
+          navigate('Username');
+        }
+      });
+  };
+
+  // Resend OTP
+  _handleResendOTP = () => {
+    axios
+      .post(API.RESEND_OTP, {
+        user_id: 1,
+      })
+      .then((response) => {
+        if (response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+          );
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+           
+          );
+        }
+      });
+  };
 
   render() {
-    const { otp } = this.state;
+    const {otp} = this.state;
+    const {
+      route: {params},
+    } = this.props;
+    const email = this.props.route.params.email;
 
     return (
       <View style={CommonStyles.container}>
@@ -29,33 +112,55 @@ class OTP extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={CommonStyles.headerWrapper}>
             <Text style={AuthStyle.selectText}>Verification Code</Text>
-            <Text style={[AuthStyle.buttonText, OTPStyles.header]}>{'Please enter the code sent to'}</Text>
-            <Text style={[AuthStyle.buttonText, OTPStyles.header]}>{'"xyz@gmail.com"'}</Text>
+            <Text style={[AuthStyle.buttonText, OTPStyles.header]}>
+              {'Please enter the code sent to'}
+            </Text>
+            <Text style={[AuthStyle.buttonText, OTPStyles.header]}>
+              {email}
+            </Text>
           </View>
           <OTPInputView
             style={OTPStyles.inputView}
             pinCount={4}
-            keyboardType='number-pad'
-            onCodeChanged={(code) => { this.setState({ otp: code }); }}
+            keyboardType="number-pad"
+            onCodeChanged={(code) => {
+              this.setState({otp: code});
+            }}
             autoFocusOnLoad={false}
             codeInputFieldStyle={OTPStyles.input}
             code={otp}
             codeInputHighlightStyle={OTPStyles.inputHighlight}
             onCodeFilled={(code) => {
-              this.setState({ otp: code });
+              this.setState({otp: code});
             }}
           />
         </KeyboardAwareScrollView>
         <View style={OTPStyles.buttonsWrapper}>
-          <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]} onPress={this.onVerify}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Verify'}</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+              AuthStyle.loginTouchable,
+              {backgroundColor: Constants.Colors.TEXT_COLOR2},
+            ]}
+            // onPress={this.onVerify}
+            onPress={this._handleVerify}
+          >
+            <Text
+              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {'Verify'}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={OTPStyles.button} onPress={() => {}}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{'Resend Link'}</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={OTPStyles.button}
+            onPress={this._handleResendOTP}>
+            <Text
+              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {'Resend Link'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -70,4 +175,4 @@ OTP.propTypes = {
   }).isRequired,
 };
 
-export default connect(null, { loginSuccess: actions.loginSuccess })(OTP);
+export default connect(null, {loginSuccess: actions.loginSuccess})(OTP);

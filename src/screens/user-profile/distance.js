@@ -1,11 +1,27 @@
-import React, { Component } from 'react';
-import { Image, Platform, ScrollView, View, TouchableOpacity, Text } from 'react-native';
-import { func, shape } from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import React, {Component} from 'react';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert
+} from 'react-native';
+import {func, shape} from 'prop-types';
+import {withTranslation} from 'react-i18next';
 import Constants from '../../constants';
-import { AuthStyle, DistanceStyles, CommonStyles, ConnectUserTypeStyles, Repeat5KStyles } from '../../styles';
-import { StepBar, TimePicker } from '../../components';
-import { distanceList } from '../../data';
+import {
+  AuthStyle,
+  DistanceStyles,
+  CommonStyles,
+  ConnectUserTypeStyles,
+  Repeat5KStyles,
+} from '../../styles';
+import {StepBar, TimePicker} from '../../components';
+import {distanceList} from '../../data';
+import { setUserDistance } from '../../helpers/auth';
+
 
 class Distance extends Component {
   constructor() {
@@ -18,16 +34,27 @@ class Distance extends Component {
       visible: false,
     };
   }
+  DistanceStore = () => {
+    if (this.state.time === null) {
+      Alert.alert('', 'Please Select Distance to Race', '');
+    } else {
+      setUserDistance(this.state.time);
+  this.props.navigation.navigate('Location');
+    }
+    
+  }
+  
 
   onTypeChange = (payload) => {
     this.setState({
-      time: payload, visible: true,
+      time: payload,
+      visible: true,
     });
-  }
+  };
 
   onValueChange = (value, type) => {
-    this.setState({ [type]: value });
-  }
+    this.setState({[type]: value});
+  };
 
   onClose = () => {
     this.setState({
@@ -37,7 +64,7 @@ class Distance extends Component {
       time: null,
       visible: false,
     });
-  }
+  };
 
   onSelect = () => {
     this.setState({
@@ -46,16 +73,12 @@ class Distance extends Component {
       second: 1,
       visible: false,
     });
-  }
+  };
 
   render() {
+    const {hour, minute, second, time, visible} = this.state;
     const {
-      hour, minute, second, time, visible,
-    } = this.state;
-    const {
-      navigation: {
-        goBack, navigate,
-      },
+      navigation: {goBack, navigate},
       t: translate,
     } = this.props;
 
@@ -66,49 +89,72 @@ class Distance extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={ConnectUserTypeStyles.wrapper}>
             <StepBar count={5} selected={[0, 1, 2, 3, 4]} />
             <View style={ConnectUserTypeStyles.inputWrapper}>
-              <Text style={ConnectUserTypeStyles.input}>{translate('distance.title')}</Text>
+              <Text style={ConnectUserTypeStyles.input}>
+                {translate('distance.title')}
+              </Text>
               {distanceList.map((t) => (
                 <TouchableOpacity
                   key={t.value}
                   style={[ConnectUserTypeStyles.button, DistanceStyles.button]}
                   activeOpacity={0.7}
-                  onPress={() => this.onTypeChange(t.value)}
-                >
+                  onPress={() => this.onTypeChange(t.value)}>
                   <Text
                     style={[
                       ConnectUserTypeStyles.buttonText,
                       DistanceStyles.buttonText,
-                      { color: time === t.value ? Constants.Colors.TEXT_COLOR_WHITE : Constants.Colors.TEXT_COLOR2 },
-                    ]}
-                  >
+                      {
+                        color:
+                          time === t.value
+                            ? Constants.Colors.TEXT_COLOR_WHITE
+                            : Constants.Colors.TEXT_COLOR2,
+                      },
+                    ]}>
                     {translate(t.label)}
                   </Text>
-                  {time === t.value && <Image source={Constants.Images.check} resizeMode='contain' style={[AuthStyle.checkImg, DistanceStyles.select]} />}
+                  {time === t.value && (
+                    <Image
+                      source={Constants.Images.check}
+                      resizeMode="contain"
+                      style={[AuthStyle.checkImg, DistanceStyles.select]}
+                    />
+                  )}
                 </TouchableOpacity>
               ))}
             </View>
           </View>
         </ScrollView>
-        <View style={[Repeat5KStyles.buttonsWrapper, DistanceStyles.buttonsWrapper]}>
+        <View
+          style={[
+            Repeat5KStyles.buttonsWrapper,
+            DistanceStyles.buttonsWrapper,
+          ]}>
           <View style={ConnectUserTypeStyles.buttons}>
             <TouchableOpacity
-              style={[AuthStyle.introButton, { backgroundColor: Constants.Colors.TRANSPARENT }]}
+              style={[
+                AuthStyle.introButton,
+                {backgroundColor: Constants.Colors.TRANSPARENT},
+              ]}
               activeOpacity={0.7}
-              onPress={() => goBack()}
-            >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Back')}</Text>
+              onPress={() => goBack()}>
+              <Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {translate('Back')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={AuthStyle.introButton}
               activeOpacity={0.7}
-              onPress={() => navigate('Location')}
-            >
-              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Next')}</Text>
+              onPress={() => this.DistanceStore()}
+              // onPress={() => navigate('Location')}
+              >
+              <Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {translate('Next')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

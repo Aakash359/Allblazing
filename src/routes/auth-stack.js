@@ -8,6 +8,8 @@ import Intro from '../screens/onboarding/introduction';
 import Login from '../screens/onboarding/login';
 import ForgotPassword from '../screens/onboarding/forgot-password';
 import OTP from '../screens/onboarding/otp-verification';
+import ForgotOTP from '../screens/onboarding/forgot-otp-verification';
+import ResetPassword from '../screens/onboarding/ResetPassword';
 import Register from '../screens/onboarding/register';
 import StaticContent from '../screens/settings/static-content';
 import Username from '../screens/user-profile/user-name';
@@ -66,6 +68,38 @@ export default function MainNavigator() {
       <AuthStack.Screen
         name="OTP"
         component={OTP}
+        options={({ navigation }) => ({
+          headerBackTitleVisible: false,
+          headerLeft: null,
+          headerRight: () => (
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
+              <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
+            </TouchableOpacity>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
+          headerTitleAlign: 'center',
+        })}
+      />
+      <AuthStack.Screen
+        name="ForgotOTP"
+        component={ForgotOTP}
+        options={({ navigation }) => ({
+          headerBackTitleVisible: false,
+          headerLeft: null,
+          headerRight: () => (
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
+              <Image source={Constants.Images.close} resizeMode='contain' style={CommonStyles.crossImage} />
+            </TouchableOpacity>
+          ),
+          headerTintColor: Constants.Colors.WHITE,
+          headerTitle: null,
+          headerTitleAlign: 'center',
+        })}
+      />
+      <AuthStack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
         options={({ navigation }) => ({
           headerBackTitleVisible: false,
           headerLeft: null,

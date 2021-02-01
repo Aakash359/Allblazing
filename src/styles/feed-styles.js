@@ -1,12 +1,11 @@
-
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import Constants from '../constants';
 
-const {
-  height, width,
-} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  borderStyle: {borderRadius: 10},
+
   container: {
     backgroundColor: Constants.Colors.PRIMARY,
     flex: 1,
@@ -17,6 +16,12 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     marginVertical: 20,
     width: width * 0.9,
+  },
+  feedImg1: {
+    borderRadius: 30,
+    height: height * 0.2,
+    margin: 5,
+    width: width * 0.48,
   },
   flatList: {
     flexDirection: 'column',
@@ -49,6 +54,13 @@ const styles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
     fontSize: Constants.BaseStyle.scale(12),
+  },
+  overlappingStyle: {
+    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    margin: 10,
   },
   sectionMainView: {
     borderColor: Constants.Colors.WHITE,

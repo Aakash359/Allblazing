@@ -1,16 +1,26 @@
-import React, { Component } from 'react';
-import { View,
+import React, {Component} from 'react';
+import {
+  View,
   findNodeHandle,
   TouchableOpacity,
   Platform,
   Text,
   Image,
+  Alert ,
   ScrollView,
-  TextInput } from 'react-native';
-import { func, shape } from 'prop-types';
-import { withTranslation } from 'react-i18next';
-import { AuthStyle, CommonStyles, RegisterStyle } from '../../styles';
+  TextInput,
+} from 'react-native';
+import {func, shape} from 'prop-types';
+import {withTranslation} from 'react-i18next';
+import {connect,useSelector} from 'react-redux';
+import {AuthStyle, CommonStyles, RegisterStyle} from '../../styles';
 import Constants from '../../constants';
+import axios from 'axios';
+import { authHeader } from '../../helpers/auth';
+import API from '../../constants/baseApi';
+import {setLoginDetails} from '../../reducers/baseServices/auth';
+import { getAuthToken } from '../../helpers/auth';
+
 
 class ChangePassword extends Component {
   passwordRef = React.createRef();
@@ -24,12 +34,15 @@ class ChangePassword extends Component {
       confirmPassword: '',
       newPassword: '',
       password: '',
+      isLoading: false,
       visiblePasswords: [],
     };
   }
 
   onContinue = () => {
-    const { navigation: { goBack } } = this.props;
+    const {
+      navigation: {goBack},
+    } = this.props;
 
     goBack();
   };
@@ -55,7 +68,7 @@ class ChangePassword extends Component {
   };
 
   onPasswordVisibilityChange = (type) => {
-    const { visiblePasswords } = this.state;
+    const {visiblePasswords} = this.state;
     const isExists = visiblePasswords.includes(type);
 
     let visibilities = [...visiblePasswords];
@@ -66,14 +79,90 @@ class ChangePassword extends Component {
       visibilities.push(type);
     }
 
-    this.setState({ visiblePasswords: visibilities });
+    this.setState({visiblePasswords: visibilities});
+  };
+   onSave = async() => {
+    const {
+      navigation:{navigate},
+  } = this.props;
+
+    const {password, newPassword,confirmPassword} = this.state;
+    if (password.length < 1) {
+      Alert.alert(
+        '',
+        'Please fill old password',
+        
+      );
+      return;
+    } else if (newPassword.length < 1) {
+      Alert.alert(
+        '',
+        'Please fill  new password',
+        
+      );
+      return;
+    }else if(confirmPassword.length < 1){
+      Alert.alert(
+          '',
+          'Please fill confirm password!',
+          
+      );
+      return;
+    }
+    this.setState({
+      isLoading: true,
+    });
+    // markwinz06@gmail.com/mark@1234
+    const token = await getAuthToken();
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+  };
+
+  // console.log(config);
+
+    axios
+      .post(API.CHANGE_PASSWORD, {
+        old_password: password,
+        password: newPassword,
+        confirm_password:confirmPassword,
+      },config)
+      .then((response) => {
+        // console.log('token ====', response.data);
+        if (response?.data?.code === 401) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+
+          navigate('Settings');
+
+        }
+        
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
   };
 
   render() {
     const {
-      confirmPassword, password, newPassword, visiblePasswords,
+      confirmPassword,
+      password,
+      newPassword,
+      visiblePasswords,
     } = this.state;
-    const { t: translate } = this.props;
+    const {t: translate} = this.props;
+    const {isLoading} = this.props;
 
     return (
       <View style={CommonStyles.container}>
@@ -83,8 +172,7 @@ class ChangePassword extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={RegisterStyle.wrapper}>
             <View style={RegisterStyle.passwordInput}>
               <TextInput
@@ -95,21 +183,37 @@ class ChangePassword extends Component {
                 placeholder={translate('password.OldPassword')}
                 secureTextEntry={!visiblePasswords.includes('password')}
                 value={password}
-                onChangeText={(text) => this.setState({ password: text })}
+                onChangeText={(text) => this.setState({password: text})}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
                 onFocus={() => {
-                  this.handleScrollView(findNodeHandle(this.passwordRef.current));
+                  this.handleScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onBlur={() => {
-                  this.resetScrollView(findNodeHandle(this.passwordRef.current));
+                  this.resetScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onSubmitEditing={() => this.newPasswordRef.current.focus()}
                 underlineColorAndroid={Constants.Colors.TRANSPARENT}
               />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('password')}>
-                {visiblePasswords.includes('password')
-                  ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
-                  : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => this.onPasswordVisibilityChange('password')}>
+                {visiblePasswords.includes('password') ? (
+                  <Image
+                    source={Constants.Images.eyeon}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                ) : (
+                  <Image
+                    source={Constants.Images.eyeoff}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                )}
               </TouchableOpacity>
             </View>
             <View style={[RegisterStyle.passwordInput, AuthStyle.margin]}>
@@ -122,20 +226,36 @@ class ChangePassword extends Component {
                 placeholder={translate('password.NewPassword')}
                 secureTextEntry={!visiblePasswords.includes('newPassword')}
                 value={newPassword}
-                onChangeText={(text) => this.setState({ newPassword: text })}
+                onChangeText={(text) => this.setState({newPassword: text})}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
                 onFocus={() => {
-                  this.handleScrollView(findNodeHandle(this.passwordRef.current));
+                  this.handleScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onBlur={() => {
-                  this.resetScrollView(findNodeHandle(this.passwordRef.current));
+                  this.resetScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onSubmitEditing={() => this.confirmPasswordRef.current.focus()}
               />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('newPassword')}>
-                {visiblePasswords.includes('newPassword')
-                  ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
-                  : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => this.onPasswordVisibilityChange('newPassword')}>
+                {visiblePasswords.includes('newPassword') ? (
+                  <Image
+                    source={Constants.Images.eyeon}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                ) : (
+                  <Image
+                    source={Constants.Images.eyeoff}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                )}
               </TouchableOpacity>
             </View>
             <View style={[RegisterStyle.passwordInput, AuthStyle.margin]}>
@@ -147,27 +267,57 @@ class ChangePassword extends Component {
                 placeholder={translate('password.ConfirmPassword')}
                 secureTextEntry={!visiblePasswords.includes('confirmPassword')}
                 value={confirmPassword}
-                onChangeText={(text) => this.setState({ confirmPassword: text })}
+                onChangeText={(text) => this.setState({confirmPassword: text})}
                 placeholderTextColor={Constants.Colors.TEXT_COLOR}
                 onFocus={() => {
-                  this.handleScrollView(findNodeHandle(this.passwordRef.current));
+                  this.handleScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onBlur={() => {
-                  this.resetScrollView(findNodeHandle(this.passwordRef.current));
+                  this.resetScrollView(
+                    findNodeHandle(this.passwordRef.current),
+                  );
                 }}
                 onSubmitEditing={this.onContinue}
                 underlineColorAndroid={Constants.Colors.TRANSPARENT}
               />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => this.onPasswordVisibilityChange('confirmPassword')}>
-                {visiblePasswords.includes('confirmPassword')
-                  ? (<Image source={Constants.Images.eyeon} resizeMode='contain' style={AuthStyle.checkImg} />)
-                  : (<Image source={Constants.Images.eyeoff} resizeMode='contain' style={AuthStyle.checkImg} />)}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() =>
+                  this.onPasswordVisibilityChange('confirmPassword')
+                }>
+                {visiblePasswords.includes('confirmPassword') ? (
+                  <Image
+                    source={Constants.Images.eyeon}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                ) : (
+                  <Image
+                    source={Constants.Images.eyeoff}
+                    resizeMode="contain"
+                    style={AuthStyle.checkImg}
+                  />
+                )}
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
-        <TouchableOpacity style={RegisterStyle.button} activeOpacity={0.7} onPress={this.onContinue}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
+        <TouchableOpacity
+          style={RegisterStyle.button}
+          activeOpacity={0.7}
+          // onPress={this.onContinue}
+          onPress={this.onSave}
+          >
+            {isLoading ? (
+              <ActivityIndicator  color="white" size={25}/>
+            ):(
+              <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {translate('Save')}
+            </Text>
+            )}
+          
         </TouchableOpacity>
       </View>
     );

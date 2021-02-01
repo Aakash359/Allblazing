@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: height * 0.02,
     width: width * 0.8,
+    flexDirection:'row',
+    justifyContent:'center'
   },
   userImage: {
     borderRadius: 10,

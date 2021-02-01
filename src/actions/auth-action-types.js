@@ -1,0 +1,20 @@
+export const SET_LOGIN_DETAILS = 'SET_LOGIN_DETAILS';
+
+export const SET_SIGNUP_DETAILS = 'SET_SIGNUP_DETAILS';
+export const REMOVE_AUTH_TOKEN = ' ';
+
+export const SET_PROFILE_DETAILS = 'SET_PROFILE_DETAILS';
+
+export const SET_FULLNAME = 'SET_FULLNAME';
+export const SET_AGE = 'SET_AGE';
+export const SET_GENDER = 'SET_GENDER';
+export const SET_MOTTO_DESCRIPTION = 'SET_MOTTO_DESCRIPTION';
+export const SET_TIME = 'SET_TIME';
+
+
+export const SET_CREATE_GROUP_DETAIL='SET_CREATE_GROUP_DETAIL';
+
+
+export const SET_FOLLOWLIST = 'SET_FOLLOWLIST';
+
+export const SET_FOLLOW_USERID = 'SET_FOLLOW_USERID';

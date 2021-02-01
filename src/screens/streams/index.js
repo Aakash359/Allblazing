@@ -1,13 +1,20 @@
 import React from 'react';
-import { ImageBackground, View, Text, Image, TouchableOpacity, Keyboard } from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import Share from 'react-native-share';
-import { CommonActions } from '@react-navigation/native';
-import { bool, func, shape } from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import {CommonActions} from '@react-navigation/native';
+import {bool, func, shape} from 'prop-types';
+import {withTranslation} from 'react-i18next';
 import Constants from '../../constants';
-import { InputField } from '../../components';
-import { AuthStyle, StreamStyles } from '../../styles';
-import { wearableOptions } from '../../data';
+import {InputField} from '../../components';
+import {AuthStyle, StreamStyles} from '../../styles';
+import {wearableOptions} from '../../data';
 
 class CreateStream extends React.Component {
   descriptionRef = React.createRef();
@@ -36,17 +43,21 @@ class CreateStream extends React.Component {
   }
 
   onKeyboardOpen = () => {
-    this.setState({ height: (Constants.BaseStyle.DEVICE_HEIGHT * 58) / 100 });
+    this.setState({height: (Constants.BaseStyle.DEVICE_HEIGHT * 58) / 100});
   };
 
   onKeyboardHide = () => {
-    const { toggle } = this.state;
+    const {toggle} = this.state;
 
-    this.setState({ height: toggle ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100 : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100 });
+    this.setState({
+      height: toggle
+        ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100
+        : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100,
+    });
   };
 
   onSelect = (payload) => {
-    const { selected } = this.state;
+    const {selected} = this.state;
 
     let values = [...selected];
 
@@ -58,11 +69,11 @@ class CreateStream extends React.Component {
       values.push(payload);
     }
 
-    this.setState({ selected: values });
+    this.setState({selected: values});
   };
 
   onOutsideClick = () => {
-    const { isFocused } = this.state;
+    const {isFocused} = this.state;
 
     if (isFocused) {
       Keyboard.dismiss();
@@ -70,20 +81,24 @@ class CreateStream extends React.Component {
   };
 
   onToggle = () => {
-    const { toggle } = this.state;
+    const {toggle} = this.state;
     const value = !toggle;
-    const height = value ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100 : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100;
+    const height = value
+      ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100
+      : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100;
 
     this.setState({
-      height, toggle: value,
+      height,
+      toggle: value,
     });
 
     Keyboard.dismiss();
-  }
+  };
 
   onLiveStream = () => {
     const {
-      navigation: { setParams }, route: { params },
+      navigation: {setParams},
+      route: {params},
     } = this.props;
     const payload = {};
 
@@ -101,7 +116,8 @@ class CreateStream extends React.Component {
   onShare = async () => {
     try {
       const options = {
-        message: 'This is for development purpose only. We will update this once app is live',
+        message:
+          'This is for development purpose only. We will update this once app is live',
         title: 'AllBlazing',
         url: 'https://google.com',
       };
@@ -109,15 +125,15 @@ class CreateStream extends React.Component {
       await Share.open(options);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('sharing error ', e);
+      // console.log('sharing error ', e);
     }
   };
 
   onDelete = () => {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     const options = {
       index: 0,
-      routes: [{ name: 'Dashboard' }],
+      routes: [{name: 'Dashboard'}],
     };
     const action = CommonActions.reset(options);
 
@@ -125,25 +141,36 @@ class CreateStream extends React.Component {
   };
 
   render() {
+    const {height, selected, title, toggle} = this.state;
     const {
-      height, selected, title, toggle,
-    } = this.state;
-    const {
-      route: { params },
+      route: {params},
       t: translate,
     } = this.props;
 
     return (
-      <TouchableOpacity activeOpacity={1} style={StreamStyles.container} onPress={this.onOutsideClick}>
-        <ImageBackground style={StreamStyles.background} source={Constants.Images.liveStream}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={StreamStyles.container}
+        onPress={this.onOutsideClick}>
+        <ImageBackground
+          style={StreamStyles.background}
+          source={Constants.Images.liveStream}>
           <View style={StreamStyles.row}>
             {params?.isStreamStarted && (
-              <Image resizeMode='contain' source={Constants.Images.liveLogo} style={StreamStyles.logo} />
+              <Image
+                resizeMode="contain"
+                source={Constants.Images.liveLogo}
+                style={StreamStyles.logo}
+              />
             )}
             {params?.isFinished ? (
               <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
                 <TouchableOpacity activeOpacity={0.7} onPress={this.onShare}>
-                  <Image resizeMode='contain' source={Constants.Images.share} style={StreamStyles.camera} />
+                  <Image
+                    resizeMode="contain"
+                    source={Constants.Images.share}
+                    style={StreamStyles.camera}
+                  />
                 </TouchableOpacity>
               </View>
             ) : (
@@ -154,59 +181,103 @@ class CreateStream extends React.Component {
                   </View>
                 )}
                 <TouchableOpacity activeOpacity={0.7}>
-                  <Image resizeMode='contain' source={Constants.Images.flash} style={StreamStyles.flash} />
+                  <Image
+                    resizeMode="contain"
+                    source={Constants.Images.flash}
+                    style={StreamStyles.flash}
+                  />
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7}>
-                  <Image resizeMode='contain' source={Constants.Images.rotate} style={StreamStyles.camera} />
+                  <Image
+                    resizeMode="contain"
+                    source={Constants.Images.rotate}
+                    style={StreamStyles.camera}
+                  />
                 </TouchableOpacity>
               </View>
             )}
           </View>
-          {(params?.isStreamStarted || params?.isFinished) ? (
+          {params?.isStreamStarted || params?.isFinished ? (
             <View style={StreamStyles.button}>
               {params?.isFinished ? (
                 <View style={StreamStyles.row}>
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.deleteBtn]}
                     activeOpacity={0.7}
-                    onPress={this.onDelete}
-                  >
-                    <Text style={[AuthStyle.buttonText, StreamStyles.deleteBtnText]}>{translate('Delete')}</Text>
+                    onPress={this.onDelete}>
+                    <Text
+                      style={[
+                        AuthStyle.buttonText,
+                        StreamStyles.deleteBtnText,
+                      ]}>
+                      {translate('Delete')}
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.homeBtn]}
                     activeOpacity={0.7}
-                    onPress={this.onDelete}
-                  >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Home')}</Text>
+                    onPress={this.onDelete}>
+                    <Text
+                      style={[
+                        AuthStyle.buttonText,
+                        {color: Constants.Colors.WHITE},
+                      ]}>
+                      {translate('Home')}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               ) : (
                 <View>
-                  {toggle && <Image resizeMode='contain' source={Constants.Images.health} style={StreamStyles.healthData} />}
+                  {toggle && (
+                    <Image
+                      resizeMode="contain"
+                      source={Constants.Images.health}
+                      style={StreamStyles.healthData}
+                    />
+                  )}
                   <TouchableOpacity
                     style={[AuthStyle.loginTouchable, StreamStyles.finishBtn]}
                     activeOpacity={0.7}
-                    onPress={this.onLiveStream}
-                  >
-                    <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Finish')}</Text>
+                    onPress={this.onLiveStream}>
+                    <Text
+                      style={[
+                        AuthStyle.buttonText,
+                        {color: Constants.Colors.WHITE},
+                      ]}>
+                      {translate('Finish')}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               )}
             </View>
           ) : (
-            <View activeOpacity={1} style={[StreamStyles.wrapper, { height }]}>
+            <View activeOpacity={1} style={[StreamStyles.wrapper, {height}]}>
               <InputField
                 value={title}
                 placeholder={translate('streams.Title')}
-                onChangeText={(text) => this.setState({ title: text })}
-                onFocus={() => this.setState({ isFocused: true })}
-                onBlur={() => this.setState({ isFocused: false })}
+                onChangeText={(text) => this.setState({title: text})}
+                onFocus={() => this.setState({isFocused: true})}
+                onBlur={() => this.setState({isFocused: false})}
               />
-              <View style={[StreamStyles.row, StreamStyles.switchContainer, toggle && StreamStyles.switchContainerOn]}>
-                <Text style={StreamStyles.subHeader}>{translate('streams.Wearable')}</Text>
+              <View
+                style={[
+                  StreamStyles.row,
+                  StreamStyles.switchContainer,
+                  toggle && StreamStyles.switchContainerOn,
+                ]}>
+                <Text style={StreamStyles.subHeader}>
+                  {translate('streams.Wearable')}
+                </Text>
                 <TouchableOpacity activeOpacity={0.7} onPress={this.onToggle}>
-                  <Image resizeMode='contain' source={toggle ? Constants.Images.toggleOn : Constants.Images.toggleOff} style={StreamStyles.switch} />
+                  <Image
+                    resizeMode="contain"
+                    source={
+                      toggle
+                        ? Constants.Images.toggleOn
+                        : Constants.Images.toggleOff
+                    }
+                    style={StreamStyles.switch}
+                  />
                 </TouchableOpacity>
               </View>
               {toggle && (
@@ -216,19 +287,37 @@ class CreateStream extends React.Component {
                       onPress={() => this.onSelect(wearable.value)}
                       key={wearable.value}
                       activeOpacity={0.7}
-                      style={[StreamStyles.race, selected.includes(wearable.value) && StreamStyles.raceActive]}
-                    >
-                      <Text style={[StreamStyles.raceText, selected.includes(wearable.value) && StreamStyles.raceActiveText]}>{translate(wearable.label)}</Text>
+                      style={[
+                        StreamStyles.race,
+                        selected.includes(wearable.value) &&
+                          StreamStyles.raceActive,
+                      ]}>
+                      <Text
+                        style={[
+                          StreamStyles.raceText,
+                          selected.includes(wearable.value) &&
+                            StreamStyles.raceActiveText,
+                        ]}>
+                        {translate(wearable.label)}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
               )}
               <TouchableOpacity
-                style={[AuthStyle.loginTouchable, { backgroundColor: Constants.Colors.TEXT_COLOR2 }]}
+                style={[
+                  AuthStyle.loginTouchable,
+                  {backgroundColor: Constants.Colors.TEXT_COLOR2},
+                ]}
                 activeOpacity={0.7}
-                onPress={this.onLiveStream}
-              >
-                <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('streams.LiveStream')}</Text>
+                onPress={this.onLiveStream}>
+                <Text
+                  style={[
+                    AuthStyle.buttonText,
+                    {color: Constants.Colors.WHITE},
+                  ]}>
+                  {translate('streams.LiveStream')}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -243,7 +332,7 @@ CreateStream.propTypes = {
     navigate: func.isRequired,
     setParams: func.isRequired,
   }).isRequired,
-  route: shape({ params: shape({ isEditMode: bool }) }).isRequired,
+  route: shape({params: shape({isEditMode: bool})}).isRequired,
   t: func.isRequired,
 };
 

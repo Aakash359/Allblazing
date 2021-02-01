@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: height * 0.3,
     justifyContent: 'center',
-    margin: 20,
-    paddingHorizontal: 16,
+    margin: 10,
+    marginTop:20,
     width: width * 0.9,
   },
+
   innerContainer: { marginHorizontal: 6 },
   nextText: {
     ...Constants.Fonts.Regular,
@@ -75,8 +76,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     flexDirection: 'row',
     margin: 10,
-    marginTop: 40,
+    marginTop: 10,
     padding: 15,
+  },
+  textAreaWrapper: {
+    borderBottomLeftRadius: Constants.BaseStyle.scale(6),
+    borderBottomRightRadius: Constants.BaseStyle.scale(6),
+    borderRadius: null,
+    color:'white',
+    marginTop: 0,
   },
 
 });

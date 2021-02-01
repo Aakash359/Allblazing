@@ -5,6 +5,12 @@ import { func, shape } from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import Constants from '../../constants';
 import { AuthStyle, CommonStyles, MottoStyles, RegisterStyle, UsernameStyle } from '../../styles';
+import connect from 'react-redux/lib/connect/connect';
+import { setMottoDescription } from '../../reducers/baseServices/profile';
+import API from '../../constants/baseApi';
+import axios from 'axios';
+import { Alert } from 'react-native';
+
 
 class UserMotto extends Component {
   constructor() {
@@ -15,7 +21,40 @@ class UserMotto extends Component {
   onChangeText = (motto) => {
     this.setState({ motto });
   }
+  onSave = () => {
+    const {addMottoDescription} = this.props;
+    const {
+      navigation: {navigate},
+    } = this.props;
+    const {motto} = this.state;
 
+    const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+
+    if (this.state.motto === '') {
+      Alert.alert('', 'Please enter Description', '');
+    } else {
+      axios
+        .post(
+          API.UPDATE_PROFILE,
+          {
+            motto_description: motto,
+          },
+          config,
+        )
+        .then((response) => {
+          if (response?.data?.code === 200) {
+            Alert.alert('', response?.data?.message ?? '');
+            addMottoDescription(motto);
+            console.log('age:==>',motto);
+            navigate('EditProfile');
+          }
+        });
+    }
+  };
   render() {
     const { motto } = this.state;
     const {
@@ -49,7 +88,7 @@ class UserMotto extends Component {
             </View>
           </View>
         </ScrollView>
-        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => goBack()}>
+        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => this.onSave()}>
           <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
         </TouchableOpacity>
       </View>
@@ -57,7 +96,18 @@ class UserMotto extends Component {
   }
 }
 
+// UserMotto.propTypes = {
+//   navigation: shape({
+//     dispatch: func.isRequired,
+//     goBack: func.isRequired,
+//   }).isRequired,
+//   t: func.isRequired,
+// };
+
+// export default withTranslation()(UserMotto);
+
 UserMotto.propTypes = {
+  // loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
@@ -65,4 +115,16 @@ UserMotto.propTypes = {
   t: func.isRequired,
 };
 
-export default withTranslation()(UserMotto);
+const mapStateToProps = ({auth: {email}}) => ({
+  email,
+});
+
+const mapDispatchToProps = {
+  addMottoDescription: (params) => setMottoDescription(params),
+  // loginSuccess: actions.loginSuccess,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(UserMotto));

@@ -86,7 +86,7 @@ function MyProfile() {
               <Text style={MyProfileStyles.section2}>{'127'}</Text>
               <Text style={MyProfileStyles.section1}>{'Following'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} style={MyProfileStyles.headerView}>
+            <TouchableOpacity activeOpacity={0.7} style={MyProfileStyles.headerView} onPress={() => { navigation.navigate('PostLikeListing'); }}>
               <Text style={MyProfileStyles.section2}>{'3K'}</Text>
               <Text style={MyProfileStyles.section1}>{'Posts'}</Text>
             </TouchableOpacity>

@@ -90,6 +90,11 @@ export const AuthStyle = StyleSheet.create({
     marginLeft: Constants.BaseStyle.scale(5),
     marginVertical: Constants.BaseStyle.scale(0),
   },
+  Reset:{
+    ...Constants.Fonts.ExtraLargeBold,
+    color: Constants.Colors.TEXT_COLOR_WHITE,
+    fontSize: 28,
+  },
   welcomeView: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -128,6 +133,20 @@ export const RegisterStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(5),
     width: '85%',
   },
+  email:{
+    alignSelf: 'center',
+    color: Constants.Colors.TEXT_COLOR,
+    ...Constants.Fonts.Regular,
+    height: Constants.BaseStyle.scale(40),
+    marginLeft: Constants.BaseStyle.scale(10),
+    marginTop: Constants.BaseStyle.scale(5),
+    width: '86%',
+  },
+  Reset:{
+    alignItems:'center',
+    ...Constants.Fonts.Regular,
+    color: Constants.Colors.WHITE,
+  },
   passwordInput: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -135,8 +154,18 @@ export const RegisterStyle = StyleSheet.create({
     borderRadius: Constants.BaseStyle.scale(8),
     flexDirection: 'row',
     height: Constants.BaseStyle.scale(45),
-    marginTop: Constants.BaseStyle.scale(4),
+    marginTop: Constants.BaseStyle.scale(20),
     width: '90%',
+  },
+  emailInput: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
+    borderRadius: Constants.BaseStyle.scale(8),
+    flexDirection: 'row',
+    height: Constants.BaseStyle.scale(45),
+    marginTop: Constants.BaseStyle.scale(10),
+    width: '100%',
   },
   textLinkView: {
     alignItems: 'flex-start',
@@ -155,7 +184,7 @@ export const RegisterStyle = StyleSheet.create({
     color: Constants.Colors.PRIVCYTEXT,
   },
   wrapper: {
-    flex: 0.9, marginTop: Constants.BaseStyle.scale(10),
+    flex: 0.9, marginTop: Constants.BaseStyle.scale(10),alignItems:'center'
   },
 });
 

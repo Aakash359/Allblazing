@@ -2,7 +2,7 @@ require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, '10.0'
-
+project 'RunFast.xcodeproj'
 target 'RunFast' do
   config = use_native_modules!
 
@@ -16,6 +16,8 @@ target 'RunFast' do
   pod 'Google-Maps-iOS-Utils'
   pod 'Flipper-Folly', '~> 2.2.0'
 
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
   target 'RunFastTests' do
     inherit! :complete
