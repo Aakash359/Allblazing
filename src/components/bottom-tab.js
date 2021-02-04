@@ -1,16 +1,20 @@
 import React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
-import { arrayOf, func, shape, string } from 'prop-types';
-import { BottomTabsStyles } from '../styles';
+import {Image, TouchableOpacity, View} from 'react-native';
+import {arrayOf, func, shape, string} from 'prop-types';
+import {BottomTabsStyles} from '../styles';
 import Constants from '../constants';
 
 const getTabImage = (name, active) => {
   if (name === 'Home') {
-    return active ? Constants.Images.tabBarHomeActive : Constants.Images.tabBarHome;
+    return active
+      ? Constants.Images.tabBarHomeActive
+      : Constants.Images.tabBarHome;
   }
 
   if (name === 'Discover') {
-    return active ? Constants.Images.tabBarFeedActive : Constants.Images.tabBarFeed;
+    return active
+      ? Constants.Images.tabBarFeedActive
+      : Constants.Images.tabBarFeed;
   }
 
   if (name === 'Create') {
@@ -18,22 +22,24 @@ const getTabImage = (name, active) => {
   }
 
   if (name === 'Chat') {
-    return active ? Constants.Images.tabBarChatActive : Constants.Images.tabBarChat;
+    return active
+      ? Constants.Images.tabBarChatActive
+      : Constants.Images.tabBarChat;
   }
 
   if (name === 'Me') {
-    return active ? Constants.Images.tabBarProfileActive : Constants.Images.tabBarProfile;
+    return active
+      ? Constants.Images.tabBarProfileActive
+      : Constants.Images.tabBarProfile;
   }
 
   return Constants.Images.tabBarHome;
 };
 
-export const BottomTab = ({
-  state, descriptors, navigation,
-}) => (
+export const BottomTab = ({state, descriptors, navigation}) => (
   <View style={BottomTabsStyles.tabs}>
     {state.routes.map((route, index) => {
-      const { options } = descriptors[route.key];
+      const {options} = descriptors[route.key];
 
       let label = '';
 
@@ -77,10 +83,9 @@ export const BottomTab = ({
             onPress={onPress}
             onLongPress={onLongPress}
             accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityState={isFocused ? {selected: true} : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-          >
+            testID={options.tabBarTestID}>
             <Image style={BottomTabsStyles.image} source={currentImage} />
           </TouchableOpacity>
         </View>
@@ -92,10 +97,9 @@ export const BottomTab = ({
           onPress={onPress}
           onLongPress={onLongPress}
           accessibilityRole="button"
-          accessibilityState={isFocused ? { selected: true } : {}}
+          accessibilityState={isFocused ? {selected: true} : {}}
           accessibilityLabel={options.tabBarAccessibilityLabel}
-          testID={options.tabBarTestID}
-        >
+          testID={options.tabBarTestID}>
           <Image style={BottomTabsStyles.image} source={currentImage} />
         </TouchableOpacity>
       );
@@ -104,12 +108,13 @@ export const BottomTab = ({
 );
 
 BottomTab.propTypes = {
-  descriptors: shape({ name: string }).isRequired,
+  descriptors: shape({name: string}).isRequired,
   navigation: shape({
     goBack: func.isRequired,
     navigate: func.isRequired,
   }).isRequired,
-  state: shape({ routes: arrayOf(shape({ key: string.isRequired })).isRequired }).isRequired,
+  state: shape({routes: arrayOf(shape({key: string.isRequired})).isRequired})
+    .isRequired,
 };
 
 export default BottomTab;

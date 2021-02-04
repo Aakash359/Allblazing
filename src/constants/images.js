@@ -21,6 +21,7 @@ const Images = {
   checkoff: require('../assets/checkoff2x.png'),
   clock: require('../assets/clock.png'),
   close: require('../assets/close2x.png'),
+  closeRed: require('../assets/close.png'),
   closeRound: require('../assets/closeRound.png'),
   coaching: require('../assets/coaching.png'),
   copy: require('../assets/copy.png'),

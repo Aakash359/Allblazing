@@ -66,6 +66,7 @@ function SearchSeceen() {
               source={Constants.Images.search}
               style={SearchScreen.searchIcon}
             />
+
             <TextInput
               placeholder="Find runner, group, event, club, coach etc..."
               placeholderTextColor={Constants.Colors.GREY_BORDER}

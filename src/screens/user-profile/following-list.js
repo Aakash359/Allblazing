@@ -1,6 +1,14 @@
-import React, { useState,useCallback} from 'react';
-import { View, Image, Text, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native';
-import { FollowingStyles } from '../../styles';
+import React, {useState, useCallback} from 'react';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {FollowingStyles} from '../../styles';
 import Constants from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 
@@ -13,7 +21,6 @@ function FollowingList() {
       image: '#F898A4',
       location: 'Santee, United States',
       name: 'Cameron Williamson',
-
     },
     {
       image: '#B7FFBD',
@@ -75,13 +82,12 @@ function FollowingList() {
   //     // console.log('res===>' + JSON.stringify(response.data.data.result));
   //   });
   // }, []);
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <TouchableOpacity
       style={FollowingStyles.sectionView}
       activeOpacity={0.7}
-      onPress={() => navigation.navigate('UserProfile')}
-    >
-      <View style={[FollowingStyles.listView, { backgroundColor: item.image }]} />
+      onPress={() => navigation.navigate('UserProfile')}>
+      <View style={[FollowingStyles.listView, {backgroundColor: item.image}]} />
       <View>
         <Text style={FollowingStyles.nameText}>{item.name}</Text>
         <Text style={FollowingStyles.locationText}>{item.location}</Text>
@@ -99,7 +105,7 @@ function FollowingList() {
           />
           <TextInput
             placeholder="Search Following (123)"
-            placeholderTextColor='#ccc'
+            placeholderTextColor="#898989"
             value={search}
             autoCapitalize="none"
             autoCorrect={false}

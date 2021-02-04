@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import Constants from '../constants';
 
@@ -91,9 +91,10 @@ export default StyleSheet.create({
     textAlign: 'left',
   },
   invitedUserImage: {
-    height: 40, width: Constants.BaseStyle.scale(40),
+    height: 40,
+    width: Constants.BaseStyle.scale(40),
   },
-  invitedUserWrapper: { height: 40 },
+  invitedUserWrapper: {height: 40},
   location: {
     ...Constants.Fonts.Small,
     color: Constants.Colors.GRAY,
@@ -101,7 +102,7 @@ export default StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(5),
     paddingLeft: Constants.BaseStyle.scale(20),
   },
-  namePadding: { paddingLeft: Constants.BaseStyle.scale(0) },
+  namePadding: {paddingLeft: Constants.BaseStyle.scale(0)},
   padding: {
     paddingLeft: Constants.BaseStyle.scale(10),
     textAlign: 'left',
@@ -121,9 +122,9 @@ export default StyleSheet.create({
   },
   row: {
     alignItems: 'center',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     margin: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(15),
   },
@@ -133,20 +134,22 @@ export default StyleSheet.create({
     height: Constants.BaseStyle.scale(120),
     justifyContent: 'center',
     ...Platform.select({
-      android: { marginTop: Constants.BaseStyle.scale(200) },
-      ios: { marginTop: Constants.BaseStyle.scale(150) },
+      android: {marginTop: Constants.BaseStyle.scale(50)},
+      ios: {marginTop: Constants.BaseStyle.scale(50)},
     }),
     width: Constants.BaseStyle.scale(300),
   },
   userDetailView: {
-    alignItems: 'center', flexDirection: 'row', justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   userImage: {
     borderRadius: 10,
     height: '100%',
     width: Constants.BaseStyle.scale(70),
   },
-  userInformation: { flex: 0.6 },
+  userInformation: {flex: 0.6},
   userWrapper: {
     alignItems: 'center',
     borderRadius: 5,
