@@ -19,11 +19,13 @@ import {func, shape} from 'prop-types';
 import {getAuthToken, getGroupImage, getGroupName} from '../../helpers/auth';
 import axios from 'axios';
 import {ActivityIndicator} from 'react-native';
+
 class AddMember extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ischecked: false,
+      UserListLoading:false,
       isLoading: false,
       list: [],
       arrSelectedUsers: [],
@@ -44,7 +46,7 @@ class AddMember extends Component {
     };
     // console.log('token===>', config);
     this.setState({
-      isLoading: true,
+      UserListLoading: true,
     });
     axios
       .get(API.USER_LIST, config)
@@ -57,7 +59,7 @@ class AddMember extends Component {
       })
       .finally(() => {
         this.setState({
-          isLoading: false,
+          UserListLoading: false,
         });
       });
   };
@@ -115,7 +117,110 @@ class AddMember extends Component {
           Alert.alert('', response?.data?.message ?? '');
         }
         if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+           response?.data?.message ?? '',
+           [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('cancle pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => navigate('Home'),
+            },
+          ],
+          {cancelable:false}
+           );
+          // addCreateGroupDetail(response?.data?.data);
+          // console.log('====>Response', response?.data?.data);
+          // navigate('Home');
+        }
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+  OnEvent = async () => {
+    const {
+      navigation: {goBack, navigate},
+      route: {params},
+      t: translate,
+    } = this.props;
+    const {arrSelectedUsers} = this.state;
+    if (arrSelectedUsers.length < 1) {
+      Alert.alert('', 'Please Select member!');
+      return;
+    }
+    const name = this.props.route.params.name;
+    const address1 = this.props.route.params.address1;
+    const address2 = this.props.route.params.address2;
+    const photo = this.props.route.params.photo;
+    const date = this.props.route.params.date;
+    const eventType = this.props.route.params.eventType;
+    const Category = this.props.route.params.Category;
+    const time = this.props.route.params.time;
+    const isEnabled = this.props.route.params.isEnabled;
+    const description = this.props.route.params.description;
+    this.setState({
+      isLoading: true,
+    });
+    const token = await getAuthToken();
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    console.log('token===>', config);
+
+    const formdata = new FormData();
+    formdata.append('name', name);
+    formdata.append('image', {
+      uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
+      name: 'test.jpg',
+      type: 'image/jpg',
+    });
+    formdata.append('event_type',eventType);
+    formdata.append('description', description);
+    formdata.append('time', time);
+    formdata.append('date', date);
+    formdata.append('category_id', Category);
+    formdata.append('status', isEnabled);
+    formdata.append('address_first', address1);
+    // formdata.append('address_second', address2);
+    for (let index = 0; index < arrSelectedUsers.length; index++) {
+      const element = arrSelectedUsers[index];
+      formdata.append(`groups[${element}]`, element);
+    }
+
+    console.log('===>FormData', formdata);
+    this.setState({
+      isLoading: true,
+    });
+    axios
+      .post(API.EVENT, formdata, config)
+      .then((response) => {
+        console.log('response ======>', response.data);
+        if (response?.data?.code === 401) {
           Alert.alert('', response?.data?.message ?? '');
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert('', 
+          response?.data?.message ?? '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('cancle pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => navigate('Home'),
+            },
+          ],
+          {cancelable:false}
+          );
           // addCreateGroupDetail(response?.data?.data);
           // console.log('====>Response', response?.data?.data);
           navigate('Home');
@@ -183,15 +288,23 @@ class AddMember extends Component {
     // const {nam} = this.state;
 
     const {
-      navigation: {goBack, navigate, getParam, isLoading},
+      navigation: {goBack, navigate, getParam},
       route: {params},
       t: translate,
     } = this.props;
 
     return (
-      <>
-        {isLoading ? (
-          <ActivityIndicator color="white" size={25}/>
+      <View style={{flex: 1}}>
+        {this.state.UserListLoading ? (
+          <View
+            style={{
+              height:'90%',
+              width:'100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator color="white" size={25} />
+          </View>
         ) : (
           <FlatList
             data={this.state.list}
@@ -199,19 +312,30 @@ class AddMember extends Component {
             keyExtractor={(item) => item.user_id}
           />
         )}
-
+        
         <TouchableOpacity
           activeOpacity={0.7}
           // onPress={() => navigation.navigate('AddMember')}
-          onPress={this.CreateGroup}
+          // onPress={this.CreateGroup}
+          // onPress={this.OnEvent}
+          onPress={() =>
+           this.props.route.params.iseventPage ? this.OnEvent() : this.CreateGroup()
+          }
           style={AddMemberStyles.nextView}>
-          {isLoading ? (
+          {this.state.isLoading ? (
             <ActivityIndicator color="white" size={25} />
           ) : (
-            <Text style={AddMemberStyles.nextText}>Create Group</Text>
+            <View>
+              {this.props.route.params.iseventPage ? 
+              <Text style={AddMemberStyles.nextText}>Create Event</Text> :
+              <Text style={AddMemberStyles.nextText}>Create Group</Text>
+              }
+            
+            </View>
           )}
         </TouchableOpacity>
-      </>
+        
+      </View>
     );
   }
 }

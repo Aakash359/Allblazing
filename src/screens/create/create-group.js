@@ -18,7 +18,6 @@ import Constants from '../../constants';
 import {connect} from 'react-redux';
 import {func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
-import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-crop-picker';
 import {ActionSheetIOS} from 'react-native';
 import {Alert} from 'react-native';
@@ -50,6 +49,7 @@ class CreateGroup extends Component {
       Alert.alert('', 'Please select Group Type', '');
     } else {
       this.props.navigation.navigate('AddMember', {
+        iseventPage: false,
         name: this.state.name,
         GroupType: this.state.list[0].id,
         photo: this.state.photo,
@@ -133,7 +133,8 @@ class CreateGroup extends Component {
         },
       ]}
       // onPress={(item) => this.setState({option:item.id,selectedId:item.id})}
-      onPress={() => this.OnPress(item)}>
+      onPress={() => this.OnPress(item)}
+      >
       <Text style={[CreateGroupStyles.optionalText]}>{item.name}</Text>
     </TouchableOpacity>
   );
@@ -150,13 +151,6 @@ class CreateGroup extends Component {
       <SafeAreaView style={CreateGroupStyles.container}>
         <ScrollView style={CreateGroupStyles.innerContainer}>
           <View style={CreateGroupStyles.imageView}>
-            <ActionSheet
-              ref={this.actionSheetRef}
-              title={'Select a Photo'}
-              options={['Done', 'Take Photo', 'Choose From Library']}
-              cancelButtonIndex={0}
-              onPress={() => this._handleActionSheet()}
-            />
             <TouchableOpacity onPress={() => this.choosePhotosFromGallery()}>
               {photo == '' ? (
                 <Image

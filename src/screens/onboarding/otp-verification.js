@@ -67,11 +67,21 @@ class OTP extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('Cancle Pressed'),
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('Username'),
+              },
+            ],
+            {cancelable: false},
           );
           setOtpToken(response?.data?.data?.data?.token);
           console.log('otptoken=======>',response?.data?.data?.data?.token);
-          navigate('Username');
+          // navigate('Username');
         }
       });
   };

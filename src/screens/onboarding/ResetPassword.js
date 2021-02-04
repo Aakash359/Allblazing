@@ -88,14 +88,36 @@ class ChangePassword extends Component {
       Alert.alert(
         '',
         'Please fill the newPassword!',
-        
+        [
+          {
+            text: 'Cancle',
+            onPress: () => console.log('cancle pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.log('Ok Pressed'),
+          },
+        ],
+        {cancelable:false}
       );
       return;
     }else if(confirmPassword.length < 1){
       Alert.alert(
           '',
           'Please fill the Confirmpassword!',
-          
+          [
+            {
+              text: 'Cancle',
+              onPress: () => console.log('cancle pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => console.log('ok Pressed'),
+            },
+          ],
+          {cancelable:false}
       );
       return;
     }
@@ -127,7 +149,18 @@ class ChangePassword extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('Login'),
+              },
+            ],
+            {cancelable:false}
           );
 
           navigate('Login');

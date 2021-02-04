@@ -16,18 +16,23 @@ const API = {
   RESET_PASSWORD:BASE_URL + '/resetPassword',
   POST: BASE_URL + '/post',
   FOLLOWERS: BASE_URL + '/follow?type=Follow',
+  FOLLOWING: BASE_URL + '/follow?type=Following',
   POSTS:BASE_URL + '/post?type=my_post',
+  POST_LIST :BASE_URL + '/post?type=all',
   LIKE: BASE_URL + '/post/like',
   UPDATE_PROFILE:BASE_URL + '/updateProfile' ,
   PROFILE_DETAILS: BASE_URL + '/profileDetails',
   FOLLOW: BASE_URL + '/follow',
+  UNFOLLOW:BASE_URL + '/follow/' ,
   USER_BLOCK : BASE_URL + '/block',
   USER_REPORT : BASE_URL + '/report',
   CREATE_GROUP : BASE_URL + '/group',
   CONTACT_US : BASE_URL + '/contact_us',
   USER_LIST : BASE_URL + '/user_list',
   GROUP_TYPE : BASE_URL + '/groupType',
-
+  EVENT : BASE_URL + '/event',
+  // USERLIST : BASE_URL + 
+  
 
   
 };

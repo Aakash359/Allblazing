@@ -3,7 +3,6 @@ import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollV
 import { LiveFeedStyles } from '../../styles';
 import Constants from '../../constants';
 import { PermisionPopup } from '../../components';
-
 function LiveFeed() {
   const [like, setLike] = useState(false);
   const [showPopup, setShowPopup] = useState(true);

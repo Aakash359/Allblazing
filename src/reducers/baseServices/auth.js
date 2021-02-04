@@ -2,8 +2,8 @@ import {REMOVE_AUTH_TOKEN, SET_LOGIN_DETAILS} from '../../actions/auth-action-ty
 
 const initialState = {
   token:'',
-  user_id: 0,
-  role: 0,
+  user_id: null,
+  role: null,
   email: '',
   device_token: null,
   device_type: null,

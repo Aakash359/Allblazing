@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Image,
@@ -14,33 +14,75 @@ import UserGoalScreen from './user-goals';
 import Constants from '../../constants';
 import {MoreOptionsPopup} from '../../components';
 import profileStyles from '../../styles/profile-styles';
-import {useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import axios from 'axios';
 import API from '../../constants/baseApi';
+import {func, shape} from 'prop-types';
+import {withTranslation} from 'react-i18next';
+import {getAuthToken} from '../../helpers/auth';
+import {ActivityIndicator} from 'react-native';
 
-// class UserProfile extends Component {
+class UserProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      Loading: false,
+      FollowLoading: false,
+      followStatus: false,
+      option: 'Goals',
+      optionList: ['Goals', "PB's", 'Likes'],
+      list: [],
+    };
+  }
+  componentDidMount() {
+    this.UserProfileDetails();
+  }
 
-function UserProfile() {
-  const optionList = ['Goals', "PB's", 'Likes'];
-  const follow_id = useSelector(({profile}) => profile?.follow_id ?? '');
-  // console.log('id:', follow_id);
+  UserProfileDetails = async () => {
+    const id = this.props.route.params.id;
+    console.log('userid==>', id);
+    const token = await getAuthToken();
+    // console.log('====>', token);
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    this.setState({
+      Loading: true,
+    });
+    axios
+      .post(
+        API.PROFILE_DETAILS,
+        {
+          user_id: id,
+        },
+        config,
+      )
+      .then((response) => {
+        if (response.data.data.result) {
+          console.log('===>details', response.data.data.result);
+          this.setState({list: response?.data?.data?.result});
+        }
+      })
+      .finally(() => {
+        this.setState({
+          Loading: false,
+        });
+      });
+  };
 
-  const navigation = useNavigation();
-  const route = useRoute();
-  const [followStatus, setFollowStatus] = useState(false);
+  displayOptions = () => <UserGoalScreen />;
 
-  const [option, setOption] = useState('Goals');
-
-  const displayOptions = () => <UserGoalScreen />;
-
-  const renderItem = ({item}) => (
+  renderItem = ({item}) => (
     <TouchableOpacity
       activeOpacity={0.7}
       style={[
         ProfileStyles.optionalSectionView,
         {
           backgroundColor:
-            item === option ? Constants.Colors.GRAY : Constants.Colors.PRIMARY,
+            item === this.option
+              ? Constants.Colors.GRAY
+              : Constants.Colors.PRIMARY,
         },
       ]}
       onPress={() => {
@@ -50,14 +92,54 @@ function UserProfile() {
     </TouchableOpacity>
   );
 
-  const handleUserFollow = useCallback(async () => {
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+  // componentDidMount() {
+  //   this.displayOptions();
+  // }
+  OnUnfollow = async () => {
+    const {
+      navigation: {goBack, navigate},
+    } = this.props;
+    const followId = this.props.route.params.follow_id;
+    console.log('followId', followId);
+    const token = await getAuthToken();
+    console.log('====>', token);
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    console.log('config=>', config);
+    axios.delete(API.UNFOLLOW + followId, config).then((response) => {
+      console.log('response==>', response.data);
+      if (response.data.code == 200) {
+        Alert.alert(
+          '',
+          response?.data?.message ?? '',
+          [
+            {
+              text: 'Cancle',
+              onPress: () => console.log('cancle pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => navigate('MyProfile'),
+            },
+          ],
+          {cancelable: false},
+        );
+        // navigate('MyProfile');
+      }
+    });
+  };
+  handleUserFollow = async () => {
+    const token = await getAuthToken();
+    const {followStatus} = this.state;
     // console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-
+    this.setState({
+      FollowLoading: true,
+    });
     axios
       .post(
         API.FOLLOW,
@@ -68,118 +150,207 @@ function UserProfile() {
       )
       .then((response) => {
         if (response.data.code == 200) {
-          Alert.alert('', response?.data?.message ?? '');
-          setFollowStatus(!followStatus);
+          Alert.alert('', response?.data?.message ?? '',
+          [
+            {
+              text: 'Cancle',
+              onPress: () => console.log('cancle pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => console.log('ok Pressed'),
+            },
+          ],
+          {cancelable:false}
+          );
+          this.setState({followStatus: !followStatus});
         }
+      })
+      .finally(() => {
+        this.setState({
+          FollowLoading: false,
+        });
       });
-  }, []);
-
-  return (
-    <View style={ProfileStyles.container}>
-      <View>
-        <TouchableOpacity activeOpacity={0.7}>
-          <View>
-            <ImageBackground
-              source={Constants.Images.profilePic}
-              imageStyle={ProfileStyles.borderRadius}
-              style={ProfileStyles.profileIcon}>
-              <View style={ProfileStyles.levelStyle}>
-                <Text style={ProfileStyles.levelText}>Level 1</Text>
-              </View>
-              <View style={profileStyles.overlappingStyle}>
-                <View>
-                  <Text style={ProfileStyles.heading}>
-                    {'Cameron Williamson, 23'}
-                  </Text>
-                  <Text style={ProfileStyles.subHeading}>
-                    {'It always seems impossible until it`s done!'}
-                  </Text>
-                </View>
-                <TouchableOpacity activeOpacity={0.7}>
-                  <Image
-                    source={Constants.Images.chat}
-                    resizeMode="contain"
-                    style={ProfileStyles.icon}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  // onPress={() => setFollowStatus(!followStatus)}
-                  onPress={() => handleUserFollow()}>
-                  <Image
-                    source={Constants.Images.add}
-                    resizeMode="contain"
-                    style={ProfileStyles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </View>
-        </TouchableOpacity>
-        <View style={ProfileStyles.sectionMainView}>
-          <View style={ProfileStyles.sectionView}>
-            <Text style={ProfileStyles.section2}>{'48'}</Text>
-            <Text style={ProfileStyles.section1}>{'Followers'}</Text>
-          </View>
-          <View style={ProfileStyles.sectionView}>
-            <Text style={ProfileStyles.section2}>{'127'}</Text>
-            <Text style={ProfileStyles.section1}>{'Following'}</Text>
-          </View>
-          <View style={ProfileStyles.sectionView}>
-            <Text style={ProfileStyles.section2}>{'3K'}</Text>
-            <Text style={ProfileStyles.section1}>{'Posts'}</Text>
-          </View>
-          <View style={ProfileStyles.sectionViewEnd}>
-            <TouchableOpacity onPress={() => navigation.navigate('ChatsGroup')}>
-              <Text style={ProfileStyles.section2}>{'5'}</Text>
-              <Text style={ProfileStyles.section1}>{'Groups'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {followStatus ? (
-          <View>
-            <FlatList
-              scrollEnabled={false}
-              contentContainerStyle={ProfileStyles.sectionMainView}
-              data={optionList}
-              renderItem={renderItem}
-              keyExtractor={(id, index) => index.toString()}
-            />
-            {displayOptions(option)}
+  };
+  render() {
+    // const {nam} = this.state;
+    const {
+      navigation: {goBack, navigate, setParams, isLoading},
+      route: {params},
+      t: translate,
+    } = this.props;
+    const id = this.props.route.params.id;
+    // console.log('id===>',id);
+    return (
+      <View style={ProfileStyles.container}>
+        {this.state.Loading ? (
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator color="white" size={25} />
           </View>
         ) : (
-          <View style={ProfileStyles.iconView}>
-            <Image
-              source={Constants.Images.lockProfile}
-              resizeMode="contain"
-              style={ProfileStyles.lockedIcon}
-            />
-            <Text style={ProfileStyles.bottomHeader}>{'Private Account'}</Text>
-            <Text style={ProfileStyles.bottomHeader2}>
-              {'Follow this account to see photos and videos.'}
-            </Text>
+          <View>
+            <TouchableOpacity activeOpacity={0.7}>
+              <View>
+                <ImageBackground
+                  source={{uri: this.state.list.image}}
+                  imageStyle={ProfileStyles.borderRadius}
+                  style={ProfileStyles.profileIcon}>
+                  <View style={ProfileStyles.levelStyle}>
+                    <Text style={ProfileStyles.levelText}>
+                      Level {this.state.list.level}
+                    </Text>
+                  </View>
+                  <View style={profileStyles.overlappingStyle}>
+                    <View>
+                      <Text style={ProfileStyles.heading}>
+                        {this.state.list.full_name}
+                      </Text>
+                      <Text style={ProfileStyles.subHeading}>
+                        {this.state.list.motto_description}
+                      </Text>
+                    </View>
+                    <TouchableOpacity activeOpacity={0.7}>
+                      <Image
+                        source={Constants.Images.chat}
+                        resizeMode="contain"
+                        style={ProfileStyles.icon}
+                      />
+                    </TouchableOpacity>
+                  {this.props.route?.params?.iseventPage ? null :
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      // onPress={() => setFollowStatus(!followStatus)}
+                      onPress={() => this.handleUserFollow()}>
+                      {this.state.FollowLoading ? (
+                        <ActivityIndicator color="white" size={25} />
+                      ) : (
+                        <Image
+                          source={Constants.Images.add}
+                          resizeMode="contain"
+                          style={ProfileStyles.icon}
+                        />
+                      )}
+                    </TouchableOpacity>
+                    }
+                  </View>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+            <View style={ProfileStyles.sectionMainView}>
+              <View style={ProfileStyles.sectionView}>
+                <Text style={ProfileStyles.section2}>
+                  {this.state.list.followerCount}
+                </Text>
+                <Text style={ProfileStyles.section1}>{'Followers'}</Text>
+              </View>
+              <View style={ProfileStyles.sectionView}>
+                <Text style={ProfileStyles.section2}>
+                  {this.state.list.followingCount}
+                </Text>
+                <Text style={ProfileStyles.section1}>{'Following'}</Text>
+              </View>
+              <View style={ProfileStyles.sectionView}>
+                <Text style={ProfileStyles.section2}>
+                  {this.state.list.postCount}
+                </Text>
+                <Text style={ProfileStyles.section1}>{'Posts'}</Text>
+              </View>
+              <View style={ProfileStyles.sectionViewEnd}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('ChatsGroup')}>
+                  <Text style={ProfileStyles.section2}>
+                    {this.state.list.groupCount}
+                  </Text>
+                  <Text style={ProfileStyles.section1}>{'Groups'}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            {this.state.followStatus ? (
+              <View>
+                <FlatList
+                  scrollEnabled={false}
+                  contentContainerStyle={ProfileStyles.sectionMainView}
+                  data={this.optionList}
+                  renderItem={this.renderItem}
+                  keyExtractor={(id, index) => index.toString()}
+                />
+                {this.displayOptions(this.option)}
+              </View>
+            ) : (
+              <View style={ProfileStyles.iconView}>
+                <Image
+                  source={Constants.Images.lockProfile}
+                  resizeMode="contain"
+                  style={ProfileStyles.lockedIcon}
+                />
+                <Text style={ProfileStyles.bottomHeader}>
+                  {'Private Account'}
+                </Text>
+                <Text style={ProfileStyles.bottomHeader2}>
+                  {'Follow this account to see photos and videos.'}
+                </Text>
+              </View>
+            )}
           </View>
         )}
+
+        {this.props.route?.params?.visible && (
+          <MoreOptionsPopup
+            hasUnFollowBtn={
+              this.props.route?.params?.iseventPage ? true : false
+            }
+            onUnfollow={() => this.OnUnfollow()}
+            visible={this.props.route?.params?.visible}
+            onBlock={() => {
+              this.props.navigation.setParams({visible: false});
+              this.props.navigation.navigate('BlockReportUser', {
+                isBlockPage: true,
+                id: id,
+              });
+            }}
+            onReport={() => {
+              this.props.navigation.setParams({visible: false});
+              this.props.navigation.navigate('BlockReportUser', {
+                isBlockPage: false,
+                id: id,
+              });
+            }}
+            onClose={() => this.props.navigation.setParams({visible: false})}
+          />
+        )}
       </View>
-      {route?.params?.visible && (
-        <MoreOptionsPopup
-          hasUnFollowBtn={false}
-          visible={route?.params?.visible}
-          onBlock={() => {
-            navigation.setParams({visible: false});
-            navigation.navigate('BlockReportUser', {isBlockPage: true});
-          }}
-          onReport={() => {
-            navigation.setParams({visible: false});
-            navigation.navigate('BlockReportUser', {isBlockPage: false});
-          }}
-          onClose={() => navigation.setParams({visible: false})}
-        />
-      )}
-    </View>
-  );
+    );
+  }
 }
 
-export default UserProfile;
+// export default UserProfile;
 
+UserProfile.propTypes = {
+  loginSuccess: func.isRequired,
+  navigation: shape({
+    dispatch: func.isRequired,
+    goBack: func.isRequired,
+  }).isRequired,
+  t: func.isRequired,
+};
 
+const mapStateToProps = ({profile: follow_id}) => ({
+  follow_id,
+});
+
+const mapDispatchToProps = {
+  // addFullName: (params) => setFullName(params),
+  // addCreateGroupDetail: (params) => setCreateGroupDetails(params),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(UserProfile));

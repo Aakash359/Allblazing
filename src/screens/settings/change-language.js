@@ -67,9 +67,20 @@ class ChangeLanguage extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('Settings'),
+              },
+            ],
+            {cancelable:false}
           );
-          navigate('Settings');
+          // navigate('Settings');
         }
       }).finally(() => {
         this.setState({

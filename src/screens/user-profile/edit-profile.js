@@ -16,6 +16,7 @@ import {setProfileDetails} from '../../reducers/baseServices/profile';
 import {func, shape} from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import {withTranslation} from 'react-i18next';
+import { getAuthToken } from '../../helpers/auth';
 
 class EditProfile extends Component {
   constructor() {
@@ -27,12 +28,7 @@ class EditProfile extends Component {
 
   }
 
-  onNavigate = (route, title) => {
-    this.props.navigation.navigate(route, {
-      isEditMode: true,
-      title,
-    });
-  };
+ 
 
   componentDidMount() {
     this.getProfileDetails();
@@ -42,10 +38,10 @@ class EditProfile extends Component {
     const {addProfileDetail} = this.props;
 
     const {user_id} = this.props;
+    console.log('userid==>',user_id);
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
-    // console.log('====>', token);
+    const token = await getAuthToken();
+    console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -73,15 +69,26 @@ class EditProfile extends Component {
       // setUpload(true);
       this.setState({upload:true});
       this.setState({selectedImage:image.path});
-      // setSelectedImage(image.path);
+      // setSelectedImage(image.path); 
 
       console.log(image.path, imageIndex);
     });
   };
-
+  onNavigate = (route, title) => {
+    const {full_name,age,Gender,time,motto_description}=this.props;
+    this.props.navigation.navigate(route, {
+      full_name:full_name,
+      age:age,
+      motto_description:motto_description,
+      Gender:Gender,
+      time:time,
+      isEditMode: true,
+      title,
+    });
+  };
 
   render() {
-    const {image, full_name, age, time, motto_description,selectedImage} = this.props;
+    const {image,Gender, full_name, age, time, motto_description,selectedImage} = this.props;
     return (
       <>
         <ScrollView style={CommonStyles.container}>
@@ -105,7 +112,7 @@ class EditProfile extends Component {
               <Text style={EditProfileStyles.headerTextLike}>{full_name}</Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => this.onNavigate('Username', 'Edit Name')}>
+                onPress={() => this.onNavigate('Username','Edit Name')}>
                 <Image
                   source={Constants.Images.edit}
                   style={EditProfileStyles.icon}
@@ -124,7 +131,7 @@ class EditProfile extends Component {
               </TouchableOpacity>
             </View>
             <View style={EditProfileStyles.headerViewLike} activeOpacity={0.7}>
-              <Text style={EditProfileStyles.headerTextLike}>{'Gender'}</Text>
+              <Text style={EditProfileStyles.headerTextLike}>{Gender}</Text>
               <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={() => this.onNavigate('UserGender', 'Edit Gender')}>

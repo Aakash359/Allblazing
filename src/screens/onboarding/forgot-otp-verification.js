@@ -68,11 +68,22 @@ class ForgotOTP extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('ResetPassword'),
+              },
+            ],
+            {cancelable:false}
           );
-        
           setForgotOtpToken(response?.data?.data?.data?.token);
           console.log('token==>',response?.data?.data?.data?.token);
-          navigate('ResetPassword');
+          // navigate('ResetPassword');
         }
       });
   };
@@ -94,6 +105,15 @@ class ForgotOTP extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancle', onPress: () => console.log('Cancle Pressed')
+              },
+              {
+                text: 'OK', onPress: () => console.log('OK Pressed')
+              },
+            ],
+            {cancelable: true},
           );
         }
       });
