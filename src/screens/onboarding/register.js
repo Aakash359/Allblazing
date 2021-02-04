@@ -20,7 +20,7 @@ import axios from 'axios';
 import API from '../../constants/baseApi';
 import {setSignUpDetails} from '../../reducers/baseServices/signUp';
 import * as actions from '../../actions/user-action-types';
-import { setSignUpToken, setUserId } from '../../helpers/auth';
+import {setSignUpToken, setUserId} from '../../helpers/auth';
 
 class Register extends Component {
   emailRef = React.createRef();
@@ -81,20 +81,39 @@ class Register extends Component {
 
     const {email, password} = this.state;
     if (email.length < 1) {
-      Alert.alert(
-        '',
-        'Please enter email id',
-        
+      Alert.alert('', 'Please enter email id',
+      [
+        {
+          text: 'Cancle',
+          onPress: () => console.log('cancle pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => console.log('Ok Pressed'),
+        },
+      ],
+      {cancelable:false}
       );
       return;
     } else if (password.length < 8) {
-      Alert.alert(
-        '',
-        'Please enter password at least 8 characters!',
+      Alert.alert('', 'Please enter password at least 8 characters!',
+      [
+        {
+          text: 'Cancle',
+          onPress: () => console.log('cancle pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+      {cancelable:false}
       );
       return;
     }
-    
+
     this.setState({
       isLoading: true,
     });
@@ -109,21 +128,30 @@ class Register extends Component {
             '',
             response?.data?.message?.email ?? '',
             // console.log('res===>', response?.data?.message?.email),
-            
           );
         }
         if (response?.data?.code === 200) {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('Cancle Pressed'),
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('OTP', {email: this.state.email}),
+              },
+            ],
+            {cancelable: false},
           );
           addSignUpDetail(response?.data?.data);
           // console.log('data=====>', response?.data?.data);
           setUserId(response?.data?.data?.user_id.toString());
           // console.log('UserId====>>>',response?.data?.data?.user_id);
           signupSuccess();
-          navigate('OTP',{email:this.state.email});
+          // navigate('OTP',{email:this.state.email});
         }
       })
       .finally(() => {
@@ -156,7 +184,7 @@ class Register extends Component {
               </Text>
             </View>
             <View>
-            <View style={RegisterStyle.emailInput}>
+              <View style={RegisterStyle.emailInput}>
                 <TextInput
                   ref={this.emailRef}
                   style={RegisterStyle.email}
@@ -247,8 +275,7 @@ class Register extends Component {
           style={RegisterStyle.button}
           activeOpacity={0.7}
           // onPress={this.onContinue}
-          onPress={this.onSignUp}
-          >
+          onPress={this.onSignUp}>
           {isLoading ? (
             <ActivityIndicator size="small" color="white" />
           ) : (

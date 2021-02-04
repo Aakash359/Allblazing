@@ -21,12 +21,14 @@ import {
 } from '../../reducers/baseServices/profile';
 import {withTranslation} from 'react-i18next';
 import {func, shape} from 'prop-types';
+import {ActivityIndicator} from 'react-native';
 
 class FollowersList extends Component {
   constructor() {
     super();
     this.state = {
       search: '',
+      Loading: false,
       list: [],
     };
   }
@@ -41,24 +43,30 @@ class FollowersList extends Component {
   _fetchFollowers = async () => {
     const {addFollowUserId} = this.props;
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
     // console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
     console.log('===>responseFOLLOWERS');
     this.setState({
-      isLoading: true,
+      Loading: true,
     });
-    axios.get(API.FOLLOWERS, config).then((response) => {
-      if (response.data.data.result) {
-        console.log('===>responseFOLLOWERS', response.data.data.result);
-        this.setState({list: response?.data?.data?.result});
-        addFollowUserId(response?.data?.data?.result?.id);
-        console.log('====?id', response?.data?.data?.result?.id);
-      }
-    });
+    axios
+      .get(API.FOLLOWERS, config)
+      .then((response) => {
+        if (response.data.data.result) {
+          console.log('===>responseFOLLOWERS', response.data.data.result);
+          this.setState({list: response?.data?.data?.result});
+          addFollowUserId(response?.data?.data?.result?.id);
+          console.log('====?id', response?.data?.data?.result?.id);
+        }
+      })
+      .finally(() => {
+        this.setState({
+          Loading: false,
+        });
+      });
   };
 
   renderItem = ({item}) => {
@@ -66,7 +74,9 @@ class FollowersList extends Component {
       <TouchableOpacity
         style={FollowingStyles.sectionView}
         activeOpacity={0.7}
-        onPress={() => this.props.navigation.navigate('UserProfile',{userid:item.id})}>
+        onPress={() =>
+          this.props.navigation.navigate('UserProfile', {iseventPage: false,id: item.id})
+        }>
         <View
           style={[FollowingStyles.listView, {backgroundColor: '#F898A4'}]}
         />
@@ -98,28 +108,41 @@ class FollowersList extends Component {
               value={this.state.search}
               autoCapitalize="none"
               autoCorrect={false}
+              style={{color: 'white'}}
               onChangeText={(text) => {
-                this.setState(text);
+                this.setState({search: text});
               }}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
-          <FlatList
-            scrollEnabled={false}
-            contentContainerStyle={FollowingStyles.flatList}
-            data={this.state.list}
-            // renderItem={({ item, index }) => this.renderItem(item, navigate)}
-            renderItem={({item, index, navigate}) => (
-              <this.renderItem item={item} index={index} />
-            )}
-          />
+          {this.state.Loading ? (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+              <ActivityIndicator color="white" size={25} />
+            </View>
+          ) : (
+            <FlatList
+              scrollEnabled={false}
+              contentContainerStyle={FollowingStyles.flatList}
+              data={this.state.list}
+              // renderItem={({ item, index }) => this.renderItem(item, navigate)}
+              renderItem={({item, index, navigate}) => (
+                <this.renderItem item={item} index={index} />
+              )}
+            />
+          )}
         </ScrollView>
       </>
     );
   }
 }
 FollowersList.propTypes = {
-  loginSuccess: func.isRequired,
+  // loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

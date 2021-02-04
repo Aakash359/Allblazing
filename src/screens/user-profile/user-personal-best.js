@@ -32,7 +32,7 @@ class UserPersonalBest extends Component {
       this.props.navigation.navigate('Distance');
     }
   };
-  onTypeChange = (payload) => this.setState({time: payload});
+ 
 
   onSave = () => {
     const {addTime} = this.props;
@@ -60,14 +60,33 @@ class UserPersonalBest extends Component {
         )
         .then((response) => {
           if (response?.data?.code === 200) {
-            Alert.alert('', response?.data?.message ?? '');
+            Alert.alert('', response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('EditProfile'),
+              },
+            ],
+            {cancelable:false}
+            );
             addTime(time);
             console.log('age:==>',time);
-            navigate('EditProfile');
+            // navigate('EditProfile');
           }
         });
     }
   };
+  onTypeChange = (payload) => this.setState({time: payload});
+  componentDidMount(){
+    const time = this.props.route.params.time;
+      console.log('fullname==>',time);
+      this.setState({time: time})
+  }
   render() {
     const {time} = this.state;
     const {
@@ -177,7 +196,6 @@ class UserPersonalBest extends Component {
 }
 
 UserPersonalBest.propTypes = {
-  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

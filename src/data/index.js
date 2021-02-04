@@ -86,27 +86,27 @@ export const wearableOptions = [{
 export const times = [{
   color: Constants.Colors.LIGHT_BLUE,
   label: '< 18 minutes',
-  value: 'lessThan18Minutes',
+  value: 'less Than  18Minutes',
 }, {
   color: Constants.Colors.LIGHT_RED,
   label: 'recent5KTimes.between18and20',
-  value: 'between18and20',
+  value: 'between 18 and 20',
 }, {
   color: Constants.Colors.LIGHT_YELLOW,
   label: 'recent5KTimes.between20and23',
-  value: 'between20and23',
+  value: 'between 20 and 23',
 }, {
   color: Constants.Colors.LIGHT_PINK,
   label: 'recent5KTimes.between23and26',
-  value: 'between23and26',
+  value: 'between 23 and 26',
 }, {
   color: Constants.Colors.DARK_YELLOW,
   label: 'recent5KTimes.between26and30',
-  value: 'between26and30',
+  value: 'between 26 and 30',
 }, {
   color: Constants.Colors.LIGHT_GREEN,
   label: 'recent5KTimes.moreThan30',
-  value: 'moreThan30',
+  value: 'moreThan 30',
 }];
 
 export default levels;

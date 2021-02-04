@@ -6,31 +6,32 @@ SET_GENDER,
 SET_MOTTO_DESCRIPTION,
   SET_FOLLOWLIST,
   SET_TIME,
+  SET_FOLLOW_ID,
   SET_FOLLOW_USERID
 } from '../../actions/auth-action-types';
 
 const initialState = {
-  blocked: 0,
-  followerData: 0,
-  followingData:0,
-  postData:0,
-  groupData:0,
-  user_id:0,
+  blocked: null,
+  followerData: null,
+  followingData:null,
+  postData:null,
+  groupData:null,
+  user_id:null,
   full_name:'',
-  age:0,
+  age:null,
   motto_description:'',
-  level:0,
+  level:null,
   time:null,
-  distance:0,
+  distance:null,
   runnres_type:'',
-  phone:0,
-  role:0,
+  phone:null,
+  role:null,
   email:'',
   image:null,
 
   // FOLLOWLIST
   id:0,
-  follow_id:0,
+  follow_id:null,
   folowing_id:0,
   created_at:0,
   followingName:'',
@@ -80,6 +81,11 @@ export default function profile(state = initialState, {payload, type}) {
       return {
         ...state,
         id:'',
+      };
+      case SET_FOLLOW_ID:
+      return {
+        ...state,
+        follow_id:'',
       };
     default:
       return state;
@@ -131,4 +137,11 @@ export function setFollowUserId(params) {
     dispatch({type: SET_FOLLOW_USERID, payload: params});
   };
 }
+export function setFollowId(params) {
+  console.log('===>',params);
+  return (dispatch) => {
+    dispatch({type: SET_FOLLOW_ID, payload: params});
+  };
+}
+
 

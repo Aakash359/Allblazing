@@ -12,39 +12,66 @@ import {withTranslation} from 'react-i18next';
 import Constants from '../../constants';
 import {InputField, StepBar} from '../../components';
 import {AuthStyle, CommonStyles, UsernameStyle} from '../../styles';
-import {setUserName} from '../../helpers/auth';
+import {getAuthToken, setUserName} from '../../helpers/auth';
 import axios from 'axios';
 import API from '../../constants/baseApi';
 import {connect} from 'react-redux';
 import {setFullName} from '../../reducers/baseServices/profile';
+import { ActivityIndicator } from 'react-native';
 
 class Username extends Component {
   constructor() {
     super();
-    this.state = {name: ''};
+    this.state = {
+      name: '',
+      Loading:false,
+    };
   }
+
+componentDidMount(){
+  const full_name = this.props.route?.params?.full_name;
+    console.log('fullname==>',full_name);
+    this.setState({name: full_name})
+}
 
   NameStore = () => {
     if (this.state.name === '') {
-      Alert.alert('', 'Please Enter Full Name', '');
+      Alert.alert(
+        '',
+        'Please Enter Full Name',
+        [
+          {
+            text: 'Cancle',
+            onPress: () => console.log('cancle pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.log('ok Pressed'),
+          },
+        ],
+        {cancelable:false}
+      );
     } else {
       setUserName(this.state.name);
       this.props.navigation.navigate('Userage');
     }
   };
 
-  onSave = () => {
+  onSave = async() => {
     const {addFullName} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
     const {name} = this.state;
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
-    };
+      };
+      this.setState({
+        Loading: true,
+      });
 
     if (this.state.name === '') {
       Alert.alert('', 'Please Enter Full Name', '');
@@ -59,23 +86,41 @@ class Username extends Component {
         )
         .then((response) => {
           if (response?.data?.code === 200) {
-            Alert.alert('', response?.data?.message ?? '');
+            Alert.alert('',
+             response?.data?.message ?? '',
+             [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('EditProfile'),
+              },
+            ],
+            {cancelable:false}
+             );
             addFullName(name);
             console.log('name:==>',name);
-            navigate('EditProfile');
+            // navigate('EditProfile');
           }
+        }).finally(() => {
+          this.setState({
+            Loading: false,
+          });
         });
     }
   };
 
   render() {
-    const {name} = this.state;
+    // const {name} = this.state;
     const {
       navigation: {goBack, navigate},
       route: {params},
       t: translate,
     } = this.props;
-
+    
     return (
       <View style={CommonStyles.container}>
         <ScrollView
@@ -93,8 +138,9 @@ class Username extends Component {
                 </Text>
               )}
               <InputField
-                value={name}
-                placeholder={translate('Full Name')}
+                value={this.state.name}
+                style={{color:'white'}}
+                placeholder={translate('full name')}
                 onChangeText={(text) => this.setState({name: text})}
               />
             </View>
@@ -108,10 +154,15 @@ class Username extends Component {
               onPress={() => this.onSave()}
               // onPress={() => goBack()}
             >
-              <Text
+              {this.state.Loading ? (
+                <ActivityIndicator color="white" size={25}/>
+              ):(
+                <Text
                 style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
                 {translate('Save')}
               </Text>
+              )}
+              
             </TouchableOpacity>
           ) : (
             <View style={UsernameStyle.buttons}>

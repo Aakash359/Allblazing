@@ -1,39 +1,50 @@
-import React, { Component } from 'react';
-import { Platform, TextInput, View, TouchableOpacity, Text } from 'react-native';
-import { withTranslation } from 'react-i18next';
-import { func, shape } from 'prop-types';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, {Component} from 'react';
+import {Platform, TextInput, View, TouchableOpacity, Text} from 'react-native';
+import {withTranslation} from 'react-i18next';
+import {func, shape} from 'prop-types';
+import {ScrollView} from 'react-native-gesture-handler';
 import Constants from '../../constants';
-import { AuthStyle, CommonStyles, MottoStyles, RegisterStyle, UsernameStyle } from '../../styles';
+import {
+  AuthStyle,
+  CommonStyles,
+  MottoStyles,
+  RegisterStyle,
+  UsernameStyle,
+} from '../../styles';
 import connect from 'react-redux/lib/connect/connect';
-import { setMottoDescription } from '../../reducers/baseServices/profile';
+import {setMottoDescription} from '../../reducers/baseServices/profile';
 import API from '../../constants/baseApi';
 import axios from 'axios';
-import { Alert } from 'react-native';
-
+import {Alert} from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { getAuthToken } from '../../helpers/auth';
 
 class UserMotto extends Component {
   constructor() {
     super();
-    this.state = { motto: '' };
+    this.state = {
+      motto: '', 
+      Loading: false
+    };
   }
 
   onChangeText = (motto) => {
-    this.setState({ motto });
-  }
-  onSave = () => {
+    this.setState({motto});
+  };
+  onSave = async() => {
     const {addMottoDescription} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
     const {motto} = this.state;
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-
+    this.setState({
+      Loading: true,
+    });
     if (this.state.motto === '') {
       Alert.alert('', 'Please enter Description', '');
     } else {
@@ -47,18 +58,42 @@ class UserMotto extends Component {
         )
         .then((response) => {
           if (response?.data?.code === 200) {
-            Alert.alert('', response?.data?.message ?? '');
+            Alert.alert('', response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('EditProfile'),
+              },
+            ],
+            {cancelable:false}
+            );
             addMottoDescription(motto);
-            console.log('age:==>',motto);
-            navigate('EditProfile');
+            console.log('age:==>', motto);
+            // navigate('EditProfile');
           }
+        })
+        .finally(() => {
+          this.setState({
+            Loading: false,
+          });
         });
     }
   };
+  // componentDidMount(){
+  //   const motto_description = this.props.route.params.motto_description;
+  //     console.log('motto_description==>',motto_description);
+  //     this.setState({motto: motto_description})
+  // }
   render() {
-    const { motto } = this.state;
+    const {motto} = this.state;
     const {
-      navigation: { goBack }, t: translate,
+      navigation: {goBack},
+      t: translate,
     } = this.props;
 
     return (
@@ -67,8 +102,7 @@ class UserMotto extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-          keyboardShouldPersistTaps="always"
-        >
+          keyboardShouldPersistTaps="always">
           <View style={UsernameStyle.wrapper}>
             <View style={UsernameStyle.inputWrapper}>
               <View style={CommonStyles.textAreaWrapper}>
@@ -84,12 +118,23 @@ class UserMotto extends Component {
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
               </View>
-              <Text style={RegisterStyle.mottoCount}>{`${motto.length}/60`}</Text>
+              <Text
+                style={RegisterStyle.mottoCount}>{`${motto.length}/60`}</Text>
             </View>
           </View>
         </ScrollView>
-        <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, MottoStyles.saveBtn]} onPress={() => this.onSave()}>
-          <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={[AuthStyle.saveBtn, MottoStyles.saveBtn]}
+          onPress={() => this.onSave()}>
+            {this.state.Loading ? (
+              <ActivityIndicator size={25} color="white"/>
+            ):(
+              <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {translate('Save')}
+            </Text>
+            )}
+          
         </TouchableOpacity>
       </View>
     );

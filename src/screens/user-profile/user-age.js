@@ -8,10 +8,11 @@ import Constants from '../../constants';
 import { AgePicker, StepBar } from '../../components';
 import { AuthStyle, CommonStyles, UsernameStyle } from '../../styles';
 import * as actions from '../../actions/user-action-types';
-import { setUserAge } from '../../helpers/auth';
+import { getAuthToken, setUserAge } from '../../helpers/auth';
 import { setAge } from '../../reducers/baseServices/profile';
 import API from '../../constants/baseApi';
 import axios from 'axios';
+import { ActivityIndicator } from 'react-native';
 
 class Userage extends Component {
 
@@ -20,6 +21,7 @@ class Userage extends Component {
     this.state = {
       age: null,
       visible: false,
+      Loading:false,
     };
   }
 
@@ -32,18 +34,20 @@ class Userage extends Component {
     }
     
   }
-  onSave = () => {
+  onSave = async() => {
     const {addAge} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
     const {age} = this.state;
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
+    this.setState({
+      Loading: true,
+    });
 
     if (this.state.age === '') {
       Alert.alert('', 'Please Select your Age', '');
@@ -58,11 +62,28 @@ class Userage extends Component {
         )
         .then((response) => {
           if (response?.data?.code === 200) {
-            Alert.alert('', response?.data?.message ?? '');
+            Alert.alert('', response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('EditProfile'),
+              },
+            ],
+            {cancelable:false}
+            );
             addAge(age);
             console.log('age:==>',age);
-            navigate('EditProfile');
+            // navigate('EditProfile');
           }
+        }).finally(() => {
+          this.setState({
+            Loading: false,
+          });
         });
     }
   };
@@ -79,7 +100,11 @@ class Userage extends Component {
     goBack();
   }
   
-
+  componentDidMount(){
+    const age = this.props.route?.params?.age;
+      console.log('age==>',age);
+      this.setState({age: age})
+  }
   render() {
     const {
       age, visible,
@@ -113,7 +138,12 @@ class Userage extends Component {
         </ScrollView>
         {params?.isEditMode ? (
           <TouchableOpacity activeOpacity={0.7} style={[AuthStyle.saveBtn, UsernameStyle.saveBtn]} onPress={() => this.onSave()}>
-            <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
+            {this.state.Loading ? (
+              <ActivityIndicator color="white" size={25}/>
+            ):(
+              <Text style={[AuthStyle.buttonText, { color: Constants.Colors.WHITE }]}>{translate('Save')}</Text>
+            )}
+            
           </TouchableOpacity>
         ) : (
           <View style={UsernameStyle.buttonsWrapper}>
@@ -150,7 +180,6 @@ class Userage extends Component {
 }
 
 Userage.propTypes = {
-  loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

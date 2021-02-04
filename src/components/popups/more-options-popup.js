@@ -31,7 +31,7 @@ const MoreOptionsPopup = ({
       <View style={[PopupStyles.container, PopupStyles.moreOptionsContainer]}>
         <View style={[PopupStyles.wrapper, PopupStyles.moreOptionsWrapper]}>
           { hasUnFollowBtn && (
-            <TouchableOpacity activeOpacity={0.7} onPress={onUnfollow} style={PopupStyles.blockBtn}>
+            <TouchableOpacity  onPress={onUnfollow} style={PopupStyles.blockBtn}>
               <Image source={Constants.Images.addUser} style={PopupStyles.blockIcon} />
               <View>
                 <Text style={PopupStyles.btnTitle}>{translate(unfollowBtnTitle)}</Text>

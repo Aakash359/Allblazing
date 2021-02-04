@@ -50,10 +50,10 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      emailId: 'roy01@mailinator.com',
+      emailId: '',
       isRemember: false,
       isShow: false,
-      password: '12345678',
+      password: '',
       isLoading: false,
     };
   }
@@ -65,11 +65,13 @@ class Login extends Component {
   }
 
   onLogin = async () => {
+    console.log('dsgbdfghhg');
+    
     const {loginSuccess, addLoginDetail} = this.props;
     const {
       navigation: {goBack, navigate},
     } = this.props;
-
+    navigate('Overview');
     const {emailId, password} = this.state;
     if (emailId.length < 1) {
       Alert.alert(
@@ -106,12 +108,12 @@ class Login extends Component {
           );
         }
         if (response?.data?.code === 200) {
-          console.log("=======>>>response");
+          console.log("=======>>>responselogin",response?.data?.data);
           setAuthToken(response?.data?.data?.token);
           addLoginDetail(response?.data?.data);
-          setLoginUserId(response?.data?.data?.user_id.toString());
+          setLoginUserId(JSON.stringify(response?.data?.data));
           // loginSuccess();
-          navigate('Home');
+          navigate('Overview');
         }
       })
       .finally(() => {

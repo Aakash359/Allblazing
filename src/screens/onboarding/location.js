@@ -30,9 +30,21 @@ import {
   getOtpToken,
 } from '../../helpers/auth';
 import API from '../../constants/baseApi';
+import connect from 'react-redux/lib/connect/connect';
+import {setProfileDetails} from '../../reducers/baseServices/profile';
+
+import { ActivityIndicator } from 'react-native';
 
 class Location extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoading: false,
+    };
+  }
+
   onSubmit = async () => {
+    const {addUserProfileDetails} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
@@ -82,10 +94,22 @@ class Location extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('Login'),
+              },
+            ],
+            {cancelable:false}
           );
-
-          navigate('Login');
+          addUserProfileDetails(response?.data);
+          console.log('res===>kkkkk' + JSON.stringify(response.data));
+          // navigate('Login');
         }
       })
       .finally(() => {
@@ -138,10 +162,15 @@ class Location extends Component {
             // activeOpacity={0.7}
             style={[OTPStyles.button, LocationStyles.button]}
             onPress={this.onSubmit}>
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {translate('profile.Select It Manually')}
-            </Text>
+              {this.state.isLoading ? (
+                <ActivityIndicator color="white" size={25}/>
+              ):(
+                <Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {translate('profile.Select It Manually')}
+              </Text>
+              )}
+            
           </TouchableOpacity>
         </View>
       </View>
@@ -150,5 +179,16 @@ class Location extends Component {
 }
 
 Location.propTypes = {t: func.isRequired};
+const mapStateToProps = ({auth: {email}}) => ({
+  email,
+});
 
-export default withTranslation()(Location);
+const mapDispatchToProps = {
+  addUserProfileDetails: (params) => setProfileDetails(params),
+  // loginSuccess: actions.loginSuccess,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(Location));

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Platform,
   TextInput,
+  ActivityIndicator,
   View,
   Text,
   Image,
@@ -21,6 +22,7 @@ import {blockReportReasons} from '../data';
 import Axios from 'axios';
 import API from '../constants/baseApi';
 import {Alert} from 'react-native';
+import { getAuthToken } from '../helpers/auth';
 
 class BlockUser extends React.Component {
   descriptionRef = React.createRef();
@@ -32,13 +34,16 @@ class BlockUser extends React.Component {
     this.state = {
       description: '',
       reason: null,
+      isLoading:false,
     };
   }
   OnBlock = async () => {
     const {
       navigation: {navigate},
+      route: {params},
     } = this.props;
-
+    const id = this.props.route.params.id;
+    console.log('userid===>',id);
     this.setState({
       isLoading: true,
     });
@@ -51,7 +56,7 @@ class BlockUser extends React.Component {
     Axios.post(
       API.USER_BLOCK,
       {
-        user_id: 2,
+        user_id: id,
         type: 'blocked',
         block_type: 'Testing',
       },
@@ -70,10 +75,21 @@ class BlockUser extends React.Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('MyProfile'),
+              },
+            ],
+            {cancelable:false}
           );
 
-          navigate('MyProfile');
+          // navigate('MyProfile');
         }
       })
       .finally(() => {
@@ -86,21 +102,22 @@ class BlockUser extends React.Component {
   OnReport = async () => {
     const {
       navigation: {navigate},
+      route: {params},
     } = this.props;
-
+    const id = this.props.route.params.id;
+    console.log('====>',id);
     this.setState({
       isLoading: true,
     });
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
     Axios.post(
       API.USER_REPORT,
       {
-        user_id: 11,
+        user_id: id,
         type: 'report',
         report_type: 'Testing',
       },
@@ -119,10 +136,21 @@ class BlockUser extends React.Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('MyProfile'),
+              },
+            ],
+            {cancelable:false}
           );
 
-          navigate('MyProfile');
+          // navigate('MyProfile');
         }
       })
       .finally(() => {
@@ -219,7 +247,12 @@ class BlockUser extends React.Component {
           }}
           // onPress={this.OnSubmit}
         >
+          {this.state.isLoading ? (
+            <ActivityIndicator color="white" size={25}/>
+          ):(
           <Text style={[AuthStyle.buttonLanguageText, reason && AuthStyle.buttonActiveText]}>{translate('Submit')}</Text>
+          )}
+          
         </TouchableOpacity>
       </View>
     );

@@ -85,9 +85,23 @@ class CreatePost extends Component {
         Alert.alert('', response?.data?.message ?? '');
       }
       if (response?.data?.code === 200) {
-        Alert.alert('', response?.data?.message ?? '');
+        Alert.alert('',
+         response?.data?.message ?? '',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('cancle pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => navigate('Discover'),
+          },
+        ],
+        {cancelable:false}
+        );
 
-    navigate('Discover');
+    // navigate('Discover');
       }
     }).finally(() => {
       this.setState({

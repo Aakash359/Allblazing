@@ -1,117 +1,213 @@
-
-import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FollowersStyles, FeedStyles } from '../../styles';
+import React, {Component} from 'react';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {FollowersStyles, FeedStyles} from '../../styles';
 import Constants from '../../constants';
+import {func, shape} from 'prop-types';
+import {connect} from 'react-redux';
+import {withTranslation} from 'react-i18next';
+import {setFeedDetails} from '../../reducers/baseServices/Feed';
+import Axios from 'axios';
+import API from '../../constants/baseApi';
+import {getAuthToken} from '../../helpers/auth';
+import moment from 'moment';
+import {ActivityIndicator} from 'react-native';
 
-const list = [{
-  image: Constants.Images.user1, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-},
-{
-  image: Constants.Images.user2, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-},
-{
-  image: Constants.Images.user3, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-},
-{
-  image: Constants.Images.user4, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-},
-{
-  image: Constants.Images.user5, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-},
-{
-  image: Constants.Images.user6, likeNumber: '500', name: 'Alex Carey', time: '4:30 am',
-}];
+class FeedScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      like: false,
+      list: [],
+    };
+    const {
+      navigation: {goBack, navigate, getParam, isLoading},
+      route: {params},
+      t: translate,
+    } = this.props;
+  }
+  componentDidMount() {
+    this.FeedList();
+  }
 
-function FeedScreen() {
-  const navigation = useNavigation();
-  const [like, setLike] = useState(false);
+  FeedList = async () => {
+    const { addFeedDetails} = this.props;
+    const token = await getAuthToken();
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    // console.log('token===>', config);
+    this.setState({
+      isLoading: true,
+    });
+    Axios.get(API.POST_LIST, config)
+      .then((response) => {
+        // console.log('response ====', response.data.data.result);
+        if (response.data.data.result) {
+          console.log('===>response', response.data.data.result);
+          this.setState({list: response?.data?.data?.result});
+          addFeedDetails(response?.data?.data?.result);
+        }
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+  _Like = async (item) => {
+    const token = await getAuthToken();
+    console.log('==>', item.id);
+    console.log('tokens==>', token);
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    // console.log(config);
+    Axios.post(
+      API.LIKE,
+      {
+        post_id: item.id,
+        type: item.likeStatus > 0 ? 'unliked' : 'liked',
+      },
+      config,
+    )
+      .then((response) => {
+        console.log('data===>', response.data);
+      })
+      .finally(() => {});
+  };
 
-  const renderItem = ({ item }) => (
-    <View>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={[FollowersStyles.sectionView]}
-        onPress={() => { navigation.navigate('FeedDetailScreen'); }}
-      >
-        <View style={[FeedStyles.listView]}>
-          <View style={FeedStyles.innerView}>
-            <Image
-              source={item.image}
-              style={FeedStyles.userImage}
-            />
-            <View style={FeedStyles.nameView}>
-              <Text style={FollowersStyles.nameText}>{item.name}</Text>
-              <Text style={FollowersStyles.locationText}>{item.time}</Text>
+  renderItem = ({item}) => {
+    const {} = this.state;
+    const {
+      navigation: {navigate},
+      likeCount
+    } = this.props;
+    return (
+      <View>
+        <View
+          activeOpacity={0.7}
+          style={[FollowersStyles.sectionView]}
+          // onPress={() => {
+          //   this.props.navigation.navigate('FeedDetailScreen', {data: item});
+          // }}
+        >
+          <View style={[FeedStyles.listView]}>
+            <View style={FeedStyles.innerView}>
+              <Image source={{uri: item.post}} style={FeedStyles.userImage} />
+              <View style={FeedStyles.nameView}>
+                <Text style={FollowersStyles.nameText}>{item.autherName}</Text>
+                <Text style={FollowersStyles.locationText}>
+                  {moment(item.created_at).format('LT')}
+                </Text>
+              </View>
             </View>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={FeedStyles.heartView}
+              onPress={() => this._Like(item)}>
+              <Image
+                source={
+                  item.likeStatus > 0
+                    ? Constants.Images.selectedHeart
+                    : Constants.Images.heart
+                }
+                style={FeedStyles.heartIcon}
+              />
+              <Text style={FollowersStyles.nameText}>{item.likeCount}</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={FeedStyles.heartView}
-            onPress={() => { setLike(!like); navigation.navigate('FeedDetailScreen', { data: item }); }}
-          >
-            <Image
-              source={like ? Constants.Images.selectedHeart : Constants.Images.heart}
-              style={FeedStyles.heartIcon}
-            />
-            <Text style={FollowersStyles.nameText}>{item.likeNumber}</Text>
-          </TouchableOpacity>
-
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => { setLike(!like); navigation.navigate('FeedDetailScreen', { data: item }); }}
-      >
-        <Image
-          source={Constants.Images.feedImg}
-          style={FeedStyles.feedImg}
-        />
-      </TouchableOpacity>
-      {/* <View style={{
-        height: 291, width: 343, backgroundColor: item.image, marginVertical: 20, marginHorizontal: 16
-      }}
-      /> */}
-    </View>
-  );
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            this.props.navigation.navigate('FeedDetailScreen', {data: item});
+          }}>
+          <Image source={{uri: item.post}} style={FeedStyles.feedImg} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
-  const filterData = ({ item }) => (
+  filterData = ({item}) => (
     <TouchableOpacity
       activeOpacity={0.7}
       style={[FeedStyles.optionalSectionView]}
-      onPress={() => { navigation.navigate('LiveFeed'); }}
-    >
-      <Image
-        source={item.image}
-        style={FeedStyles.userImage}
-      />
+      onPress={() => {
+        this.props.navigation.navigate('LiveFeed');
+      }}>
+      <Image source={{uri: item.post}} style={FeedStyles.userImage} />
     </TouchableOpacity>
   );
+  render() {
+    const {isLoading} = this.state;
 
-  return (
-    <>
-      <ScrollView style={FollowersStyles.container}>
-        <FlatList
-          data={list}
-          contentContainerStyle={FeedStyles.sectionMainView}
-          renderItem={filterData}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => `1-${index}`}
-        />
-        <FlatList
-          // style={MyProfileStyles.sectionMainView}
-          scrollEnabled={false}
-          contentContainerStyle={FollowersStyles.flatList}
-          data={list}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => `2-${index}`}
-        />
-      </ScrollView>
-
-    </>
-  );
+    const {
+      navigation: {goBack, navigate, getParam},
+      route: {params},
+      t: translate,
+    } = this.props;
+    return (
+      <>
+        <View style={FollowersStyles.container}>
+          {isLoading ? (
+            <View style={{justifyContent:'center',alignItems:'center',height:'100%',width:'100%'}}>
+              <ActivityIndicator color="white" size={25} />
+                </View>
+          ) : (
+            <ScrollView>
+              <FlatList
+                data={this.state.list}
+                contentContainerStyle={FeedStyles.sectionMainView}
+                renderItem={this.filterData}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item, index) => `1-${index}`}
+              />
+              <FlatList
+                // style={MyProfileStyles.sectionMainView}
+                scrollEnabled={false}
+                contentContainerStyle={FollowersStyles.flatList}
+                data={this.state.list}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => `2-${index}`}
+              />
+            </ScrollView>
+          )}
+        </View>
+      </>
+    );
+  }
 }
 
-export default FeedScreen;
+// export default FeedScreen;
+FeedScreen.propTypes = {
+  loginSuccess: func.isRequired,
+  navigation: shape({
+    dispatch: func.isRequired,
+    goBack: func.isRequired,
+  }).isRequired,
+  t: func.isRequired,
+};
+
+const mapStateToProps = ({Feed:likeStatus,likeCount}) => ({
+  likeStatus,
+  likeCount,
+});
+
+const mapDispatchToProps = {
+  addFeedDetails: (params) => setFeedDetails(params),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(FeedScreen));

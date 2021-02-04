@@ -54,12 +54,23 @@ class ForgotPassword extends Component {
           Alert.alert(
             '',
             response?.data?.message ?? '',
-            
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('ForgotOTP',{email:this.state.email}),
+              },
+            ],
+            {cancelable:false}
           );
           setForgotPasswordUserId(response?.data?.data?.user_id.toString());
           console.log(response?.data?.data?.user_id.toString());
         }
-        navigate('ForgotOTP',{email:this.state.email});
+        // navigate('ForgotOTP',{email:this.state.email});
       })
       .finally(() => {
         this.setState({

@@ -100,13 +100,11 @@ class Settings extends Component {
       navigation: {navigate},
     } = this.props;
 
-    const token = await removeAuthToken();
+    const token = await clearAsyncStorage();
     console.log("========>>tokenNullll",token);
-    if (token == undefined) {
       this.setState({logoutPopup: false})
-      navigate('Login');
-      // logOutSuccess();
-    }  
+      logOutSuccess('');
+    
   };
 
   render() {
@@ -143,7 +141,6 @@ Settings.propTypes = {
 
 const mapDispatchToProps = {
   logOutSuccess: (params) => removeAuthTokenFromRedux(params),
-  // logOutSuccess : actions.logoutSuccess
 };
 
 export default connect(
