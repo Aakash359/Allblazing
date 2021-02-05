@@ -84,7 +84,7 @@ class Register extends Component {
       Alert.alert('', 'Please enter email id',
       [
         {
-          text: 'Cancle',
+          text: 'Cancel',
           onPress: () => console.log('cancle pressed'),
           style: 'cancel',
         },
@@ -100,7 +100,7 @@ class Register extends Component {
       Alert.alert('', 'Please enter password at least 8 characters!',
       [
         {
-          text: 'Cancle',
+          text: 'Cancel',
           onPress: () => console.log('cancle pressed'),
           style: 'cancel',
         },
@@ -136,7 +136,7 @@ class Register extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
+                text: 'Cancel',
                 onPress: () => console.log('Cancle Pressed'),
               },
               {

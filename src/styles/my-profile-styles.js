@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   sectionMainView: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     backgroundColor: Constants.Colors.TAB_BACK,
     marginHorizontal: 10,
     borderRadius: 30,

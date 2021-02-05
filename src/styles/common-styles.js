@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     margin: Constants.BaseStyle.scale(18),
     width: Constants.BaseStyle.scale(18),
   },
+  crossImage2: {
+    alignSelf: 'center',
+    height: Constants.BaseStyle.scale(60),
+    width: Constants.BaseStyle.scale(60),
+  },
   divider: {
     backgroundColor: Constants.Colors.TEXT_COLOR2,
     height: 1,

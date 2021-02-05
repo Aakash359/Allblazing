@@ -69,7 +69,7 @@ class OTP extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
+                text: 'Cancel',
                 onPress: () => console.log('Cancle Pressed'),
               },
               {
