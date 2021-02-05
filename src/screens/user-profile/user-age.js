@@ -19,20 +19,39 @@ class Userage extends Component {
   constructor() {
     super();
     this.state = {
-      age: null,
+      age: 0,
       visible: false,
       Loading:false,
     };
   }
-
+  componentDidMount(){
+    const age = this.props.route?.params?.age ?? 0;
+      console.log('age==>',age);
+      this.setState({age: age})
+  }
   AgeStore = () => {
-    if (this.state.age === null) {
-      Alert.alert('', 'Please Select Your Age', '');
+    if (this.state.age === 0 ) {
+      Alert.alert(
+        '',
+        'Please Select age',
+        [
+          {
+            text: 'Cancle',
+            onPress: () => console.log('cancle pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.log('ok Pressed'),
+          },
+        ],
+        {cancelable:false}
+      );
     } else {
+      console.log('===>',this.state.age);
       setUserAge(this.state.age.toString());
-  this.props.navigation.navigate('ConnectUserType');
+      this.props.navigation.navigate('ConnectUserType');
     }
-    
   }
   onSave = async() => {
     const {addAge} = this.props;
@@ -100,11 +119,7 @@ class Userage extends Component {
     goBack();
   }
   
-  componentDidMount(){
-    const age = this.props.route?.params?.age;
-      console.log('age==>',age);
-      this.setState({age: age})
-  }
+  
   render() {
     const {
       age, visible,

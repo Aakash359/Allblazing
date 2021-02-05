@@ -131,7 +131,8 @@ class FeedScreen extends Component {
           onPress={() => {
             this.props.navigation.navigate('FeedDetailScreen', {data: item});
           }}>
-          <Image source={{uri: item.post}} style={FeedStyles.feedImg} />
+            
+          <Image source={{uri: item.post}} style={FeedStyles.feedImg} resizeMode="cover" />
         </TouchableOpacity>
       </View>
     );
@@ -144,7 +145,7 @@ class FeedScreen extends Component {
       onPress={() => {
         this.props.navigation.navigate('LiveFeed');
       }}>
-      <Image source={{uri: item.post}} style={FeedStyles.userImage} />
+      <Image source={{uri: item.post}} style={FeedStyles.userImage} resizeMode="cover" />
     </TouchableOpacity>
   );
   render() {
@@ -190,7 +191,7 @@ class FeedScreen extends Component {
 
 // export default FeedScreen;
 FeedScreen.propTypes = {
-  loginSuccess: func.isRequired,
+  // loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

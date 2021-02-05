@@ -4,12 +4,18 @@ import { func, shape } from 'prop-types';
 import Constants from '../../constants';
 import { ChatStyles, HomeStyles, GroupDetailStyles, MyProfileStyles, InviteFriendsStyles, CommonStyles } from '../../styles';
 import { SingleEvent, MoreOptionsPopup, RemoveMemberPopup } from '../../components';
+import axios from 'axios';
+import API from '../../constants/baseApi';
 
 class GroupDetail extends React.Component {
   constructor() {
     super();
     this.state = {
-      optionList: ['Active', 'Created', 'Requested', 'Archived'], options: 'Active', removeMemberPopup: false, visible: false,
+      optionList: ['Active', 'Created', 'Requested', 'Archived'], 
+      options: 'Active', 
+      removeMemberPopup: false,
+       visible: false,
+       isLoading:false,
     };
   }
 
@@ -19,18 +25,18 @@ class GroupDetail extends React.Component {
     return (<SingleEvent onPress={() => navigate('SingleEventDetail')} screen='groupDetails' />);
   }
 
-  renderHeader = ({ goBack }) => (
-    <View style={HomeStyles.ChatOneToOneHeader}>
-      <View style={[InviteFriendsStyles.userWrapper]}>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
-          <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
-        <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
-      </TouchableOpacity>
-    </View>
-  )
+  // renderHeader = ({ goBack }) => (
+  //   <View style={HomeStyles.ChatOneToOneHeader}>
+  //     <View style={[InviteFriendsStyles.userWrapper]}>
+  //       <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
+  //         <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
+  //       </TouchableOpacity>
+  //     </View>
+  //     <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
+  //       <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
+  //     </TouchableOpacity>
+  //   </View>
+  // )
 
  displayOptions = (data) => {
    if (data === 'Active') {
@@ -63,6 +69,64 @@ class GroupDetail extends React.Component {
     );
   }
 
+  OnJoin = async() => {
+    const {
+      navigation:{navigate},
+  } = this.props;
+
+    this.setState({
+      isLoading: true,
+    });
+    // markwinz06@gmail.com/mark@1234
+    const token = await getAuthToken();
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+  };
+
+  console.log(config);
+
+    axios
+      .post(API.JOIN_GROUP + followId, config)
+      .then((response) => {
+        // console.log('token ====', response.data);
+        if (response?.data?.code === 401) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancle',
+                onPress: () => console.log('cancle pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => navigate('Settings'),
+              },
+            ],
+            {cancelable:false}
+            
+          );
+
+          // navigate('Settings');
+
+        }
+        
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+  
   // </View>
 
   render() {
@@ -78,7 +142,7 @@ class GroupDetail extends React.Component {
     return (
       <>
         <View style={HomeStyles.GroupDetailStyles}>
-          {this.renderHeader({ goBack })}
+          {/* {this.renderHeader({ goBack })} */}
           <ScrollView>
             <ImageBackground
               source={Constants.Images.groupDetails}
@@ -116,6 +180,7 @@ class GroupDetail extends React.Component {
               />
             </View>
             <TouchableOpacity
+              onPress={()=>this.OnJoin()}
               activeOpacity={0.7}
               style={GroupDetailStyles.nextView}
             >

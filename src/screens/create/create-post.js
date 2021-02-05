@@ -37,7 +37,6 @@ class CreatePost extends Component {
       this.setState({upload:true});
       // setSelectedImage(image.path);
       this.setState({selectedImage:image.path});
-
       console.log(image.path, imageIndex);
     });
   };

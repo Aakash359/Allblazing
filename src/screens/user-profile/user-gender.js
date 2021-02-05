@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, View, TouchableOpacity, Text} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from 'react-native';
 import {withTranslation} from 'react-i18next';
 import {func, shape} from 'prop-types';
 import Constants from '../../constants';
@@ -13,7 +20,8 @@ import connect from 'react-redux/lib/connect/connect';
 import axios from 'axios';
 import API from '../../constants/baseApi';
 import {ActivityIndicator} from 'react-native';
-import { getAuthToken } from '../../helpers/auth';
+import {getAuthToken} from '../../helpers/auth';
+import {setGender} from '../../reducers/baseServices/profile';
 
 const genders = [
   {
@@ -34,15 +42,19 @@ class UserGender extends Component {
   constructor() {
     super();
     this.state = {
-      gender: null,
+      gender: '',
       Loading: false,
     };
   }
-
-  onChange = (gender) => {
-    this.setState({gender});
+  componentDidMount() {
+    const gender = this.props.route?.params?.gender;
+    console.log('gender==>', gender);
+    this.setState({gender: gender});
+  }
+  onChange = (payload) => {
+    this.setState({gender: payload});
   };
-  onSave = async() => {
+  onSave = async () => {
     const {addGender} = this.props;
     const {
       navigation: {navigate},
@@ -63,27 +75,29 @@ class UserGender extends Component {
         .post(
           API.UPDATE_PROFILE,
           {
-            age: gender,
+            gender: gender,
           },
           config,
         )
         .then((response) => {
           if (response?.data?.code === 200) {
-            Alert.alert('', response?.data?.message ?? '',
-            [
-              {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
-              },
-              {
-                text: 'OK',
-                onPress: () => navigate('EditProfile'),
-              },
-            ],
-            {cancelable:false}
+            Alert.alert(
+              '',
+              response?.data?.message ?? '',
+              [
+                {
+                  text: 'Cancle',
+                  onPress: () => console.log('cancle pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: () => navigate('EditProfile'),
+                },
+              ],
+              {cancelable: false},
             );
-            addGender(age);
+            addGender(gender);
             console.log('gender:==>', gender);
             // navigate('EditProfile');
           }
@@ -95,6 +109,7 @@ class UserGender extends Component {
         });
     }
   };
+
   render() {
     const {gender} = this.state;
     const {
@@ -143,7 +158,7 @@ class UserGender extends Component {
           style={[AuthStyle.saveBtn, GenderStyles.saveBtn]}
           onPress={() => this.onSave()}>
           {this.state.Loading ? (
-            <ActivityIndicator color="white" size={25}/>
+            <ActivityIndicator color="white" size={25} />
           ) : (
             <Text
               style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>

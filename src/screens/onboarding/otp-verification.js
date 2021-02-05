@@ -9,12 +9,12 @@ import Constants from '../../constants';
 import {AuthStyle, CommonStyles, OTPStyles} from '../../styles';
 import axios from 'axios';
 import API from '../../constants/baseApi';
-import { setOtpToken, getUserId } from '../../helpers/auth';
+import {setOtpToken, getUserId} from '../../helpers/auth';
 
 class OTP extends Component {
   constructor() {
     super();
-    this.state = {otp: ''};
+    this.state = {otp: '', isLoading: false, Loading: false};
   }
 
   onVerify = () => {
@@ -26,7 +26,7 @@ class OTP extends Component {
   };
 
   // verify OTP
-  _handleVerify = async() => {
+  _handleVerify = async () => {
     const {
       navigation: {navigate},
     } = this.props;
@@ -36,13 +36,26 @@ class OTP extends Component {
       Alert.alert(
         '',
         'Please fill otp!',
-        
+        [
+          {
+            text: 'Cancle',
+            onPress: () => console.log('cancle pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.log('ok Pressed'),
+          },
+        ],
+        {cancelable: false},
       );
       return;
     }
     const UserId = await getUserId();
-   console.log('UserId===>',UserId);
-
+    console.log('UserId===>', UserId);
+    this.setState({
+      isLoading: true,
+    });
     axios
       .post(API.VERIFY_OTP, {
         user_id: UserId,
@@ -50,18 +63,10 @@ class OTP extends Component {
       })
       .then((response) => {
         if (response?.data?.code === 401) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            
-          );
+          Alert.alert('', response?.data?.message ?? '');
         }
         if (response?.data?.code === 422) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            
-          );
+          Alert.alert('', response?.data?.message ?? '');
         }
         if (response?.data?.code === 200) {
           Alert.alert(
@@ -80,32 +85,38 @@ class OTP extends Component {
             {cancelable: false},
           );
           setOtpToken(response?.data?.data?.data?.token);
-          console.log('otptoken=======>',response?.data?.data?.data?.token);
+          console.log('otptoken=======>', response?.data?.data?.data?.token);
           // navigate('Username');
         }
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
   // Resend OTP
   _handleResendOTP = () => {
+    this.setState({
+      Loading: true,
+    });
     axios
       .post(API.RESEND_OTP, {
         user_id: 1,
       })
       .then((response) => {
         if (response?.data?.code === 422) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-          );
+          Alert.alert('', response?.data?.message ?? '');
         }
         if (response?.data?.code === 200) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-           
-          );
+          Alert.alert('', response?.data?.message ?? '');
         }
+      })
+      .finally(() => {
+        this.setState({
+          Loading: false,
+        });
       });
   };
 
@@ -156,21 +167,28 @@ class OTP extends Component {
               {backgroundColor: Constants.Colors.TEXT_COLOR2},
             ]}
             // onPress={this.onVerify}
-            onPress={this._handleVerify}
-          >
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {'Verify'}
-            </Text>
+            onPress={this._handleVerify}>
+            {this.state.isLoading ? (
+              <ActivityIndicator color="white" size={25} />
+            ) : (
+              <Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {'Verify'}
+              </Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
             style={OTPStyles.button}
             onPress={this._handleResendOTP}>
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {'Resend Link'}
-            </Text>
+            {this.state.Loading ? (
+              <ActivityIndicator color="white" size={25} />
+            ) : (
+              <Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {'Resend Link'}
+              </Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>

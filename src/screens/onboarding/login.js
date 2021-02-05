@@ -113,7 +113,7 @@ class Login extends Component {
           addLoginDetail(response?.data?.data);
           setLoginUserId(JSON.stringify(response?.data?.data));
           // loginSuccess();
-          navigate('Overview');
+          // navigate('Overview');
         }
       })
       .finally(() => {

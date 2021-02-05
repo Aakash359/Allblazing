@@ -29,12 +29,13 @@ class Username extends Component {
   }
 
 componentDidMount(){
-  const full_name = this.props.route?.params?.full_name;
-    console.log('fullname==>',full_name);
+  const full_name = this.props.route?.params?.full_name ?? '';
+    console.log('fullname==>',full_name );
     this.setState({name: full_name})
 }
 
   NameStore = () => {
+    console.log('fullname==>', this.state.name);
     if (this.state.name === '') {
       Alert.alert(
         '',
@@ -73,7 +74,7 @@ componentDidMount(){
         Loading: true,
       });
 
-    if (this.state.name === '') {
+    if (name === '') {
       Alert.alert('', 'Please Enter Full Name', '');
     } else {
       axios

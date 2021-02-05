@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, ScrollView, View, TouchableOpacity, Text,Alert} from 'react-native';
+import {Platform, ScrollView, View, TouchableOpacity, Text,Alert, ActivityIndicator} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {withTranslation} from 'react-i18next';
 import {bool, func, shape} from 'prop-types';
@@ -22,10 +22,10 @@ import { setTime } from '../../reducers/baseServices/profile';
 class UserPersonalBest extends Component {
   constructor() {
     super();
-    this.state = {time: null};
+    this.state = {time: 0,Loading:false};
   }
   TimeStore = () => {
-    if (this.state.time === null) {
+    if (this.state.time === 0) {
       Alert.alert('', 'Please Select  Recent time', '');
     } else {
       setUserRecentTime(this.state.time);
@@ -46,7 +46,9 @@ class UserPersonalBest extends Component {
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-
+    this.setState({
+      Loading: true,
+    });
     if (this.state.time === '') {
       Alert.alert('', 'Please Select your Age', '');
     } else {
@@ -78,12 +80,16 @@ class UserPersonalBest extends Component {
             console.log('age:==>',time);
             // navigate('EditProfile');
           }
+        }).finally(() => {
+          this.setState({
+            Loading: false,
+          });
         });
     }
   };
   onTypeChange = (payload) => this.setState({time: payload});
   componentDidMount(){
-    const time = this.props.route.params.time;
+    const time = this.props.route?.params?.time ?? '';
       console.log('fullname==>',time);
       this.setState({time: time})
   }
@@ -149,10 +155,13 @@ class UserPersonalBest extends Component {
             activeOpacity={0.7}
             style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]}
             onPress={() => this.onSave()}>
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {translate('Save')}
-            </Text>
+              {this.state.Loading ? (
+                <ActivityIndicator colo="white" size={25}/>
+              ):(<Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {translate('Save')}
+              </Text>)}
+            
           </TouchableOpacity>
         ) : (
           <View style={Repeat5KStyles.buttonsWrapper}>

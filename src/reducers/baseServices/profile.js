@@ -19,6 +19,7 @@ const initialState = {
   user_id:null,
   full_name:'',
   age:null,
+  gender:'',
   motto_description:'',
   level:null,
   time:null,
