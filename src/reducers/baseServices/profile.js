@@ -2,41 +2,42 @@ import {
   SET_PROFILE_DETAILS,
   SET_FULLNAME,
   SET_AGE,
-SET_GENDER,
-SET_MOTTO_DESCRIPTION,
+  SET_GENDER,
+  SET_MOTTO_DESCRIPTION,
   SET_FOLLOWLIST,
   SET_TIME,
   SET_FOLLOW_ID,
-  SET_FOLLOW_USERID
+  SET_FOLLOW_USERID,
+  SET_PROFILE_IMAGE,
 } from '../../actions/auth-action-types';
 
 const initialState = {
   blocked: null,
-  followerData: null,
-  followingData:null,
-  postData:null,
-  groupData:null,
-  user_id:null,
-  full_name:'',
-  age:null,
-  gender:'',
-  motto_description:'',
-  level:null,
-  time:null,
-  distance:null,
-  runnres_type:'',
-  phone:null,
-  role:null,
-  email:'',
-  image:null,
+  followingCount: null,
+  followerCount: null,
+  postCount: null,
+  groupCount: null,
+  user_id: null,
+  full_name: '',
+  age: null,
+  gender: '',
+  motto_description: '',
+  level: null,
+  time: null,
+  distance: null,
+  runnres_type: '',
+  phone: null,
+  role: null,
+  email: '',
+  image: 'N/A',
 
   // FOLLOWLIST
-  id:0,
-  follow_id:null,
-  folowing_id:0,
-  created_at:0,
-  followingName:'',
-  followName:''
+  id: 0,
+  follow_id: null,
+  folowing_id: 0,
+  created_at: 0,
+  followingName: '',
+  followName: '',
 };
 
 export default function profile(state = initialState, {payload, type}) {
@@ -46,47 +47,51 @@ export default function profile(state = initialState, {payload, type}) {
         ...state,
         ...payload,
       };
-      case SET_FULLNAME:
+    case SET_FULLNAME:
       return {
         ...state,
-        full_name:payload,
+        full_name: payload,
       };
-      case SET_AGE:
+    case SET_AGE:
       return {
         ...state,
-        age:payload,
+        age: payload,
       };
-      case SET_GENDER:
+    case SET_GENDER:
       return {
         ...state,
-        gender:payload,
+        gender: payload,
       };
-      case SET_MOTTO_DESCRIPTION:
+    case SET_MOTTO_DESCRIPTION:
       return {
         ...state,
-        motto_description:payload,
-      
+        motto_description: payload,
       };
-      case SET_TIME:
+    case SET_TIME:
       return {
         ...state,
-        time:payload,
+        time: payload,
       };
-      case SET_FOLLOWLIST:
+    case SET_FOLLOWLIST:
       return {
         ...state,
-        follow_id:'',
+        follow_id: '',
         // ...payload
       };
-      case SET_FOLLOW_USERID:
+    case SET_FOLLOW_USERID:
       return {
         ...state,
-        id:'',
+        id: '',
       };
-      case SET_FOLLOW_ID:
+    case SET_FOLLOW_ID:
       return {
         ...state,
-        follow_id:'',
+        follow_id: '',
+      };
+    case SET_PROFILE_IMAGE:
+      return {
+        ...state,
+        image: payload,
       };
     default:
       return state;
@@ -104,6 +109,13 @@ export function setFullName(params) {
     dispatch({type: SET_FULLNAME, payload: params});
   };
 }
+
+export function setProfileImage(params) {
+  return (dispatch) => {
+    dispatch({type: SET_PROFILE_IMAGE, payload: params});
+  };
+}
+
 export function setAge(params) {
   return (dispatch) => {
     dispatch({type: SET_AGE, payload: params});
@@ -126,23 +138,21 @@ export function setTime(params) {
 }
 
 export function setFollowList(params) {
-  console.log('===>',params);
+  console.log('===>', params);
   return (dispatch) => {
     dispatch({type: SET_FOLLOWLIST, payload: params});
   };
 }
 
 export function setFollowUserId(params) {
-  console.log('===>',params);
+  console.log('===>', params);
   return (dispatch) => {
     dispatch({type: SET_FOLLOW_USERID, payload: params});
   };
 }
 export function setFollowId(params) {
-  console.log('===>',params);
+  console.log('===>', params);
   return (dispatch) => {
     dispatch({type: SET_FOLLOW_ID, payload: params});
   };
 }
-
-

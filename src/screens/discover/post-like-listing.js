@@ -87,7 +87,10 @@ class PostLikeListing extends Component {
 
   renderItem = ({item}) => (
     <View>
-      <TouchableOpacity
+      {this.state.isLoading ? (
+        <ActivityIndicator color="white" size={25}/>
+       ) : (
+        <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
           this.props.navigation.navigate('FeedDetailScreen', {data: item});
@@ -118,6 +121,8 @@ class PostLikeListing extends Component {
           </View>
         </ImageBackground>
       </TouchableOpacity>
+      )}
+      
     </View>
   );
   render() {
