@@ -6,6 +6,7 @@ import { ChatStyles, HomeStyles, GroupDetailStyles, MyProfileStyles, InviteFrien
 import { SingleEvent, MoreOptionsPopup, RemoveMemberPopup } from '../../components';
 import axios from 'axios';
 import API from '../../constants/baseApi';
+import { getAuthToken } from '../../helpers/auth';
 
 class GroupDetail extends React.Component {
   constructor() {

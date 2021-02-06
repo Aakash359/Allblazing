@@ -22,7 +22,7 @@ import Axios from 'axios';
 import API from '../../constants/baseApi';
 import {getAuthToken} from '../../helpers/auth';
 import {ActivityIndicator} from 'react-native';
-import {setProfileDetails} from '../../reducers/baseServices/profile';
+import {setMottoDescription, setProfileDetails} from '../../reducers/baseServices/profile';
 
 class MyProfile extends Component {
   constructor() {
@@ -39,7 +39,7 @@ class MyProfile extends Component {
   }
 
   UserProfileDetails = async () => {
-    const {user_id, addProfileDetail} = this.props;
+    const {user_id, addProfileDetail,} = this.props;
     console.log('userid==>', user_id);
     const token = await getAuthToken();
     // console.log('====>', token);
@@ -109,6 +109,7 @@ class MyProfile extends Component {
       age,
       gender,
       time,
+      level,
       motto_description,
       image,
       followingCount,
@@ -144,8 +145,7 @@ class MyProfile extends Component {
                     style={MyProfileStyles.profileIcon}>
                     <View style={MyProfileStyles.levelStyle}>
                       <Text style={MyProfileStyles.levelText}>
-                        gfgf
-                        {/* Level {level} */}
+                        Level {level}
                       </Text>
                     </View>
                     <View style={MyProfileStyles.overlappingStyle}>
@@ -248,6 +248,7 @@ const mapStateToProps = ({
     followerCount,
     groupCount,
     postCount,
+    level,
   },
   auth: {user_id},
 }) => ({
@@ -255,6 +256,7 @@ const mapStateToProps = ({
   full_name,
   age,
   gender,
+  level,
   time,
   motto_description,
   user_id,
@@ -265,6 +267,7 @@ const mapStateToProps = ({
 });
 const mapDispatchToProps = {
   addProfileDetail: (params) => setProfileDetails(params),
+ 
 };
 export default connect(
   mapStateToProps,

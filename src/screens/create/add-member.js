@@ -51,8 +51,8 @@ class AddMember extends Component {
     axios
       .get(API.USER_LIST, config)
       .then((response) => {
-        // console.log('response ====', response.data.data.result);
-        if (response.data.data.result) {
+        console.log('response ====', response.data.data.result);
+        if (response?.data?.data?.result) {
           // console.log('===>response', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
         }

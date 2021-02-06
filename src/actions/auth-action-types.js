@@ -8,6 +8,8 @@ export const SET_PROFILE_DETAILS = 'SET_PROFILE_DETAILS';
 export const SET_FULLNAME = 'SET_FULLNAME';
 export const SET_AGE = 'SET_AGE';
 export const SET_GENDER = 'SET_GENDER';
+export const SET_LOCATION = 'SET_LOCATION';
+
 export const SET_MOTTO_DESCRIPTION = 'SET_MOTTO_DESCRIPTION';
 export const SET_TIME = 'SET_TIME';
 

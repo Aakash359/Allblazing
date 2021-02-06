@@ -9,6 +9,7 @@ import {
   SET_FOLLOW_ID,
   SET_FOLLOW_USERID,
   SET_PROFILE_IMAGE,
+  SET_LOCATION,
 } from '../../actions/auth-action-types';
 
 const initialState = {
@@ -124,6 +125,11 @@ export function setAge(params) {
 export function setGender(params) {
   return (dispatch) => {
     dispatch({type: SET_GENDER, payload: params});
+  };
+}
+export function setLocation(params) {
+  return (dispatch) => {
+    dispatch({type: SET_LOCATION, payload: params});
   };
 }
 export function setMottoDescription(params) {

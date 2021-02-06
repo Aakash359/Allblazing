@@ -23,20 +23,20 @@ class UserMotto extends Component {
   constructor() {
     super();
     this.state = {
-      motto: '', 
+      motto_description: '', 
       Loading: false
     };
   }
 
-  onChangeText = (motto) => {
-    this.setState({motto});
-  };
+  // onChangeText = (text) => {
+  //   this.setState({motto_description:text});
+  // };
   onSave = async() => {
     const {addMottoDescription} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
-    const {motto} = this.state;
+    const {motto_description} = this.state;
 
     const token = await getAuthToken();
     const config = {
@@ -45,14 +45,14 @@ class UserMotto extends Component {
     this.setState({
       Loading: true,
     });
-    if (this.state.motto === '') {
+    if (this.state.motto_description === '') {
       Alert.alert('', 'Please enter Description', '');
     } else {
       axios
         .post(
           API.UPDATE_PROFILE,
           {
-            motto_description: motto,
+            motto_description: motto_description,
           },
           config,
         )
@@ -72,8 +72,8 @@ class UserMotto extends Component {
             ],
             {cancelable:false}
             );
-            addMottoDescription(motto);
-            console.log('age:==>', motto);
+            addMottoDescription(motto_description);
+            console.log('motto_description:==>', motto_description);
             // navigate('EditProfile');
           }
         })
@@ -90,7 +90,7 @@ class UserMotto extends Component {
   //     this.setState({motto: motto_description})
   // }
   render() {
-    const {motto} = this.state;
+    const {motto_description} = this.state;
     const {
       navigation: {goBack},
       t: translate,
@@ -112,19 +112,19 @@ class UserMotto extends Component {
                   numberOfLines={15}
                   style={CommonStyles.textArea}
                   placeholder={translate('profile.Motto')}
-                  value={motto}
-                  onChangeText={this.onChangeText}
+                  value={motto_description}
+                  onChangeText={(text) =>this.setState({motto_description:text})}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
                 />
               </View>
               <Text
-                style={RegisterStyle.mottoCount}>{`${motto.length}/60`}</Text>
+                style={RegisterStyle.mottoCount}>{`${motto_description.length}/60`}</Text>
             </View>
           </View>
         </ScrollView>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.7}v
           style={[AuthStyle.saveBtn, MottoStyles.saveBtn]}
           onPress={() => this.onSave()}>
             {this.state.Loading ? (
