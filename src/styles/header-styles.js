@@ -6,7 +6,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Constants.Colors.PRIMARY,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around'
   },
   crossIcon: {
     height: 16,
@@ -46,7 +46,7 @@ export default StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   searchIcon: {
     height: 20,

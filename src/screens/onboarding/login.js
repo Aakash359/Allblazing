@@ -149,6 +149,8 @@ class Login extends Component {
                 value={emailId}
                 placeholder={translate('Email')}
                 onChangeText={(text) => this.setState({emailId: text})}
+                autoCapitalize={false}
+                autoCorrect={false}
               />
               <View style={LoginStyles.passwordInput}>
                 <TextInput
@@ -159,6 +161,8 @@ class Login extends Component {
                   onChangeText={(text) => this.setState({password: text})}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                  autoCapitalize={false}
+                autoCorrect={false}
                 />
                 {isShow ? (
                   <TouchableOpacity

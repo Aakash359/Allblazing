@@ -17,6 +17,8 @@ import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import {withTranslation} from 'react-i18next';
 import {Alert} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Colors from '../../constants/colors';
 
 class CreateEvent extends Component {
   constructor(props) {
@@ -121,7 +123,7 @@ class CreateEvent extends Component {
         CreateEventStyles.halfView,
         {
           backgroundColor:
-            this.state.EventTypeSelectedId == item.id ? '#808080' : '#292929',
+            this.state.EventTypeSelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
         },
       ]}
       onPress={() => this.handleBtn(item.id)}>
@@ -138,7 +140,7 @@ class CreateEvent extends Component {
         CreateEventStyles.halfView,
         {
           backgroundColor:
-            this.state.EventCategorySelectedId == item.id ? '#808080' : '#292929',
+            this.state.EventCategorySelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
         },
       ]}
       onPress={() => this.handleBtns(item.id)}>
@@ -278,6 +280,13 @@ class CreateEvent extends Component {
             />
           </View>
           <View style={CreateEventStyles.searchView}>
+            {/* <DateTimePicker
+             value={new Date()}
+             mode="date"
+             is24Hour={true}
+          display="default"
+          onChange={(e) => console.log(e)}
+            /> */}
             <TextInput
               placeholder="Date"
               placeholderTextColor={Constants.Colors.GREY_BORDER}
