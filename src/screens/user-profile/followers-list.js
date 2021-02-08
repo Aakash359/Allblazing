@@ -63,8 +63,8 @@ class FollowersList extends Component {
         if (response.data.data.result) {
           console.log('===>responseFOLLOWERS', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
-          addFollowUserId(response?.data?.data?.result?.id);
-          console.log('====?id', response?.data?.data?.result?.id);
+          // addFollowUserId(response?.data?.data?.result?.id);
+          // console.log('====?id', response?.data?.data?.result?.id);
         }
       })
       .finally(() => {

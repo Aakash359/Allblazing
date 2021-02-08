@@ -80,7 +80,7 @@ class Login extends Component {
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
-        {cancelable: false},
+        {Cancelable: false},
       );
       return;
     } else if (password.length < 1) {

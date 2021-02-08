@@ -65,16 +65,16 @@ class UserPersonalBest extends Component {
             Alert.alert('', response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             );
             addTime(time);
             console.log('age:==>',time);

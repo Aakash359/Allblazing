@@ -85,15 +85,15 @@ class Register extends Component {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('cancle pressed'),
-          style: 'cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'Cancel',
         },
         {
           text: 'OK',
           onPress: () => console.log('Ok Pressed'),
         },
       ],
-      {cancelable:false}
+      {Cancelable:false}
       );
       return;
     } else if (password.length < 8) {
@@ -101,15 +101,15 @@ class Register extends Component {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('cancle pressed'),
-          style: 'cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'Cancel',
         },
         {
           text: 'OK',
           onPress: () => console.log('OK Pressed'),
         },
       ],
-      {cancelable:false}
+      {Cancelable:false}
       );
       return;
     }
@@ -137,14 +137,14 @@ class Register extends Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('Cancle Pressed'),
+                onPress: () => console.log('Cancel Pressed'),
               },
               {
                 text: 'OK',
                 onPress: () => navigate('OTP', {email: this.state.email}),
               },
             ],
-            {cancelable: false},
+            {Cancelable: false},
           );
           addSignUpDetail(response?.data?.data);
           // console.log('data=====>', response?.data?.data);

@@ -123,15 +123,15 @@ class AddMember extends Component {
            [
             {
               text: 'Cancel',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('Home'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
            );
           // addCreateGroupDetail(response?.data?.data);
           // console.log('====>Response', response?.data?.data);
@@ -211,15 +211,15 @@ class AddMember extends Component {
           [
             {
               text: 'Cancel',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('Home'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
           );
           // addCreateGroupDetail(response?.data?.data);
           // console.log('====>Response', response?.data?.data);

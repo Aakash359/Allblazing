@@ -86,16 +86,16 @@ class UserGender extends Component {
               response?.data?.message ?? '',
               [
                 {
-                  text: 'Cancle',
-                  onPress: () => console.log('cancle pressed'),
-                  style: 'cancel',
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel pressed'),
+                  style: 'Cancel',
                 },
                 {
                   text: 'OK',
                   onPress: () => navigate('EditProfile'),
                 },
               ],
-              {cancelable: false},
+              {Cancelable: false},
             );
             addGender(gender);
             console.log('gender:==>', gender);

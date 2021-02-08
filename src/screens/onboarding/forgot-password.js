@@ -52,16 +52,16 @@ class ForgotPassword extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('ForgotOTP',{email:this.state.email}),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
           setForgotPasswordUserId(response?.data?.data?.user_id.toString());
           console.log(response?.data?.data?.user_id.toString());

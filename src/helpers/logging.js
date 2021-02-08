@@ -18,5 +18,5 @@ export const showAlert = (
   message = 'Please try again',
   buttons = [{ text: 'Ok' }],
 ) => {
-  Alert.alert(title, message, buttons, { cancelable: false });
+  Alert.alert(title, message, buttons, { Cancelable: false });
 };

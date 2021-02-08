@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import {bool, func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
@@ -17,7 +18,6 @@ import axios from 'axios';
 import API from '../../constants/baseApi';
 import {connect} from 'react-redux';
 import {setFullName} from '../../reducers/baseServices/profile';
-import { ActivityIndicator } from 'react-native';
 
 class Username extends Component {
   constructor() {
@@ -42,16 +42,16 @@ componentDidMount(){
         'Please Enter Full Name',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok Pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
       );
     } else {
       setUserName(this.state.name);
@@ -91,16 +91,16 @@ componentDidMount(){
              response?.data?.message ?? '',
              [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
              );
             addFullName(name);
             console.log('name:==>',name);

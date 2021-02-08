@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, TouchableOpacity, Text, Platform, Alert} from 'react-native';
+import {View, TouchableOpacity, Text, Platform, Alert,ActivityIndicator} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {func, shape} from 'prop-types';
@@ -38,16 +38,16 @@ class OTP extends Component {
         'Please fill otp!',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok Pressed'),
           },
         ],
-        {cancelable: false},
+        {Cancelable: false},
       );
       return;
     }
@@ -75,14 +75,14 @@ class OTP extends Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('Cancle Pressed'),
+                onPress: () => console.log('Cancel Pressed'),
               },
               {
                 text: 'OK',
                 onPress: () => navigate('Username'),
               },
             ],
-            {cancelable: false},
+            {Cancelable: false},
           );
           setOtpToken(response?.data?.data?.data?.token);
           console.log('otptoken=======>', response?.data?.data?.data?.token);

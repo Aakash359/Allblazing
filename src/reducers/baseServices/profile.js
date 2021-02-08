@@ -82,7 +82,7 @@ export default function profile(state = initialState, {payload, type}) {
     case SET_FOLLOW_USERID:
       return {
         ...state,
-        id: '',
+        id: payload
       };
     case SET_FOLLOW_ID:
       return {

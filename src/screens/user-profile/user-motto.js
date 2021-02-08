@@ -61,16 +61,16 @@ class UserMotto extends Component {
             Alert.alert('', response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             );
             addMottoDescription(motto_description);
             console.log('motto_description:==>', motto_description);
@@ -112,7 +112,7 @@ class UserMotto extends Component {
                   numberOfLines={15}
                   style={CommonStyles.textArea}
                   placeholder={translate('profile.Motto')}
-                  value={motto_description}
+                  value={this.state.motto_description}
                   onChangeText={(text) =>this.setState({motto_description:text})}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}

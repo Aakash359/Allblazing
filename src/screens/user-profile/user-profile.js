@@ -43,7 +43,7 @@ class UserProfile extends Component {
     const id = this.props.route.params.id;
     console.log('userid==>', id);
     const token = await getAuthToken();
-    // console.log('====>', token);
+    console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -59,11 +59,16 @@ class UserProfile extends Component {
         config,
       )
       .then((response) => {
+        console.log('response==>',response);
         if (response.data.data.result) {
           console.log('===>details', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
         }
-      })
+      }).catch((err)=>{
+        console.log('err==>',err);
+      }
+
+      )
       .finally(() => {
         this.setState({
           Loading: false,
@@ -115,16 +120,16 @@ class UserProfile extends Component {
           response?.data?.message ?? '',
           [
             {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              text: 'Cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('MyProfile'),
             },
           ],
-          {cancelable: false},
+          {Cancelable: false},
         );
         // navigate('MyProfile');
       }
@@ -150,19 +155,21 @@ class UserProfile extends Component {
       )
       .then((response) => {
         if (response.data.code == 200) {
-          Alert.alert('', response?.data?.message ?? '',
-          [
-            {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
-            },
-            {
-              text: 'OK',
-              onPress: () => console.log('ok Pressed'),
-            },
-          ],
-          {cancelable:false}
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => console.log('ok Pressed'),
+              },
+            ],
+            {Cancelable: false},
           );
           this.setState({followStatus: !followStatus});
         }
@@ -199,7 +206,12 @@ class UserProfile extends Component {
             <TouchableOpacity activeOpacity={0.7}>
               <View>
                 <ImageBackground
-                  source={{uri: this.state.list.image}}
+                  source={
+                    this.state.list.image == 'N/A'
+                      ? Constants.Images.profilePic
+                      : {uri: this.state.list.image}
+                  }
+                  // source={{uri: this.state.list.image}}
                   imageStyle={ProfileStyles.borderRadius}
                   style={ProfileStyles.profileIcon}>
                   <View style={ProfileStyles.levelStyle}>
@@ -223,22 +235,22 @@ class UserProfile extends Component {
                         style={ProfileStyles.icon}
                       />
                     </TouchableOpacity>
-                  {this.props.route?.params?.iseventPage ? null :
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      // onPress={() => setFollowStatus(!followStatus)}
-                      onPress={() => this.handleUserFollow()}>
-                      {this.state.FollowLoading ? (
-                        <ActivityIndicator color="white" size={25} />
-                      ) : (
-                        <Image
-                          source={Constants.Images.add}
-                          resizeMode="contain"
-                          style={ProfileStyles.icon}
-                        />
-                      )}
-                    </TouchableOpacity>
-                    }
+                    {this.props.route?.params?.iseventPage ? null : (
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        // onPress={() => setFollowStatus(!followStatus)}
+                        onPress={() => this.handleUserFollow()}>
+                        {this.state.FollowLoading ? (
+                          <ActivityIndicator color="white" size={25} />
+                        ) : (
+                          <Image
+                            source={Constants.Images.add}
+                            resizeMode="contain"
+                            style={ProfileStyles.icon}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </ImageBackground>
               </View>

@@ -78,15 +78,15 @@ class BlockUser extends React.Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('MyProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
 
           // navigate('MyProfile');
@@ -139,15 +139,15 @@ class BlockUser extends React.Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('MyProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
 
           // navigate('MyProfile');

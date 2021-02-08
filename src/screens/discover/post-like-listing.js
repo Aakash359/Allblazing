@@ -39,7 +39,7 @@ class PostLikeListing extends Component {
     this._fetchPost();
   }
 
-  _fetchPost = (useCallback = async () => {
+  _fetchPost = async() => {
     const token = await getAuthToken();
     console.log('====>', token);
     const config = {
@@ -61,16 +61,22 @@ class PostLikeListing extends Component {
           isLoading: false,
         });
       });
-  });
+  };
 
   _Like = async (item) => {
     const token = await getAuthToken();
     console.log('==>', item.id);
     console.log('tokens==>', token);
     const config = {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: { Authorization: `Bearer ${token}` },
     };
     // console.log(config);
+
+    let newList = this.state.list.map(el => (
+      el.id === item.id ? { ...el, likeStatus: item.likeStatus > 0 ? 0 : 1, likeCount: item.likeStatus > 0 ? item.likeCount - 1 : item.likeCount + 1}  : el
+    ))
+    this.setState({list: newList});
+
     Axios.post(
       API.LIKE,
       {
@@ -107,6 +113,7 @@ class PostLikeListing extends Component {
               // onPress={() => {
               //   setLike(!like);
               // }}
+              hitSlop={{top: 30, bottom: 30, left: 30, right: 30}}
             >
               <Image
                 source={

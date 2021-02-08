@@ -36,16 +36,16 @@ class Userage extends Component {
         'Please Select age',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok Pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
       );
     } else {
       console.log('===>',this.state.age);
@@ -84,16 +84,16 @@ class Userage extends Component {
             Alert.alert('', response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             );
             addAge(age);
             console.log('age:==>',age);
