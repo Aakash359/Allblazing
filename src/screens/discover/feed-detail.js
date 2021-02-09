@@ -33,52 +33,66 @@ class FeedDetailScreen extends Component {
       route: {params},
       t: translate,
     } = this.props;
-    const {like,isLoading}=this.state;
+    const {like, isLoading} = this.state;
     const autherName = this.props.route.params.data.autherName;
     const likeCount = this.props.route.params.data.likeCount;
     const likeStatus = this.props.route.params.data.likeStatus;
     const created_at = this.props.route.params.data.created_at;
     const post = this.props.route.params.data.post;
+    const autherImage = this.props.route.params.data.autherImage;
+
     return (
       <>
         <View style={FeedDetailStyles.container}>
-        <View style={[FeedDetailStyles.listView]}>
-          <View style={FeedDetailStyles.innerView}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() =>this.props.navigation.goBack()}>
+          <View style={[FeedDetailStyles.listView]}>
+            <View style={FeedDetailStyles.innerView}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => this.props.navigation.goBack()}>
+                <Image
+                  source={Constants.Images.arrowLeft}
+                  style={FeedDetailStyles.arrowLeft}
+                />
+              </TouchableOpacity>
               <Image
-                source={Constants.Images.arrowLeft}
-                style={FeedDetailStyles.arrowLeft}
+                // source={{uri: autherImage}}
+                source={
+                  autherImage == 'N/A'
+                    ? Constants.Images.profilePic
+                    : {uri: autherImage}
+                }
+                style={FeedDetailStyles.userImage}
               />
-            </TouchableOpacity>
-            <Image source={{uri: post}} style={FeedDetailStyles.userImage} />
-            <View style={FeedDetailStyles.nameView}>
-              <Text style={FollowersStyles.nameText}>{autherName}</Text>
-              <Text style={FollowersStyles.locationText}>
-                {moment(created_at).format('LT')}
-              </Text>
+              <View style={FeedDetailStyles.nameView}>
+                <Text style={FollowersStyles.nameText}>{autherName}</Text>
+                <Text style={FollowersStyles.locationText}>
+                  {moment(created_at).format('LT')}
+                </Text>
+              </View>
+            </View>
+            <View style={FeedDetailStyles.heartView}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  this.setState({like: !like});
+                }}>
+                <Image
+                  source={
+                    likeStatus > 0
+                      ? Constants.Images.selectedHeart
+                      : Constants.Images.heart
+                  }
+                  style={FeedDetailStyles.heartIcon}
+                />
+              </TouchableOpacity>
+              <Text style={FollowersStyles.nameText}>{likeCount}</Text>
             </View>
           </View>
-          <View style={FeedDetailStyles.heartView}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => {
-                this.setState({like:!like});
-              }}>
-              <Image
-                source={
-                  likeStatus > 0
-                    ? Constants.Images.selectedHeart
-                    : Constants.Images.heart
-                }
-                style={FeedDetailStyles.heartIcon}
-              />
-            </TouchableOpacity>
-            <Text style={FollowersStyles.nameText}>{likeCount}</Text>
-          </View>
-        </View>
-        <Image source={{uri: post}}  style={FeedDetailStyles.feedImg} resizeMode="contain"/>
+          <Image
+            source={{uri: post}}
+            style={FeedDetailStyles.feedImg}
+            resizeMode="contain"
+          />
         </View>
       </>
     );

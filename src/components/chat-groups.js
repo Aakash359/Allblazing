@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { bool, func, shape } from 'prop-types';
+import { array, bool, func, shape, string } from 'prop-types';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import Constants from '../constants';
 import { InviteFriendsStyles } from '../styles';
@@ -8,19 +8,22 @@ import { InviteFriendsStyles } from '../styles';
 export const ChatGroup = ({
   hasChats,
   navigation,
+  test,
+  data
 
 }) => (
+  
   <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('GroupDetail')} style={InviteFriendsStyles.container}>
     <View style={InviteFriendsStyles.userWrapper}>
-      <Image source={Constants.Images.groupDetails} style={InviteFriendsStyles.userImage} />
+      <Image source={data.post == 'N/A' ? Constants.Images.groupDetails : {uri:data.post}} style={InviteFriendsStyles.userImage} />
       <View>
-        <Text style={InviteFriendsStyles.username}>Super Nova</Text>
-        <Text style={InviteFriendsStyles.location}>Mike,santee, watson and 38 others</Text>
+        <Text style={InviteFriendsStyles.username}>{data.name}</Text>
+        <Text style={InviteFriendsStyles.location}>{data.description}</Text>
       </View>
     </View>
     {hasChats && (
       <View style={InviteFriendsStyles.chatCount}>
-        <Text style={InviteFriendsStyles.chatText}>1</Text>
+        <Text style={InviteFriendsStyles.chatText}>{data.count}</Text>
       </View>
     )}
 
@@ -29,6 +32,8 @@ export const ChatGroup = ({
 
 ChatGroup.propTypes = {
   hasChats: bool,
+  test:string,
+  data:array,
   navigation: shape({
     navigate: func,
     setParams: func,

@@ -23,7 +23,5 @@ export const SET_FOLLOW_ID = 'SET_FOLLOW_ID';
 export const SET_FEED_DETAILS = 'SET_FEED_DETAILS';
 export const SET_PROFILE_IMAGE = 'SET_PROFILE_IMAGE';
 
-// post Like
-export const SET_POST_LIKE_DETAILS = 'SET_POST_LIKE_DETAILS';
-export const SET_POST_LIKECOUNT = 'SET_POST_LIKECOUNT';
+
 
