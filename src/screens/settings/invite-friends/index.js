@@ -40,46 +40,46 @@ class InviteFriends extends React.Component {
     const Component = source === 'home' ? View : ScrollView;
 
     return (
-      <View style={CommonStyles.container}>
+      <>
         <Component>
-          <View style={[HomeStyles.wrapper, InviteFriendsStyles.overview]}>
-            <Image
-              resizeMode="contain"
-              style={[
-                InviteFriendsStyles.runners,
-                source === 'home' && InviteFriendsStyles.homeRunners,
-              ]}
-              source={Constants.Images.runners}
-            />
-            <Text style={InviteFriendsStyles.description}>
-              {translate('settings.InviteFriendsDescription')}
-            </Text>
-            <View style={InviteFriendsStyles.row}>
-              <Text style={InviteFriendsStyles.code}>{'ALLBLAZING123456'}</Text>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => Clipboard.setString('ALLBLAZING123456')}>
-                <Image
-                  resizeMode="contain"
-                  style={InviteFriendsStyles.copy}
-                  source={Constants.Images.copy}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Component>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={[
-            InviteFriendsStyles.button,
-            InviteFriendsStyles.inviteBtn,
-            source === 'home' && InviteFriendsStyles.homeInviteBtn,
-          ]}
-          onPress={() => this.setState({visible: true})}>
-          <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-            {translate('settings.Invite Friends')}
+          <Image
+            resizeMode="contain"
+            style={[
+              InviteFriendsStyles.runners,
+              source === 'home' && InviteFriendsStyles.homeRunners,
+            ]}
+            source={Constants.Images.runners}
+          />
+          <Text style={InviteFriendsStyles.description}>
+            {translate('settings.InviteFriendsDescription')}
           </Text>
-        </TouchableOpacity>
+          <View style={InviteFriendsStyles.row}>
+            <Text style={InviteFriendsStyles.code}>{'ALLBLAZING123456'}</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Clipboard.setString('ALLBLAZING123456')}>
+              <Image
+                resizeMode="contain"
+                style={InviteFriendsStyles.copy}
+                source={Constants.Images.copy}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+              InviteFriendsStyles.button,
+              InviteFriendsStyles.inviteBtn,
+              source === 'home' && InviteFriendsStyles.homeInviteBtn,
+            ]}
+            onPress={() => this.setState({visible: true})}>
+            <Text
+              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+              {translate('settings.Invite Friends')}
+            </Text>
+          </TouchableOpacity>
+        </Component>
         {visible && (
           <InviteOptionPopup
             onFacebook={() => this.setState({visible: false})}
@@ -88,7 +88,7 @@ class InviteFriends extends React.Component {
             onClose={() => this.setState({visible: false})}
           />
         )}
-      </View>
+      </>
     );
   }
 }

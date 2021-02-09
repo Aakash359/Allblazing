@@ -51,8 +51,8 @@ class AddMember extends Component {
     axios
       .get(API.USER_LIST, config)
       .then((response) => {
-        // console.log('response ====', response.data.data.result);
-        if (response.data.data.result) {
+        console.log('response ====', response.data.data.result);
+        if (response?.data?.data?.result) {
           // console.log('===>response', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
         }
@@ -123,15 +123,15 @@ class AddMember extends Component {
            [
             {
               text: 'Cancel',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('Home'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
            );
           // addCreateGroupDetail(response?.data?.data);
           // console.log('====>Response', response?.data?.data);
@@ -211,15 +211,15 @@ class AddMember extends Component {
           [
             {
               text: 'Cancel',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('Home'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
           );
           // addCreateGroupDetail(response?.data?.data);
           // console.log('====>Response', response?.data?.data);

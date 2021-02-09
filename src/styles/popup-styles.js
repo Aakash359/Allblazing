@@ -67,12 +67,12 @@ const styles = {
     justifyContent: 'center',
     width: (Constants.BaseStyle.DEVICE_WIDTH / 100) * 18,
   },
-  cancelButtonStyle: {
+  CancelButtonStyle: {
     backgroundColor: Constants.Colors.WHITE,
     borderColor: Constants.Colors.PRIMARY,
     borderWidth: 1,
   },
-  cancelTextStyle: { color: Constants.Colors.PRIMARY },
+  CancelTextStyle: { color: Constants.Colors.PRIMARY },
   close: {
     alignItems: 'center',
     alignSelf: 'center',

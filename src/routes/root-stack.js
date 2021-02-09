@@ -18,6 +18,7 @@ class AppNavigator extends Component {
 
   _loadAccessToken = async () => {
     const token = await getAuthToken();
+    const userId = await getLoginUserId();
     // const userId = await getLoginUserId();
     // console.log('JSON.parse(userId)========',userId,token);
     this.props.addLoginDetail(JSON.parse(userId));

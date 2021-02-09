@@ -1,10 +1,13 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Constants.Colors.PRIMARY,
+    height: 50,
+    marginTop: 10,
+    marginBottom: 5,
+
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
@@ -17,6 +20,10 @@ export default StyleSheet.create({
     height: 20,
     marginRight: 10,
     width: 20,
+  },
+  filterIcon2: {
+    height: 22,
+    width: 22,
   },
   headerRightTextStyle: {
     ...Constants.Fonts.RegularBold,
@@ -33,6 +40,15 @@ export default StyleSheet.create({
     textAlign: 'left',
     width: '70%',
   },
+  inputSearch: {
+    marginHorizontal: Constants.BaseStyle.scale(2),
+    backgroundColor: Constants.Colors.PRIMARY,
+    borderRadius: Constants.BaseStyle.scale(8),
+  },
+  inputNotif: {
+    backgroundColor: Constants.Colors.PRIMARY,
+    borderRadius: Constants.BaseStyle.scale(8),
+  },
   mapIcon: {
     height: 20,
     marginHorizontal: Constants.BaseStyle.scale(10),
@@ -40,7 +56,7 @@ export default StyleSheet.create({
   },
   notificationIcon: {
     height: 20,
-    marginHorizontal: Constants.BaseStyle.scale(10),
+    margin: Constants.BaseStyle.scale(10),
     width: 20,
   },
   row: {
@@ -50,7 +66,7 @@ export default StyleSheet.create({
   },
   searchIcon: {
     height: 20,
-    marginHorizontal: Constants.BaseStyle.scale(10),
+    margin: Constants.BaseStyle.scale(10),
     width: 20,
   },
   searchInput: {

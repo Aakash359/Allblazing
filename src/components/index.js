@@ -2,6 +2,7 @@ import AgePicker from './popups/age-picker';
 import InviteOptionPopup from './popups/invite-options-popup';
 import LogoutPopup from './popups/logout-popup';
 import MoreOptionsPopup from './popups/more-options-popup';
+import PlusIconPopup from './popups/plus-icon-popup';
 import RemoveMemberPopup from './popups/remove-member-popup';
 import SuccessPopup from './popups/success-popup';
 import PermisionPopup from './popups/permission-popup';
@@ -46,4 +47,5 @@ export {
   UserImages,
   LogoutPopup,
   MoreOptionsPopup,
+  PlusIconPopup
 };

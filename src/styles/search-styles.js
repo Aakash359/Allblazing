@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
 // const {
@@ -57,18 +57,18 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: 12,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     margin: 10,
     marginTop: 40,
-    padding: 15,
+    padding: 4,
   },
   sectionMainView: {
     borderColor: Constants.Colors.WHITE,
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: 20,
-
   },
-
 });
 
 export default StyleSheet.create(styles);

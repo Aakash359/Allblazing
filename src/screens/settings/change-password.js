@@ -93,16 +93,16 @@ class ChangePassword extends Component {
         'Please fill old password',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
       );
       return;
     } else if (newPassword.length < 1) {
@@ -111,17 +111,35 @@ class ChangePassword extends Component {
         'Please fill  new password',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
         
+      );
+      return;
+    }else if(password == newPassword ){
+      Alert.alert(
+        '',
+        'you have recently used this password',
+        [
+          {
+            text:'Cancel',
+            onPress:()=>console.log('Cancel pressed'),
+            style:'Cancel',
+          },
+          {
+            text:'Ok',
+            onPress: () => console.log('ok pressed'),
+          },
+        ],
+        {Cancelable:false}
       );
       return;
     }else if(confirmPassword.length < 1){
@@ -130,17 +148,35 @@ class ChangePassword extends Component {
           'Please fill confirm password!',
           [
             {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              text: 'Cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => console.log('ok pressed'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
           
+      );
+      return;
+    }else if(newPassword != confirmPassword){
+      Alert.alert(
+        '',
+        'Please enter new password and confirm password same',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.log('ok pressed'),
+          },
+        ],
+        {Cancelable:false}
       );
       return;
     }
@@ -176,16 +212,16 @@ class ChangePassword extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('Settings'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             
           );
 
@@ -209,8 +245,6 @@ class ChangePassword extends Component {
       visiblePasswords,
     } = this.state;
     const {t: translate} = this.props;
-    const {isLoading} = this.props;
-
     return (
       <View style={CommonStyles.container}>
         <ScrollView
@@ -357,7 +391,7 @@ class ChangePassword extends Component {
           // onPress={this.onContinue}
           onPress={this.onSave}
           >
-            {isLoading ? (
+            {this.state.isLoading ? (
               <ActivityIndicator  color="white" size={25}/>
             ):(
               <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>

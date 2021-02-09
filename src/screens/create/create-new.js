@@ -4,7 +4,7 @@ import { func, shape } from 'prop-types';
 import Modal from 'react-native-modalbox';
 import Constants from '../../constants';
 import { HomeStyles, CreateNewStyles } from '../../styles';
-import { HeaderSearchBar, SingleEvent } from '../../components';
+import { HeaderSearchBar, SingleEvent ,InviteOptionPopup} from '../../components';
 
 class CreateNew extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class CreateNew extends React.Component {
       <>
         <View style={HomeStyles.container}>
           <HeaderSearchBar keyword={keyword} onChangeText={(value) => this.setState({ keyword: value })} />
-          <View>
+          {/* <View>
             {this.renderHeader({
               navigate, route: 'Events', title: 'Events',
             })}
@@ -57,8 +57,17 @@ class CreateNew extends React.Component {
             <Image style={CreateNewStyles.runnerImage} source={Constants.Images.runnerImage} />
             <Text style={CreateNewStyles.modalText}>{'No runners available in nearby area'}</Text>
           </View>
+        </View> */}
         </View>
-        <Modal
+        {modalOpen && (
+          <InviteOptionPopup
+            onFacebook={() => this.setState({visible: false})}
+            onStrava={this.onStrava}
+            onWhatsApp={() => this.setState({visible: false})}
+            onClose={() => this.setState({visible: false})}
+          />
+        )}
+        {/* <Modal
           isOpen={modalOpen}
           style={CreateNewStyles.modal}
           backdropPressToClose={false}
@@ -106,7 +115,7 @@ class CreateNew extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
       </>
     );
   }

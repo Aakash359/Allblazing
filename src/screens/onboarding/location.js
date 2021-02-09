@@ -96,16 +96,16 @@ class Location extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('Login'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
           addUserProfileDetails(response?.data);
           console.log('res===>kkkkk' + JSON.stringify(response.data));

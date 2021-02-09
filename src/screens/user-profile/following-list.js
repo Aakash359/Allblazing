@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { View, Image, Text, TouchableOpacity,ActivityIndicator, TextInput, FlatList, ScrollView } from 'react-native';
+import { View, Image, Text, TouchableOpacity, TextInput, FlatList, ScrollView,ActivityIndicator } from 'react-native';
 import { FollowingStyles } from '../../styles';
 import Constants from '../../constants';
 import {useNavigation} from '@react-navigation/native';
@@ -61,7 +61,7 @@ class FollowingList extends Component {
     <TouchableOpacity
       style={FollowingStyles.sectionView}
       activeOpacity={0.7}
-      onPress={() => this.props.navigation.navigate('UserProfile',{iseventPage: true,follow_id: item.follow_id})}
+      onPress={() => this.props.navigation.navigate('UserProfile',{iseventPage: true,follow_id: item.follow_id,id:item.id})}
     >
       <View style={[FollowingStyles.listView, { backgroundColor: '#F898A4' }]} />
       <View>

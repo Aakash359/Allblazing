@@ -39,7 +39,7 @@ class FeedScreen extends Component {
   }
 
   FeedList = async () => {
-    const { addFeedDetails} = this.props;
+    const {addFeedDetails} = this.props;
     const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
@@ -71,6 +71,17 @@ class FeedScreen extends Component {
       headers: {Authorization: `Bearer ${token}`},
     };
     // console.log(config);
+    let newList = this.state.list.map((el) =>
+      el.id === item.id
+        ? {
+            ...el,
+            likeStatus: item.likeStatus > 0 ? 0 : 1,
+            likeCount:
+              item.likeStatus > 0 ? item.likeCount - 1 : item.likeCount + 1,
+          }
+        : el,
+    );
+    this.setState({list: newList});
     Axios.post(
       API.LIKE,
       {
@@ -89,7 +100,7 @@ class FeedScreen extends Component {
     const {} = this.state;
     const {
       navigation: {navigate},
-      likeCount
+      likeCount,
     } = this.props;
     return (
       <View>
@@ -131,7 +142,11 @@ class FeedScreen extends Component {
           onPress={() => {
             this.props.navigation.navigate('FeedDetailScreen', {data: item});
           }}>
-          <Image source={{uri: item.post}} style={FeedStyles.feedImg} />
+          <Image
+            source={{uri: item.post}}
+            style={FeedStyles.feedImg}
+            resizeMode="cover"
+          />
         </TouchableOpacity>
       </View>
     );
@@ -144,7 +159,11 @@ class FeedScreen extends Component {
       onPress={() => {
         this.props.navigation.navigate('LiveFeed');
       }}>
-      <Image source={{uri: item.post}} style={FeedStyles.userImage} />
+      <Image
+        source={{uri: item.post}}
+        style={FeedStyles.userImage}
+        resizeMode="cover"
+      />
     </TouchableOpacity>
   );
   render() {
@@ -159,9 +178,15 @@ class FeedScreen extends Component {
       <>
         <View style={FollowersStyles.container}>
           {isLoading ? (
-            <View style={{justifyContent:'center',alignItems:'center',height:'100%',width:'100%'}}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+              }}>
               <ActivityIndicator color="white" size={25} />
-                </View>
+            </View>
           ) : (
             <ScrollView>
               <FlatList
@@ -190,7 +215,7 @@ class FeedScreen extends Component {
 
 // export default FeedScreen;
 FeedScreen.propTypes = {
-  loginSuccess: func.isRequired,
+  // loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,
@@ -198,7 +223,7 @@ FeedScreen.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = ({Feed:likeStatus,likeCount}) => ({
+const mapStateToProps = ({Feed: likeStatus, likeCount}) => ({
   likeStatus,
   likeCount,
 });

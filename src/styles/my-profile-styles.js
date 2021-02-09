@@ -1,12 +1,10 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import Constants from '../constants';
 
-const {
-  height, width,
-} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  borderRadius: { borderRadius: 20 },
+  borderRadius: {borderRadius: 20},
   bottomHeader: {
     alignSelf: 'center',
     ...Constants.Fonts.RegularBold,
@@ -109,13 +107,28 @@ const styles = StyleSheet.create({
   },
   sectionMainView: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: Constants.Colors.TAB_BACK,
+    marginHorizontal: 10,
+    borderRadius: 30,
+  },
+  sectionMainView2: {
+    marginTop: 10,
+    flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: Constants.Colors.PRIMARY,
+    marginHorizontal: 10,
+    borderRadius: 30,
   },
   sectionView: {
-    borderRadius: 20,
-    marginTop: 20,
+    borderRadius: 30,
     paddingHorizontal: 30,
     paddingVertical: 10,
+  },
+  sectionView2: {
+    borderRadius: 30,
+    paddingHorizontal: 35,
+    paddingVertical: 12,
   },
   subHeading: {
     ...Constants.Fonts.Regular,

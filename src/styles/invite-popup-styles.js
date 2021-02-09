@@ -8,6 +8,13 @@ const styles = {
     flex: 1,
     justifyContent: 'flex-end',
   },
+  container2: {
+   
+    backgroundColor: Constants.Colors.TRANSLUCENT,
+    flex: 1,
+    justifyContent: 'flex-end',
+   
+  },
   headerText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
@@ -43,6 +50,16 @@ const styles = {
     backgroundColor: Constants.Colors.PRIMARY,
     height: 150,
     width: Constants.BaseStyle.DEVICE_WIDTH,
+  },
+  wrapper2: {
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    height: 170,
+    width: Constants.BaseStyle.DEVICE_WIDTH,
+    alignItems:'center',
+    paddingBottom:10,
+    borderTopLeftRadius: Constants.BaseStyle.scale(16),
+    borderTopRightRadius: Constants.BaseStyle.scale(16),
+    
   },
 };
 

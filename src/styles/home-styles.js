@@ -1,9 +1,7 @@
-
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
 const styles = StyleSheet.create({
-
   ChatBody: {
     alignItems: 'center',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -24,10 +22,8 @@ const styles = StyleSheet.create({
     marginLeft: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(5),
     width: '90%',
-
   },
   ChatOneToOneContainer: {
-
     alignItems: 'flex-start',
     backgroundColor: Constants.Colors.TEXT_COLOR2,
 
@@ -41,7 +37,6 @@ const styles = StyleSheet.create({
     padding: Constants.BaseStyle.scale(14),
   },
   ChatOneToOneContainer2: {
-
     alignItems: 'flex-end',
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderBottomLeftRadius: Constants.BaseStyle.scale(10),
@@ -52,13 +47,19 @@ const styles = StyleSheet.create({
     padding: Constants.BaseStyle.scale(14),
   },
   ChatOneToOneContainerOuter: {
-    alignSelf: 'flex-start', flexDirection: 'row', margin: Constants.BaseStyle.scale(14),
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    margin: Constants.BaseStyle.scale(14),
   },
   ChatOneToOneContainerOuter2: {
-    alignSelf: 'flex-end', flexDirection: 'row', margin: Constants.BaseStyle.scale(10),
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    margin: Constants.BaseStyle.scale(10),
   },
   ChatOneToOneHeader: {
-    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 2,
   },
   ChatTrinangleLeft: {
     alignSelf: 'flex-end',
@@ -73,9 +74,7 @@ const styles = StyleSheet.create({
 
     marginBottom: Constants.BaseStyle.scale(5),
 
-    transform: [
-      { rotate: '180deg' },
-    ],
+    transform: [{rotate: '180deg'}],
     width: 0,
   },
   ChatTrinangleRight: {
@@ -91,26 +90,31 @@ const styles = StyleSheet.create({
 
     marginBottom: Constants.BaseStyle.scale(5),
 
-    transform: [
-      { rotate: '270deg' },
-    ],
+    transform: [{rotate: '270deg'}],
     width: 0,
   },
   chatHeader: {
-
-    alignItems: 'center', borderBottomColor: Constants.Colors.TEXT_COLOR_WHITE, borderBottomWidth: Constants.BaseStyle.scale(3), flex: 1,
+    alignItems: 'center',
+    borderBottomColor: Constants.Colors.TEXT_COLOR_WHITE,
+    borderBottomWidth: Constants.BaseStyle.scale(3),
+    flex: 1,
   },
   chatHeader2: {
-
-    alignItems: 'center', borderBottomColor: Constants.Colors.TEXT_COLOR_WHITE, borderBottomWidth: Constants.BaseStyle.scale(3), flex: 1,
+    alignItems: 'center',
+    borderBottomColor: Constants.Colors.TEXT_COLOR_WHITE,
+    borderBottomWidth: Constants.BaseStyle.scale(3),
+    flex: 1,
   },
 
   chatHeaderContainer: {
-    flexDirection: 'row', marginTop: Constants.BaseStyle.scale(20),
+    flexDirection: 'row',
+    marginTop: Constants.BaseStyle.scale(20),
   },
 
   chatHeaderContainer2: {
-    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: Constants.BaseStyle.scale(10),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: Constants.BaseStyle.scale(10),
   },
 
   chatText: {
@@ -118,7 +122,6 @@ const styles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginBottom: Constants.BaseStyle.scale(10),
     paddingHorizontal: Constants.BaseStyle.scale(10),
-
   },
 
   chatText2: {
@@ -166,7 +169,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
   icon: {
-    height: 20, width: 20,
+    height: 20,
+    width: 20,
   },
   iconText: {
     ...Constants.Fonts.Small,
@@ -228,16 +232,18 @@ const styles = StyleSheet.create({
     marginRight: Constants.BaseStyle.scale(10),
     marginTop: Constants.BaseStyle.scale(10),
   },
-  spacing: { paddingTop: Constants.BaseStyle.scale(10) },
+  spacing: {paddingTop: Constants.BaseStyle.scale(10)},
   title: {
     ...Constants.Fonts.RegularBold,
     color: Constants.Colors.BLACK,
     paddingHorizontal: Constants.BaseStyle.scale(10),
   },
   user: {
-    borderRadius: Constants.BaseStyle.scale(30) / 2, height: Constants.BaseStyle.scale(30), width: Constants.BaseStyle.scale(30),
+    borderRadius: Constants.BaseStyle.scale(30) / 2,
+    height: Constants.BaseStyle.scale(30),
+    width: Constants.BaseStyle.scale(30),
   },
-  userSpace: { marginLeft: -10 },
+  userSpace: {marginLeft: -10},
   users: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -248,7 +254,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  wrapper: { marginTop: Constants.BaseStyle.scale(10) },
+  wrapper: {marginTop: Constants.BaseStyle.scale(10)},
+  wrapperActionButton: {
+    backgroundColor: Constants.Colors.BLUE,
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 48 / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 20,
+  },
 });
 
 export default StyleSheet.create(styles);

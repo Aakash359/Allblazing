@@ -31,6 +31,7 @@ const API = {
   USER_LIST : BASE_URL + '/user_list',
   GROUP_TYPE : BASE_URL + '/groupType',
   EVENT : BASE_URL + '/event',
+  JOIN_GROUP : BASE_URL + '/group/join/',
   // USERLIST : BASE_URL + 
   
 

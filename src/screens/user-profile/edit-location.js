@@ -11,6 +11,8 @@ import {
   LocationStyles,
   UsernameStyle,
 } from '../../styles';
+import connect from 'react-redux/lib/connect/connect';
+import { setLocation } from '../../reducers/baseServices/profile';
 
 class EditLocation extends Component {
   onChangeText = () => {};
@@ -78,4 +80,18 @@ EditLocation.propTypes = {
   t: func.isRequired,
 };
 
-export default withTranslation()(EditLocation);
+// export default withTranslation()(EditLocation);
+
+
+const mapStateToProps = ({auth: {email}}) => ({
+  email,
+});
+
+const mapDispatchToProps = {
+  addLocation: (params) => setLocation(params),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(EditLocation));

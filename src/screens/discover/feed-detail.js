@@ -26,9 +26,8 @@ class FeedDetailScreen extends Component {
     };
   }
 
-  // const { authername, likecount, post,Time,likeStatus} = route.params;
-
-  renderItem = () => {
+  render() {
+    // const {nam} = this.state;
     const {
       navigation: {goBack, navigate, getParam},
       route: {params},
@@ -40,9 +39,9 @@ class FeedDetailScreen extends Component {
     const likeStatus = this.props.route.params.data.likeStatus;
     const created_at = this.props.route.params.data.created_at;
     const post = this.props.route.params.data.post;
-
     return (
-      <View>
+      <>
+        <View style={FeedDetailStyles.container}>
         <View style={[FeedDetailStyles.listView]}>
           <View style={FeedDetailStyles.innerView}>
             <TouchableOpacity
@@ -79,22 +78,8 @@ class FeedDetailScreen extends Component {
             <Text style={FollowersStyles.nameText}>{likeCount}</Text>
           </View>
         </View>
-        {isLoading ? (
-          <ActivityIndicator color="white" size={25}/>
-        ):(
-        <Image source={{uri: post}} style={FeedDetailStyles.feedImg} />
-        )}
-      </View>
-    );
-  };
-  render() {
-    // const {nam} = this.state;
-
-    return (
-      <>
-        <ScrollView style={FeedDetailStyles.container}>
-         {this.renderItem()}
-        </ScrollView>
+        <Image source={{uri: post}}  style={FeedDetailStyles.feedImg} resizeMode="contain"/>
+        </View>
       </>
     );
   }
@@ -103,7 +88,7 @@ class FeedDetailScreen extends Component {
 // export default FeedDetailScreen;
 
 FeedDetailScreen.propTypes = {
-  loginSuccess: func.isRequired,
+  // loginSuccess: func.isRequired,
   navigation: shape({
     dispatch: func.isRequired,
     goBack: func.isRequired,

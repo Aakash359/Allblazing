@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
 export const AuthStyle = StyleSheet.create({
@@ -43,7 +43,7 @@ export const AuthStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(20),
     width: '90%',
   },
-  langHeaderText: { fontSize: 28 },
+  langHeaderText: {fontSize: 28},
   loginTouchable: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -58,8 +58,8 @@ export const AuthStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  logoutBtn: { marginTop: Constants.BaseStyle.scale(30) },
-  margin: { marginTop: Constants.BaseStyle.scale(20) },
+  logoutBtn: {marginTop: Constants.BaseStyle.scale(30)},
+  margin: {marginTop: Constants.BaseStyle.scale(20)},
   privcyContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -90,7 +90,7 @@ export const AuthStyle = StyleSheet.create({
     marginLeft: Constants.BaseStyle.scale(5),
     marginVertical: Constants.BaseStyle.scale(0),
   },
-  Reset:{
+  Reset: {
     ...Constants.Fonts.ExtraLargeBold,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     fontSize: 28,
@@ -133,7 +133,7 @@ export const RegisterStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(5),
     width: '85%',
   },
-  email:{
+  email: {
     alignSelf: 'center',
     color: Constants.Colors.TEXT_COLOR,
     ...Constants.Fonts.Regular,
@@ -142,8 +142,8 @@ export const RegisterStyle = StyleSheet.create({
     marginTop: Constants.BaseStyle.scale(5),
     width: '86%',
   },
-  Reset:{
-    alignItems:'center',
+  Reset: {
+    alignItems: 'center',
     ...Constants.Fonts.Regular,
     color: Constants.Colors.WHITE,
   },
@@ -184,7 +184,9 @@ export const RegisterStyle = StyleSheet.create({
     color: Constants.Colors.PRIVCYTEXT,
   },
   wrapper: {
-    flex: 0.9, marginTop: Constants.BaseStyle.scale(10),alignItems:'center'
+    flex: 0.9,
+    marginTop: Constants.BaseStyle.scale(10),
+    alignItems: 'center',
   },
 });
 
@@ -290,7 +292,7 @@ export const ConnectUserTypeStyles = StyleSheet.create({
 });
 
 export const Repeat5KStyles = StyleSheet.create({
-  active: { ...Constants.Fonts.RegularBold },
+  active: {...Constants.Fonts.RegularBold},
   buttonText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.BLACK,
@@ -300,7 +302,7 @@ export const Repeat5KStyles = StyleSheet.create({
     marginBottom: Constants.BaseStyle.scale(15),
     marginTop: Constants.BaseStyle.scale(0),
   },
-  header: { width: '80%' },
+  header: {width: '80%'},
   saveBtn: {
     marginBottom: Constants.BaseStyle.scale(15),
     marginTop: Constants.BaseStyle.scale(10),
@@ -309,16 +311,18 @@ export const Repeat5KStyles = StyleSheet.create({
 
 export const DistanceStyles = StyleSheet.create({
   button: {
-    alignItems: 'center', justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  buttonText: { textAlign: 'center' },
+  buttonText: {textAlign: 'center'},
   buttonsWrapper: {
     flexDirection: 'column-reverse',
     marginBottom: Constants.BaseStyle.scale(15),
     marginTop: Constants.BaseStyle.scale(0),
   },
   select: {
-    position: 'absolute', right: Constants.BaseStyle.scale(5),
+    position: 'absolute',
+    right: Constants.BaseStyle.scale(5),
   },
 });
 
@@ -330,10 +334,20 @@ export const ForgotPassStyles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonsWrapper: {
-    flex: 0.65, flexDirection: 'column-reverse',
+    flex: 0.65,
+    flexDirection: 'column-reverse',
   },
   wrapper: {
-    alignItems: 'center', flex: 0.3, justifyContent: 'space-evenly', marginTop: Constants.BaseStyle.scale(20),
+    alignItems: 'center',
+    flex: 0.3,
+    justifyContent: 'space-evenly',
+    marginTop: Constants.BaseStyle.scale(20),
+  },
+  wrapper2: {
+    flex: 0.3,
+    width: '90%',
+
+    marginTop: Constants.BaseStyle.scale(20),
   },
 });
 
@@ -373,20 +387,25 @@ export const WelcomeStyles = StyleSheet.create({
     paddingTop: Constants.BaseStyle.scale(0),
   },
   wrapper: {
-    alignItems: 'center', flex: 0.9, justifyContent: 'center', marginTop: Constants.BaseStyle.scale(0),
+    alignItems: 'center',
+    flex: 0.9,
+    justifyContent: 'center',
+    marginTop: Constants.BaseStyle.scale(0),
   },
 });
 
 export const OTPStyles = StyleSheet.create({
   button: {
-    alignItems: 'center', margin: Constants.BaseStyle.scale(10),
+    alignItems: 'center',
+    margin: Constants.BaseStyle.scale(10),
   },
   buttonsWrapper: {
     marginBottom: Constants.BaseStyle.scale(15),
     marginTop: Constants.BaseStyle.scale(10),
   },
   header: {
-    marginHorizontal: Constants.BaseStyle.scale(40), textAlign: 'center',
+    marginHorizontal: Constants.BaseStyle.scale(40),
+    textAlign: 'center',
   },
   input: {
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
@@ -493,8 +512,8 @@ export const LoginStyles = StyleSheet.create({
     paddingHorizontal: Constants.BaseStyle.scale(6),
     ...Constants.Fonts.Regular,
   },
-  row: { flexDirection: 'row' },
-  scollWrapper: { flex: 0.6 },
+  row: {flexDirection: 'row'},
+  scollWrapper: {flex: 0.6},
   socialIcon: {
     height: Constants.BaseStyle.scale(40),
     width: Constants.BaseStyle.scale(40),
@@ -531,18 +550,19 @@ export const LocationStyles = StyleSheet.create({
     color: Constants.Colors.WHITE,
     marginLeft: Constants.BaseStyle.scale(10),
   },
-  inputWrapper: { marginTop: Constants.BaseStyle.scale(40) },
-  location: { justifyContent: 'flex-start' },
+  inputWrapper: {marginTop: Constants.BaseStyle.scale(40)},
+  location: {justifyContent: 'flex-start'},
   locationIcon: {
-    height: 25, width: 26,
+    height: 25,
+    width: 26,
   },
-  locationText: { alignSelf: 'center' },
+  locationText: {alignSelf: 'center'},
   logo: {
     alignSelf: 'center',
     marginBottom: Constants.BaseStyle.scale(40),
     width: '50%',
   },
-  margin: { marginVertical: Constants.BaseStyle.scale(10) },
+  margin: {marginVertical: Constants.BaseStyle.scale(10)},
   orText: {
     ...Constants.Fonts.Regular,
     color: Constants.Colors.PRIVCYTEXT,
@@ -568,7 +588,9 @@ export const MottoStyles = StyleSheet.create({
   },
 });
 
-export const ContactUSStyles = StyleSheet.create({ saveBtn: { marginTop: Constants.BaseStyle.scale(300) } });
+export const ContactUSStyles = StyleSheet.create({
+  saveBtn: {marginTop: Constants.BaseStyle.scale(300)},
+});
 
 export const LanguageStyles = StyleSheet.create({
   button: {
@@ -581,7 +603,7 @@ export const LanguageStyles = StyleSheet.create({
     flex: 0.9,
     marginTop: Constants.BaseStyle.scale(100),
   },
-  saveBtn: { marginTop: Constants.BaseStyle.scale(450) },
+  saveBtn: {marginTop: Constants.BaseStyle.scale(450)},
 });
 
 export const ChangePassStyles = StyleSheet.create({
