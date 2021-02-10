@@ -52,7 +52,7 @@ class UserMotto extends Component {
         .post(
           API.UPDATE_PROFILE,
           {
-            motto_description: motto_description,
+            motto: motto_description,
           },
           config,
         )

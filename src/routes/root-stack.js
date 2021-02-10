@@ -7,6 +7,7 @@ import AppStack from './app-stack';
 import {setLoginDetails} from '../reducers/baseServices/auth';
 import {withTranslation} from 'react-i18next';
 import {getAuthToken, getLoginUserId} from '../helpers/auth';
+import SplashScreen from 'react-native-splash-screen';
 
 class AppNavigator extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class AppNavigator extends Component {
     // const userId = await getLoginUserId();
     // console.log('JSON.parse(userId)========',userId,token);
     this.props.addLoginDetail(JSON.parse(userId));
+    SplashScreen.hide()
     // this.setState({accessToken: token});
   };
 
@@ -43,7 +45,7 @@ class AppNavigator extends Component {
   render() {
     const {token} = this.props;
     console.log('==========>>>.Token', this.state.accessToken);
-    return token ? <AppStack /> : <AuthStack />;
+    return token ?  <AppStack /> : <AuthStack />;
   }
 }
 

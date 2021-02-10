@@ -65,13 +65,13 @@ class Login extends Component {
   }
 
   onLogin = async () => {
-    console.log('dsgbdfghhg');
+    // console.log('dsgbdfghhg');
     
     const {loginSuccess, addLoginDetail} = this.props;
     const {
       navigation: {goBack, navigate},
     } = this.props;
-    navigate('Overview');
+    // navigate('Overview');
     const {emailId, password} = this.state;
     if (emailId.length < 1) {
       Alert.alert(

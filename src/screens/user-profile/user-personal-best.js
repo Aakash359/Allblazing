@@ -13,7 +13,7 @@ import {
 import {StepBar} from '../../components';
 import Constants from '../../constants';
 import {times} from '../../data';
-import {setUserRecentTime} from '../../helpers/auth';
+import {getAuthToken, setUserRecentTime} from '../../helpers/auth';
 import API from '../../constants/baseApi';
 import axios from 'axios';
 import connect from 'react-redux/lib/connect/connect';
@@ -34,21 +34,21 @@ class UserPersonalBest extends Component {
   };
  
 
-  onSave = () => {
+  onSave = async() => {
     const {addTime} = this.props;
     const {
       navigation: {navigate},
     } = this.props;
     const {time} = this.state;
 
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
     this.setState({
       Loading: true,
     });
+    console.log('==>',time);
     if (this.state.time === '') {
       Alert.alert('', 'Please Select your Age', '');
     } else {
@@ -77,7 +77,7 @@ class UserPersonalBest extends Component {
             {Cancelable:false}
             );
             addTime(time);
-            console.log('age:==>',time);
+            console.log('time:==>',time);
             // navigate('EditProfile');
           }
         }).finally(() => {
@@ -90,7 +90,7 @@ class UserPersonalBest extends Component {
   onTypeChange = (payload) => this.setState({time: payload});
   componentDidMount(){
     const time = this.props.route?.params?.time ?? '';
-      console.log('fullname==>',time);
+      console.log('time==>',time);
       this.setState({time: time})
   }
   render() {

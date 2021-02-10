@@ -35,7 +35,7 @@ const API = {
   MY_GROUPS:BASE_URL + '/group?type=my_group',  
   ALL_GROUPS:BASE_URL + '/group?type=all',  
   REQUESTED:BASE_URL + '/requested',  
-
+  GROUPDETAILS:BASE_URL + '/group/',
   
   
   

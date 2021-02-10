@@ -122,6 +122,7 @@ class ChatsGroup extends React.Component {
       return (
         <ChatGroup
           data={item}
+          isMyGroupPage={val = '0'}
           hasCheckBox={params?.hasCheckBox}
           hasTick={params?.hasTick}
           navigation={navigate}
@@ -132,6 +133,7 @@ class ChatsGroup extends React.Component {
       return (
         <ChatGroup
           data={item}
+          isMyGroupPage={val='1'}
           hasCheckBox={params?.hasCheckBox}
           hasTick={params?.hasTick}
           navigation={navigate}
@@ -142,6 +144,7 @@ class ChatsGroup extends React.Component {
     return (
       <ChatGroup
         data={item}
+        isMyGroupPage={val = '2'}
         hasCheckBox={params?.hasCheckBox}
         hasTick={params?.hasTick}
         navigation={navigate}

@@ -37,6 +37,7 @@ class GroupDetail extends React.Component {
       removeMemberPopup: false,
       visible: false,
       isLoading: false,
+      Loading: false,
     };
   }
 
@@ -53,19 +54,39 @@ class GroupDetail extends React.Component {
     );
   };
 
-  // renderHeader = ({ goBack }) => (
-  //   <View style={HomeStyles.ChatOneToOneHeader}>
-  //     <View style={[InviteFriendsStyles.userWrapper]}>
-  //       <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
-  //         <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
-  //       </TouchableOpacity>
-  //     </View>
-  //     <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
-  //       <Image source={Constants.Images.more} resizeMode='contain' style={CommonStyles.crossImage} />
-  //     </TouchableOpacity>
-  //   </View>
-  // )
-
+  // componentDidMount() {
+  //   this.groupDetails();
+  // }
+  // groupDetails = async () => {
+  //   const {
+  //     navigation: {navigate},
+  //     route: {params},
+  //   } = this.props;
+  //   const id = this.props.route.params.data.id;
+  //   console.log('id==>',id);
+  //   const token = await getAuthToken();
+  //   const config = {
+  //     headers: {Authorization: `Bearer ${token}`},
+  //   };
+  //   // console.log('token===>', config);
+  //   this.setState({
+  //     Loading: true,
+  //   });
+  //   axios
+  //     .get(API.GROUPDETAILS + id + '?type=active', config)
+  //     .then((response) => {
+  //       console.log('response ====', response.data);
+  //       if (response.data) {
+  //         // console.log('===>response', response.data.data.result);
+  //         // this.setState({list: response?.data?.data?.result});
+  //       }
+  //     })
+  //     .finally(() => {
+  //       this.setState({
+  //         Loading: false,
+  //       });
+  //     });
+  // };
   displayOptions = (data) => {
     if (data === 'Active') {
       return true;
@@ -119,8 +140,10 @@ class GroupDetail extends React.Component {
   OnJoin = async () => {
     const {
       navigation: {navigate},
+      route: {params},
     } = this.props;
-
+    const GroupId = this.props.route.params.data.id;
+    console.log('id==>', GroupId);
     this.setState({
       isLoading: true,
     });
@@ -133,9 +156,9 @@ class GroupDetail extends React.Component {
     console.log(config);
 
     axios
-      .post(API.JOIN_GROUP + followId, config)
+      .post(API.JOIN_GROUP + GroupId, config)
       .then((response) => {
-        // console.log('token ====', response.data);
+        console.log('token ====', response.data);
         if (response?.data?.code === 401) {
           Alert.alert('', response?.data?.message ?? '');
         }
@@ -171,8 +194,13 @@ class GroupDetail extends React.Component {
 
   render() {
     const {
-      navigation: {navigate, goBack},
+      navigation: {navigate},
+      route: {params},
     } = this.props;
+    const id = this.props.route.params.data.id;
+    const name = this.props.route.params.data.name;
+    const count = this.props.route.params.data.count;
+    // const Checking = this.props.route.params.checking;
     const {optionList, visible, removeMemberPopup} = this.state;
 
     return (
@@ -186,27 +214,34 @@ class GroupDetail extends React.Component {
               style={MyProfileStyles.profileIcon}>
               <View style={ChatStyles.overlappingStyle}>
                 <View>
-                  <Text style={ChatStyles.heading}>{'Super Nova'}</Text>
-                  <Text style={ChatStyles.subHeading}>{'18 Members'}</Text>
+                  <Text style={ChatStyles.heading}>{name}</Text>
+                  <Text style={ChatStyles.subHeading}>
+                    {count} {'Members'}
+                  </Text>
                 </View>
-                <TouchableOpacity onPress={() => navigate('GroupInfo')}>
-                  <Image
-                    source={Constants.Images.edit}
-                    resizeMode="contain"
-                    style={ChatStyles.icon}
-                  />
-                </TouchableOpacity>
+                {this.props.route?.params?.isMyGroupPage ? (
+                  <TouchableOpacity onPress={() => navigate('GroupInfo')}>
+                    <Image
+                      source={Constants.Images.edit}
+                      resizeMode="contain"
+                      style={ChatStyles.icon}
+                    />
+                  </TouchableOpacity>
+                ) : null}
               </View>
             </ImageBackground>
             <View>
-              <FlatList
-                // style={MyProfileStyles.sectionMainView}
-                scrollEnabled={false}
-                contentContainerStyle={ChatStyles.sectionMainView}
-                data={optionList}
-                renderItem={this.renderItem2}
-                keyExtractor={(id, index) => index.toString()}
-              />
+              {this.props.route?.params?.isMyGroupPage ? (
+                <FlatList
+                  // style={MyProfileStyles.sectionMainView}
+                  scrollEnabled={false}
+                  contentContainerStyle={ChatStyles.sectionMainView}
+                  data={optionList}
+                  renderItem={this.renderItem2}
+                  keyExtractor={(id, index) => index.toString()}
+                />
+              ) : null}
+
               <FlatList
                 scrollEnabled={false}
                 data={[1, 2, 3]}
@@ -214,16 +249,29 @@ class GroupDetail extends React.Component {
                 keyExtractor={(item, index) => `${index}`}
               />
             </View>
-            <TouchableOpacity
+            
+              <TouchableOpacity
+                onPress={() => this.OnJoin()}
+                activeOpacity={0.7}
+                style={GroupDetailStyles.nextView}>
+                {this.state.isLoading ? (
+                  <ActivityIndicator color="white" size={25} />
+                ) : (
+                  <Text style={GroupDetailStyles.nextText}>Join</Text>
+                )}
+              </TouchableOpacity>
+           
+
+            {/* <TouchableOpacity
               onPress={() => this.OnJoin()}
               activeOpacity={0.7}
               style={GroupDetailStyles.nextView}>
               {this.state.isLoading ? (
                 <ActivityIndicator color="white" size={25} />
               ) : (
-                <Text style={GroupDetailStyles.nextText}>Next</Text>
+                <Text style={GroupDetailStyles.nextText}>Withdraw Request</Text>
               )}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </ScrollView>
           <MoreOptionsPopup
             hasUnFollowBtn={false}
