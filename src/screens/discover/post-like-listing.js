@@ -35,8 +35,15 @@ class PostLikeListing extends Component {
     } = this.props;
   }
 
+  changeHeader = () => {
+    this.props.navigation.setOptions({
+      headerTitle: `Posts ${this.props.route.params.postCount}`
+    })
+  }
+
   componentDidMount() {
     this._fetchPost();
+    this.changeHeader()
   }
 
   _fetchPost = async() => {

@@ -28,19 +28,111 @@ import {
   getUserDistance,
   getUserRecentTime,
   getOtpToken,
+  setUserAddress,
+  setUserLocation,
+  getUserAddress,
+  getUserLocation,
 } from '../../helpers/auth';
 import API from '../../constants/baseApi';
 import connect from 'react-redux/lib/connect/connect';
 import {setProfileDetails} from '../../reducers/baseServices/profile';
 
 import { ActivityIndicator } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import { PermissionsAndroid } from 'react-native';
+import Axios from 'axios';
 
 class Location extends Component {
   constructor() {
     super();
     this.state = {
       isLoading: false,
+      location: null,
+      address: ''
     };
+  }
+
+  getAddress = ({latitude, longitude}) => {
+    const GOOGLE_API_KEY = 'AIzaSyDu_SQanN6PpTQR3_6L2LA9fSro9xFseVA'
+    let api = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
+    console.log("API HIT", api);
+    Axios.get(api).then(res => {
+      console.log("GET DATA FROM LANG LONG",res?.data?.results[0]?.formatted_address);
+      this.setState({address: res?.data?.results[0]?.formatted_address})
+    })
+    .catch(e => {
+      console.log("DATE DATA FROM LANG LONG ERROR", e);
+    })
+  }  
+
+  getGeoLocation = () => {
+    Geolocation.getCurrentPosition(position => {
+      console.log("POSTION", position);
+      this.setState({location: position.coords}, () => {
+        this.getAddress(position.coords)
+      })
+
+    }, e => {
+      console.log("POSITION EROOR", e);
+    }, {
+      enableHighAccuracy: true
+    })
+  } 
+
+  getLocation =async () => {
+
+    if(Platform.OS === 'ios'){
+       Geolocation.requestAuthorization();
+      this.getGeoLocation();
+  }else {
+  
+      let granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+              title: "App Geolocation Permission",
+              message: "App needs access to your phone's location.",
+          }
+      );
+  
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  
+          this.getGeoLocation();
+  
+      } else {
+  
+          console.log('Location permission not granted!!!!');
+  
+      }
+  
+  }
+
+  //  const {status} = await Permissions.askAsync(Permissions.Location)
+  //   .then(res => {
+  //     console.log(res);
+  //   })
+  //   if(status === 'granted'){
+  //     Geolocation.getCurrentPosition(position => {
+  //     console.log(position);
+  //   }, e => {
+  //     console.log(e);
+  //   })
+  //   }
+  //   else {
+  //     Geolocation.requestAuthorization()
+  //   }
+    
+  }
+
+  setUserAddLoc = async () => {
+    const {location, address} = this.state
+    setUserLocation(location)
+    setUserAddress(address)
+    this.onSubmit()
+  }
+
+  componentDidMount() {
+
+    this.getLocation()
   }
 
   onSubmit = async () => {
@@ -59,6 +151,8 @@ class Location extends Component {
     const Distance = await getUserDistance();
     const Time = await getUserRecentTime();
     const token = await getOtpToken();
+    const adrress = await getUserAddress();
+    const {latitude, longitude} = await getUserLocation();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -73,8 +167,8 @@ class Location extends Component {
           type: Type,
           distance: Distance,
           time: Time,
-          latitude:74.777899,
-          longitude:25.345678,
+          latitude,
+          longitude,
           country:'india',
           state:'up',
           level:1
@@ -152,7 +246,7 @@ class Location extends Component {
               AuthStyle.loginTouchable,
               {backgroundColor: Constants.Colors.TEXT_COLOR2},
             ]}
-            onPress={() => null}>
+            onPress={this.setUserAddLoc}>
             <Text
               style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
               {translate('profile.Share My Location')}

@@ -505,7 +505,7 @@ export default function MainNavigator() {
         options={{
           headerBackTitleVisible: false,
           headerRight: () => (
-            <TouchableOpacity style={HeaderStyles.row}>
+            <TouchableOpacity style={HeaderStyles.row} onPress={null}>
               <Text style={HeaderStyles.headerRightTextStyle}>Select All</Text>
             </TouchableOpacity>
           ),
@@ -552,7 +552,7 @@ export default function MainNavigator() {
           headerBackTitleVisible: false,
           headerShown: true,
           headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Posts(3k)',
+          headerTitle: 'Posts',
           headerTitleAlign: 'center',
         })}
       />

@@ -1,5 +1,7 @@
 export const SET_LOGIN_DETAILS = 'SET_LOGIN_DETAILS';
 
+export const SET_INTRO_COMPLETE = 'SET_INTRO_COMPLETE'
+
 export const SET_SIGNUP_DETAILS = 'SET_SIGNUP_DETAILS';
 export const REMOVE_AUTH_TOKEN = ' ';
 
@@ -11,6 +13,7 @@ export const SET_GENDER = 'SET_GENDER';
 export const SET_LOCATION = 'SET_LOCATION';
 
 export const SET_MOTTO_DESCRIPTION = 'SET_MOTTO_DESCRIPTION';
+export const SET_ADDRESS = 'SET_ADDRESS'
 export const SET_TIME = 'SET_TIME';
 
 export const SET_CREATE_GROUP_DETAIL = 'SET_CREATE_GROUP_DETAIL';

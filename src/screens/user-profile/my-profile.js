@@ -57,8 +57,9 @@ class MyProfile extends Component {
       config,
     )
       .then((response) => {
+        console.log("RESPONSE", response);
+        console.log('===>My Profile', response);
         if (response.data.data.result) {
-          // console.log('===>My Profile', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
           addProfileDetail(response?.data?.data?.result);
           console.log('profile response==>', response?.data?.data?.result);
@@ -174,7 +175,7 @@ class MyProfile extends Component {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    this.props.navigation.navigate('FollowersList');
+                    this.props.navigation.navigate('FollowersList', {user_id: this.props.user_id, followerCount});
                   }}
                   style={MyProfileStyles.headerView}>
                   <Text style={MyProfileStyles.section2}>{followerCount}</Text>
@@ -183,7 +184,7 @@ class MyProfile extends Component {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    this.props.navigation.navigate('FollowingList');
+                    this.props.navigation.navigate('FollowingList', {user_id: this.props.user_id, followingCount});
                   }}
                   style={MyProfileStyles.headerView}>
                   <Text style={MyProfileStyles.section2}>{followingCount}</Text>
@@ -193,7 +194,7 @@ class MyProfile extends Component {
                   activeOpacity={0.7}
                   style={MyProfileStyles.headerView}
                   onPress={() => {
-                    this.props.navigation.navigate('PostLikeListing');
+                    this.props.navigation.navigate('PostLikeListing', {postCount} );
                   }}>
                   <Text style={MyProfileStyles.section2}>{postCount}</Text>
                   <Text style={MyProfileStyles.section1}>{'Posts'}</Text>
@@ -249,6 +250,7 @@ const mapStateToProps = ({
     groupCount,
     postCount,
     level,
+    address
   },
   auth: {user_id},
 }) => ({
@@ -264,6 +266,7 @@ const mapStateToProps = ({
   followerCount,
   groupCount,
   postCount,
+  address
 });
 const mapDispatchToProps = {
   addProfileDetail: (params) => setProfileDetails(params),

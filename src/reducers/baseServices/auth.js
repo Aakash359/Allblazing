@@ -1,4 +1,4 @@
-import {REMOVE_AUTH_TOKEN, SET_LOGIN_DETAILS} from '../../actions/auth-action-types';
+import {REMOVE_AUTH_TOKEN, SET_INTRO_COMPLETE, SET_LOGIN_DETAILS} from '../../actions/auth-action-types';
 
 const initialState = {
   token:'',
@@ -8,6 +8,8 @@ const initialState = {
   device_token: null,
   device_type: null,
   image: '',
+  count: 1,
+  intro: false
 };
 
 export default function auth(state = initialState, {payload, type}) {
@@ -17,25 +19,31 @@ export default function auth(state = initialState, {payload, type}) {
         ...state,
         ...payload,
       };
-      case REMOVE_AUTH_TOKEN:
-        return {
-          ...state,
-          token:'',
-        };
-
+    case REMOVE_AUTH_TOKEN:
+      return {
+        ...state,
+        token:'',
+      };
+    case SET_INTRO_COMPLETE:
+      return {...state, intro: true}
+    case 'COUNT':
+      return {...state, count: state.count+1}
     default:
       return state;
   }
 }
 
 export function setLoginDetails(params) {
-    return dispatch => {
-      dispatch({ type: SET_LOGIN_DETAILS, payload: params });
-    };
+    return ({ type: SET_LOGIN_DETAILS, payload: params });
+    
   }
 
   export function removeAuthTokenFromRedux(params) {
-    return dispatch => {
-      dispatch({ type: REMOVE_AUTH_TOKEN, payload: params });
-    };
+    return ({ type: REMOVE_AUTH_TOKEN, payload: params })
+    
   }
+
+export function setIntroComplete() {
+  return ({type: SET_INTRO_COMPLETE})
+  
+}

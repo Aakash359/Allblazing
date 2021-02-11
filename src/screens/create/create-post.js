@@ -89,13 +89,14 @@ class CreatePost extends Component {
       name: 'post' + '.png',
       type: 'image/png',
     });
+    console.log("POST CRETAE FORM DATA", formData);
     this.setState({
       isLoading: true,
     });
     axios
       .post(API.POST, formData, config)
       .then((response) => {
-        console.log('response' + JSON.stringify(response.data));
+        console.log('CRETAE POST response' + JSON.stringify(response));
         if (response?.data?.code === 422) {
           Alert.alert('', response?.data?.message ?? '');
         }

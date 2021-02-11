@@ -21,6 +21,15 @@ import {setLoginDetails} from '../../reducers/baseServices/auth';
 import axios from 'axios';
 import API from '../../constants/baseApi';
 import { setAuthToken, setLoginUserId } from '../../helpers/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+import Geolocation from '@react-native-community/geolocation';
+import { PermissionsAndroid } from 'react-native';
+
+Geolocation?.setRNConfiguration({
+  skipPermissionRequests: true,
+  authorizationLevel: 'always'
+});
+
 const socialIcons = [
   {
     icon: Constants.Images.email,
@@ -51,11 +60,36 @@ class Login extends Component {
     super();
     this.state = {
       emailId: '',
-      isRemember: false,
+      isRemember: true,
       isShow: false,
       password: '',
       isLoading: false,
     };
+  }
+
+  
+
+
+  getLastUserCred = async () => {
+    try {
+      const userCred = JSON.parse(await AsyncStorage.getItem('userCred') || '{}')
+      this.setState({emailId: userCred?.email, password: userCred?.password})
+    } catch (error) {
+      console.log('Unable to get User Last Cred');
+    }
+    
+  }
+
+
+
+  
+
+  
+
+
+  componentDidMount() {
+    this.getLastUserCred()
+
   }
 
   componentWillUnmount() {
@@ -99,7 +133,7 @@ class Login extends Component {
         email: emailId,
         password: password,
       })
-      .then((response) => {
+      .then(async (response) => {
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
@@ -112,8 +146,21 @@ class Login extends Component {
           setAuthToken(response?.data?.data?.token);
           addLoginDetail(response?.data?.data);
           setLoginUserId(JSON.stringify(response?.data?.data));
-          // loginSuccess();
-          // navigate('Overview');
+          if(this.state.isRemember) {
+            try {
+              await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
+              console.log('CRED SAVED', JSON.stringify({email: emailId, password}));
+            } catch (error) {
+              console.log("CRED NOT SAVED", error.message);
+            }
+        }
+        else {
+          console.log('remember is false');
+          await AsyncStorage.removeItem('userCred')
+          
+        }
+          loginSuccess();
+          navigate('Overview');
         }
       })
       .finally(() => {
@@ -297,7 +344,7 @@ const mapStateToProps = ({auth: {email}}) => ({
 
 const mapDispatchToProps = {
   addLoginDetail: (params) => setLoginDetails(params),
-  // loginSuccess: actions.loginSuccess,
+  loginSuccess: actions.loginSuccess,
 };
 
 export default connect(

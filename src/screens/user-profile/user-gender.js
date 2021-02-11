@@ -80,6 +80,7 @@ class UserGender extends Component {
           config,
         )
         .then((response) => {
+          console.log("USER GENGER UPDATE", response);
           if (response?.data?.code === 200) {
             Alert.alert(
               '',

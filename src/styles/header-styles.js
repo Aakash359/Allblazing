@@ -7,7 +7,6 @@ export default StyleSheet.create({
     height: 50,
     marginTop: 10,
     marginBottom: 5,
-
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
@@ -62,7 +61,8 @@ export default StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    width: 101,
   },
   searchIcon: {
     height: 20,

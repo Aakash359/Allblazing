@@ -30,10 +30,18 @@ class FollowingList extends Component {
   _fetchFollowingList = async () => {
     const {addFollowUserId,addFollowId} = this.props;
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
-    // console.log('====>', token);
+    let user_id = this.props?.route?.params?.user_id || this.props.user_id
+    // if(this.props.route.params.userId) {
+    //   user_id = this.props.route.params.userId
+    // }
+
+    // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    console.log('TOKEN====>', this.props.token);
+    console.log('MY ID====>', user_id);
+
     const config = {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: {Authorization: `Bearer ${this.props.token}`},
+      params: {id: user_id}
     };
     console.log('===>responseFOLLOWERS');
     this.setState({
@@ -42,8 +50,8 @@ class FollowingList extends Component {
     Axios
       .get(API.FOLLOWING, config)
       .then((response) => {
+        console.log('===>responseFOLLOWERS', response);
         if (response.data.data.result) {
-          console.log('===>responseFOLLOWERS', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
           addFollowUserId(response?.data?.data?.result?.id);
           console.log('===>',response?.data?.data?.result?.id);
@@ -61,9 +69,12 @@ class FollowingList extends Component {
     <TouchableOpacity
       style={FollowingStyles.sectionView}
       activeOpacity={0.7}
-      onPress={() => this.props.navigation.navigate('UserProfile',{iseventPage: true,follow_id: item.follow_id,id:item.id})}
+      onPress={() => this.props.navigation.navigate('UserProfile',{iseventPage: true,follow_id: item.follow_id})}
     >
-      <View style={[FollowingStyles.listView, { backgroundColor: '#F898A4' }]} />
+      <View style={[FollowingStyles.listView, { backgroundColor: '#F898A4' }]} >
+      <Image source={item?.followimage} style={{width: 100, height: 100, borderRadius: 12}} resizeMode="cover" />
+      </View>
+
       <View>
         <Text style={FollowingStyles.nameText}>{item.followName}</Text>
         <Text style={FollowingStyles.locationText}>Santee, United States</Text>
@@ -83,10 +94,10 @@ class FollowingList extends Component {
             style={FollowingStyles.searchIcon}
           />
           <TextInput
-            placeholder="Search Following (123)"
+            placeholder={`Search Following (${this.props.route.params.followingCount})`}
             placeholderTextColor='#ccc'
             value={this.state.search}
-            style={{color:'white'}}
+            style={{color:'white', padding: 10}}
             autoCapitalize="none"
             autoCorrect={false}
             onChangeText={(text) => {
@@ -131,8 +142,10 @@ FollowingList.propTypes = {
   }).isRequired,
   t: func.isRequired,
 };
-const mapStateToProps = ({profile: {id}}) => ({
+const mapStateToProps = ({profile: {id, user_id}, auth: {token}}) => ({
   id,
+  token,
+  user_id
 });
 
 const mapDispatchToProps = {

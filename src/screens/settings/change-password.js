@@ -9,6 +9,7 @@ import {
   Alert ,
   ScrollView,
   TextInput,
+  ActivityIndicator
 } from 'react-native';
 import {func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
@@ -124,7 +125,7 @@ class ChangePassword extends Component {
         
       );
       return;
-    }else if(password == newPassword ){
+    }else if(password === newPassword ){
       Alert.alert(
         '',
         'you have recently used this password',
@@ -198,7 +199,27 @@ class ChangePassword extends Component {
         confirm_password:confirmPassword,
       },config)
       .then((response) => {
-        // console.log('token ====', response.data);
+        console.log('UPDATE USER PASSWORD ====', response);
+        if(response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            'Old password is not matching',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => console.log('Ok pressed'),
+              },
+            ],
+            {Cancelable:false}
+            
+          );
+          return
+        }
         if (response?.data?.code === 401) {
           Alert.alert(
             '',

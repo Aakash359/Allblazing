@@ -3,6 +3,8 @@ import { logError } from './logging';
 const TOKEN_KEY = '@auth_token';
 const USER_NAME_KEY = '@username_key';
 const USER_AGE_KEY = '@userage_key';
+const USER_LOCATION_KEY = '@userlocation_key'
+const USER_ADDRESS_KEY = '@useraddress_key'
 const USER_CONNECT_TYPE_KEY='@userconnecttype_key';
 const USER_DISTANCE_KEY = '@userdistance_key';
 const USER_RECENT_TIME_KEY = '@userrecenttime_key';
@@ -77,6 +79,44 @@ export const setAuthToken = async (value = '') => {
       return null;
     }
   };
+
+
+  export const setUserLocation = async (location) => {
+    try {
+      await AsyncStorage.setItem(USER_LOCATION_KEY, JSON.stringify(location));
+      // console.log("=======>>",value);
+    } catch (err) {
+      logError(err, '[setUserLocation] AsyncStorage Error');
+    }
+  };
+  export const getUserLocation= async () => {
+    try {
+      return JSON.parse(await AsyncStorage.getItem(USER_LOCATION_KEY) || '{}');
+    } catch (err) {
+      logError(err, '[getUserLocation] AsyncStorage Error');
+      return null;
+    }
+  };
+
+  export const setUserAddress = async (address) => {
+    console.log("ADDRESS", address);
+    try {
+      await AsyncStorage.setItem(USER_ADDRESS_KEY, address);
+      // console.log("=======>>",value);
+    } catch (err) {
+      logError(err, '[setUserAddress] AsyncStorage Error', address);
+    }
+  };
+  export const getUserAddress = async () => {
+    try {
+      return JSON.parse(await AsyncStorage.getItem(USER_ADDRESS_KEY) || '{}');
+    } catch (err) {
+      logError(err, '[getUserAddress] AsyncStorage Error');
+      return null;
+    }
+  };
+
+
   export const setUserConnectType = async (value = '') => {
     try {
       await AsyncStorage.setItem(USER_CONNECT_TYPE_KEY, value);
@@ -240,6 +280,7 @@ export const setAuthToken = async (value = '') => {
   
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
+  
 
 
 

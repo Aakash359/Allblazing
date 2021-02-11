@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Constants from '../../constants';
-import {AddMemberStyles} from '../../styles';
+import {AddMemberStyles, HeaderStyles} from '../../styles';
 import API from '../../constants/baseApi';
 import {connect} from 'react-redux';
 import {withTranslation} from 'react-i18next';
@@ -35,8 +35,29 @@ class AddMember extends Component {
   // const navigation = useNavigation();
   // const [isLoading,setIsLoding]=useState(false);
 
+  selectAll = () => {
+    const {list, arrSelectedUsers} = this.state
+    const selectedList = list.reduce((data, instance) => {
+        data.push(instance.user_id)
+      return data
+    },[])
+    // console.log("ALL SELECTED LIST", selectedList);
+    this.setState({arrSelectedUsers: selectedList})
+  }
+
+  setHeaderRight = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={HeaderStyles.row} onPress={this.selectAll}>
+          <Text style={HeaderStyles.headerRightTextStyle}>Select All</Text>
+        </TouchableOpacity>
+      )
+    })
+  }
+
   componentDidMount() {
     this.UserList();
+    this.setHeaderRight()
   }
 
   UserList = async () => {
@@ -80,13 +101,15 @@ class AddMember extends Component {
     const photo = this.props.route.params.photo;
     const description = this.props.route.params.description;
     const Type = this.props.route.params.GroupType;
+    const imageDetails = this.props.route.params.imageDetails
     console.log('===>id', Type);
     this.setState({
       isLoading: true,
     });
     const token = await getAuthToken();
     const config = {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: {Authorization: `Bearer ${token}`,
+    },
     };
     console.log('token===>', config);
 
@@ -163,14 +186,19 @@ class AddMember extends Component {
     const eventType = this.props.route.params.eventType;
     const Category = this.props.route.params.Category;
     const time = this.props.route.params.time;
+    const tempDate = this.props.route.params.tempDate
     const isEnabled = this.props.route.params.isEnabled;
     const description = this.props.route.params.description;
+    const imageDetials = this.props.route.params.imageDetails
+    console.log("IMAGE DETAILS", imageDetials);
     this.setState({
       isLoading: true,
     });
+    console.log(tempDate);
     const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
+
     };
     console.log('token===>', config);
 
@@ -178,15 +206,15 @@ class AddMember extends Component {
     formdata.append('name', name);
     formdata.append('image', {
       uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
-      name: 'test.jpg',
-      type: 'image/jpg',
+      name: imageDetials?.filename || 'image.jpg',
+      type: imageDetials.mime,
     });
     formdata.append('event_type',eventType);
     formdata.append('description', description);
-    formdata.append('time', time);
-    formdata.append('date', date);
+    formdata.append('time', new Date(tempDate).getTime());
+    formdata.append('date', new Date(date).getTime());
     formdata.append('category_id', Category);
-    formdata.append('status', isEnabled);
+    formdata.append('status', isEnabled? '1': '0');
     formdata.append('address_first', address1);
     // formdata.append('address_second', address2);
     for (let index = 0; index < arrSelectedUsers.length; index++) {
@@ -201,7 +229,7 @@ class AddMember extends Component {
     axios
       .post(API.EVENT, formdata, config)
       .then((response) => {
-        console.log('response ======>', response.data);
+        console.log('EVENT CREATE response ======>', response);
         if (response?.data?.code === 401) {
           Alert.alert('', response?.data?.message ?? '');
         }
@@ -226,6 +254,23 @@ class AddMember extends Component {
           navigate('Home');
         }
       })
+      .catch(e => {
+        Alert.alert('', 
+          e?.message ?? '',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => console.log('Ok pressed'),
+            },
+          ],
+          {Cancelable:false}
+          );
+      })
       .finally(() => {
         this.setState({
           isLoading: false,
@@ -243,6 +288,7 @@ class AddMember extends Component {
         arrSelectedUsers: [...this.state.arrSelectedUsers, item.user_id],
       });
     }
+    console.log("Selected Members",this.state.arrSelectedUsers);
   };
 
   removePeople(e) {

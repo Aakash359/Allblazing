@@ -54,6 +54,7 @@ class CreateGroup extends Component {
         GroupType: this.state.list[0].id,
         photo: this.state.photo,
         description: this.state.description,
+        imageDetails: this.state.imagedetails
       });
     }
   };

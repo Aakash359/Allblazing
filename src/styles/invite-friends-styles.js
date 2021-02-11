@@ -122,9 +122,8 @@ export default StyleSheet.create({
   },
   row: {
     alignItems: 'center',
-    alignSelf: 'flex-start',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     margin: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(15),
   },

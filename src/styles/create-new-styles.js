@@ -44,6 +44,6 @@ export default StyleSheet.create({
     borderRadius: 13,
     flexDirection: 'row',
     padding: 6,
-    width: width * 0.42,
+    width: width * 0.38,
   },
 });

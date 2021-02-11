@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
@@ -53,10 +54,10 @@ const styles = {
   },
   wrapper2: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,
-    height: 170,
+    height: Platform.OS === 'ios' ? 200 : 170,
     width: Constants.BaseStyle.DEVICE_WIDTH,
     alignItems:'center',
-    paddingBottom:10,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
     borderTopLeftRadius: Constants.BaseStyle.scale(16),
     borderTopRightRadius: Constants.BaseStyle.scale(16),
     

@@ -36,6 +36,7 @@ class FollowersList extends Component {
     };
   }
 
+
   // const navigation = useNavigation();
   // const dispatch = useDispatch();
 
@@ -48,20 +49,23 @@ class FollowersList extends Component {
     // eslint-disable-next-line react/prop-types
     const { addFollowUserId } = this.props;
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
-    // console.log('====>', token);
+    // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9xdXl0ZWNoLm5ldFwvcnVuZmFzdC1zZnRwXC9SdW5GYXN0XC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MTAzODE0MzQsImV4cCI6MTY0MTkxNzQzNCwibmJmIjoxNjEwMzgxNDM0LCJqdGkiOiI3RWRvMGlJTnl4SXFVVzhqIiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YVbGsO63fIzvn7M5uciyRF24FAf0HEhvgPLnR2_Irro';
+    console.log('Token====>', this.props.token);
     const config = {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: {Authorization: `Bearer ${this.props.token}`},
+      params: {
+        id: this.props?.route?.params?.user_id
+      }
     };
-    console.log('===>responseFOLLOWERS');
+    // console.log('===>responseFOLLOWERS');
     this.setState({
       Loading: true,
     });
     axios
       .get(API.FOLLOWERS, config)
       .then((response) => {
+        console.log('===>responseFOLLOWERS', response);
         if (response.data.data.result) {
-          console.log('===>responseFOLLOWERS', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
           // addFollowUserId(response?.data?.data?.result?.id);
           // console.log('====?id', response?.data?.data?.result?.id);
@@ -85,9 +89,12 @@ class FollowersList extends Component {
         <View
           style={[
             FollowingStyles.listView,
-            { backgroundColor: Constants.Colors.SECONDARY_COLOR },
+            { backgroundColor: Constants.Colors.LIGHT_RED },
           ]}
-        />
+        >
+
+        <Image source={item?.followimage} style={{width: 70, height: 70, borderRadius: 12}} resizeMode="cover" />
+        </View>
         <View>
           <Text style={FollowingStyles.nameText}>{item.followingName}</Text>
           <Text style={FollowingStyles.locationText}>
@@ -111,12 +118,12 @@ class FollowersList extends Component {
             />
 
             <TextInput
-              placeholder="Search Followers (48)"
+              placeholder={`Search Followers (${this.props.route.params.followerCount})`}
               placeholderTextColor="#898989"
               value={this.state.search}
               autoCapitalize="none"
               autoCorrect={false}
-              style={{color: 'white'}}
+              style={{color: 'white', paddingVertical: 10}}
               onChangeText={(text) => {
                 this.setState({search: text});
               }}
@@ -157,8 +164,9 @@ FollowersList.propTypes = {
   }).isRequired,
   t: func.isRequired,
 };
-const mapStateToProps = ({ profile: { id } }) => ({
+const mapStateToProps = ({ profile: { id }, auth: {token} }) => ({
   id,
+  token
 });
 
 const mapDispatchToProps = {

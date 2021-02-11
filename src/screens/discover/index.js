@@ -50,7 +50,7 @@ class FeedScreen extends Component {
     });
     Axios.get(API.POST_LIST, config)
       .then((response) => {
-        // console.log('response ====', response.data.data.result);
+        console.log('response ====', response);
         if (response.data.data.result) {
           console.log('===>response', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
@@ -104,12 +104,15 @@ class FeedScreen extends Component {
     } = this.props;
     return (
       <View>
+        <TouchableOpacity onPress={() => {
+            // console.log("USER SCREEN PRESSED")
+            this.props.navigation.navigate('UserProfile', {id: item.id});
+          }}>
+
         <View
           activeOpacity={0.7}
           style={[FollowersStyles.sectionView]}
-          // onPress={() => {
-          //   this.props.navigation.navigate('FeedDetailScreen', {data: item});
-          // }}
+          
         >
           <View style={[FeedStyles.listView]}>
             <View style={FeedStyles.innerView}>
@@ -137,6 +140,8 @@ class FeedScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {

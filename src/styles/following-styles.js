@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 20,
     marginVertical: 10,
+    padding: Platform.OS === 'ios' ? 15 : 10 
     // width: '50%'
   },
 });

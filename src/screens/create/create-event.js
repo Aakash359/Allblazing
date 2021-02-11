@@ -19,7 +19,11 @@ import {withTranslation} from 'react-i18next';
 import {Alert} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Colors from '../../constants/colors';
-
+import DatePickerAI from '../../components/popups/date-picker'
+import { DatePicker } from 'react-native-wheel-picker-android';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import moment from 'moment'
 class CreateEvent extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +68,10 @@ class CreateEvent extends Component {
           name: 'Club',
         },
       ],
+      tempDateTime: new Date(),
+      showDate: false,
+      tempDate: new Date(),
+      showTime: false
     };
   }
 
@@ -92,7 +100,9 @@ class CreateEvent extends Component {
         address2: this.state.address2,
         time: this.state.time,
         date: this.state.date,
+        tempDate: this.state.tempDate,
         description: this.state.description,
+        imageDetails: this.state.imagedetails
       });
     }
   };
@@ -148,6 +158,13 @@ class CreateEvent extends Component {
     </TouchableOpacity>
   );
 
+  onChangeDate = (e,date) => this.setState({date: date.toDateString(), tempDateTime: date})
+    onChangeTime = (e,time) => {
+      
+      this.setState({time: `${ moment(time).format('HH:mm')}`, tempDate: time})
+  }
+
+
   render() {
     const {
       name,
@@ -165,6 +182,8 @@ class CreateEvent extends Component {
       route: {params},
       t: translate,
     } = this.props;
+
+    
     return (
       <SafeAreaView style={CreateEventStyles.container}>
         <ScrollView style={CreateEventStyles.innerContainer}>
@@ -279,14 +298,10 @@ class CreateEvent extends Component {
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
-          <View style={CreateEventStyles.searchView}>
-            {/* <DateTimePicker
-             value={new Date()}
-             mode="date"
-             is24Hour={true}
-          display="default"
-          onChange={(e) => console.log(e)}
-            /> */}
+          
+           <TouchableWithoutFeedback onPress={() => this.setState({showDate: true})}>
+          <View style={CreateEventStyles.searchView} >
+
             <TextInput
               placeholder="Date"
               placeholderTextColor={Constants.Colors.GREY_BORDER}
@@ -298,12 +313,17 @@ class CreateEvent extends Component {
               }}
               style={CreateEventStyles.groupName}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
+              editable={false}
+              />
+            
             <Image
               source={Constants.Images.calendar}
               style={CreateEventStyles.calendarIcon}
-            />
+              />
           </View>
+              </TouchableWithoutFeedback>
+           <TouchableWithoutFeedback onPress={() => this.setState({showTime: true})}>
+
           <View style={CreateEventStyles.searchView}>
             <TextInput
               placeholder="Time"
@@ -316,12 +336,14 @@ class CreateEvent extends Component {
               }}
               style={CreateEventStyles.groupName}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
+              editable={false}
             />
             <Image
               source={Constants.Images.clock}
               style={CreateEventStyles.clockIcon}
             />
           </View>
+          </TouchableWithoutFeedback>
           <View style={CreateEventStyles.searchView}>
             <TextInput
               placeholder="Event Address Line 1"
@@ -374,10 +396,38 @@ class CreateEvent extends Component {
             <Text style={CreateEventStyles.nextText}>Create Event</Text>
           </TouchableOpacity>
         </ScrollView>
+        {this.state.showDate && <View>
+          <TouchableOpacity onPress={() => this.setState({showDate: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
+          </TouchableOpacity>
+          <RNDateTimePicker
+            testID="dateTimePicker"
+            value={this.state.tempDateTime}
+            mode="date"
+            is24Hour={true}
+            display="spinner"
+            onChange={this.onChangeDate}
+            textColor="#fff"
+            /></View>}
+            {this.state.showTime && <View>
+          <TouchableOpacity onPress={() => this.setState({showTime: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
+          </TouchableOpacity>
+          <RNDateTimePicker
+            testID="TimePicker"
+            value={this.state.tempDate}
+            mode="time"
+            is24Hour={true}
+            display="spinner"
+            onChange={this.onChangeTime}
+            textColor="#fff"
+            /></View>}
       </SafeAreaView>
     );
   }
 }
+
+
 
 // export default CreateEvent;
 

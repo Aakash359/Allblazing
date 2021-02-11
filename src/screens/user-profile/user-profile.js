@@ -40,7 +40,7 @@ class UserProfile extends Component {
   }
 
   UserProfileDetails = async () => {
-    const id = this.props.route.params.id;
+    const id = this.props.route.params.follow_id || this.props.route.params.id;
     console.log('userid==>', id);
     const token = await getAuthToken();
     console.log('====>', token);
@@ -104,7 +104,7 @@ class UserProfile extends Component {
     const {
       navigation: {goBack, navigate},
     } = this.props;
-    const followId = this.props.route.params.follow_id;
+    const followId = this.props.route.params.follow_id || this.props.route.params.id;
     console.log('followId', followId);
     const token = await getAuthToken();
     console.log('====>', token);
@@ -138,7 +138,7 @@ class UserProfile extends Component {
   handleUserFollow = async () => {
     const token = await getAuthToken();
     const {followStatus} = this.state;
-    // console.log('====>', token);
+    console.log('ID====>', this.props.route.params.follow_id || this.props.route.params.id);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -149,7 +149,7 @@ class UserProfile extends Component {
       .post(
         API.FOLLOW,
         {
-          follow_id: 3,
+          follow_id: this.props.route.params.follow_id || this.props.route.params.id
         },
         config,
       )
@@ -187,7 +187,7 @@ class UserProfile extends Component {
       route: {params},
       t: translate,
     } = this.props;
-    const id = this.props.route.params.id;
+    const id = this.props.route.params.follow_id || this.props.route.params.id;
     // console.log('id===>',id);
     return (
       <View style={ProfileStyles.container}>
@@ -236,20 +236,21 @@ class UserProfile extends Component {
                       />
                     </TouchableOpacity>
                     {this.props.route?.params?.iseventPage ? null : (
-                      <TouchableOpacity
+                      
+                        this.state.FollowLoading ? (
+                          <ActivityIndicator color="white" size={25} />
+                        ) : (
+                          <TouchableOpacity
                         activeOpacity={0.7}
                         // onPress={() => setFollowStatus(!followStatus)}
                         onPress={() => this.handleUserFollow()}>
-                        {this.state.FollowLoading ? (
-                          <ActivityIndicator color="white" size={25} />
-                        ) : (
                           <Image
                             source={Constants.Images.add}
                             resizeMode="contain"
                             style={ProfileStyles.icon}
                           />
-                        )}
                       </TouchableOpacity>
+                        )
                     )}
                   </View>
                 </ImageBackground>
@@ -257,16 +258,25 @@ class UserProfile extends Component {
             </TouchableOpacity>
             <View style={ProfileStyles.sectionMainView}>
               <View style={ProfileStyles.sectionView}>
+                <TouchableOpacity onPress={() => {
+                  this.props.navigation.navigate('FollowersList', {user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                }}>
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.followerCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Followers'}</Text>
+                </TouchableOpacity>
               </View>
               <View style={ProfileStyles.sectionView}>
+              <TouchableOpacity onPress={() => {
+                  this.props.navigation.navigate('FollowingList', {user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                }}>
+
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.followingCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Following'}</Text>
+                </TouchableOpacity>
               </View>
               <View style={ProfileStyles.sectionView}>
                 <Text style={ProfileStyles.section2}>

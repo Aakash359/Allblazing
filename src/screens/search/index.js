@@ -61,7 +61,7 @@ function SearchSeceen() {
     <>
       <SafeAreaView style={SearchScreen.container}>
         <ScrollView>
-          <View style={SearchScreen.searchView}>
+          <View style={[SearchScreen.searchView, {justifyContent: 'flex-start'}]}>
             <Image
               source={Constants.Images.search}
               style={SearchScreen.searchIcon}

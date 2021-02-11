@@ -110,54 +110,58 @@ class BlockUser extends React.Component {
       isLoading: true,
     });
 
+    const reason = this.state.reason === 'Other' ? this.state.description : this.state.reason
+
+    console.log('REPORT REASON', this.state.reason);
     const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-    Axios.post(
-      API.USER_REPORT,
-      {
-        user_id: id,
-        type: 'report',
-        report_type: 'Testing',
-      },
-      config,
-    )
-      .then((response) => {
-        console.log('response ====', response.data);
-        if (response?.data?.code === 401) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            
-          );
-        }
-        if (response?.data?.code === 200) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel pressed'),
-                style: 'Cancel',
-              },
-              {
-                text: 'OK',
-                onPress: () => navigate('MyProfile'),
-              },
-            ],
-            {Cancelable:false}
-          );
 
-          // navigate('MyProfile');
-        }
-      })
-      .finally(() => {
-        this.setState({
-          isLoading: false,
-        });
-      });
+    // Axios.post(
+    //   API.USER_REPORT,
+    //   {
+    //     user_id: id,
+    //     type: 'report',
+    //     report_type: reason,
+    //   },
+    //   config,
+    // )
+    //   .then((response) => {
+    //     console.log('response ====', response.data);
+    //     if (response?.data?.code === 401) {
+    //       Alert.alert(
+    //         '',
+    //         response?.data?.message ?? '',
+            
+    //       );
+    //     }
+    //     if (response?.data?.code === 200) {
+    //       Alert.alert(
+    //         '',
+    //         response?.data?.message ?? '',
+    //         [
+    //           {
+    //             text: 'Cancel',
+    //             onPress: () => console.log('Cancel pressed'),
+    //             style: 'Cancel',
+    //           },
+    //           {
+    //             text: 'OK',
+    //             onPress: () => navigate('MyProfile'),
+    //           },
+    //         ],
+    //         {Cancelable:false}
+    //       );
+
+    //       // navigate('MyProfile');
+    //     }
+    //   })
+    //   .finally(() => {
+    //     this.setState({
+    //       isLoading: false,
+    //     });
+    //   });
   };
   render() {
     const {reason, description} = this.state;

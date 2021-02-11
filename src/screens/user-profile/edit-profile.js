@@ -193,7 +193,7 @@ class EditProfile extends Component {
                     EditProfileStyles.headerTextLike,
                     {...Constants.Fonts.Regular},
                   ]}>
-                  {'121 Dazzy Cir, Santee, SC 29142, United State'}
+                  {this.props.address}
                 </Text>
 
                 <TouchableOpacity
@@ -265,7 +265,7 @@ EditProfile.propTypes = {
 };
 
 const mapStateToProps = ({
-  profile: {image, full_name, age, time, gender, motto_description},
+  profile: {image, full_name, age, time, gender, motto_description, address},
   auth: {user_id},
 }) => ({
   image,
@@ -275,6 +275,7 @@ const mapStateToProps = ({
   time,
   motto_description,
   user_id,
+  address
 });
 
 const mapDispatchToProps = {

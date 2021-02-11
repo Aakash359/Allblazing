@@ -52,11 +52,12 @@ class UserMotto extends Component {
         .post(
           API.UPDATE_PROFILE,
           {
-            motto_description: motto_description,
+            motto: motto_description,
           },
           config,
         )
         .then((response) => {
+          console.log("MOTTO_DESCRIPTION UPDATE", response);
           if (response?.data?.code === 200) {
             Alert.alert('', response?.data?.message ?? '',
             [
@@ -76,6 +77,8 @@ class UserMotto extends Component {
             console.log('motto_description:==>', motto_description);
             // navigate('EditProfile');
           }
+        }).catch(e => {
+          console.log("MOTTO DESCRIPTION UPDATE ERROR", e);
         })
         .finally(() => {
           this.setState({

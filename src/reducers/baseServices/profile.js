@@ -10,6 +10,7 @@ import {
   SET_FOLLOW_USERID,
   SET_PROFILE_IMAGE,
   SET_LOCATION,
+  SET_ADDRESS,
 } from '../../actions/auth-action-types';
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   role: null,
   email: '',
   image: 'N/A',
+  address: '',
 
   // FOLLOWLIST
   id: 0,
@@ -94,71 +96,60 @@ export default function profile(state = initialState, {payload, type}) {
         ...state,
         image: payload,
       };
+    case SET_ADDRESS:
+      return {
+        ...state,
+        address: payload
+      }
     default:
       return state;
   }
 }
 
 export function setProfileDetails(params) {
-  return (dispatch) => {
-    dispatch({type: SET_PROFILE_DETAILS, payload: params});
-  };
+  return ({type: SET_PROFILE_DETAILS, payload: params});
 }
 
 export function setFullName(params) {
-  return (dispatch) => {
-    dispatch({type: SET_FULLNAME, payload: params});
-  };
+  return ({type: SET_FULLNAME, payload: params});
 }
 
 export function setProfileImage(params) {
-  return (dispatch) => {
-    dispatch({type: SET_PROFILE_IMAGE, payload: params});
-  };
+  return ({type: SET_PROFILE_IMAGE, payload: params});
 }
 
 export function setAge(params) {
-  return (dispatch) => {
-    dispatch({type: SET_AGE, payload: params});
-  };
+  return ({type: SET_AGE, payload: params});
 }
 export function setGender(params) {
-  return (dispatch) => {
-    dispatch({type: SET_GENDER, payload: params});
-  };
+  return ({type: SET_GENDER, payload: params});
 }
 export function setLocation(params) {
-  return (dispatch) => {
-    dispatch({type: SET_LOCATION, payload: params});
-  };
+  return ({type: SET_LOCATION, payload: params});
 }
 export function setMottoDescription(params) {
-  return (dispatch) => {
-    dispatch({type: SET_MOTTO_DESCRIPTION, payload: params});
-  };
+  return ({type: SET_MOTTO_DESCRIPTION, payload: params});
 }
+
+export function setAddress(params) {
+  return ({type: SET_ADDRESS, payload: params});
+}
+
+
 export function setTime(params) {
-  return (dispatch) => {
-    dispatch({type: SET_TIME, payload: params});
-  };
+  return ({type: SET_TIME, payload: params});
 }
 
 export function setFollowList(params) {
   console.log('===>', params);
-  return (dispatch) => {
-    dispatch({type: SET_FOLLOWLIST, payload: params});
-  };
+  return ({type: SET_FOLLOWLIST, payload: params});
 }
 
 export function setFollowUserId(params) {
   console.log('===>', params);
-  return (dispatch) => {
-    dispatch({type: SET_FOLLOW_USERID, payload: params});
-  };
+  return ({type: SET_FOLLOW_USERID, payload: params});
 }
 export function setFollowId(params) {
   console.log('===>', params);
-  return (dispatch) => {
-    dispatch({type: SET_FOLLOW_ID, payload: params});
-  };
+  return ({type: SET_FOLLOW_ID, payload: params});
 }

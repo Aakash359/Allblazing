@@ -8,6 +8,7 @@ import * as actions from '../../actions/user-action-types';
 import { clearAsyncStorage, removeAuthToken } from '../../helpers/auth';
 import {withTranslation} from 'react-i18next';
 import { removeAuthTokenFromRedux } from '../../reducers/baseServices/auth';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const settingList = [
   {
@@ -100,7 +101,19 @@ class Settings extends Component {
       navigation: {navigate},
     } = this.props;
 
-    const token = await clearAsyncStorage();
+    const allKeys = await AsyncStorage.getAllKeys()
+    console.log(await AsyncStorage.getItem('userCred'));
+    console.log('ALL KEYS BEFORE REMOVE', allKeys);
+    let index = allKeys.indexOf('userCred')
+    let newKeys = allKeys.splice(index, 1)
+    let index2 = allKeys.indexOf('intro')
+    allKeys.splice(index, 1)
+    console.log('NEW_KEYS',newKeys);
+    console.log('ALL KEYS AFTER REMOVE', allKeys);
+
+
+
+    const token = await AsyncStorage.multiRemove(allKeys);
     console.log("========>>tokenNullll",token);
       this.setState({logoutPopup: false})
       logOutSuccess('');

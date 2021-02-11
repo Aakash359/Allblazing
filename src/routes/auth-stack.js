@@ -20,15 +20,28 @@ import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
 import Constants from '../constants';
 import { CommonStyles } from '../styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const AuthStack = createStackNavigator();
 const options = { headerShown: false };
 
-export default function MainNavigator() {
+export default function MainNavigator({intro}) {
+  // const [intro, setIntro] = React.useState(true)
+
   const { t: translate } = useTranslation();
 
+  
+console.log("DONE INTRO..?", typeof intro, intro);
+
+// React.useEffect(async() => {
+//   const getIntro = await AsyncStorage.getItem('intro') 
+//   setIntro(getIntro === 'true' || false )
+// }, intro)
+
+
+
   return (
-    <AuthStack.Navigator headerMode="screen" initialRouteName="SelectLanguage">
+    <AuthStack.Navigator headerMode="screen" initialRouteName={intro ? 'Login': 'SelectLanguage' }>
       <AuthStack.Screen
         name="SelectLanguage"
         options={options}

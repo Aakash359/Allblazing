@@ -23,7 +23,6 @@ export default function auth(state = initialState, {payload, type}) {
 }
 
 export function setFeedDetails(params) {
-  return (dispatch) => {
-    dispatch({type: SET_FEED_DETAILS, payload: params});
-  };
+  return ({type: SET_FEED_DETAILS, payload: params});
+
 }

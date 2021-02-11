@@ -131,27 +131,27 @@ class Register extends Component {
           );
         }
         if (response?.data?.code === 200) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-              },
-              {
-                text: 'OK',
-                onPress: () => navigate('OTP', {email: this.state.email}),
-              },
-            ],
-            {Cancelable: false},
-          );
+          // Alert.alert(
+          //   '',
+          //   response?.data?.message ?? '',
+          //   [
+          //     {
+          //       text: 'Cancel',
+          //       onPress: () => console.log('Cancel Pressed'),
+          //     },
+          //     {
+          //       text: 'OK',
+          //       onPress: () => navigate('OTP', {email: this.state.email}),
+          //     },
+          //   ],
+          //   {Cancelable: false},
+          // );
           addSignUpDetail(response?.data?.data);
           // console.log('data=====>', response?.data?.data);
           setUserId(response?.data?.data?.user_id.toString());
           // console.log('UserId====>>>',response?.data?.data?.user_id);
           signupSuccess();
-          // navigate('OTP',{email:this.state.email});
+          navigate('OTP',{email:this.state.email});
         }
       })
       .finally(() => {
