@@ -64,6 +64,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This will help us to recommend you nearby locations while searching for nearby users.
 </string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This will help us to recommend you nearby locations while searching for nearby users.
+</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Please allow us to access your microphone to be able to record a video and send in a chat message.</string>
 	<key>NSMotionUsageDescription</key>
