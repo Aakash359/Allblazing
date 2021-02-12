@@ -6,8 +6,7 @@ import {
   Image,
   TextInput,
   ScrollView,
-  Platform,
-  Alert,
+  Alert, Platform,
   ActivityIndicator,
 } from 'react-native';
 import {func, shape} from 'prop-types';
@@ -89,7 +88,10 @@ class Login extends Component {
 
   componentDidMount() {
     this.getLastUserCred()
-    Geolocation.requestAuthorization()
+    if (Platform.OS === 'ios') {
+       Geolocation.requestAuthorization()
+    }
+   
   }
 
   componentWillUnmount() {
