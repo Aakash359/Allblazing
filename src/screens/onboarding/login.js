@@ -83,13 +83,37 @@ class Login extends Component {
 
 
   
-
+  getLocation = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'AllBlazing',
+          'message': 'AllBlazing access to your location '
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the location")
+        // alert("You can use the location");
+      } else {
+        console.log("location permission denied")
+        // alert("Location permission denied");
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+  }
   
 
 
   componentDidMount() {
     this.getLastUserCred()
-    Geolocation.requestAuthorization()
+    if(Platform.OS === 'ios') {
+
+      Geolocation.requestAuthorization()
+    }else {
+      this.getLocation()
+    }
   }
 
   componentWillUnmount() {
@@ -201,8 +225,9 @@ class Login extends Component {
                 value={emailId}
                 placeholder={translate('Email')}
                 onChangeText={(text) => this.setState({emailId: text})}
-                autoCapitalize={false}
+                autoCapitalize={'none'}
                 autoCorrect={false}
+
               />
               <View style={LoginStyles.passwordInput}>
                 <TextInput
@@ -213,7 +238,7 @@ class Login extends Component {
                   onChangeText={(text) => this.setState({password: text})}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
-                  autoCapitalize={false}
+                  autoCapitalize={'none'}
                 autoCorrect={false}
                 />
                 {isShow ? (

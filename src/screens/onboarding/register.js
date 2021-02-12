@@ -186,7 +186,7 @@ class Register extends Component {
             <View>
               <View style={RegisterStyle.emailInput}>
                 <TextInput
-                autoCapitalize={false}
+                autoCapitalize={'none'}
                 autoCorrect={false}
                   ref={this.emailRef}
                   style={RegisterStyle.email}
@@ -220,7 +220,7 @@ class Register extends Component {
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   onSubmitEditing={this.onContinue}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
-                  autoCapitalize={false}
+                  autoCapitalize={'none'}
                   autoCorrect={false}
                 />
                 <TouchableOpacity

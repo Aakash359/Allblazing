@@ -91,8 +91,8 @@ class Location extends Component {
       let granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-              title: "App Geolocation Permission",
-              message: "App needs access to your phone's location.",
+            'title': 'AllBlazing',
+            'message': 'AllBlazing access to your location '
           }
       );
   
@@ -206,7 +206,7 @@ class Location extends Component {
               },
               {
                 text: 'OK',
-                onPress: () => token ? navigate('Overview') : navigate('Login'),
+                onPress: () => authToken ? navigate('Overview') : navigate('Login'),
               },
             ],
             {Cancelable:false}
