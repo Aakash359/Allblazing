@@ -32,6 +32,7 @@ import {
   setUserLocation,
   getUserAddress,
   getUserLocation,
+  getAuthToken,
 } from '../../helpers/auth';
 import API from '../../constants/baseApi';
 import connect from 'react-redux/lib/connect/connect';
@@ -69,6 +70,7 @@ class Location extends Component {
     Geolocation.getCurrentPosition(position => {
       console.log("POSTION", position);
       this.setState({location: position.coords}, () => {
+        setUserLocation(position.coords)
         this.getAddress(position.coords)
       })
 
@@ -99,6 +101,7 @@ class Location extends Component {
           this.getGeoLocation();
   
       } else {
+        this.getLocation()
   
           console.log('Location permission not granted!!!!');
   
@@ -126,8 +129,14 @@ class Location extends Component {
   setUserAddLoc = async () => {
     const {location, address} = this.state
     setUserLocation(location)
-    setUserAddress(address)
-    this.onSubmit()
+    .then(v => {
+      setUserAddress(address)
+      .then(v => {
+
+        this.onSubmit()
+      })
+
+    })
   }
 
   componentDidMount() {
@@ -150,9 +159,11 @@ class Location extends Component {
     const Type = await getUserConnectType();
     const Distance = await getUserDistance();
     const Time = await getUserRecentTime();
-    const token = await getOtpToken();
-    const adrress = await getUserAddress();
+    const token = await getOtpToken() || await getAuthToken()
+    const authToken = await getAuthToken()
+    const address = await getUserAddress() || '';
     const {latitude, longitude} = await getUserLocation();
+    console.log("USER DETAILS: =====", name, Age, Type, Distance, Time, "Token", token, address, {latitude, longitude});
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -167,16 +178,15 @@ class Location extends Component {
           type: Type,
           distance: Distance,
           time: Time,
-          latitude,
-          longitude,
-          country:'india',
-          state:'up',
-          level:1
+          latitude: latitude || 0.0,
+          longitude: longitude || 0.0,
+          level:1,
+          address: address || 'Select'
         },
         config,
       )
       .then((response) => {
-        // console.log('response ====', response.data);
+        console.log('response ====', response.data);
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
@@ -196,7 +206,7 @@ class Location extends Component {
               },
               {
                 text: 'OK',
-                onPress: () => navigate('Login'),
+                onPress: () => token ? navigate('Overview') : navigate('Login'),
               },
             ],
             {Cancelable:false}

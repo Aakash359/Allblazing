@@ -109,7 +109,7 @@ export const setAuthToken = async (value = '') => {
   };
   export const getUserAddress = async () => {
     try {
-      return JSON.parse(await AsyncStorage.getItem(USER_ADDRESS_KEY) || '{}');
+      return await AsyncStorage.getItem(USER_ADDRESS_KEY);
     } catch (err) {
       logError(err, '[getUserAddress] AsyncStorage Error');
       return null;

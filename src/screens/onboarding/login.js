@@ -26,7 +26,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
 
 Geolocation?.setRNConfiguration({
-  skipPermissionRequests: true,
+  skipPermissionRequests: false,
   authorizationLevel: 'always'
 });
 
@@ -89,7 +89,7 @@ class Login extends Component {
 
   componentDidMount() {
     this.getLastUserCred()
-
+    Geolocation.requestAuthorization()
   }
 
   componentWillUnmount() {
@@ -160,7 +160,12 @@ class Login extends Component {
           
         }
           loginSuccess();
-          navigate('Overview');
+          if(response?.data?.data?.completeProfile) {
+            navigate('Overview');
+
+          }else {
+            navigate('Username')
+          }
         }
       })
       .finally(() => {
