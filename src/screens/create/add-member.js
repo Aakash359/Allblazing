@@ -116,10 +116,10 @@ class AddMember extends Component {
     const formdata = new FormData();
     formdata.append('name', name);
     formdata.append('image', {
-      uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
-      name: 'test.jpg',
-      type: 'image/jpg',
-    });
+            uri: photo,
+            name: 'test.jpg',
+            type: 'image/jpg',
+          })
     // formdata.append('image', photo);
     formdata.append('type', Type);
     for (let index = 0; index < arrSelectedUsers.length; index++) {
@@ -190,7 +190,7 @@ class AddMember extends Component {
     const isEnabled = this.props.route.params.isEnabled;
     const description = this.props.route.params.description;
     const imageDetials = this.props.route.params.imageDetails
-    console.log("IMAGE DETAILS", imageDetials);
+    console.log("IMAGE DETAILS", photo);
     this.setState({
       isLoading: true,
     });
@@ -204,11 +204,16 @@ class AddMember extends Component {
 
     const formdata = new FormData();
     formdata.append('name', name);
+    // formdata.append('image', {
+    //   uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
+    //   name: imageDetials?.filename || 'image.jpg',
+    //   type: imageDetials.mime,
+    // });
     formdata.append('image', {
-      uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
-      name: imageDetials?.filename || 'image.jpg',
-      type: imageDetials.mime,
-    });
+            uri: photo,
+            name: 'test.jpg',
+            type: 'image/jpeg',
+          })
     formdata.append('event_type',eventType);
     formdata.append('description', description);
     formdata.append('time', new Date(tempDate).getTime());

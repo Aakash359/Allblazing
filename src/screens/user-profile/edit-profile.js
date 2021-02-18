@@ -48,7 +48,8 @@ class EditProfile extends Component {
         'JPEG',
         85,
       )
-        .then(async ({uri}) => {
+        .then(async ({ uri }) => {
+          console.log("MYYURRL",uri)
           const token = await getAuthToken();
           const config = {
             headers: {Authorization: `Bearer ${token}`},
@@ -146,9 +147,15 @@ class EditProfile extends Component {
 
             <View style={EditProfileStyles.containerLikes}>
               <View style={EditProfileStyles.headerViewLike}>
+              <View style={EditProfileStyles.flexDirection}>
+              <Text
+                    style={EditProfileStyles.headerQuestion}>
+                    {'Name'}
+                  </Text>
                 <Text style={EditProfileStyles.headerTextLike}>
                   {full_name}
                 </Text>
+                </View>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => this.onNavigate('Username', 'Edit Name')}>
@@ -159,8 +166,13 @@ class EditProfile extends Component {
                 </TouchableOpacity>
               </View>
               <View style={EditProfileStyles.headerViewLike}>
+              <View style={EditProfileStyles.flexDirection}>
+              <Text
+                    style={EditProfileStyles.headerQuestion}>
+                    {'Age'}
+                  </Text>
                 <Text style={EditProfileStyles.headerTextLike}>{age}</Text>
-
+                  </View>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => this.onNavigate('Userage', 'Edit Age')}>
@@ -173,8 +185,13 @@ class EditProfile extends Component {
               <View
                 style={EditProfileStyles.headerViewLike}
                 activeOpacity={0.7}>
+                  <View style={EditProfileStyles.flexDirection}>
+                  <Text
+                    style={EditProfileStyles.headerQuestion}>
+                    {'Gender'}
+                  </Text>
                 <Text style={EditProfileStyles.headerTextLike}>{gender}</Text>
-
+                  </View>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => this.onNavigate('UserGender', 'Edit Gender')}>
@@ -187,6 +204,11 @@ class EditProfile extends Component {
               <View
                 style={EditProfileStyles.headerViewLike}
                 activeOpacity={0.7}>
+                  <View style={EditProfileStyles.flexDirection}>
+                  <Text
+                    style={EditProfileStyles.headerQuestion}>
+                    {'Your Address'}
+                  </Text>
                 <Text
                   numberOfLines={2}
                   style={[
@@ -195,6 +217,7 @@ class EditProfile extends Component {
                   ]}>
                   {this.props.address}
                 </Text>
+                </View>
 
                 <TouchableOpacity
                   activeOpacity={0.7}
@@ -230,6 +253,11 @@ class EditProfile extends Component {
                 </TouchableOpacity>
               </View>
               <View style={EditProfileStyles.headerViewLike}>
+              <View style={EditProfileStyles.flexDirection}>
+              <Text
+                    style={EditProfileStyles.headerQuestion}>
+                    {'Your Motto'}
+                  </Text>
                 <Text
                   style={[
                     EditProfileStyles.headerTextLike,
@@ -237,6 +265,7 @@ class EditProfile extends Component {
                   ]}>
                   {motto_description}
                 </Text>
+                </View>
 
                 <TouchableOpacity
                   activeOpacity={0.7}

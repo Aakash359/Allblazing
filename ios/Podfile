@@ -19,6 +19,8 @@ target 'RunFast' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'agora-react-native-rtm', :path => '../node_modules/agora-react-native-rtm'
+
   target 'RunFastTests' do
     inherit! :complete
     # Pods for testing

@@ -20,7 +20,8 @@ import {connect} from 'react-redux';
 import {withTranslation} from 'react-i18next';
 import Axios from 'axios';
 import API from '../../constants/baseApi';
-import {getAuthToken} from '../../helpers/auth';
+import { getAuthToken } from '../../helpers/auth';
+import { withNavigationFocus } from '@react-navigation/compat';
 import {ActivityIndicator} from 'react-native';
 import {setMottoDescription, setProfileDetails} from '../../reducers/baseServices/profile';
 
@@ -35,8 +36,14 @@ class MyProfile extends Component {
   }
 
   componentDidMount() {
-    this.UserProfileDetails();
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.UserProfileDetails();
+    });
+    
   }
+  // componentWillUnmount() {
+  //  this.unsubscribe.remove() 
+  // }
 
   UserProfileDetails = async () => {
     const {user_id, addProfileDetail,} = this.props;
@@ -275,4 +282,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(MyProfile));
+)(withTranslation()( MyProfile));

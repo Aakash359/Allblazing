@@ -220,6 +220,7 @@ class CreateGroup extends Component {
               onChangeText={(text) => this.setState({description: text})}
               placeholderTextColor={Constants.Colors.TEXT_COLOR}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
+              textAlignVertical = 'top'
             />
           </View>
           <TouchableOpacity

@@ -37,7 +37,7 @@ return axios.post(API.LOG_IN, {
       
     }
       loginSuccess();
-      navigate('Overview');
+      navigate('Home');
     }
   })
   .finally(() => {

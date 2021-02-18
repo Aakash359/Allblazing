@@ -23,6 +23,7 @@ import DatePickerAI from '../../components/popups/date-picker'
 import { DatePicker } from 'react-native-wheel-picker-android';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment'
 class CreateEvent extends Component {
   constructor(props) {
@@ -112,15 +113,25 @@ class CreateEvent extends Component {
       height: 400,
       cropping: false,
       includeBase64: true,
-    }).then((photo) => {
-      console.log('image details ', photo);
-      const {mime, filename, data, path} = photo;
-      const uri = `data:${mime};base64,${data}`;
-      this.setState(() => {
-        return {photo: photo.path, imagedetails: photo};
+    }).then((image) => {
+      ImageResizer.createResizedImage(
+        Platform.OS === 'android'
+          ? image.path
+          : image.path.replace('file://', ''),
+        image.width / 3,
+        image.height / 3,
+        'JPEG',
+        85,
+      ).then(({ uri }) => {
+       console.log("MYYURRL",uri)
+        // const {path} = photo;
+        // const uri = `data:${mime};base64,${data}`;
+        this.setState(() => {
+          return { photo: uri,};
+        });
+        // console.log(path);
       });
-      console.log(photo.path);
-    });
+    })
   };
   handleBtn = (Btn) => {
     this.setState({EventTypeSelectedId: Btn});

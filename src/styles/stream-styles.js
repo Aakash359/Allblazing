@@ -39,12 +39,12 @@ const styles = {
   },
   header: {
     alignItems: 'center',
-    backgroundColor: Constants.Colors.BLUE,
+    backgroundColor: Constants.Colors.WHITE,
     flexDirection: 'row',
     height: 36,
-    justifyContent: 'center',
+    justifyContent:'space-around',
     marginRight: -Constants.BaseStyle.scale(5),
-    width: 60,
+    width: 80,
   },
   headerIcons: {
     alignItems: 'center',
@@ -54,7 +54,7 @@ const styles = {
   },
   headerText: {
     ...Constants.Fonts.SmallBold,
-    color: Constants.Colors.WHITE,
+    color: Constants.Colors.BLACK,
   },
   healthData: {
     height: Constants.BaseStyle.scale(200),
@@ -95,9 +95,11 @@ const styles = {
     textAlign: 'center',
   },
   row: {
+    flex: 1,
+    width:'95%',
     alignItems: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    position:'absolute',
     justifyContent: 'space-between',
     marginHorizontal: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(10),

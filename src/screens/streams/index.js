@@ -1,21 +1,33 @@
 import React from 'react';
 import {
   ImageBackground,
+  Dimensions,
   View,
   Text,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
   Keyboard,
+  PermissionsAndroid
 } from 'react-native';
 import Share from 'react-native-share';
 import {CommonActions} from '@react-navigation/native';
 import {bool, func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
 import Constants from '../../constants';
-import {InputField} from '../../components';
+import RtcEngine from 'react-native-agora';
 import {AuthStyle, StreamStyles} from '../../styles';
-import {wearableOptions} from '../../data';
-
+import {
+  RtcLocalView,
+  RtcRemoteView,
+  ChannelProfile,
+  ClientRole,
+ 
+} from 'react-native-agora';
+const dimensions = {
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height,
+};
 class CreateStream extends React.Component {
   descriptionRef = React.createRef();
   scrollViewRef = React.createRef();
@@ -24,22 +36,132 @@ class CreateStream extends React.Component {
     super(props);
 
     this.state = {
+      timer: null,
       height: (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100,
       isFocused: false,
       selected: [],
       title: '',
       toggle: false,
+      joined: false,
+      flash: false,
+      minutes_Counter: '00',
+      seconds_Counter: '00',
+      
     };
+    this.AgoraEngine = React.createRef();
   }
 
+  init = async () => {
+    this.AgoraEngine.current = await RtcEngine.create(
+      '22143d65ab6a440099dec92cbb2c6f2f',
+    );
+    
+    this.AgoraEngine.current.enableVideo();
+    
+    this.AgoraEngine.current.enableAudio();
+    this.AgoraEngine.current.setChannelProfile(ChannelProfile.LiveBroadcasting);
+      this.AgoraEngine.current.setClientRole(ClientRole.Broadcaster);
+  
+    this.AgoraEngine.current.addListener(
+      'JoinChannelSuccess',
+      (channel, uid, elapsed) => {
+        console.log('JoinChannelSuccess', channel, uid, elapsed);
+
+        this.setState({ joined: true });
+        this.onButtonStart()
+      },
+    );
+    
+    
+
+   this.AgoraEngine.current.addListener(
+      'LeaveChannel',
+      (data) => {
+        console.log('LeaeveChhannel', data);
+         const {navigation} = this.props;
+    const options = {
+      index: 0,
+      routes: [{name: 'Dashboard'}],
+    };
+    const action = CommonActions.reset(options);
+
+    navigation.dispatch(action);
+        
+      },
+   );
+    
+    this.AgoraEngine.current.addListener('RemoteVideoStateChanged', (uid, state) => {
+      // if (uid === 1) setBroadcasterVideoState(state);
+      console.log("Startuusss changed" ,state)
+    });
+  };
+  permissionAsk = async () => {
+    if (Platform.OS === 'android') {
+      await this.requestCameraAndAudioPermission();
+    }
+  }
+  destroy = async () => { await AgoraEngine.current.destroy(); }
   componentDidMount() {
     Keyboard.addListener('keyboardDidShow', this.onKeyboardOpen);
     Keyboard.addListener('keyboardDidHide', this.onKeyboardHide);
+   this.permissionAsk()
+    this.init().then(() =>
+      this.AgoraEngine.current.joinChannel(
+        '00622143d65ab6a440099dec92cbb2c6f2fIABgPzqO1EFAHT0s4Pr/8EW8dXJ+umYRNZOzBp9qMNxPjsgIv5MAAAAAEABFd1n8HjEuYAEAAQAeMS5g',
+        'live_stream',
+        null,
+        0,
+      ),
+    );
+   
   }
+onSwitchCamera = () => {
+     console.log("Called22") 
+    this.AgoraEngine.current.switchCamera()
+  };
+   LeaveChannel = () => {
+   
+    this.AgoraEngine.current.leaveChannel()
+  };
+   touchOn = () => {
+     this.setState({ flash: !this.state.flash }, () => {
+     this.state.flash?this.AgoraEngine.current.setCameraTorchOn(true):this.AgoraEngine.current.setCameraTorchOn(false)
+  })
+    
+     
+  } 
 
+   SendMessge = () => {
+  console.log('mesaageData',streamID,message)
+    this.AgoraEngine.current.sendStreamMessage(streamID,message)
+   }
+  
+  async requestCameraAndAudioPermission() {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+      ]);
+      if (
+        granted['android.permission.RECORD_AUDIO'] ===
+          PermissionsAndroid.RESULTS.GRANTED &&
+        granted['android.permission.CAMERA'] ===
+          PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        console.log('You can use the cameras & mic');
+      } else {
+        console.log('Permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+  
   componentWillUnmount() {
+  
     Keyboard.removeListener('keyboardDidShow', this.onKeyboardOpen);
     Keyboard.removeListener('keyboardDidHide', this.onKeyboardHide);
+      clearInterval(this.state.timer);
   }
 
   onKeyboardOpen = () => {
@@ -80,114 +202,83 @@ class CreateStream extends React.Component {
     }
   };
 
-  onToggle = () => {
-    const {toggle} = this.state;
-    const value = !toggle;
-    const height = value
-      ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100
-      : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100;
-
-    this.setState({
-      height,
-      toggle: value,
-    });
-
-    Keyboard.dismiss();
-  };
-
-  onLiveStream = () => {
-    const {
-      navigation: {setParams},
-      route: {params},
-    } = this.props;
-    const payload = {};
-
-    if (params?.isStreamStarted) {
-      payload.isStreamStarted = false;
-      payload.isFinished = true;
-    } else {
-      payload.isStreamStarted = true;
-    }
-
-    setParams(payload);
-    Keyboard.dismiss();
-  };
-
-  onShare = async () => {
-    try {
-      const options = {
-        message:
-          'This is for development purpose only. We will update this once app is live',
-        title: 'AllBlazing',
-        url: 'https://google.com',
-      };
-
-      await Share.open(options);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      // console.log('sharing error ', e);
-    }
-  };
 
   onDelete = () => {
-    const {navigation} = this.props;
-    const options = {
-      index: 0,
-      routes: [{name: 'Dashboard'}],
-    };
-    const action = CommonActions.reset(options);
-
-    navigation.dispatch(action);
+    clearInterval(this.state.timer);
+    
+   
+    this.AgoraEngine.current.leaveChannel();
   };
-
+onButtonStart = () => {
+ 
+    let timer = setInterval(() => {
+ 
+      var num = (Number(this.state.seconds_Counter) + 1).toString(),
+        count = this.state.minutes_Counter;
+ 
+      if (Number(this.state.seconds_Counter) == 59) {
+        count = (Number(this.state.minutes_Counter) + 1).toString();
+        num = '00';
+      }
+ 
+      this.setState({
+        minutes_Counter: count.length == 1 ? '0' + count : count,
+        seconds_Counter: num.length == 1 ? '0' + num : num
+      });
+    }, 1000);
+    this.setState({ timer });
+ 
+    this.setState({startDisable : true})
+  }
   render() {
-    const {height, selected, title, toggle} = this.state;
+    const { height, selected, title, toggle, joined } = this.state;
     const {
-      route: {params},
+      route: { params },
       t: translate,
     } = this.props;
 
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        style={StreamStyles.container}
-        onPress={this.onOutsideClick}>
-        <ImageBackground
-          style={StreamStyles.background}
-          source={Constants.Images.liveStream}>
-          <View style={StreamStyles.row}>
-            {params?.isStreamStarted && (
-              <Image
+      <View style ={{flex:1}}>
+        {!joined ?
+          <View style={{ flex:1 ,backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator
+              size={30}
+              color="#fff"
+             
+            />
+            <Text style={{ color: 'white' }}>Joining Stream, Please Wait</Text>
+          </View>
+          : <View style={{ flex: 1 }}>
+            <RtcLocalView.SurfaceView
+              uid={0}
+              style={{width: dimensions.width,
+                height: dimensions.height,}}
+              channelId={'live_stream'}
+            />
+              
+            <View style={StreamStyles.row}>
+              <View style={StreamStyles.header}>
+                 <Image
                 resizeMode="contain"
                 source={Constants.Images.liveLogo}
                 style={StreamStyles.logo}
               />
-            )}
-            {params?.isFinished ? (
+                  <Text style={StreamStyles.headerText}>{this.state.minutes_Counter} : {this.state.seconds_Counter}</Text>
+                </View>
+             
+         
               <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
-                <TouchableOpacity activeOpacity={0.7} onPress={this.onShare}>
-                  <Image
-                    resizeMode="contain"
-                    source={Constants.Images.share}
-                    style={StreamStyles.camera}
-                  />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View style={[StreamStyles.row, StreamStyles.headerIcons]}>
-                {params?.isStreamStarted && (
-                  <View style={StreamStyles.header}>
-                    <Text style={StreamStyles.headerText}>02:05</Text>
-                  </View>
-                )}
-                <TouchableOpacity activeOpacity={0.7}>
+                
+                
+                
+                <TouchableOpacity activeOpacity={0.7} onPress={this.touchOn}>
                   <Image
                     resizeMode="contain"
                     source={Constants.Images.flash}
                     style={StreamStyles.flash}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity activeOpacity={0.7} onPress={this.onSwitchCamera}>
                   <Image
                     resizeMode="contain"
                     source={Constants.Images.rotate}
@@ -195,137 +286,34 @@ class CreateStream extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-            )}
-          </View>
-          {params?.isStreamStarted || params?.isFinished ? (
-            <View style={StreamStyles.button}>
-              {params?.isFinished ? (
-                <View style={StreamStyles.row}>
-                  <TouchableOpacity
-                    style={[AuthStyle.loginTouchable, StreamStyles.deleteBtn]}
-                    activeOpacity={0.7}
-                    onPress={this.onDelete}>
-                    <Text
-                      style={[
-                        AuthStyle.buttonText,
-                        StreamStyles.deleteBtnText,
-                      ]}>
-                      {translate('Delete')}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[AuthStyle.loginTouchable, StreamStyles.homeBtn]}
-                    activeOpacity={0.7}
-                    onPress={this.onDelete}>
-                    <Text
-                      style={[
-                        AuthStyle.buttonText,
-                        {color: Constants.Colors.WHITE},
-                      ]}>
-                      {translate('Home')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View>
-                  {toggle && (
-                    <Image
-                      resizeMode="contain"
-                      source={Constants.Images.health}
-                      style={StreamStyles.healthData}
-                    />
-                  )}
-                  <TouchableOpacity
-                    style={[AuthStyle.loginTouchable, StreamStyles.finishBtn]}
-                    activeOpacity={0.7}
-                    onPress={this.onLiveStream}>
-                    <Text
-                      style={[
-                        AuthStyle.buttonText,
-                        {color: Constants.Colors.WHITE},
-                      ]}>
-                      {translate('Finish')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+          
             </View>
-          ) : (
-            <View activeOpacity={1} style={[StreamStyles.wrapper, {height}]}>
-              <InputField
-                value={title}
-                placeholder={translate('streams.Title')}
-                onChangeText={(text) => this.setState({title: text})}
-                onFocus={() => this.setState({isFocused: true})}
-                onBlur={() => this.setState({isFocused: false})}
-              />
-              <View
-                style={[
-                  StreamStyles.row,
-                  StreamStyles.switchContainer,
-                  toggle && StreamStyles.switchContainerOn,
-                ]}>
-                <Text style={StreamStyles.subHeader}>
-                  {translate('streams.Wearable')}
-                </Text>
-                <TouchableOpacity activeOpacity={0.7} onPress={this.onToggle}>
-                  <Image
-                    resizeMode="contain"
-                    source={
-                      toggle
-                        ? Constants.Images.toggleOn
-                        : Constants.Images.toggleOff
-                    }
-                    style={StreamStyles.switch}
-                  />
-                </TouchableOpacity>
-              </View>
-              {toggle && (
-                <View style={StreamStyles.row}>
-                  {wearableOptions.map((wearable) => (
-                    <TouchableOpacity
-                      onPress={() => this.onSelect(wearable.value)}
-                      key={wearable.value}
-                      activeOpacity={0.7}
-                      style={[
-                        StreamStyles.race,
-                        selected.includes(wearable.value) &&
-                          StreamStyles.raceActive,
-                      ]}>
-                      <Text
-                        style={[
-                          StreamStyles.raceText,
-                          selected.includes(wearable.value) &&
-                            StreamStyles.raceActiveText,
-                        ]}>
-                        {translate(wearable.label)}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              )}
+         
+            <View style={StreamStyles.button}>
+              
               <TouchableOpacity
-                style={[
-                  AuthStyle.loginTouchable,
-                  {backgroundColor: Constants.Colors.TEXT_COLOR2},
-                ]}
+                style={[AuthStyle.loginTouchable,{ height: Constants.BaseStyle.scale(50),backgroundColor:Constants.Colors.TAB}]}
                 activeOpacity={0.7}
-                onPress={this.onLiveStream}>
+                onPress={this.onDelete}>
                 <Text
                   style={[
                     AuthStyle.buttonText,
-                    {color: Constants.Colors.WHITE},
+                    { color: Constants.Colors.WHITE },
                   ]}>
-                  {translate('streams.LiveStream')}
+                  {translate('Finish')}
                 </Text>
               </TouchableOpacity>
             </View>
-          )}
-        </ImageBackground>
-      </TouchableOpacity>
-    );
+          </View>}
+      </View>)
   }
 }
+
+
+            
+            
+     
+   
 
 CreateStream.propTypes = {
   navigation: shape({
