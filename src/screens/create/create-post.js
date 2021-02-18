@@ -161,11 +161,12 @@ class CreatePost extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
+              disabled={this.state.isLoading}
               // onPress={() => navigation.navigate('Feed')}
               onPress={() => this._handlePost()}
               style={CreatePostStyles.nextView}>
               {this.state.isLoading ? (
-                <ActivityIndicator color="white" size={25} />
+                <ActivityIndicator color="white" size={25}/>
               ) : (
                 <Text style={CreatePostStyles.nextText}>Post</Text>
               )}

@@ -13,7 +13,6 @@ import Constants from '../../constants';
 import {func, shape} from 'prop-types';
 import {connect} from 'react-redux';
 import {withTranslation} from 'react-i18next';
-import {setFeedDetails} from '../../reducers/baseServices/Feed';
 import Axios from 'axios';
 import API from '../../constants/baseApi';
 import {getAuthToken} from '../../helpers/auth';
@@ -39,7 +38,6 @@ class FeedScreen extends Component {
   }
 
   FeedList = async () => {
-    const {addFeedDetails} = this.props;
     const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
@@ -54,7 +52,6 @@ class FeedScreen extends Component {
         if (response.data.data.result) {
           console.log('===>response', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
-          addFeedDetails(response?.data?.data?.result);
         }
       })
       .finally(() => {
@@ -116,7 +113,10 @@ class FeedScreen extends Component {
         >
           <View style={[FeedStyles.listView]}>
             <View style={FeedStyles.innerView}>
-              <Image source={{uri: item.post}} style={FeedStyles.userImage} />
+              <Image
+                source={{uri: item.autherImage}}
+                style={FeedStyles.userImage}
+              />
               <View style={FeedStyles.nameView}>
                 <Text style={FollowersStyles.nameText}>{item.autherName}</Text>
                 <Text style={FollowersStyles.locationText}>
@@ -165,7 +165,7 @@ class FeedScreen extends Component {
         this.props.navigation.navigate('LiveFeed');
       }}>
       <Image
-        source={{uri: item.post}}
+        source={{uri: item.autherImage}}
         style={FeedStyles.userImage}
         resizeMode="cover"
       />
@@ -228,13 +228,13 @@ FeedScreen.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = ({Feed: likeStatus, likeCount}) => ({
-  likeStatus,
-  likeCount,
+const mapStateToProps = ({}) => ({
+ 
 });
 
+
 const mapDispatchToProps = {
-  addFeedDetails: (params) => setFeedDetails(params),
+  // addFeedDetails: (params) => setFeedDetails(params),
 };
 
 export default connect(

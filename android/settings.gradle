@@ -1,6 +1,11 @@
 rootProject.name = 'RunFast'
+<<<<<<< HEAD
 include ':agora-react-native-rtm'
 project(':agora-react-native-rtm').projectDir = new File(rootProject.projectDir, '../node_modules/agora-react-native-rtm/android')
+=======
+include ':react-native-splash-screen'
+project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
+>>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
 include ':react-native-image-picker'
 project(':react-native-image-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-picker/android')
 include ':react-native-orientation'
@@ -9,3 +14,4 @@ include ':react-native-splash-screen'
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+

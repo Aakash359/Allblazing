@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   Alert ,
+  ActivityIndicator,
   ScrollView,
   TextInput,
   ActivityIndicator

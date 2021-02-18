@@ -43,8 +43,8 @@ class EditProfile extends Component {
         Platform.OS === 'android'
           ? image.path
           : image.path.replace('file://', ''),
-        image.width / 3,
-        image.height / 3,
+        image.width / 2,
+        image.height / 2,
         'JPEG',
         85,
       )

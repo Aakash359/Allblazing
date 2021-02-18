@@ -26,7 +26,7 @@ const initialState = {
   motto_description: '',
   level: null,
   time: null,
-  distance: null,
+  distance: '',
   runnres_type: '',
   phone: null,
   role: null,
@@ -65,6 +65,12 @@ export default function profile(state = initialState, {payload, type}) {
         ...state,
         gender: payload,
       };
+      case SET_LOCATION:
+      return {
+        ...state,
+        gender: payload,
+      };
+      
     case SET_MOTTO_DESCRIPTION:
       return {
         ...state,

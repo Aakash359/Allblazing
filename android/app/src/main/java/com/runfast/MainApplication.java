@@ -4,7 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+<<<<<<< HEAD
 import io.agora.agora_rtm.AgoraRTMPackage;
+=======
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+>>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
 import com.imagepicker.ImagePickerPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactInstanceManager;
