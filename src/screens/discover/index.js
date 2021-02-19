@@ -19,6 +19,8 @@ import API from '../../constants/baseApi';
 import {getAuthToken} from '../../helpers/auth';
 import moment from 'moment';
 import {ActivityIndicator} from 'react-native';
+import Colors from '../../constants/colors';
+import {withNavigationFocus} from '@react-navigation/compat'
 
 class FeedScreen extends Component {
   constructor(props) {
@@ -34,15 +36,33 @@ class FeedScreen extends Component {
       t: translate,
     } = this.props;
   }
+  // componentDidMount() {
+  //   this.FeedList();
+  // }
+
   componentDidMount() {
-    this.FeedList();
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.FeedList();
+    });
+    
+  }
+  componentWillUnmount() {
+   this.unsubscribe() 
   }
 
+  // componentDidUpdate(prevProps) {
+  //   console.log("I'M ON FEED SCREEN",this.props.isFocused);
+  //   if(prevProps !== this.props && this.props.isFocused) {
+  //     this.FeedList()
+  //   }
+  // }
+
   FeedList = async () => {
-    const {addFeedDetails} = this.props;
+    const {addFeedDetails, user_id} = this.props;
     const token = await getAuthToken();
     const config = {
       headers: {Authorization: `Bearer ${token}`},
+      params: {id: user_id}
     };
     // console.log('token===>', config);
     this.setState({
@@ -106,7 +126,7 @@ class FeedScreen extends Component {
       <View>
         <TouchableOpacity onPress={() => {
             // console.log("USER SCREEN PRESSED")
-            this.props.navigation.navigate('UserProfile', {id: item.id});
+            this.props.navigation.navigate('UserProfile', {id: item.user_id});
           }}>
 
         <View
@@ -115,8 +135,11 @@ class FeedScreen extends Component {
           
         >
           <View style={[FeedStyles.listView]}>
-            <View style={FeedStyles.innerView}>
-              <Image source={{uri: item.post}} style={FeedStyles.userImage} />
+            <View style={[FeedStyles.innerView]}>
+              <View style={{borderWidth: 1, borderColor: Colors.BORDER_GREY, borderRadius: 23, marginRight: 10}} >
+
+              <Image source={{uri: item.post}}  style={[FeedStyles.userImage, {marginRight: 0}]} />
+              </View>
               <View style={FeedStyles.nameView}>
                 <Text style={FollowersStyles.nameText}>{item.autherName}</Text>
                 <Text style={FollowersStyles.locationText}>
@@ -126,7 +149,7 @@ class FeedScreen extends Component {
             </View>
             <TouchableOpacity
               activeOpacity={0.7}
-              style={FeedStyles.heartView}
+              style={[FeedStyles.heartView]}
               onPress={() => this._Like(item)}>
               <Image
                 source={
@@ -146,11 +169,13 @@ class FeedScreen extends Component {
           activeOpacity={0.7}
           onPress={() => {
             this.props.navigation.navigate('FeedDetailScreen', {data: item});
-          }}>
+          }}
+          style={[FeedStyles.feedImgWrapper]}
+          >
           <Image
             source={{uri: item.post}}
-            style={FeedStyles.feedImg}
-            resizeMode="cover"
+            style={[FeedStyles.feedImg, {marginVertical: 0, margin: 0}]}
+            resizeMode="contain"
           />
         </TouchableOpacity>
       </View>
@@ -160,17 +185,26 @@ class FeedScreen extends Component {
   filterData = ({item}) => (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[FeedStyles.optionalSectionView]}
+      style={[FeedStyles.optionalSectionView, {borderWidth: 1, borderColor: Colors.LIGHT_RED, borderRadius: 23, marginRight: 10 }]}
       onPress={() => {
         this.props.navigation.navigate('LiveFeed');
       }}>
       <Image
         source={{uri: item.post}}
-        style={FeedStyles.userImage}
+        style={[FeedStyles.userImage, {marginRight: 0}]}
         resizeMode="cover"
       />
     </TouchableOpacity>
   );
+
+  ListEmptyComponent = () => {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{color: '#fff'}}>Don't have any feeds to show</Text>
+      </View>
+    )
+  }
+
   render() {
     const {isLoading} = this.state;
 
@@ -193,7 +227,7 @@ class FeedScreen extends Component {
               <ActivityIndicator color="white" size={25} />
             </View>
           ) : (
-            <ScrollView>
+             <ScrollView>
               <FlatList
                 data={this.state.list}
                 contentContainerStyle={FeedStyles.sectionMainView}
@@ -206,9 +240,10 @@ class FeedScreen extends Component {
                 // style={MyProfileStyles.sectionMainView}
                 scrollEnabled={false}
                 contentContainerStyle={FollowersStyles.flatList}
-                data={this.state.list}
+                data={this.state.list.reverse()}
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => `2-${index}`}
+                ListEmptyComponent={this.ListEmptyComponent}
               />
             </ScrollView>
           )}
@@ -228,9 +263,10 @@ FeedScreen.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = ({Feed: likeStatus, likeCount}) => ({
+const mapStateToProps = ({Feed: likeStatus, likeCount, profile: {user_id}}) => ({
   likeStatus,
   likeCount,
+  user_id
 });
 
 const mapDispatchToProps = {
@@ -240,4 +276,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(FeedScreen));
+)(withTranslation()((FeedScreen)));

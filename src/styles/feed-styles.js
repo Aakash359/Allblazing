@@ -1,5 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import Constants from '../constants';
+import Colors from '../constants/colors';
 
 const {height, width} = Dimensions.get('window');
 
@@ -16,6 +17,16 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     marginVertical: 20,
     width: width * 0.9,
+  },
+  feedImgWrapper: {
+    borderWidth: 1, 
+    borderColor: Colors.LIGHT_GRAY, 
+    borderRadius: 16,
+    width: width * 0.9,
+    padding: 0, 
+    backgroundColor: Colors.BLACK,
+    alignSelf: 'center',
+    overflow: 'hidden'
   },
   feedImg1: {
     borderRadius: 30,

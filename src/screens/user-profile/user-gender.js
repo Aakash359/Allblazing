@@ -69,7 +69,7 @@ class UserGender extends Component {
       Loading: true,
     });
     if (this.state.gender === '') {
-      Alert.alert('', 'Please Select your Gender', '');
+      Alert.alert('', 'Please select your gender', '');
     } else {
       axios
         .post(

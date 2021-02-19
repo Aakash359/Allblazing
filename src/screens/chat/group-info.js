@@ -4,13 +4,60 @@ import { bool, func, shape } from 'prop-types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HomeStyles, ChatStyles } from '../../styles';
 import { GroupsInfo, RemoveMemberPopup } from '../../components';
-import Constants from '../../constants';
+import Constants, {Colors} from '../../constants';
+import API from '../../constants/baseApi';
+import Axios from 'axios';
+import { getAuthToken } from '../../helpers/auth';
+import ImageResizer from 'react-native-image-resizer';
+import ImagePicker from 'react-native-image-crop-picker';
+import { Alert } from 'react-native';
+import { Platform } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+
 
 class GroupInfo extends React.Component {
   constructor() {
     super();
-    this.state = { removeMemberPopup: false };
+    this.state = { removeMemberPopup: false, groupDetails: {}, IsLoadingImage: false, imageUrl: '' };
   }
+
+   getGroupDetails = async () => {
+    const token = await getAuthToken()
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      params: {
+        type: 'active'
+      }
+    }
+    const {groupId} = this.props.route.params
+    const url = `${API.GROUP_DETAILS}/${groupId}`
+    
+
+    try {
+      const res = await Axios.get(url, config)
+      console.log("GROUP DETAILS", res?.data?.data);
+      this.setState({groupDetails: res?.data?.data})
+
+    } catch (error) {
+      console.log("ERROR GROUP DETAILS", error);
+    }
+
+  }
+
+
+  componentDidMount() {
+    this.unSubscribe = this.props.navigation.addListener('focus', () => {
+      this.getGroupDetails()
+      
+    })
+  }
+
+  componentWillUnmount() {
+    this.unSubscribe()
+  }
+
 
   onPressOk = () => {
     this.setState({ removeMemberPopup: true });
@@ -24,30 +71,108 @@ class GroupInfo extends React.Component {
       return (<GroupsInfo hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} onPressButton={() => this.onPressOk()} />);
     }
 
+    chooseImage = async (imageIndex) => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: false,
+      includeBase64: true,
+    }).then((image) => {
+      ImageResizer.createResizedImage(
+        Platform.OS === 'android'
+          ? image.path
+          : image.path.replace('file://', ''),
+        image.width / 3,
+        image.height / 3,
+        'JPEG',
+        85,
+      )
+        .then( async ({uri}) => {
+          console.log("URI", uri);
+          const token = await getAuthToken();
+          const config = {
+            headers: {Authorization: `Bearer ${token}`},
+          };
+          this.setState({
+            IsLoadingImage: true,
+          });
+          const formdata = new FormData()
+          let data = {}
+          formdata.append('image', {
+            uri: uri,
+            name: 'test.jpg',
+            type: 'image/jpg',
+          });
+          const {groupId} = this.props.route.params
+
+          const url = `${API.GROUP_UPDATE}/${groupId}`
+          console.log(url, config);
+          console.log(formdata);
+          
+          
+          Axios.post(url, formdata, config)
+            .then((response) => {
+              console.log("GROUP IMAGE UPDATE", response)
+              if (response?.data?.code === 200) {
+                this.setState({imageUrl: uri})
+
+                Alert.alert('', response?.data?.message ?? '');
+              } else {
+                Alert.alert('', response?.data?.message ?? '');
+              }
+            })
+            .catch((error) => {
+            console.log("ERROR", error);
+              Alert.alert('', error?.response?.data ?? '');
+            })
+            .finally(() => {
+              this.setState({
+                IsLoadingImage: false,
+              });
+            });
+
+
+
+          console.log('compressed Image true', image.height);
+        })
+        .catch((err) => {
+          console.log('compressed Image false== ', err);
+        });
+
+      console.log('aaaaa', image.path, imageIndex);
+    });
+    }
+
     render() {
       const { navigation: { navigate } } = this.props;
-      const { removeMemberPopup } = this.state;
+      const { removeMemberPopup, groupDetails } = this.state;
+      const {group} = this.props.route.params
+    const group_image = this.state.imageUrl ? {uri: this.state.imageUrl} : groupDetails === 'N/A' ? Constants.Images.groupDetails : {uri: groupDetails?.group_image}
 
       return (
         <View style={HomeStyles.container}>
           <ScrollView>
             <View>
               <ImageBackground
-                source={Constants.Images.groupDetails}
+                source={group_image}
                 imageStyle={ChatStyles.borderRadius}
                 style={ChatStyles.profileIcon}
               >
+                {this.state.IsLoadingImage && <ActivityIndicator size="small" color={Colors.WHITE} />}
 
                 <View style={ChatStyles.overlappingStyle}>
                   <View>
-                    <Text style={ChatStyles.heading}>{'Super Nova'}</Text>
-                    <Text style={ChatStyles.subHeading}>{'18 Members'}</Text>
+                    <Text style={ChatStyles.heading}>{groupDetails?.group_name}</Text>
+                    <Text style={ChatStyles.subHeading}>{group?.userInfo?.userData?.length || 0}
+                    {group?.userInfo?.userData?.length > 1
+                      ? ' Members'
+                      : ' Member'}</Text>
                   </View>
-                  <TouchableOpacity activeOpacity={0.7}>
+                  <TouchableOpacity activeOpacity={0.7} onPress={this.chooseImage}>
                     <Image
                       source={Constants.Images.edit}
                       resizeMode='contain'
-                      style={ChatStyles.icon}
+                      style={ChatStyles.icon} 
                     />
                   </TouchableOpacity>
                 </View>
@@ -56,11 +181,11 @@ class GroupInfo extends React.Component {
 
             <View style={ChatStyles.groupNameContainer}>
               <View>
-                <Text style={ChatStyles.groupNameHeading}>{'Super Nova'}</Text>
+                <Text style={ChatStyles.groupNameHeading}>{groupDetails?.group_name}</Text>
               </View>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => { navigate('EditGroupName'); }}
+                onPress={() => { navigate('EditGroupName', {groupName: groupDetails?.group_name, groupId: group?.group_id}); }}
               >
                 <Image
                   source={Constants.Images.edit}
@@ -75,7 +200,7 @@ class GroupInfo extends React.Component {
                 <Text style={ChatStyles.groupDiscHeading}>{'Description'}</Text>
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  onPress={() => { navigate('EditGroupDisc'); }}
+                  onPress={() => { navigate('EditGroupDisc', {groupDescription: groupDetails?.group_description, groupId: group?.group_id}); }}
                 >
 
                   <Image
@@ -86,8 +211,7 @@ class GroupInfo extends React.Component {
                 </TouchableOpacity>
               </View>
               <Text style={ChatStyles.discText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec luctus nibh. Donec scelerisque dolor ipsum.
-                Maecenas dapibus molestie dictum
+               {groupDetails?.group_description}
               </Text>
             </View>
             <View>
@@ -96,7 +220,7 @@ class GroupInfo extends React.Component {
 
             </View>
             <FlatList
-              data={[1, 2, 3, 4, 5]}
+              data={group?.userInfo?.userData}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => `${index}`}
             />

@@ -85,7 +85,7 @@ export const BottomTab = ({
        const currentImage = getTabImage(label, isFocused);
  
        return label === 'Create' ? (
-         <View style={BottomTabsStyles.addContainer}>
+         <View style={BottomTabsStyles.addContainer} key={`${index}`}>
            <TouchableOpacity
              activeOpacity={0.7}
              key={route.key}

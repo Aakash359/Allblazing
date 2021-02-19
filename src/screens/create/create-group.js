@@ -14,7 +14,7 @@ ActivityIndicator,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {CreateGroupStyles, CommonStyles} from '../../styles';
-import Constants from '../../constants';
+import Constants, { Colors } from '../../constants';
 import {connect} from 'react-redux';
 import {func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
@@ -42,11 +42,11 @@ class CreateGroup extends Component {
   }
   NameStore = () => {
     if (this.state.photo === '') {
-      Alert.alert('', 'please Select Image', '');
+      Alert.alert('', 'Please select image', '');
     } else if (this.state.name === '') {
-      Alert.alert('', 'Please Enter Full Name', '');
+      Alert.alert('', 'Please enter full name', '');
     } else if (this.state.list > 0) {
-      Alert.alert('', 'Please select Group Type', '');
+      Alert.alert('', 'Please select group type', '');
     } else {
       this.props.navigation.navigate('AddMember', {
         iseventPage: false,
@@ -88,10 +88,10 @@ class CreateGroup extends Component {
 
   choosePhotosFromGallery = (index) => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      width: 500,
+      height: 500,
       cropping: false,
-      includeBase64: true,
+      includeBase64: false,
     }).then((photo) => {
       console.log('image details ', photo);
       const {mime, filename, data, path} = photo;
@@ -177,7 +177,7 @@ class CreateGroup extends Component {
               autoCapitalize="none"
               autoCorrect={false}
               onChangeText={(text) => this.setState({name: text})}
-              style={CreateGroupStyles.groupName}
+              style={[CreateGroupStyles.groupName, {color: Colors.WHITE}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
@@ -214,6 +214,7 @@ class CreateGroup extends Component {
               style={[
                 CommonStyles.textAreaWrapper,
                 CreateGroupStyles.textAreaWrapper,
+                {paddingTop: Platform.OS === 'ios' ? 25 : 15, textAlignVertical:'top'}
               ]}
               placeholder={translate(' description here...')}
               value={description}

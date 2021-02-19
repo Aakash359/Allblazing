@@ -18,8 +18,10 @@ import { GOOGLE_API_KEY } from '../../config/config';
 import Colors from '../../constants/colors';
 import API from '../../constants/baseApi';
 import Axios from 'axios';
-import { getAuthToken } from '../../helpers/auth';
+import { getAuthToken, getOtpToken, getUserAddress, getUserAge, getUserConnectType, getUserDistance, getUserLocation, getUserName, getUserRecentTime } from '../../helpers/auth';
 import { Alert } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { times } from '../../data';
 
 class EditLocation extends Component {
   onChangeText = () => {};
@@ -27,11 +29,96 @@ class EditLocation extends Component {
   constructor(props){
     super(props)
     this.state = {
-      address: ''
+      address: '',
+      isLoading: false
     }
   }
 
+  onSubmitSignManual = async () => {
+    const {addUserProfileDetails} = this.props;
+    const {
+      navigation: {navigate},
+    } = this.props;
+
+    this.setState({
+      isLoading: true,
+    });
+    // markwinz06@gmail.com/mark@1234
+    const name = await getUserName();
+    const Age = await getUserAge();
+    const Type = await getUserConnectType();
+    const Distance = await getUserDistance();
+    const Time = await getUserRecentTime();
+    const token = await getOtpToken() || await getAuthToken()
+    const authToken = await getAuthToken()
+    const address = await getUserAddress();
+    const {latitude, longitude} = await getUserLocation();
+    console.log("USER DETAILS: =====", name, Age, Type, Distance, Time, "Token", token, address, {latitude, longitude});
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+    };
+    // console.log(name, Age, Type, Distance, Time);
+    // console.log(config);
+
+    const payload = {
+      full_name: name,
+      age: Age,
+      type: Type,
+      distance: Distance,
+      time: Time|| times[0]?.value,
+      latitude: latitude || 74.777899,
+      longitude: longitude || 25.345678,
+      level:1,
+      address: this.state.address || address || 'Select'
+    }
+    
+    console.log("PAYLOAD===============>", payload);
+    Axios
+      .post(
+        API.COMPLETE_PROFILE,
+        payload,
+        config,
+      )
+      .then((response) => {
+        console.log('response ====', response.data);
+        if (response?.data?.code === 401) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            
+          );
+        }
+        if (response?.data?.code === 200) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => authToken ? navigate('Overview') : navigate('Login'),
+              },
+            ],
+            {Cancelable:false}
+          );
+          addUserProfileDetails(response?.data);
+          console.log('res===>kkkkk' + JSON.stringify(response.data));
+          // navigate('Login');
+        }
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+
   setAddress = async () => {
+    this.setState({isLoading: true})
     console.log();
     const {address} = this.state
     const {addAddress} =  this.props
@@ -45,10 +132,10 @@ class EditLocation extends Component {
       headers: {Authorization: `Bearer ${token}`},
     };
     this.setState({
-      Loading: true,
+      isLoading: true,
     });
     if (this.state.address === '') {
-      Alert.alert('', 'Please Select Address', '');
+      Alert.alert('', 'Please select address', '');
     } else {
       Axios
         .post(
@@ -176,10 +263,14 @@ class EditLocation extends Component {
         <TouchableOpacity
           activeOpacity={0.7}
           style={[AuthStyle.saveBtn, LocationStyles.saveBtn]}
-          onPress={this.setAddress}>
-          <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+          onPress={!this.state.isLoading ? this.props.route?.params?.signUpManual ? this.onSubmitSignManual : this.setAddress: null}>
+          {this.state.isLoading ?
+            <ActivityIndicator  size="small" color="#FFF"/>
+             :  
+            <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
             {translate('Save')}
           </Text>
+           } 
         </TouchableOpacity>
       </View>
     );

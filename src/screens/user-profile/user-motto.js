@@ -3,7 +3,7 @@ import {Platform, TextInput, View, TouchableOpacity, Text} from 'react-native';
 import {withTranslation} from 'react-i18next';
 import {func, shape} from 'prop-types';
 import {ScrollView} from 'react-native-gesture-handler';
-import Constants from '../../constants';
+import Constants, { Colors } from '../../constants';
 import {
   AuthStyle,
   CommonStyles,
@@ -46,7 +46,7 @@ class UserMotto extends Component {
       Loading: true,
     });
     if (this.state.motto_description === '') {
-      Alert.alert('', 'Please enter Description', '');
+      Alert.alert('', 'Please enter description', '');
     } else {
       axios
         .post(
@@ -87,11 +87,11 @@ class UserMotto extends Component {
         });
     }
   };
-  // componentDidMount(){
-  //   const motto_description = this.props.route.params.motto_description;
-  //     console.log('motto_description==>',motto_description);
-  //     this.setState({motto: motto_description})
-  // }
+  componentDidMount(){
+    const motto_description = this.props.route.params.motto_description;
+      console.log('motto_description==>', motto_description);
+      this.setState({motto_description})
+  }
   render() {
     const {motto_description} = this.state;
     const {
@@ -113,7 +113,7 @@ class UserMotto extends Component {
                   multiline
                   maxLength={60}
                   numberOfLines={15}
-                  style={CommonStyles.textArea}
+                  style={[CommonStyles.textArea, {color: Colors.WHITE}]}
                   placeholder={translate('profile.Motto')}
                   value={this.state.motto_description}
                   onChangeText={(text) =>this.setState({motto_description:text})}

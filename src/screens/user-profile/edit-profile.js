@@ -268,7 +268,7 @@ class EditProfile extends Component {
 
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  onPress={() => this.onNavigate('UserMotto', 'Edit Motto')}>
+                  onPress={() => this.onNavigate('UserMotto', 'Edit Motto', {motto: motto_description})}>
                   <Image
                     source={Constants.Images.edit}
                     style={EditProfileStyles.icon}

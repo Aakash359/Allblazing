@@ -69,10 +69,10 @@ class FollowingList extends Component {
     <TouchableOpacity
       style={FollowingStyles.sectionView}
       activeOpacity={0.7}
-      onPress={() => this.props.navigation.navigate('UserProfile',{iseventPage: true,follow_id: item.follow_id})}
+      onPress={() => item.follow_id === this.props.user_id? this.props.navigation.navigate('Me') : this.props.navigation.navigate('UserProfile',{iseventPage: true,id: item.follow_id})}
     >
-      <View style={[FollowingStyles.listView, { backgroundColor: '#F898A4' }]} >
-      <Image source={item?.followimage} style={{width: 100, height: 100, borderRadius: 12}} resizeMode="cover" />
+      <View style={[FollowingStyles.listView, { backgroundColor: '#F898A4', overflow: 'hidden' }]} >
+      <Image source={{uri: item?.followimage}} style={{width: 60, height: 60, borderRadius: 12}} resizeMode="cover" />
       </View>
 
       <View>
@@ -81,6 +81,15 @@ class FollowingList extends Component {
       </View>
     </TouchableOpacity>
   );
+
+  ListEmptyComponent = () => {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{color: '#fff'}} >You didn't follow anyone.</Text>
+      </View>
+    )
+  }
+
   render() {
     const {
       navigation: {navigate},
@@ -124,6 +133,7 @@ class FollowingList extends Component {
           renderItem={({item, index, navigate}) => (
             <this.renderItem item={item} index={index} />
           )}
+          ListEmptyComponent={this.ListEmptyComponent}
         />
       )}
       </ScrollView>

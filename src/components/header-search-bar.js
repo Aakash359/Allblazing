@@ -25,6 +25,8 @@ function SearchBar() {
             source={Constants.Images.search}
           />
         </TouchableOpacity>
+        </View>
+        <View style={[HeaderStyles.row, {padding:6}]}>
         <TouchableOpacity
           style={HeaderStyles.inputSearch}
           activeOpacity={0.7}

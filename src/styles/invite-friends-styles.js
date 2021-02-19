@@ -99,6 +99,7 @@ export default StyleSheet.create({
     ...Constants.Fonts.Small,
     color: Constants.Colors.GRAY,
     flexWrap: 'wrap',
+    flexShrink: 1,
     marginTop: Constants.BaseStyle.scale(5),
     paddingLeft: Constants.BaseStyle.scale(20),
   },

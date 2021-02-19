@@ -84,16 +84,16 @@ class FollowersList extends Component {
         style={FollowingStyles.sectionView}
         activeOpacity={0.7}
         onPress={() =>
-          this.props.navigation.navigate('UserProfile', {iseventPage: false,id: item.id})
+         item?.folowing_id === this.props.user_id ? this.props.navigation.navigate('Me') :this.props.navigation.navigate('UserProfile', {iseventPage: false, id: item.folowing_id, follow_id: item.folowing_id})
         }>
         <View
           style={[
             FollowingStyles.listView,
-            { backgroundColor: Constants.Colors.LIGHT_RED },
+            { backgroundColor: Constants.Colors.LIGHT_RED, overflow: 'hidden' },
           ]}
         >
 
-        <Image source={item?.followimage} style={{width: 70, height: 70, borderRadius: 12}} resizeMode="cover" />
+        <Image  source={{uri: item?.followingImage}} style={{width: 60, height: 60, borderRadius: 12}}  />
         </View>
         <View>
           <Text style={FollowingStyles.nameText}>{item.followingName}</Text>
@@ -104,6 +104,14 @@ class FollowersList extends Component {
       </TouchableOpacity>
     );
   };
+
+  ListEmptyComponent = () => {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{color: '#fff'}} >You don't have any followers.</Text>
+      </View>
+    )
+  }
 
   render() {
     const {  navigation: { navigate },
@@ -149,6 +157,7 @@ class FollowersList extends Component {
               renderItem={({item, index, navigate}) => (
                 <this.renderItem item={item} index={index} />
               )}
+              ListEmptyComponent={this.ListEmptyComponent}
             />
           )}
         </ScrollView>
@@ -164,9 +173,10 @@ FollowersList.propTypes = {
   }).isRequired,
   t: func.isRequired,
 };
-const mapStateToProps = ({ profile: { id }, auth: {token} }) => ({
+const mapStateToProps = ({ profile: { id, user_id }, auth: {token} }) => ({
   id,
-  token
+  token,
+  user_id
 });
 
 const mapDispatchToProps = {

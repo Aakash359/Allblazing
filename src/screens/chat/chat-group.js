@@ -4,31 +4,182 @@ import { bool, func, shape } from 'prop-types';
 import { HomeStyles } from '../../styles';
 import { ChatGroup } from '../../components';
 import Constants from '../../constants';
+import Axios from 'axios';
+import API from '../../constants/baseApi';
+import { getAuthToken } from '../../helpers/auth';
+import Colors from '../../constants/colors';
+import { ActivityIndicator } from 'react-native';
 
+export const GROUP_TYPES = {
+  MY_GROUPS: 'MY_GROUPS',
+  ALL_GROUPS: 'ALL_GROUPS',
+  REQUESTED: 'REQUESTED'
+}
 class ChatsGroup extends React.Component {
   constructor() {
     super();
-    this.state = { activeTab: '0' };
+    this.state = { activeTab: '0',
+    myGroups: [],
+    allGroups: [],
+    requestedGroups: [],
+    loader: {
+      myGroups: {isLoading: true},
+      allGroups: {isLoading: true},
+      requestedGroups: {isLoading: true},
+    }
+  };
   }
 
-  renderItem = () => {
+  getMyGroups = async () => {
+    this.setState({
+      loader: {...this.state.loader, myGroups: {...this.state.loader.myGroups, isLoading: true}}
+    })
+    const token = await getAuthToken();
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+      params: {
+        type: 'my_group'
+      }
+    };
+    Axios.get(API.GROUP_LISTING, config)
+    .then(res => {
+      console.log("GROUP LISTING", res)
+      this.setState({myGroups: res?.data?.data?.result, loader: {...this.state.loader, myGroups: {...this.state.loader.myGroups, isLoading: false}}})
+    })
+    .catch(e => {
+      console.log("ERROR GROUP LISTING", e);
+      this.setState({ loader: {...this.state.loader, myGroups: {...this.state.loader.myGroups, isLoading: false}}})
+    })
+  }
+
+  getAllGroups = async () => {
+    this.setState({
+      loader: {...this.state.loader, allGroups: {...this.state.loader.allGroups, isLoading: true}}
+    })
+    const token = await getAuthToken();
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+      params: {
+        type: 'active'
+      }
+    };
+    Axios.get(API.GROUP_LISTING, config)
+    .then(res => {
+      console.log("ALL GROUP LISTING", res)
+      this.setState({allGroups: res?.data?.data?.result, loader: {...this.state.loader, allGroups: {...this.state.loader.allGroups, isLoading: false}}})
+    })
+    .catch(e => {
+      console.log("ERROR ALL GROUP LISTING", e);
+      this.setState({
+        loader: {...this.state.loader, allGroups: {...this.state.loader.allGroups, isLoading: false}}
+      })
+    })
+  }
+
+  getReqGroups = async () => {
+    this.setState({
+      loader: {...this.state.loader, requestedGroups: {...this.state.loader.requestedGroups, isLoading: true}}
+    })
+    const token = await getAuthToken();
+    const config = {
+      headers: {Authorization: `Bearer ${token}`},
+      
+    };
+    Axios.get(API.REQ_GROUP_LISTING, config)
+    .then(res => {
+      console.log("REQ GROUP LISTING", res)
+      this.setState({requestedGroups: res?.data?.data, loader: {...this.state.loader, requestedGroups: {...this.state.loader.requestedGroups, isLoading: false}}})
+    })
+    .catch(e => {
+      console.log("ERROR AREQLL GROUP LISTING", e);
+      this.setState({
+        loader: {...this.state.loader, requestedGroups: {...this.state.loader.requestedGroups, isLoading: false}}
+      })
+    })
+  }
+
+  getApiToExecu = (type) => {
+      switch(type) {
+        case '0':
+          this.getMyGroups()
+        break
+        case '1':
+          this.getAllGroups()
+        break
+        case '2':
+          this.getReqGroups()
+        break
+        default:
+          this.getMyGroups()
+        break
+      }
+   }
+
+  componentDidMount() {
+    this.unSubscribe = this.props.navigation.addListener('focus', () => {
+    this.getApiToExecu(this.state.activeTab)
+      
+    })
+  }
+  componentWillUnmount() {
+    this.unSubscribe()
+  }
+  
+
+  renderItem = ({item}) => {
     const {
       route: { params }, navigation: { navigate },
     } = this.props;
     const { activeTab } = this.state;
 
     if (activeTab === '0') {
-      return <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} />;
+      return (
+        
+        <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={GROUP_TYPES.MY_GROUPS} group={item} />
+      )
     }
     if (activeTab === '1') {
-      return <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} />;
+      return (
+        this.state.loader.allGroups.isLoading ? 
+        <View style={{flex: 1, marginVertical: 50, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="small" color={Colors.WHITE} />
+        </View>
+         : 
+         <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={GROUP_TYPES.ALL_GROUPS} group={item}  />
+      )
     }
 
-    return <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} />;
+    return (
+      this.state.loader.requestedGroups.isLoading ? 
+      <View style={{flex: 1, marginVertical: 50, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="small" color={Colors.WHITE} />
+      </View>
+       : 
+       <ChatGroup hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={GROUP_TYPES.REQUESTED} group={item}  />
+    )
   }
 
   onTabPress = (val) => {
     this.setState({ activeTab: val });
+    this.getApiToExecu(val)
+  }
+
+  getDataByGroupType = (type) => {
+    const {myGroups, allGroups, requestedGroups} = this.state
+    switch(type) {
+      case '0':
+        return myGroups
+      break
+      case '1':
+        return allGroups
+      break
+      case '2':
+        return requestedGroups
+      break
+      default:
+        return myGroups
+      break
+    }
   }
 
   renderHeader = () => {
@@ -55,19 +206,68 @@ class ChatsGroup extends React.Component {
     );
   }
 
+  ListEmptyComponent = () => {
+    return (  <View style={{flex: 1, alignItems: 'center', marginVertical: 10}}>
+      <Text style={{color: Colors.TEXT_COLOR_WHITE}}>No groups found</Text>
+    </View>
+    )
+  }
+
   render() {
     const { navigation: { navigate } } = this.props;
+
+    console.log(this.state.requestedGroups);
 
     return (
       <View style={HomeStyles.container}>
         {this.renderHeader({
           navigate, route: 'Events', title: 'Events',
         })}
-        <FlatList
-          data={[1, 2, 3, 4, 5]}
+        {this.state.loader.myGroups.isLoading && this.state.activeTab === '0' ||
+        this.state.loader.allGroups.isLoading && this.state.activeTab === '1' ||
+        this.state.loader.requestedGroups.isLoading && this.state.activeTab === '2'
+         ? 
+        <View style={{flex: 1, marginVertical: 50, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="small" color={Colors.WHITE} />
+        </View>
+         : 
+          this.state.activeTab === '2' ?
+            <><FlatList
+          data={this.getDataByGroupType(this.state.activeTab)?.request}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
-        />
+              ListEmptyComponent={this.ListEmptyComponent}
+              ListHeaderComponent={() => {
+                  return (
+                    <View style={{ justifyContent: 'center', alignItems: 'flex-start', margin: 10 }}>
+                      <Text style={{color: Colors.WHITE}} >Requested By Me</Text>
+                    </View>
+                  )
+                }}
+            />
+            <FlatList
+          data={this.getDataByGroupType(this.state.activeTab)?.resceived}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => `${index}`}
+                ListEmptyComponent={this.ListEmptyComponent}
+                ListHeaderComponent={() => {
+                  return (
+                    <View style={{ justifyContent: 'center', alignItems: 'flex-start', margin: 10 }}>
+                      <Text style={{color: Colors.WHITE}} >Recevied By Me</Text>
+                    </View>
+                  )
+                }}
+                
+            /></>
+            :
+            <FlatList
+          data={this.getDataByGroupType(this.state.activeTab)}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => `${index}`}
+              ListEmptyComponent={this.ListEmptyComponent}
+              
+          />
+        }
       </View>
     );
   }

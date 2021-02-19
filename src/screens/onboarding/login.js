@@ -89,7 +89,8 @@ class Login extends Component {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': 'AllBlazing',
-          'message': 'AllBlazing access to your location '
+          'message': 'AllBlazing access to your location ',
+          buttonPositive: "OK"
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -100,7 +101,7 @@ class Login extends Component {
         // alert("Location permission denied");
       }
     } catch (err) {
-      console.warn(err)
+      console.log(err)
     }
   }
   
@@ -129,7 +130,7 @@ class Login extends Component {
     const {
       navigation: {goBack, navigate},
     } = this.props;
-    navigate('Overview');
+    // navigate('Overview');
     const {emailId, password} = this.state;
     if (emailId.length < 1) {
       Alert.alert(
@@ -158,6 +159,7 @@ class Login extends Component {
         password: password,
       })
       .then(async (response) => {
+        console.log("LOGIN RESPONSE", response);
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
@@ -170,6 +172,7 @@ class Login extends Component {
           setAuthToken(response?.data?.data?.token);
           addLoginDetail(response?.data?.data);
           setLoginUserId(JSON.stringify(response?.data?.data));
+          
           if(this.state.isRemember) {
             try {
               await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
@@ -191,6 +194,9 @@ class Login extends Component {
             navigate('Username')
           }
         }
+      })
+      .catch(e => {
+        console.log("");
       })
       .finally(() => {
         this.setState({

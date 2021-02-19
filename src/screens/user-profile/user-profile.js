@@ -175,6 +175,8 @@ class UserProfile extends Component {
         }
       })
       .finally(() => {
+    this.UserProfileDetails();
+
         this.setState({
           FollowLoading: false,
         });
@@ -239,7 +241,8 @@ class UserProfile extends Component {
                       
                         this.state.FollowLoading ? (
                           <ActivityIndicator color="white" size={25} />
-                        ) : (
+                        ) : 
+                        !this.state.list.follow ?(
                           <TouchableOpacity
                         activeOpacity={0.7}
                         // onPress={() => setFollowStatus(!followStatus)}
@@ -250,7 +253,20 @@ class UserProfile extends Component {
                             style={ProfileStyles.icon}
                           />
                       </TouchableOpacity>
-                        )
+                        ) : 
+                      //   (
+                      //     <TouchableOpacity
+                      //   activeOpacity={0.7}
+                      //   // onPress={() => setFollowStatus(!followStatus)}
+                      //   onPress={() => this.handleUserFollow()}>
+                      //     <Image
+                      //       source={Constants.Images.add}
+                      //       resizeMode="contain"
+                      //       style={ProfileStyles.icon}
+                      //     />
+                      // </TouchableOpacity>
+                      //   )
+                      null
                     )}
                   </View>
                 </ImageBackground>
@@ -259,7 +275,7 @@ class UserProfile extends Component {
             <View style={ProfileStyles.sectionMainView}>
               <View style={ProfileStyles.sectionView}>
                 <TouchableOpacity onPress={() => {
-                  this.props.navigation.navigate('FollowersList', {user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                  this.props.navigation.navigate('FollowersList', {followerCount: this.state.list.followerCount, user_id: this.props.route.params.follow_id || this.props.route.params.id});
                 }}>
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.followerCount}
@@ -269,7 +285,7 @@ class UserProfile extends Component {
               </View>
               <View style={ProfileStyles.sectionView}>
               <TouchableOpacity onPress={() => {
-                  this.props.navigation.navigate('FollowingList', {user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                  this.props.navigation.navigate('FollowingList', {followingCount: this.state.list.followingCount,  user_id: this.props.route.params.follow_id || this.props.route.params.id});
                 }}>
 
                 <Text style={ProfileStyles.section2}>
@@ -278,11 +294,15 @@ class UserProfile extends Component {
                 <Text style={ProfileStyles.section1}>{'Following'}</Text>
                 </TouchableOpacity>
               </View>
-              <View style={ProfileStyles.sectionView}>
+                <View style={ProfileStyles.sectionView}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('PostLikeListing', {postCount: this.state.list.postCount, userId: this.state.list.user_id})}>
+                    
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.postCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Posts'}</Text>
+                  </TouchableOpacity>
               </View>
               <View style={ProfileStyles.sectionViewEnd}>
                 <TouchableOpacity
@@ -294,7 +314,7 @@ class UserProfile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            {this.state.followStatus ? (
+            {!this.state.list.private_status ||  this.state.list.follow ? (
               <View>
                 <FlatList
                   scrollEnabled={false}

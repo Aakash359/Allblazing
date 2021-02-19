@@ -20,7 +20,7 @@ import {connect} from 'react-redux';
 import {withTranslation} from 'react-i18next';
 import Axios from 'axios';
 import API from '../../constants/baseApi';
-import {getAuthToken} from '../../helpers/auth';
+import {getAuthToken, setUserId} from '../../helpers/auth';
 import {ActivityIndicator} from 'react-native';
 import {setMottoDescription, setProfileDetails} from '../../reducers/baseServices/profile';
 
@@ -34,8 +34,17 @@ class MyProfile extends Component {
     };
   }
 
+  // componentDidMount() {
+  //   this.UserProfileDetails();
+  // }
   componentDidMount() {
-    this.UserProfileDetails();
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.UserProfileDetails();
+    });
+    
+  }
+  componentWillUnmount() {
+   this.unsubscribe() 
   }
 
   UserProfileDetails = async () => {
@@ -62,6 +71,7 @@ class MyProfile extends Component {
         if (response.data.data.result) {
           this.setState({list: response?.data?.data?.result});
           addProfileDetail(response?.data?.data?.result);
+          setUserId(response?.data?.data?.result?.user_id.toString())
           console.log('profile response==>', response?.data?.data?.result);
         }
       })
