@@ -560,12 +560,7 @@ export default function MainNavigator() {
       <AppStack.Screen
         name="LiveFeed"
         component={LiveFeed}
-        options={{
-          headerBackTitleVisible: false,
-          headerTintColor: Constants.Colors.WHITE,
-          headerTitle: 'Live',
-          headerTitleAlign: 'center',
-        }}
+         options={options}
       />
       <AppStack.Screen
         name="FollowersList"

@@ -52,7 +52,7 @@ const PlusIconPopup = ({
                 activeOpacity={0.7}
                 onPress={() => {
                     onClose();
-                    navigation.navigate('LiveStream')}}
+                    navigation.navigate('LiveFeed')}}
                 style={CreateNewStyles.tagView}
               >
                 <Image style={CreateNewStyles.icons} source={Constants.Images.addFriend} />

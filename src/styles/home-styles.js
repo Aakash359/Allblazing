@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   ChatOneToOneContainer: {
     alignItems: 'flex-start',
-    backgroundColor: Constants.Colors.TEXT_COLOR2,
+    backgroundColor:Constants.Colors.SECONDARY_COLOR,
 
     borderBottomRightRadius: Constants.BaseStyle.scale(10),
     borderTopLeftRadius: Constants.BaseStyle.scale(10),
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   ChatOneToOneContainer2: {
     alignItems: 'flex-end',
-    backgroundColor: Constants.Colors.SECONDARY_COLOR,
+    backgroundColor: Constants.Colors.TEXT_COLOR2,
     borderBottomLeftRadius: Constants.BaseStyle.scale(10),
     borderTopLeftRadius: Constants.BaseStyle.scale(10),
     borderTopRightRadius: Constants.BaseStyle.scale(10),
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     borderRightColor: Constants.Colors.TRANSPARENT,
     borderRightWidth: Constants.BaseStyle.scale(10),
     borderStyle: 'solid',
-    borderTopColor: Constants.Colors.TEXT_COLOR2,
-
+   
+ borderTopColor: Constants.Colors.SECONDARY_COLOR,
     borderTopWidth: Constants.BaseStyle.scale(15),
     height: 0,
 
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderRightColor: Constants.Colors.TRANSPARENT,
     borderRightWidth: Constants.BaseStyle.scale(15),
     borderStyle: 'solid',
-    borderTopColor: Constants.Colors.SECONDARY_COLOR,
+     borderTopColor: Constants.Colors.TEXT_COLOR2,
     borderTopWidth: Constants.BaseStyle.scale(15),
 
     height: 0,

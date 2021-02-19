@@ -46,11 +46,7 @@ class AppNavigator extends Component {
     const {token, intro} = this.props;
     console.log('INTRO DONE', intro);
     console.log('==========>>>.Token', this.state.accessToken);
-<<<<<<< HEAD
-    return token ? <AppStack /> : <AuthStack intro={intro} />;
-=======
     return token ?  <AppStack /> : <AuthStack />;
->>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
   }
 }
 

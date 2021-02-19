@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
   ScrollView,
   TextInput,
-  ActivityIndicator
 } from 'react-native';
 import {func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';

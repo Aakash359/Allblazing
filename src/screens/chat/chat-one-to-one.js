@@ -4,15 +4,94 @@ import { func, shape } from 'prop-types';
 import { CommonStyles, HomeStyles, InviteFriendsStyles, ChatStyles } from '../../styles';
 import { MoreOptionsPopup } from '../../components';
 import Constants from '../../constants';
-
+import RtmAdapter from '../../utilities/rtm-adapter';
+import { GiftedChat, Send, InputToolbar, Time } from 'react-native-gifted-chat'
+import { Logger } from '../../utilities/utils';
 class ChatOneToOne extends React.Component {
   constructor() {
     super();
     this.state = {
       message: '', visible: false,
+      messages: [],
+      channel:'live_streaming'
     };
+    this.client = new RtmAdapter()
+  }
+subscribeChannelMessage() {
+    this.client.on('error', (evt) => {
+      Logger.log(evt);
+    });
+
+    this.client.on('channelMessageReceived', (evt) => {
+      const { uid, channelId, text } = evt;
+      console.log('evt', evt);
+      Logger.log('channelMessageReceived uid ', uid);
+      if (channelId === this.state.channel) {
+        this.setState((prevState) => ({
+          messages: GiftedChat.append(prevState.messages, [
+            {
+              _id: +new Date(),
+              text,
+              user: {
+                _id: +new Date(),
+               
+              },
+              createdAt: new Date(),
+            },
+          ]),
+        }));
+        console.log('message from current channel', text);
+      }
+    });
   }
 
+  onSend(messages = []) {
+    const channel = this.state.channel;
+    console.log('send channel', this.state.channel);
+    messages.forEach((message) => {
+      this.client
+        .sendChannelMessage({
+          channel,
+          message: `${message.text}`,
+        })
+        .then(() => {
+          console.log('send message');
+          this.setState((prevState) => ({
+            messages: GiftedChat.append(prevState.messages, [message]),
+          }));
+        })
+        .catch(() => {
+          console.warn('send failured');
+        });
+    });
+  }
+
+  // componentDidMount() {
+    
+  // }
+
+  componentWillUnmount() {
+    let channel = this.state.channel
+    this.client.leave(channel);
+  }
+  componentDidMount() {
+    this.client.login(`10`).then(() => {
+    let channel = this.state.channel
+    console.log('mount chat ', channel);
+    this.subscribeChannelMessage();
+    this.client
+      .join(channel)
+      .then(() => {
+        console.log('join channel success');
+        this.setState({
+          channel,
+        });
+      })
+      .catch(() => {
+        console.warn('join failured');
+      });
+    });
+  }
   renderItem = (item) => {
     if (item.index % 2 === 0) {
       return (
@@ -59,7 +138,7 @@ class ChatOneToOne extends React.Component {
           }}
         />
         <View>
-          <Text style={InviteFriendsStyles.username}>Shane Watson</Text>
+          <Text style={InviteFriendsStyles.username}>Shane Wafff</Text>
           <Text style={InviteFriendsStyles.location}>Santee</Text>
         </View>
       </View>
@@ -85,7 +164,7 @@ class ChatOneToOne extends React.Component {
         {this.renderHeader({
           goBack, route: 'Events', title: 'Events',
         })}
-        <FlatList
+        {/* <FlatList
           data={[1, 2, 3, 4, 5]}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
@@ -113,7 +192,15 @@ class ChatOneToOne extends React.Component {
               />
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
+        <GiftedChat
+          messages={this.state.messages}
+          renderAvatar={() => null}
+        onSend={(messages) => this.onSend(messages)}
+        user={{
+          _id: '1',
+        }}
+      />
         <MoreOptionsPopup
           hasUnFollowBtn={false}
           visible={visible}

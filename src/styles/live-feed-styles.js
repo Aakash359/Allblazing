@@ -112,11 +112,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   overlappingStyle: {
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 16,
+    position: 'absolute',
+    top: height / 3,
+    width:'90%'
   },
   profileIcon: {
     alignSelf: 'center',
@@ -139,6 +142,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
+  },
+   sectionMainView2: {
+   
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    flexDirection: 'row',
+  padding:20
+     
+    
   },
   subHeading: {
     ...Constants.Fonts.Regular,

@@ -24,11 +24,12 @@ import {
   ClientRole,
  
 } from 'react-native-agora';
+import { liveStream } from '../../constants/images';
 const dimensions = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height,
 };
-class CreateStream extends React.Component {
+class liveStreamOther extends React.Component {
   descriptionRef = React.createRef();
   scrollViewRef = React.createRef();
 
@@ -107,7 +108,7 @@ class CreateStream extends React.Component {
    this.permissionAsk()
     this.init().then(() =>
       this.AgoraEngine.current.joinChannel(
-        '00622143d65ab6a440099dec92cbb2c6f2fIAArXiUys+6hcAAmz2gW3wVdJ8iQnVK+gTwA2W34dQMGRsgIv5MAAAAAEABFd1n8RZMvYAEAAQBFky9g',
+        '00622143d65ab6a440099dec92cbb2c6f2fIABgPzqO1EFAHT0s4Pr/8EW8dXJ+umYRNZOzBp9qMNxPjsgIv5MAAAAAEABFd1n8HjEuYAEAAQAeMS5g',
         'live_stream',
         null,
         0,
@@ -324,4 +325,4 @@ CreateStream.propTypes = {
   t: func.isRequired,
 };
 
-export default withTranslation()(CreateStream);
+export default withTranslation()(liveStreamOther);

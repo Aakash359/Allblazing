@@ -7,7 +7,7 @@ const styles = {
     width: Constants.BaseStyle.DEVICE_WIDTH,
   },
   button: {
-    bottom: (Constants.BaseStyle.DEVICE_HEIGHT * 12) / 100,
+    bottom: (Constants.BaseStyle.DEVICE_HEIGHT * 5) / 100,
     position: 'absolute',
     width: '100%',
   },

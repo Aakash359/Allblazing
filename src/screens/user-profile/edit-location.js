@@ -23,21 +23,12 @@ import {
   UsernameStyle,
 } from '../../styles';
 import connect from 'react-redux/lib/connect/connect';
-<<<<<<< HEAD
 import { setAddress, setLocation } from '../../reducers/baseServices/profile';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_API_KEY } from '../../config/config';
 import Colors from '../../constants/colors';
 import API from '../../constants/baseApi';
 import Axios from 'axios';
 import { getAuthToken } from '../../helpers/auth';
-import { Alert } from 'react-native';
-=======
-import {setLocation} from '../../reducers/baseServices/profile';
-import {getAuthToken} from '../../helpers/auth';
-import axios from 'axios';
-import API from '../../constants/baseApi';
->>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
 
 class EditLocation extends Component {
   constructor() {
@@ -177,13 +168,6 @@ class EditLocation extends Component {
   //   }
   // };
 
-  constructor(props){
-    super(props)
-    this.state = {
-      address: ''
-    }
-  }
-
   setAddress = async () => {
     console.log();
     const {address} = this.state
@@ -273,7 +257,6 @@ class EditLocation extends Component {
           keyboardShouldPersistTaps="always">
           <View style={UsernameStyle.wrapper}>
             <View style={UsernameStyle.inputWrapper}>
-<<<<<<< HEAD
               {/* <View
                 // activeOpacity={1}
                 // style={[UsernameStyle.ageButton, LocationStyles.location]}
@@ -312,66 +295,6 @@ class EditLocation extends Component {
 
               {/* </View> */}
               {/* <Text style={LocationStyles.orText}>{'or'}</Text>
-=======
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '90%',
-                  backgroundColor: '#252525',
-                  borderRadius: 8,
-                }}>
-                <TouchableOpacity
-                  style={{
-                    width: '10%',
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={Constants.Images.myLocation}
-                    style={LocationStyles.locationIcon}
-                  />
-                </TouchableOpacity>
-                <View style={{width: '90%'}}>
-                  <GooglePlacesAutocomplete
-                  // ref={refAutoComplate}
-                    currentLocationLabel={true}
-                    placeholder="Santee, United States"
-                    query={{
-                      key: 'AIzaSyDu_SQanN6PpTQR3_6L2LA9fSro9xFseVA',
-                      language: 'en',
-                    }}
-                    onPress={(data, details = null) => {
-                      // this.getLatLongFromAdd(data?.description);
-                      console.log('data==>', details);
-                      this.setState({location:(data?.description)});
-                      console.log('===>',data?.description);
-
-                    }}
-                    onFail={(error) => console.error('fail===>', error)}
-                    styles={{
-                      textInputContainer: {
-                        width: '100%',
-                      },
-                      textInput: {
-                        alignItems: 'center',
-                        backgroundColor: Constants.Colors.SECONDARY_COLOR,
-                        borderRadius: 8,
-                        height: 50,
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        color: 'white',
-                        fontSize: 16,
-                      },
-                      predefinedPlacesDescription: {
-                        color: 'red',
-                      },
-                    }}
-                  />
-                </View>
-              </View>
-              <Text style={LocationStyles.orText}>{'or'}</Text>
->>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
               <TouchableOpacity
                 activeOpacity={1}
                 style={[UsernameStyle.ageButton, LocationStyles.margin]}>
@@ -390,22 +313,10 @@ class EditLocation extends Component {
         <TouchableOpacity
           activeOpacity={0.7}
           style={[AuthStyle.saveBtn, LocationStyles.saveBtn]}
-<<<<<<< HEAD
           onPress={this.setAddress}>
           <Text style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
             {translate('Save')}
           </Text>
-=======
-          onPress={() => this.onSave()}>
-          {this.state.Loading ? (
-            <ActivityIndicator size={25} color="white" />
-          ) : (
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {translate('Save')}
-            </Text>
-          )}
->>>>>>> 6a99ee37770725bd029a3e06936b6fb7665b9935
         </TouchableOpacity>
       </View>
     );
