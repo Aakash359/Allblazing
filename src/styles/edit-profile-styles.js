@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     margin: 20,
   },
-  flexDirection: { flexDirection: 'column' },
+  flexDirection: { flexDirection: 'column', flex: 1 },
   goalText: {
     borderRadius: 10,
     fontSize: Constants.BaseStyle.scale(12),

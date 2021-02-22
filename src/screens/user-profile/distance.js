@@ -36,7 +36,7 @@ class Distance extends Component {
   }
   DistanceStore = () => {
     if (this.state.time === null) {
-      Alert.alert('', 'Please Select Distance to Race', '');
+      Alert.alert('', 'Please select distance to race', '');
     } else {
       setUserDistance(this.state.time);
   this.props.navigation.navigate('Location');

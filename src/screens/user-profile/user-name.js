@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import {bool, func, shape} from 'prop-types';
 import {withTranslation} from 'react-i18next';
@@ -17,7 +18,6 @@ import axios from 'axios';
 import API from '../../constants/baseApi';
 import {connect} from 'react-redux';
 import {setFullName} from '../../reducers/baseServices/profile';
-import { ActivityIndicator } from 'react-native';
 
 class Username extends Component {
   constructor() {
@@ -29,28 +29,29 @@ class Username extends Component {
   }
 
 componentDidMount(){
-  const full_name = this.props.route?.params?.full_name;
-    console.log('fullname==>',full_name);
+  const full_name = this.props.route?.params?.full_name ?? '';
+    console.log('fullname==>',full_name );
     this.setState({name: full_name})
 }
 
   NameStore = () => {
+    console.log('fullname==>', this.state.name);
     if (this.state.name === '') {
       Alert.alert(
         '',
         'Please Enter Full Name',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('ok Pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
       );
     } else {
       setUserName(this.state.name);
@@ -73,8 +74,8 @@ componentDidMount(){
         Loading: true,
       });
 
-    if (this.state.name === '') {
-      Alert.alert('', 'Please Enter Full Name', '');
+    if (name === '') {
+      Alert.alert('', 'Please enter full name', '');
     } else {
       axios
         .post(
@@ -90,16 +91,16 @@ componentDidMount(){
              response?.data?.message ?? '',
              [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
              );
             addFullName(name);
             console.log('name:==>',name);

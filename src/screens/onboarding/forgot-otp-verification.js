@@ -71,15 +71,15 @@ class ForgotOTP extends Component {
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('ResetPassword'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
           setForgotOtpToken(response?.data?.data?.data?.token);
           console.log('token==>',response?.data?.data?.data?.token);
@@ -107,13 +107,13 @@ class ForgotOTP extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle', onPress: () => console.log('Cancle Pressed')
+                text: 'Cancel', onPress: () => console.log('Cancel Pressed')
               },
               {
                 text: 'OK', onPress: () => console.log('OK Pressed')
               },
             ],
-            {cancelable: true},
+            {Cancelable: true},
           );
         }
       });

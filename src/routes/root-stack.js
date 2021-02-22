@@ -18,6 +18,7 @@ class AppNavigator extends Component {
 
   _loadAccessToken = async () => {
     const token = await getAuthToken();
+    const userId = await getLoginUserId();
     // const userId = await getLoginUserId();
     // console.log('JSON.parse(userId)========',userId,token);
     this.props.addLoginDetail(JSON.parse(userId));
@@ -40,14 +41,16 @@ class AppNavigator extends Component {
   }
 
   render() {
-    const {token} = this.props;
+    const {token, intro} = this.props;
+    console.log('INTRO DONE', intro);
     console.log('==========>>>.Token', this.state.accessToken);
-    return token ? <AppStack /> : <AuthStack />;
+    return token ? <AppStack /> : <AuthStack intro={intro} />;
   }
 }
 
-const mapStateToProps = ({auth: {token}}) => ({
+const mapStateToProps = ({auth: {token, intro}}) => ({
   token,
+  intro
 });
 
 const mapDispatchToProps = {

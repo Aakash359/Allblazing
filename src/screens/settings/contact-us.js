@@ -90,16 +90,16 @@ class ContactUs extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('Settings'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             
           );
 

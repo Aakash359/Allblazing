@@ -20,7 +20,7 @@ flex: 1,
 },
 description: {
 ...Constants.Fonts.Regular,
-color: Constants.Colors.GREY_BORDER,
+color: Constants.Colors.WHITE,
 fontSize: Constants.BaseStyle.scale(16),
 height: height * 0.15,
 maxWidth: '100%',

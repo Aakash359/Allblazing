@@ -90,16 +90,16 @@ class ChangePassword extends Component {
         'Please fill the newPassword!',
         [
           {
-            text: 'Cancle',
-            onPress: () => console.log('cancle pressed'),
-            style: 'cancel',
+            text: 'Cancel',
+            onPress: () => console.log('Cancel pressed'),
+            style: 'Cancel',
           },
           {
             text: 'OK',
             onPress: () => console.log('Ok Pressed'),
           },
         ],
-        {cancelable:false}
+        {Cancelable:false}
       );
       return;
     }else if(confirmPassword.length < 1){
@@ -108,16 +108,16 @@ class ChangePassword extends Component {
           'Please fill the Confirmpassword!',
           [
             {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              text: 'Cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => console.log('ok Pressed'),
             },
           ],
-          {cancelable:false}
+          {Cancelable:false}
       );
       return;
     }
@@ -151,16 +151,16 @@ class ChangePassword extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('Login'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
 
           navigate('Login');

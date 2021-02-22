@@ -5,13 +5,16 @@ import i18next from 'i18next';
 import {withTranslation} from 'react-i18next';
 import {connect} from 'react-redux';
 import Constants from '../../constants';
-import {AuthStyle, CommonStyles, LanguageStyles} from '../../styles';
+import {
+  AuthStyle,
+  CommonStyles,
+  LanguageStyles,
+  WelcomeStyles,
+} from '../../styles';
 import * as actions from '../../actions/app-action-types';
 import {getAuthToken} from '../../helpers/auth';
 
 class Language extends Component {
-
-
   onSelectLang = (code) => {
     const {setLanguage} = this.props;
 
@@ -27,7 +30,7 @@ class Language extends Component {
     const {locale} = this.props;
 
     if (locale) {
-      navigate('Welcome');
+      navigate('Intro');
     }
   };
 
@@ -37,6 +40,9 @@ class Language extends Component {
     return (
       <View style={CommonStyles.container}>
         <View style={CommonStyles.centerItems}>
+          <Text style={[AuthStyle.selectText, WelcomeStyles.headerText]}>
+            {translate('welcome.WelcomeTo')}
+          </Text>
           <Image
             source={Constants.Images.slectLangLogo2x}
             resizeMode="contain"

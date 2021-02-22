@@ -61,11 +61,12 @@ function SearchSeceen() {
     <>
       <SafeAreaView style={SearchScreen.container}>
         <ScrollView>
-          <View style={SearchScreen.searchView}>
+          <View style={[SearchScreen.searchView, {justifyContent: 'flex-start'}]}>
             <Image
               source={Constants.Images.search}
               style={SearchScreen.searchIcon}
             />
+
             <TextInput
               placeholder="Find runner, group, event, club, coach etc..."
               placeholderTextColor={Constants.Colors.GREY_BORDER}

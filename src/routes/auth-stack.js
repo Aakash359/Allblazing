@@ -20,15 +20,33 @@ import Distance from '../screens/user-profile/distance';
 import Location from '../screens/onboarding/location';
 import Constants from '../constants';
 import { CommonStyles } from '../styles';
+import AsyncStorage from '@react-native-community/async-storage';
+import editLocation from '../screens/user-profile/edit-location';
+import constants from '../constants';
 
 const AuthStack = createStackNavigator();
 const options = { headerShown: false };
 
-export default function MainNavigator() {
+export default function MainNavigator({intro}) {
+  // const [intro, setIntro] = React.useState(true)
+
   const { t: translate } = useTranslation();
 
+  
+console.log("DONE INTRO..?", typeof intro, intro);
+
+// React.useEffect(async() => {
+//   const getIntro = await AsyncStorage.getItem('intro') 
+//   setIntro(getIntro === 'true' || false )
+// }, intro)
+
+
+
   return (
-    <AuthStack.Navigator headerMode="screen" initialRouteName="SelectLanguage">
+    <AuthStack.Navigator headerMode="screen"
+    //  initialRouteName="Location"
+     initialRouteName={intro ? 'Login': 'SelectLanguage' }
+     >
       <AuthStack.Screen
         name="SelectLanguage"
         options={options}
@@ -186,6 +204,16 @@ export default function MainNavigator() {
         name="Location"
         options={options}
         component={Location}
+      />
+      <AuthStack.Screen
+        name="EditLocation"
+        component={editLocation}
+        options={() => ({
+          headerBackTitleVisible: false,
+          headerTintColor: constants.Colors.WHITE,
+          headerTitle: translate('profile.Edit Location'),
+          headerTitleAlign: 'center',
+        })}
       />
     </AuthStack.Navigator>
   );

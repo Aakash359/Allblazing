@@ -24,7 +24,5 @@ export default function signUp(state = initial, {payload, type}) {
 }
 
 export function setSignUpDetails(params) {
-    return dispatch => {
-      dispatch({ type: SET_SIGNUP_DETAILS, payload: params });
-    };
+    return ({ type: SET_SIGNUP_DETAILS, payload: params });
   }

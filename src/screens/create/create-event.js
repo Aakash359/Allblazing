@@ -17,7 +17,14 @@ import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import {withTranslation} from 'react-i18next';
 import {Alert} from 'react-native';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Colors from '../../constants/colors';
+import DatePickerAI from '../../components/popups/date-picker'
+import { DatePicker } from 'react-native-wheel-picker-android';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import moment from 'moment'
+import { Platform } from 'react-native';
 class CreateEvent extends Component {
   constructor(props) {
     super(props);
@@ -62,22 +69,26 @@ class CreateEvent extends Component {
           name: 'Club',
         },
       ],
+      tempDateTime: new Date(),
+      showDate: false,
+      tempDate: new Date(),
+      showTime: false
     };
   }
 
   NameStore = () => {
     if (this.state.photo === '') {
-      Alert.alert('', 'please Select Image', '');
+      Alert.alert('', 'Please select image', '');
     } else if (this.state.data > 0) {
-      Alert.alert('', 'Please select Event Type', '');
+      Alert.alert('', 'Please select event type', '');
     } else if (this.state.Category > 0) {
-      Alert.alert('', 'Please select Event Category', '');
+      Alert.alert('', 'Please select event category', '');
     } else if (this.state.name === '') {
-      Alert.alert('', 'Please Enter Full Name', '');
+      Alert.alert('', 'Please enter full name', '');
     } else if (this.state.date === '') {
-      Alert.alert('', 'Please Enter date', '');
+      Alert.alert('', 'Please enter date', '');
     } else if (this.state.description === '') {
-      Alert.alert('', 'Please Enter description', '');
+      Alert.alert('', 'Please enter description', '');
     } else {
       this.props.navigation.navigate('AddMember', {
         iseventPage: true,
@@ -85,12 +96,14 @@ class CreateEvent extends Component {
         photo: this.state.photo,
         isEnabled: this.state.isEnabled,
         eventType: this.state.eventType?.[this.state.EventTypeSelectedId]?.name,
-        Category: this.state.Category?.[this.state.EventCategorySelectedId]?.id.toString(),
+        Category: 1 || this.state.Category?.[this.state.EventCategorySelectedId]?.id.toString(),
         address1: this.state.address1,
         address2: this.state.address2,
         time: this.state.time,
-        date: this.state.date,
+        date: this.state.tempDateTime,
+        tempDate: this.state.tempDate,
         description: this.state.description,
+        imageDetails: this.state.imagedetails
       });
     }
   };
@@ -100,14 +113,15 @@ class CreateEvent extends Component {
       height: 400,
       cropping: false,
       includeBase64: true,
-    }).then((photo) => {
-      console.log('image details ', photo);
+    })
+    .then((photo) => {
+      // console.log('image details ', photo);
       const {mime, filename, data, path} = photo;
       const uri = `data:${mime};base64,${data}`;
       this.setState(() => {
         return {photo: photo.path, imagedetails: photo};
       });
-      console.log(photo.path);
+      // console.log(photo.path);
     });
   };
   handleBtn = (Btn) => {
@@ -121,7 +135,7 @@ class CreateEvent extends Component {
         CreateEventStyles.halfView,
         {
           backgroundColor:
-            this.state.EventTypeSelectedId == item.id ? '#808080' : '#292929',
+            this.state.EventTypeSelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
         },
       ]}
       onPress={() => this.handleBtn(item.id)}>
@@ -138,13 +152,21 @@ class CreateEvent extends Component {
         CreateEventStyles.halfView,
         {
           backgroundColor:
-            this.state.EventCategorySelectedId == item.id ? '#808080' : '#292929',
+            this.state.EventCategorySelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
         },
       ]}
       onPress={() => this.handleBtns(item.id)}>
       <Text style={[CreateEventStyles.groupName]}>{item.name}</Text>
     </TouchableOpacity>
   );
+
+  onChangeDate = (e,date) => {
+    this.setState({date: date ? `${moment(date).format('dddd, Do MMM, YYYY')}`  : this.state.date, tempDateTime: date || this.state.tempDateTime, showDate: Platform.OS === 'ios' ? this.state.showDate: !this.state.showDate})
+  }
+    onChangeTime = (e,time) => {
+      this.setState({time: time ? `${ moment(time).format('LT')}` : this.state.time, tempDate: time || this.state.tempDate, showTime: Platform.OS === 'ios' ? this.state.showTime : !this.state.showTime})
+  }
+
 
   render() {
     const {
@@ -163,6 +185,8 @@ class CreateEvent extends Component {
       route: {params},
       t: translate,
     } = this.props;
+
+    
     return (
       <SafeAreaView style={CreateEventStyles.container}>
         <ScrollView style={CreateEventStyles.innerContainer}>
@@ -273,11 +297,16 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({name: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
-          <View style={CreateEventStyles.searchView}>
+          
+           <TouchableWithoutFeedback onPress={() => {
+             this.setState({showDate: true})
+             }}>
+          <View style={CreateEventStyles.searchView} >
+
             <TextInput
               placeholder="Date"
               placeholderTextColor={Constants.Colors.GREY_BORDER}
@@ -289,12 +318,17 @@ class CreateEvent extends Component {
               }}
               style={CreateEventStyles.groupName}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
+              editable={false}
+              />
+            
             <Image
               source={Constants.Images.calendar}
               style={CreateEventStyles.calendarIcon}
-            />
+              />
           </View>
+              </TouchableWithoutFeedback>
+           <TouchableWithoutFeedback onPress={() => this.setState({showTime: true})}>
+
           <View style={CreateEventStyles.searchView}>
             <TextInput
               placeholder="Time"
@@ -307,13 +341,15 @@ class CreateEvent extends Component {
               }}
               style={CreateEventStyles.groupName}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
+              editable={false}
             />
             <Image
               source={Constants.Images.clock}
               style={CreateEventStyles.clockIcon}
             />
           </View>
-          <View style={CreateEventStyles.searchView}>
+          </TouchableWithoutFeedback>
+          <View style={[CreateEventStyles.searchView, ]}>
             <TextInput
               placeholder="Event Address Line 1"
               placeholderTextColor={Constants.Colors.GREY_BORDER}
@@ -323,7 +359,7 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({address1: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
@@ -337,7 +373,7 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({address2: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
@@ -365,10 +401,41 @@ class CreateEvent extends Component {
             <Text style={CreateEventStyles.nextText}>Create Event</Text>
           </TouchableOpacity>
         </ScrollView>
+        {this.state.showDate && <View>
+          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showDate: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
+          </TouchableOpacity>}
+          <RNDateTimePicker
+            testID="dateTimePicker"
+            value={this.state.tempDateTime}
+            mode="date"
+            is24Hour={true}
+            display="spinner"
+            onChange={this.onChangeDate}
+            textColor="#fff"
+            onTouchCancel={() => this.setState({showDate: Platform.OS === 'ios'? this.state.showDate: !this.state.showDate})}
+            /></View>}
+            {this.state.showTime && <View>
+          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showTime: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
+          </TouchableOpacity>}
+          <RNDateTimePicker
+            testID="TimePicker"
+            value={this.state.tempDate}
+            mode="time"
+            is24Hour={true}
+            display="spinner"
+            onChange={this.onChangeTime}
+            textColor="#fff"
+            onTouchCancel={() => this.setState({showTime: Platform.OS === 'ios'? this.state.showTime: !this.state.showTime})}
+
+            /></View>}
       </SafeAreaView>
     );
   }
 }
+
+
 
 // export default CreateEvent;
 

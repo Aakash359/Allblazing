@@ -8,16 +8,23 @@ import Constants from '../../constants';
 import { AuthStyle, PopupStyles, OTPStyles } from '../../styles';
 import AnimatedModal from '../animate-modal';
 
-const ages = times(87, (i) => `${i + 13}`);
+const getAgeData = (start, end) => {
+  let a = []
+  for(let i = start; i<=end; i++) {
+    a.push(`${i}`)
+  }
+  return a
+}
+
+const ages = getAgeData(13, 100)
 
 const AgePicker = ({
   onClose, onConfirm, selectedValue, t: translate,
 }) => {
-  const initialAge = selectedValue ? (selectedValue - 13) : 5;
-  const [age, setAge] = React.useState(initialAge);
-
+  // const initialAge = selectedValue ? (selectedValue - 13) : 5;
+  const [age, setAge] = React.useState(ages[0]);
   const onItemSelection = (value) => {
-    setAge(value + 13);
+    setAge(ages[value]);
   };
 
   return (
@@ -28,7 +35,6 @@ const AgePicker = ({
           <View style={PopupStyles.divider} />
           <View style={PopupStyles.pickersContainer}>
             <WheelPicker
-              initPosition={0}
               itemTextSize={16}
               selectedItemTextSize={16}
               itemTextFontFamily="SFProRounded-Regular"

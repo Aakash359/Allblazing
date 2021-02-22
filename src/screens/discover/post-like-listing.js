@@ -35,15 +35,25 @@ class PostLikeListing extends Component {
     } = this.props;
   }
 
-  componentDidMount() {
-    this._fetchPost();
+  changeHeader = () => {
+    this.props.navigation.setOptions({
+      headerTitle: `Posts ${this.props.route.params.postCount}`
+    })
   }
 
-  _fetchPost = (useCallback = async () => {
+  componentDidMount() {
+    this._fetchPost();
+    this.changeHeader()
+  }
+
+  _fetchPost = async() => {
     const token = await getAuthToken();
+    const { user_id } = this.props
+    const {userId} = this.props.route.params
     console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
+      params: {id: userId || user_id}
     };
     this.setState({
       isLoading: true,
@@ -61,16 +71,22 @@ class PostLikeListing extends Component {
           isLoading: false,
         });
       });
-  });
+  };
 
   _Like = async (item) => {
     const token = await getAuthToken();
     console.log('==>', item.id);
     console.log('tokens==>', token);
     const config = {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: { Authorization: `Bearer ${token}` },
     };
     // console.log(config);
+
+    let newList = this.state.list.map(el => (
+      el.id === item.id ? { ...el, likeStatus: item.likeStatus > 0 ? 0 : 1, likeCount: item.likeStatus > 0 ? item.likeCount - 1 : item.likeCount + 1}  : el
+    ))
+    this.setState({list: newList});
+
     Axios.post(
       API.LIKE,
       {
@@ -87,7 +103,10 @@ class PostLikeListing extends Component {
 
   renderItem = ({item}) => (
     <View>
-      <TouchableOpacity
+      {this.state.isLoading ? (
+        <ActivityIndicator color="white" size={25}/>
+       ) : (
+        <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
           this.props.navigation.navigate('FeedDetailScreen', {data: item});
@@ -104,6 +123,7 @@ class PostLikeListing extends Component {
               // onPress={() => {
               //   setLike(!like);
               // }}
+              hitSlop={{top: 30, bottom: 30, left: 30, right: 30}}
             >
               <Image
                 source={
@@ -118,8 +138,20 @@ class PostLikeListing extends Component {
           </View>
         </ImageBackground>
       </TouchableOpacity>
+      )}
+      
     </View>
   );
+
+  ListEmptyComponent = () => {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <Text style={{color: '#fff'}} >You didn't post anything.</Text>
+        {/* <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('CreatePost')} ><Text style={{color: '#fff'}}>Please click here to post</Text></TouchableOpacity> */}
+      </View>
+    )
+  }
+
   render() {
     const {isLoading} = this.state;
 
@@ -145,6 +177,8 @@ class PostLikeListing extends Component {
               data={this.state.list}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => `2-${index}`}
+              ListEmptyComponent={this.ListEmptyComponent}
+              // ListFooterComponent={this.ListEmptyComponent}
             />
           )}
         </View>
@@ -164,7 +198,11 @@ PostLikeListing.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({profile: {user_id}}) => {
+  return {
+    user_id
+  }
+};
 
 const mapDispatchToProps = {
   // addFullName: (params) => setFullName(params),

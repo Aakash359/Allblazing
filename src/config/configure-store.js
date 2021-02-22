@@ -1,9 +1,19 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import { persistStore } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import { createNetworkMiddleware } from 'react-native-offline';
 import rootReducer from '../reducers';
 import sagas from '../sagas';
+import AsyncStorage from '@react-native-community/async-storage';
+import logger from 'redux-logger';
+
+// const persistConfig = {
+//   key: 'root',
+//   storage: AsyncStorage
+// }
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 
 const ConfigureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
@@ -20,7 +30,7 @@ const ConfigureStore = () => {
 
   const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(networkMiddleware, sagaMiddleware)),
+    composeEnhancers(applyMiddleware(networkMiddleware, sagaMiddleware, logger)),
   );
 
   const persistor = persistStore(store);

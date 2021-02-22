@@ -86,7 +86,7 @@ export const wearableOptions = [{
 export const times = [{
   color: Constants.Colors.LIGHT_BLUE,
   label: '< 18 minutes',
-  value: 'less Than  18Minutes',
+  value: 'less Than 18 Minutes',
 }, {
   color: Constants.Colors.LIGHT_RED,
   label: 'recent5KTimes.between18and20',
@@ -106,7 +106,7 @@ export const times = [{
 }, {
   color: Constants.Colors.LIGHT_GREEN,
   label: 'recent5KTimes.moreThan30',
-  value: 'moreThan 30',
+  value: 'more Than 30',
 }];
 
 export default levels;

@@ -21,6 +21,15 @@ import {setLoginDetails} from '../../reducers/baseServices/auth';
 import axios from 'axios';
 import API from '../../constants/baseApi';
 import { setAuthToken, setLoginUserId } from '../../helpers/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+import Geolocation from '@react-native-community/geolocation';
+import { PermissionsAndroid } from 'react-native';
+
+Geolocation?.setRNConfiguration({
+  skipPermissionRequests: false,
+  authorizationLevel: 'always'
+});
+
 const socialIcons = [
   {
     icon: Constants.Images.email,
@@ -51,11 +60,61 @@ class Login extends Component {
     super();
     this.state = {
       emailId: '',
-      isRemember: false,
+      isRemember: true,
       isShow: false,
       password: '',
       isLoading: false,
     };
+  }
+
+  
+
+
+  getLastUserCred = async () => {
+    try {
+      const userCred = JSON.parse(await AsyncStorage.getItem('userCred') || '{}')
+      this.setState({emailId: userCred?.email, password: userCred?.password})
+    } catch (error) {
+      console.log('Unable to get User Last Cred');
+    }
+    
+  }
+
+
+
+  
+  getLocation = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'AllBlazing',
+          'message': 'AllBlazing access to your location ',
+          buttonPositive: "OK"
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the location")
+        // alert("You can use the location");
+      } else {
+        console.log("location permission denied")
+        // alert("Location permission denied");
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
+
+
+  componentDidMount() {
+    this.getLastUserCred()
+    if(Platform.OS === 'ios') {
+
+      Geolocation.requestAuthorization()
+    }else {
+      this.getLocation()
+    }
   }
 
   componentWillUnmount() {
@@ -71,7 +130,7 @@ class Login extends Component {
     const {
       navigation: {goBack, navigate},
     } = this.props;
-    navigate('Overview');
+    // navigate('Overview');
     const {emailId, password} = this.state;
     if (emailId.length < 1) {
       Alert.alert(
@@ -80,7 +139,7 @@ class Login extends Component {
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
-        {cancelable: false},
+        {Cancelable: false},
       );
       return;
     } else if (password.length < 1) {
@@ -99,7 +158,8 @@ class Login extends Component {
         email: emailId,
         password: password,
       })
-      .then((response) => {
+      .then(async (response) => {
+        console.log("LOGIN RESPONSE", response);
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
@@ -112,9 +172,31 @@ class Login extends Component {
           setAuthToken(response?.data?.data?.token);
           addLoginDetail(response?.data?.data);
           setLoginUserId(JSON.stringify(response?.data?.data));
-          // loginSuccess();
-          navigate('Overview');
+          
+          if(this.state.isRemember) {
+            try {
+              await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
+              console.log('CRED SAVED', JSON.stringify({email: emailId, password}));
+            } catch (error) {
+              console.log("CRED NOT SAVED", error.message);
+            }
         }
+        else {
+          console.log('remember is false');
+          await AsyncStorage.removeItem('userCred')
+          
+        }
+          loginSuccess();
+          if(response?.data?.data?.completeProfile) {
+            navigate('Overview');
+
+          }else {
+            navigate('Username')
+          }
+        }
+      })
+      .catch(e => {
+        console.log("");
       })
       .finally(() => {
         this.setState({
@@ -149,6 +231,9 @@ class Login extends Component {
                 value={emailId}
                 placeholder={translate('Email')}
                 onChangeText={(text) => this.setState({emailId: text})}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+
               />
               <View style={LoginStyles.passwordInput}>
                 <TextInput
@@ -159,6 +244,8 @@ class Login extends Component {
                   onChangeText={(text) => this.setState({password: text})}
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                  autoCapitalize={'none'}
+                autoCorrect={false}
                 />
                 {isShow ? (
                   <TouchableOpacity
@@ -293,7 +380,7 @@ const mapStateToProps = ({auth: {email}}) => ({
 
 const mapDispatchToProps = {
   addLoginDetail: (params) => setLoginDetails(params),
-  // loginSuccess: actions.loginSuccess,
+  loginSuccess: actions.loginSuccess,
 };
 
 export default connect(

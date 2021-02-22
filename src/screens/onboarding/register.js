@@ -84,32 +84,32 @@ class Register extends Component {
       Alert.alert('', 'Please enter email id',
       [
         {
-          text: 'Cancle',
-          onPress: () => console.log('cancle pressed'),
-          style: 'cancel',
+          text: 'Cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'Cancel',
         },
         {
           text: 'OK',
           onPress: () => console.log('Ok Pressed'),
         },
       ],
-      {cancelable:false}
+      {Cancelable:false}
       );
       return;
     } else if (password.length < 8) {
       Alert.alert('', 'Please enter password at least 8 characters!',
       [
         {
-          text: 'Cancle',
-          onPress: () => console.log('cancle pressed'),
-          style: 'cancel',
+          text: 'Cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'Cancel',
         },
         {
           text: 'OK',
           onPress: () => console.log('OK Pressed'),
         },
       ],
-      {cancelable:false}
+      {Cancelable:false}
       );
       return;
     }
@@ -131,27 +131,27 @@ class Register extends Component {
           );
         }
         if (response?.data?.code === 200) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            [
-              {
-                text: 'Cancle',
-                onPress: () => console.log('Cancle Pressed'),
-              },
-              {
-                text: 'OK',
-                onPress: () => navigate('OTP', {email: this.state.email}),
-              },
-            ],
-            {cancelable: false},
-          );
+          // Alert.alert(
+          //   '',
+          //   response?.data?.message ?? '',
+          //   [
+          //     {
+          //       text: 'Cancel',
+          //       onPress: () => console.log('Cancel Pressed'),
+          //     },
+          //     {
+          //       text: 'OK',
+          //       onPress: () => navigate('OTP', {email: this.state.email}),
+          //     },
+          //   ],
+          //   {Cancelable: false},
+          // );
           addSignUpDetail(response?.data?.data);
           // console.log('data=====>', response?.data?.data);
           setUserId(response?.data?.data?.user_id.toString());
           // console.log('UserId====>>>',response?.data?.data?.user_id);
           signupSuccess();
-          // navigate('OTP',{email:this.state.email});
+          navigate('OTP',{email:this.state.email});
         }
       })
       .finally(() => {
@@ -186,6 +186,8 @@ class Register extends Component {
             <View>
               <View style={RegisterStyle.emailInput}>
                 <TextInput
+                autoCapitalize={'none'}
+                autoCorrect={false}
                   ref={this.emailRef}
                   style={RegisterStyle.email}
                   returnKeyType="next"
@@ -218,6 +220,8 @@ class Register extends Component {
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   onSubmitEditing={this.onContinue}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                  autoCapitalize={'none'}
+                  autoCorrect={false}
                 />
                 <TouchableOpacity
                   activeOpacity={0.7}

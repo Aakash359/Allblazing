@@ -11,6 +11,9 @@ const Colors = {
   DARK_YELLOW: '#FFBE62',
   ERROR: '#CC0000',
   GRAY: '#808080',
+  TAB: '#636363',
+  TAB_BACK: '#383838',
+  TAB_BACK2: '#BAC4CE',
   GREEN: 'rgb(0,212,130)',
   GREY_BORDER: '#898989',
   GREY_CIRCLE: '#636363',
@@ -47,7 +50,6 @@ const Colors = {
   WARNING: '#FFFF00',
   WHITE: '#FFFFFF',
   YELLOW: '#FFFF00',
-
 };
 
 module.exports = Colors;

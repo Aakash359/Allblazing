@@ -40,10 +40,10 @@ class UserProfile extends Component {
   }
 
   UserProfileDetails = async () => {
-    const id = this.props.route.params.id;
+    const id = this.props.route.params.follow_id || this.props.route.params.id;
     console.log('userid==>', id);
     const token = await getAuthToken();
-    // console.log('====>', token);
+    console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -59,11 +59,16 @@ class UserProfile extends Component {
         config,
       )
       .then((response) => {
+        console.log('response==>',response);
         if (response.data.data.result) {
           console.log('===>details', response.data.data.result);
           this.setState({list: response?.data?.data?.result});
         }
-      })
+      }).catch((err)=>{
+        console.log('err==>',err);
+      }
+
+      )
       .finally(() => {
         this.setState({
           Loading: false,
@@ -99,7 +104,7 @@ class UserProfile extends Component {
     const {
       navigation: {goBack, navigate},
     } = this.props;
-    const followId = this.props.route.params.follow_id;
+    const followId = this.props.route.params.follow_id || this.props.route.params.id;
     console.log('followId', followId);
     const token = await getAuthToken();
     console.log('====>', token);
@@ -115,16 +120,16 @@ class UserProfile extends Component {
           response?.data?.message ?? '',
           [
             {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
+              text: 'Cancel',
+              onPress: () => console.log('Cancel pressed'),
+              style: 'Cancel',
             },
             {
               text: 'OK',
               onPress: () => navigate('MyProfile'),
             },
           ],
-          {cancelable: false},
+          {Cancelable: false},
         );
         // navigate('MyProfile');
       }
@@ -133,7 +138,7 @@ class UserProfile extends Component {
   handleUserFollow = async () => {
     const token = await getAuthToken();
     const {followStatus} = this.state;
-    // console.log('====>', token);
+    console.log('ID====>', this.props.route.params.follow_id || this.props.route.params.id);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -144,30 +149,34 @@ class UserProfile extends Component {
       .post(
         API.FOLLOW,
         {
-          follow_id: 3,
+          follow_id: this.props.route.params.follow_id || this.props.route.params.id
         },
         config,
       )
       .then((response) => {
         if (response.data.code == 200) {
-          Alert.alert('', response?.data?.message ?? '',
-          [
-            {
-              text: 'Cancle',
-              onPress: () => console.log('cancle pressed'),
-              style: 'cancel',
-            },
-            {
-              text: 'OK',
-              onPress: () => console.log('ok Pressed'),
-            },
-          ],
-          {cancelable:false}
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
+              },
+              {
+                text: 'OK',
+                onPress: () => console.log('ok Pressed'),
+              },
+            ],
+            {Cancelable: false},
           );
           this.setState({followStatus: !followStatus});
         }
       })
       .finally(() => {
+    this.UserProfileDetails();
+
         this.setState({
           FollowLoading: false,
         });
@@ -180,7 +189,7 @@ class UserProfile extends Component {
       route: {params},
       t: translate,
     } = this.props;
-    const id = this.props.route.params.id;
+    const id = this.props.route.params.follow_id || this.props.route.params.id;
     // console.log('id===>',id);
     return (
       <View style={ProfileStyles.container}>
@@ -199,7 +208,12 @@ class UserProfile extends Component {
             <TouchableOpacity activeOpacity={0.7}>
               <View>
                 <ImageBackground
-                  source={{uri: this.state.list.image}}
+                  source={
+                    this.state.list.image == 'N/A'
+                      ? Constants.Images.profilePic
+                      : {uri: this.state.list.image}
+                  }
+                  // source={{uri: this.state.list.image}}
                   imageStyle={ProfileStyles.borderRadius}
                   style={ProfileStyles.profileIcon}>
                   <View style={ProfileStyles.levelStyle}>
@@ -223,44 +237,72 @@ class UserProfile extends Component {
                         style={ProfileStyles.icon}
                       />
                     </TouchableOpacity>
-                  {this.props.route?.params?.iseventPage ? null :
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      // onPress={() => setFollowStatus(!followStatus)}
-                      onPress={() => this.handleUserFollow()}>
-                      {this.state.FollowLoading ? (
-                        <ActivityIndicator color="white" size={25} />
-                      ) : (
-                        <Image
-                          source={Constants.Images.add}
-                          resizeMode="contain"
-                          style={ProfileStyles.icon}
-                        />
-                      )}
-                    </TouchableOpacity>
-                    }
+                    {this.props.route?.params?.iseventPage ? null : (
+                      
+                        this.state.FollowLoading ? (
+                          <ActivityIndicator color="white" size={25} />
+                        ) : 
+                        !this.state.list.follow ?(
+                          <TouchableOpacity
+                        activeOpacity={0.7}
+                        // onPress={() => setFollowStatus(!followStatus)}
+                        onPress={() => this.handleUserFollow()}>
+                          <Image
+                            source={Constants.Images.add}
+                            resizeMode="contain"
+                            style={ProfileStyles.icon}
+                          />
+                      </TouchableOpacity>
+                        ) : 
+                      //   (
+                      //     <TouchableOpacity
+                      //   activeOpacity={0.7}
+                      //   // onPress={() => setFollowStatus(!followStatus)}
+                      //   onPress={() => this.handleUserFollow()}>
+                      //     <Image
+                      //       source={Constants.Images.add}
+                      //       resizeMode="contain"
+                      //       style={ProfileStyles.icon}
+                      //     />
+                      // </TouchableOpacity>
+                      //   )
+                      null
+                    )}
                   </View>
                 </ImageBackground>
               </View>
             </TouchableOpacity>
             <View style={ProfileStyles.sectionMainView}>
               <View style={ProfileStyles.sectionView}>
+                <TouchableOpacity onPress={() => {
+                  this.props.navigation.navigate('FollowersList', {followerCount: this.state.list.followerCount, user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                }}>
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.followerCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Followers'}</Text>
+                </TouchableOpacity>
               </View>
               <View style={ProfileStyles.sectionView}>
+              <TouchableOpacity onPress={() => {
+                  this.props.navigation.navigate('FollowingList', {followingCount: this.state.list.followingCount,  user_id: this.props.route.params.follow_id || this.props.route.params.id});
+                }}>
+
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.followingCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Following'}</Text>
+                </TouchableOpacity>
               </View>
-              <View style={ProfileStyles.sectionView}>
+                <View style={ProfileStyles.sectionView}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('PostLikeListing', {postCount: this.state.list.postCount, userId: this.state.list.user_id})}>
+                    
                 <Text style={ProfileStyles.section2}>
                   {this.state.list.postCount}
                 </Text>
                 <Text style={ProfileStyles.section1}>{'Posts'}</Text>
+                  </TouchableOpacity>
               </View>
               <View style={ProfileStyles.sectionViewEnd}>
                 <TouchableOpacity
@@ -272,7 +314,7 @@ class UserProfile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            {this.state.followStatus ? (
+            {!this.state.list.private_status ||  this.state.list.follow ? (
               <View>
                 <FlatList
                   scrollEnabled={false}

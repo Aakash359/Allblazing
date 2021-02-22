@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, ScrollView, View, TouchableOpacity, Text,Alert} from 'react-native';
+import {Platform, ScrollView, View, TouchableOpacity, Text,Alert, ActivityIndicator} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {withTranslation} from 'react-i18next';
 import {bool, func, shape} from 'prop-types';
@@ -22,11 +22,11 @@ import { setTime } from '../../reducers/baseServices/profile';
 class UserPersonalBest extends Component {
   constructor() {
     super();
-    this.state = {time: null};
+    this.state = {time: 0,Loading:false};
   }
   TimeStore = () => {
-    if (this.state.time === null) {
-      Alert.alert('', 'Please Select  Recent time', '');
+    if (this.state.time === 0) {
+      Alert.alert('', 'Please select  recent time', '');
     } else {
       setUserRecentTime(this.state.time);
       this.props.navigation.navigate('Distance');
@@ -46,9 +46,11 @@ class UserPersonalBest extends Component {
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
-
+    this.setState({
+      Loading: true,
+    });
     if (this.state.time === '') {
-      Alert.alert('', 'Please Select your Age', '');
+      Alert.alert('', 'Please select your age', '');
     } else {
       axios
         .post(
@@ -63,27 +65,31 @@ class UserPersonalBest extends Component {
             Alert.alert('', response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('EditProfile'),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
             );
             addTime(time);
             console.log('age:==>',time);
             // navigate('EditProfile');
           }
+        }).finally(() => {
+          this.setState({
+            Loading: false,
+          });
         });
     }
   };
   onTypeChange = (payload) => this.setState({time: payload});
   componentDidMount(){
-    const time = this.props.route.params.time;
+    const time = this.props.route?.params?.time ?? '';
       console.log('fullname==>',time);
       this.setState({time: time})
   }
@@ -149,10 +155,13 @@ class UserPersonalBest extends Component {
             activeOpacity={0.7}
             style={[AuthStyle.saveBtn, Repeat5KStyles.saveBtn]}
             onPress={() => this.onSave()}>
-            <Text
-              style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
-              {translate('Save')}
-            </Text>
+              {this.state.Loading ? (
+                <ActivityIndicator colo="white" size={25}/>
+              ):(<Text
+                style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
+                {translate('Save')}
+              </Text>)}
+            
           </TouchableOpacity>
         ) : (
           <View style={Repeat5KStyles.buttonsWrapper}>

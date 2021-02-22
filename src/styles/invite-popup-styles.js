@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Constants from '../constants';
 
@@ -7,6 +8,13 @@ const styles = {
     backgroundColor: Constants.Colors.TRANSLUCENT,
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  container2: {
+   
+    backgroundColor: Constants.Colors.TRANSLUCENT,
+    flex: 1,
+    justifyContent: 'flex-end',
+   
   },
   headerText: {
     ...Constants.Fonts.Regular,
@@ -43,6 +51,16 @@ const styles = {
     backgroundColor: Constants.Colors.PRIMARY,
     height: 150,
     width: Constants.BaseStyle.DEVICE_WIDTH,
+  },
+  wrapper2: {
+    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    height: Platform.OS === 'ios' ? 200 : 170,
+    width: Constants.BaseStyle.DEVICE_WIDTH,
+    alignItems:'center',
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+    borderTopLeftRadius: Constants.BaseStyle.scale(16),
+    borderTopRightRadius: Constants.BaseStyle.scale(16),
+    
   },
 };
 

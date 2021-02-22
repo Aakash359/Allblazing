@@ -14,8 +14,9 @@ import thunk from 'redux-thunk';
 
 const {
    persistor,
+   store
 } = configureStore();
-const store = createStore(reducers, {}, applyMiddleware(thunk));
+// const store = createStore(reducers, {}, applyMiddleware(thunk));
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Constants.Colors.PRIMARY,

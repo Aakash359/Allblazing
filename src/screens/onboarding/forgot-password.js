@@ -13,7 +13,7 @@ import {AuthStyle, CommonStyles, ForgotPassStyles} from '../../styles';
 import {InputField, SuccessPopup} from '../../components';
 import axios from 'axios';
 import API from '../../constants/baseApi';
-import { setForgotPasswordUserId } from '../../helpers/auth';
+import {setForgotPasswordUserId} from '../../helpers/auth';
 
 class ForgotPassword extends Component {
   constructor() {
@@ -35,11 +35,7 @@ class ForgotPassword extends Component {
     } = this.props;
     const {email} = this.state;
     if (email.length < 1) {
-      Alert.alert(
-        '',
-        'Please enter email id',
-        
-      );    
+      Alert.alert('', 'Please enter email id');
       return;
     }
     this.setState({
@@ -56,16 +52,16 @@ class ForgotPassword extends Component {
             response?.data?.message ?? '',
             [
               {
-                text: 'Cancle',
-                onPress: () => console.log('cancle pressed'),
-                style: 'cancel',
+                text: 'Cancel',
+                onPress: () => console.log('Cancel pressed'),
+                style: 'Cancel',
               },
               {
                 text: 'OK',
                 onPress: () => navigate('ForgotOTP',{email:this.state.email}),
               },
             ],
-            {cancelable:false}
+            {Cancelable:false}
           );
           setForgotPasswordUserId(response?.data?.data?.user_id.toString());
           console.log(response?.data?.data?.user_id.toString());
@@ -93,12 +89,22 @@ class ForgotPassword extends Component {
           <Text style={[AuthStyle.buttonText, ForgotPassStyles.buttonText]}>
             {t('Forgot Password Instructions')}
           </Text>
-          <InputField
-            value={email}
-            placeholder="Email"
-            onChangeText={(text) => this.setState({email: text})}
-          />
+          <View style={ForgotPassStyles.wrapper2}>
+            <InputField
+              value={email}
+              placeholder="Email"
+              onChangeText={(text) => this.setState({email: text})}
+            />
+          </View>
         </View>
+
+        <SuccessPopup
+          hasResendBtn
+          instructions={`${t('Forgot Password Success')} "xyz@gmail.com"`}
+          visible={visible}
+          onClick={() => this.setState({visible: false}, () => navigate('OTP'))}
+          onResend={() => this.setState({visible: false})}
+        />
         <View style={ForgotPassStyles.buttonsWrapper}>
           <TouchableOpacity
             style={[
@@ -107,8 +113,7 @@ class ForgotPassword extends Component {
             ]}
             activeOpacity={0.7}
             // onPress={() => this.onContinue()}
-            onPress={() => this.onSubmit()}
-            >
+            onPress={() => this.onSubmit()}>
             {isLoading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
@@ -119,13 +124,6 @@ class ForgotPassword extends Component {
             )}
           </TouchableOpacity>
         </View>
-        <SuccessPopup
-          hasResendBtn
-          instructions={`${t('Forgot Password Success')} "xyz@gmail.com"`}
-          visible={visible}
-          onClick={() => this.setState({visible: false}, () => navigate('OTP'))}
-          onResend={() => this.setState({visible: false})}
-        />
       </View>
     );
   }

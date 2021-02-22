@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from '../constants';
 
 const styles = StyleSheet.create({
@@ -28,16 +29,16 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     height: 18,
-    marginRight: 10,
+    marginHorizontal: 10,
     width: 18,
   },
   searchView: {
-    backgroundColor: Constants.Colors.CARD_LIGHTGREY,
+    backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: 12,
     flexDirection: 'row',
+    marginLeft: 4,
+    alignItems: 'center',
     margin: 10,
-    marginTop: 40,
-    padding: 15,
   },
   sectionView: {
     alignItems: 'center',
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 20,
     marginVertical: 10,
+    padding: Platform.OS === 'ios' ? 15 : 10 
     // width: '50%'
   },
 });

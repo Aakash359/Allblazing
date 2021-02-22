@@ -37,7 +37,7 @@ class ConnectUserType extends Component {
     } = this.props;
     const {type} = this.state;
     if (this.state.type === null) {
-      Alert.alert('', 'Please Select Your Connect Runners Types', '');
+      Alert.alert('', 'Please select your connect runner types', '');
     } else {
       setUserConnectType(this.state.type);
       if (type === 'race') {
