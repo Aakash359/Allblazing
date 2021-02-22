@@ -61,6 +61,11 @@ const settingList = [
         route: 'StaticContent',
     },
     {
+        label: 'settings.Strava',
+        payload: {title: 'settings.Strava'},
+        route: 'Strava',
+    },
+    {
         label: 'settings.Logout',
         payload: {},
         route: 'logout',
