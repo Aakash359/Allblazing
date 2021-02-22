@@ -1,20 +1,75 @@
-import { GET_NETWORK_INFO_REQUEST, GET_NETWORK_INFO_SUCCESS, GET_NETWORK_INFO_FAILED, UPDATE_LANGUAGE_REQUEST, UPDATE_LANGUAGE_SUCCESS, UPDATE_LANGUAGE_FAILED } from "../Types/Type";
-import { put, call, takeEvery } from 'redux-saga/effects';
-// import Api from '../../Services/Api';
-// ====================== NETWORK UPDATE ======================
+import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { LOGIN,
+  LOGOUT,
+  loginFailure,
+  loginRequested,
+  loginSuccess, } from '../actions/auth-action-types';
+import httpClient from './http-client';
 
-export const loginSaga = function* loginSaga({ params }) {
-    try {
-    const response = yield call(Api.signupApi, params)
-    yield put({ type: SIGNUP_SUCCESS, payload: response });
-    }
-    catch (e) {
-    console.log(e, 'error');
-    yield put({ type: SIGNUP_FAILED, payload: e });
-    }
-    }
+export function* login() {
+  yield put(loginRequested());
 
-export function* authSaga() {
-    
+  const {
+    error, result,
+  } = yield call(httpClient, {
+    data: {
+      email: '',
+      password: '',
+    },
+    method: 'post',
+    url: '/abc',
+  });
+
+  if (error) {
+    yield put(loginFailure(error));
+  } else {
+    yield put(loginSuccess(result));
+  }
 }
-export default authSaga;
+
+// export function* logout() {
+//   yield put(logoutRequested());
+
+//   const { error } = yield call(httpClient, {
+//     data: {
+//       email: '',
+//       password: '',
+//     },
+//     method: 'put',
+//     url: '/abc',
+//   });
+
+//   if (error) {
+//     yield put(logoutFailure(error));
+//   } else {
+//     yield put(logoutSuccess());
+//   }
+// }
+
+// export function* getMovies() {
+//   yield put(getMoviesRequested());
+//   const payload = {
+//     baseURL: 'https://facebook.github.io/react-native/',
+//     method: 'get',
+//     url: 'movies.json',
+//   };
+//   const {
+//     error, result,
+//   } = yield call(httpClient, payload, true, false);
+
+//   if (error) {
+//     yield put(getMoviesFailure(error));
+//   } else {
+//     yield put(getMoviesSuccess(result.movies));
+//   }
+// }
+
+function* Auth() {
+  yield all([
+    //takeLatest(GET_MOVIES, getMovies),
+    takeLatest(LOGIN, login),
+    //takeLatest(LOGOUT, logout),
+  ]);
+}
+
+export default Auth;

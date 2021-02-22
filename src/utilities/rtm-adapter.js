@@ -47,6 +47,7 @@ export default class RtmAdapter extends EventEmitter {
       uid: this.uid,
       token: config.token,
     });
+    this.client.sendMessageToPeer()
   }
 
    async logout(){

@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions';
+
 export const SET_LOGIN_DETAILS = 'SET_LOGIN_DETAILS';
 
 export const SET_INTRO_COMPLETE = 'SET_INTRO_COMPLETE'
@@ -25,6 +27,18 @@ export const SET_FOLLOW_ID = 'SET_FOLLOW_ID';
 
 export const SET_FEED_DETAILS = 'SET_FEED_DETAILS';
 export const SET_PROFILE_IMAGE = 'SET_PROFILE_IMAGE';
+
+export const LOGIN = 'LOGIN';
+export const login = createAction(LOGIN);
+
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const loginFailure = createAction(LOGIN_FAILURE);
+
+export const LOGIN_REQUESTED = 'LOGIN_REQUESTED';
+export const loginRequested = createAction(LOGIN_REQUESTED);
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const loginSuccess = createAction(LOGIN_SUCCESS);
 
 
 

@@ -1,12 +1,9 @@
 import { all, fork } from 'redux-saga/effects';
 import { networkSaga } from 'react-native-offline';
-import app from './app';
+import Auth from './authSaga';
 
 const sagas = function* sagas() {
-  yield all([
-    app(),
-    fork(networkSaga, { pingInterval: 20000 }),
-  ]);
+  yield all([fork(networkSaga, { pingInterval: 20000 }), Auth()]);
 };
 
 export default sagas;
