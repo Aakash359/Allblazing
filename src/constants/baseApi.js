@@ -39,6 +39,7 @@ const API = {
     PRIVACY_POLICY: `${BASE_URL}/static/privacy`,
     TERMS_CONDITIONS: `${BASE_URL}/static/term`,
     FAQ: `${BASE_URL}/faq`,
+    USER_POST_FEED: `${BASE_URL}/post/user_list`,
     // USERLIST : BASE_URL +
 }
 
