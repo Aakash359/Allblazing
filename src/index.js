@@ -11,7 +11,7 @@ import { Loader } from './components';
 import { applyMiddleware, createStore } from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
-
+import { firebase }  from '@react-native-firebase/app';
 const {
    persistor,
    store
@@ -32,6 +32,19 @@ class AllBlazing extends React.Component {
   }
 
   async componentDidMount() {
+    if (!firebase.apps.length) {
+       
+        firebase.initializeApp({
+          apiKey: "AIzaSyADwYfhbpfWVdz-aoa4VM5oCRQrmCW3Wmw",
+          authDomain: "testingapp-fc6e8.firebaseapp.com",
+          databaseURL: "https://testingapp-fc6e8-default-rtdb.firebaseio.com",
+          projectId: "testingapp-fc6e8",
+          storageBucket: "testingapp-fc6e8.appspot.com",
+          messagingSenderId: "454768514842",
+          appId: "1:454768514842:web:5e858a5ed1b2d523d3fea3",
+          measurementId: "G-6HF5W72G91"
+        });
+      }
     SplashScreen.hide();
   }
 
@@ -54,7 +67,7 @@ class AllBlazing extends React.Component {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          <PersistGate loading={<Loader visible={false} />} persistor={persistor}>
+          <PersistGate  persistor={persistor}>
             <Root />
           </PersistGate>
         </Provider>

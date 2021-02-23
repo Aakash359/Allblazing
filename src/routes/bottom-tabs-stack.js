@@ -34,9 +34,10 @@ const tabProps = {
 const Dummy = () => {
   return null;
 };
-const TabNavigator = () => {
+const TabNavigator = (props) => {
   const { t } = useTranslation();
-  const [visible,seVisible] = React.useState(false)
+  const [visible, seVisible] = React.useState(false)
+  console.log("PPORRSSSS", props.navigation);
   return (
     <Tab.Navigator {...tabProps} tabBar={(props) => <BottomTab {...props} />}>
       <Tab.Screen options={{ tabBarLabel: t('Home') }} name="Home" component={HomeNavigator} />

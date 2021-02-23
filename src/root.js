@@ -16,8 +16,9 @@ const Root = () => (
   <SafeAreaView style={styles.container}>
     <StatusBar barStyle="light-content" />
     <View style={styles.container}>
-      <NavigationContainer theme={DarkTheme}>
+      <NavigationContainer theme={DarkTheme} >
         <Loader />
+        
         <Routes />
       </NavigationContainer>
     </View>

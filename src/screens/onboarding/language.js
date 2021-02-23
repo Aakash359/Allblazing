@@ -13,8 +13,14 @@ import {
 } from '../../styles';
 import * as actions from '../../actions/app-action-types';
 import {getAuthToken} from '../../helpers/auth';
-
+import {setTopLevelNavigator} from '../../routes/navigation-service';
 class Language extends Component {
+
+componentDidMount() {
+    console.log("my navgation " ,this.props.navigation)
+    setTopLevelNavigator(this.props.navigation)
+  }
+
   onSelectLang = (code) => {
     const {setLanguage} = this.props;
 

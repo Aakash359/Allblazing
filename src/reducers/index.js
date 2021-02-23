@@ -8,7 +8,7 @@ import signUp from './baseServices/signUp';
 import profile from './baseServices/profile';
 
 const config = {
-  // blacklist: ['app', 'user', 'auth','signUp','profile'],
+ blacklist: ['auth','user'],
   key: 'root',
   storage: AsyncStorage,
 };

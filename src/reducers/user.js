@@ -27,7 +27,7 @@ export default function app(state = initialState, {
       return {
         ...state,
         isAuthorized: false,
-        loginStatus: 'logging',
+        loginStatus: 'requesting',
         userDetails: null,
       };
 

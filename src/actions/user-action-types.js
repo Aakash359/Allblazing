@@ -4,6 +4,9 @@ import { createAction } from 'redux-actions';
 export const LOGIN = 'LOGIN';
 export const login = createAction(LOGIN);
 
+
+export const SET_AUTH = 'SET_AUTH';
+export const setAuthenticationToken = createAction(SET_AUTH);
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const loginFailure = createAction(LOGIN_FAILURE);
 

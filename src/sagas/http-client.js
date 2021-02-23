@@ -1,15 +1,13 @@
 import { call, select, put, delay } from 'redux-saga/effects';
-import { ToastActionsCreators } from 'react-native-redux-toast';
-import Idx from 'idx';
 import { showLoader, hideLoader } from '../actions/app-action-types';
-import { logoutSuccess, setAuthenticationToken } from '../actions/user-actions-types';
+import { logoutSuccess, setAuthenticationToken } from '../actions/user-action-types';
 import axiosInstance from '../utilities/axios-instance';
-
-function* HttpClient(payload, isLoader = true, authorization = true) {
+function* HttpClient(payload, isLoader = false, authorization = false) {
+  console.log("DDAATTAAA" ,payload)
   const networkStatus = yield select(({ network: { isConnected } }) => isConnected);
-
+ 
   if (!networkStatus) {
-    yield put(ToastActionsCreators.displayInfo('Please make sure you\'re connected with internet.'));
+    alert('Please make sure you\'re connected with internet.');
 
     return {
       error: true,
@@ -24,6 +22,7 @@ function* HttpClient(payload, isLoader = true, authorization = true) {
   const data = { ...payload };
 
   if (authorization) {
+    alert("called")
     const authToken = yield select(({ user: { token } }) => token);
 
     if (authToken) {
@@ -41,14 +40,12 @@ function* HttpClient(payload, isLoader = true, authorization = true) {
   try {
     const {
       data: result,
-      headers: { 'x-authorization': authentication = '' },
+      // headers: { 'Authorization': authentication = '' },
     } = yield call(axiosInstance, data);
-
+console.log("axoid repsonese ", result)
     yield put(hideLoader());
 
-    if (authentication) {
-      yield put(setAuthenticationToken(authentication));
-    }
+    
 
     return {
       error: null,
@@ -56,19 +53,19 @@ function* HttpClient(payload, isLoader = true, authorization = true) {
     };
   } catch (error) {
     yield put(hideLoader());
-    if (Idx(error, (_) => _.code)) {
+    
       if (error.code === 'ECONNABORTED') {
         const message = 'Please make sure you\'re connected with internet or our servers are not responding.';
 
-        yield put(ToastActionsCreators.displayInfo(message));
+     
       } else if (error.code === 401) {
         yield delay(250);
         yield put(logoutSuccess());
-        yield put(ToastActionsCreators.displayInfo(error.message));
+       
       } else {
-        yield put(ToastActionsCreators.displayInfo(error.message));
+        
       }
-    }
+    
 
     console.log('err----> ', error);
 

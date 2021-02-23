@@ -5,25 +5,26 @@ import { LOGIN,
   loginRequested,
   loginSuccess, } from '../actions/auth-action-types';
 import httpClient from './http-client';
-
-export function* login() {
+import { navigate } from '../routes/navigation-service';
+export function* login(data) {
   yield put(loginRequested());
 
   const {
     error, result,
   } = yield call(httpClient, {
-    data: {
-      email: '',
-      password: '',
-    },
+    data:data.payload,
     method: 'post',
-    url: '/abc',
-  });
+    url: '/login',
+  },
+  );
 
-  if (error) {
+    if (error) {
+      console.log("Eooorrrrrr",error,result)
     yield put(loginFailure(error));
-  } else {
-    yield put(loginSuccess(result));
+    } else {
+      yield put(loginSuccess(result.data));
+    setTimeout(()=>navigate('Dashboard'),3000)
+    
   }
 }
 
@@ -68,7 +69,7 @@ function* Auth() {
   yield all([
     //takeLatest(GET_MOVIES, getMovies),
     takeLatest(LOGIN, login),
-    //takeLatest(LOGOUT, logout),
+  
   ]);
 }
 

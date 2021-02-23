@@ -1,4 +1,4 @@
-import {REMOVE_AUTH_TOKEN, SET_INTRO_COMPLETE, SET_LOGIN_DETAILS} from '../../actions/auth-action-types';
+import {REMOVE_AUTH_TOKEN, SET_INTRO_COMPLETE, SET_LOGIN_DETAILS ,LOGIN_REQUESTED} from '../../actions/auth-action-types';
 
 const initialState = {
   token:'',
@@ -14,6 +14,11 @@ const initialState = {
 
 export default function auth(state = initialState, {payload, type}) {
   switch (type) {
+     case LOGIN_REQUESTED:
+      return {
+        ...state,
+        
+      };
     case SET_LOGIN_DETAILS:
       return {
         ...state,

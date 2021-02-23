@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		18EF3E9F25E3B1D3008FF877 /* Void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF3E9E25E3B1D3008FF877 /* Void.swift */; };
 		26A658B06ADE05A49963CC5D /* libPods-RunFast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 125183D6B59243C575B7FB5B /* libPods-RunFast.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -90,6 +91,8 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RunFast/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RunFast/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RunFast/main.m; sourceTree = "<group>"; };
+		18EF3E9D25E3B1D2008FF877 /* RunFast-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RunFast-Bridging-Header.h"; sourceTree = "<group>"; };
+		18EF3E9E25E3B1D3008FF877 /* Void.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Void.swift; sourceTree = "<group>"; };
 		2B0078AA2ACF49D0A68C0601 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* RunFast-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RunFast-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* RunFast-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RunFast-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +196,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				18EF3E9E25E3B1D3008FF877 /* Void.swift */,
+				18EF3E9D25E3B1D2008FF877 /* RunFast-Bridging-Header.h */,
 			);
 			name = RunFast;
 			sourceTree = "<group>";
@@ -391,7 +396,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = NLL6BQRKK3;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1200;
 						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -842,6 +847,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				18EF3E9F25E3B1D3008FF877 /* Void.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,6 +888,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C98471598C57391BB27271D5 /* Pods-RunFast-RunFastTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -905,6 +912,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0FB806BFF4BAD01F5757F163 /* Pods-RunFast-RunFastTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = RunFastTests/Info.plist;
@@ -942,6 +950,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.quytech.RunFast;
 				PRODUCT_NAME = RunFast;
 				PROVISIONING_PROFILE_SPECIFIER = "RunFast Distribution";
+				SWIFT_OBJC_BRIDGING_HEADER = "RunFast-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -968,6 +977,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.quytech.RunFast;
 				PRODUCT_NAME = RunFast;
 				PROVISIONING_PROFILE_SPECIFIER = "RunFast Distribution";
+				SWIFT_OBJC_BRIDGING_HEADER = "RunFast-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

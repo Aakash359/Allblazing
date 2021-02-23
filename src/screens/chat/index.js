@@ -4,26 +4,49 @@ import { bool, func, shape } from 'prop-types';
 import { HomeStyles } from '../../styles';
 import { ChatFriends } from '../../components';
 import Constants from '../../constants';
-
+import firestore from '@react-native-firebase/firestore'
 class Chats extends React.Component {
   constructor() {
     super();
-    this.state = { activeTab: '0' };
+    this.state = { activeTab: '0' ,threds:[] };
   }
 
-  renderItem = () => {
+  renderItem = ({ item }) => {
     const {
       route: { params }, navigation: { navigate },
     } = this.props;
     const { activeTab } = this.state;
 
-    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} />;
+    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} data = {item} />;
   }
 
   onTabPress = (val) => {
     this.setState({ activeTab: val });
   }
 
+  componentDidMount() {
+    this.unsubscribe = firestore()
+      .collection('101_103')
+      .onSnapshot(querySnapshot => {
+        const threads = querySnapshot.docs.map(documentSnapshot => {
+          console.log("myQuerySnapShot", documentSnapshot)
+          return {
+            _id: documentSnapshot.id,
+            name: documentSnapshot.data.name,
+            latestMessage: { text: '' },
+            ...documentSnapshot.data()
+          }
+        })
+        console.log("Threads " , threads)
+         this.setState({threds: threads})
+      })
+   
+      }
+
+  componentWillUnmount() {
+    
+  }
+  
   renderHeader = () => {
     const { activeTab } = this.state;
 
@@ -52,7 +75,7 @@ class Chats extends React.Component {
           navigate, route: 'Events', title: 'Events',
         })}
         <FlatList
-          data={[1, 2, 3, 4, 5]}
+          data={this.state.threds}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
         />

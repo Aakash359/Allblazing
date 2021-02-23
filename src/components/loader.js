@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.Colors.TRANSPARENT,
     flex: 1,
     justifyContent: 'center',
+    
   },
   horizontal: {
     flexDirection: 'row',

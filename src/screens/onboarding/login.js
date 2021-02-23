@@ -58,10 +58,10 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      emailId: '',
+      emailId: 'abcd@yopmail.com',
       isRemember: true,
       isShow: false,
-      password: '',
+      password: 'tarun123',
       isLoading: false,
     };
   }
@@ -78,10 +78,6 @@ class Login extends Component {
     }
     
   }
-
-
-
-  
   getLocation = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -106,7 +102,7 @@ class Login extends Component {
 
 
   componentDidMount() {
-    this.getLastUserCred()
+    // this.getLastUserCred()
     if(Platform.OS === 'ios') {
 
       Geolocation.requestAuthorization()
@@ -121,14 +117,19 @@ class Login extends Component {
     }
   }
 
+  componentDidUpdate(prevProps ,nextProps) {
+    console.log("LOGINNNNNNN", nextProps)
+    // if(prevProps.changedProp !== this.props.changedProp){
+    //     this.setState({          
+    //         changedProp: this.props.changedProp
+    //     });
+    // }
+}
+
+
+
   onLogin = async () => {
-    // console.log('dsgbdfghhg');
-    
-    const {loginSuccess, addLoginDetail} = this.props;
-    const {
-      navigation: {goBack, navigate},
-    } = this.props;
-    // navigate('Overview');
+   
     const {emailId, password} = this.state;
     if (emailId.length < 1) {
       Alert.alert(
@@ -148,54 +149,59 @@ class Login extends Component {
       );
       return;
     }
-    this.setState({
-      isLoading: true,
-    });
-    axios
-      .post(API.LOG_IN, {
+    // this.setState({
+    //   isLoading: true,
+    // });
+let data = {
         email: emailId,
         password: password,
-      })
-      .then(async (response) => {
-        if (response?.data?.code === 401) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
+      }
+    this.props.login(data)
+    // axios
+    //   .post(API.LOG_IN, {
+    //     email: emailId,
+    //     password: password,
+    //   })
+    //   .then(async (response) => {
+    //     if (response?.data?.code === 401) {
+    //       Alert.alert(
+    //         '',
+    //         response?.data?.message ?? '',
             
-          );
-        }
-        if (response?.data?.code === 200) {
-          console.log("=======>>>responselogin",response?.data?.data);
-          setAuthToken(response?.data?.data?.token);
-          addLoginDetail(response?.data?.data);
-          setLoginUserId(JSON.stringify(response?.data?.data));
-          if(this.state.isRemember) {
-            try {
-              await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
-              console.log('CRED SAVED', JSON.stringify({email: emailId, password}));
-            } catch (error) {
-              console.log("CRED NOT SAVED", error.message);
-            }
-        }
-        else {
-          console.log('remember is false');
-          await AsyncStorage.removeItem('userCred')
+    //       );
+    //     }
+    //     if (response?.data?.code === 200) {
+    //       console.log("=======>>>responselogin",response?.data?.data);
+    //       setAuthToken(response?.data?.data?.token);
+    //       addLoginDetail(response?.data?.data);
+    //       setLoginUserId(JSON.stringify(response?.data?.data));
+    //       if(this.state.isRemember) {
+    //         try {
+    //           await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
+    //           console.log('CRED SAVED', JSON.stringify({email: emailId, password}));
+    //         } catch (error) {
+    //           console.log("CRED NOT SAVED", error.message);
+    //         }
+    //     }
+    //     else {
+    //       console.log('remember is false');
+    //       await AsyncStorage.removeItem('userCred')
           
-        }
-          loginSuccess();
-          if(response?.data?.data?.completeProfile) {
-            navigate('Overview');
+    //     }
+    //       loginSuccess();
+    //       if(response?.data?.data?.completeProfile) {
+    //         navigate('Overview');
 
-          }else {
-            navigate('Username')
-          }
-        }
-      })
-      .finally(() => {
-        this.setState({
-          isLoading: false,
-        });
-      });
+    //       }else {
+    //         navigate('Username')
+    //       }
+    //     }
+    //   })
+    //   .finally(() => {
+    //     this.setState({
+    //       isLoading: false,
+    //     });
+    //   });
   };
 
   render() {
@@ -204,7 +210,9 @@ class Login extends Component {
       navigation: {navigate},
       t: translate,
       email,
+     loginStatus
     } = this.props;
+    console.log("LOGINNNNNNN",  loginStatus)
 
     return (
       <View style={CommonStyles.container}>
@@ -295,12 +303,12 @@ class Login extends Component {
               </View>
 
               <TouchableOpacity
-                disabled={isLoading}
+                disabled={loginStatus ==='requesting'}
                 style={[AuthStyle.loginTouchable, LoginStyles.loginBtn]}
                 activeOpacity={0.7}
                 onPress={this.onLogin}
                 >
-                {isLoading ? (
+                {loginStatus ==='requesting'? (
                   <ActivityIndicator size="small" color="white" />
                 ) : (
                   <Text
@@ -367,13 +375,14 @@ Login.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = ({auth: {email}}) => ({
-  email,
+const mapStateToProps = ({auth: {email,status,data,code},user:{loginStatus}}) => ({
+  email,status,data ,code ,loginStatus
 });
 
 const mapDispatchToProps = {
   addLoginDetail: (params) => setLoginDetails(params),
   loginSuccess: actions.loginSuccess,
+  login: actions.login,
 };
 
 export default connect(
