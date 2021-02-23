@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList} from 'react-native'
+import {View, FlatList, Text} from 'react-native'
 import {bool, func, shape} from 'prop-types'
 import {HomeStyles, EventMapStyles, MapViewStyles} from '../../styles'
 import {SingleEvent} from '../../components'
@@ -10,12 +10,21 @@ import {PermissionsAndroid} from 'react-native'
 import Permissions, {PERMISSIONS, request} from 'react-native-permissions'
 import {getAuthToken} from '../../helpers/auth'
 import Axios from 'axios'
+import {ActivityIndicator} from 'react-native'
+import {Colors} from '../../constants'
 
 class Events extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {visible: false, location: {}}
+        this.state = {
+            visible: false,
+            location: {},
+            events: [],
+            isLoading: true,
+            error: false,
+            msg: '',
+        }
     }
 
     onEventPress = () => {
@@ -26,7 +35,9 @@ class Events extends React.Component {
         navigate('SingleEventDetail')
     }
 
-    renderItem = () => <SingleEvent onPress={this.onEventPress} />
+    renderItem = ({item}) => (
+        <SingleEvent onPress={this.onEventPress} event={item} />
+    )
 
     onMarkerPress = () => {
         this.setState({visible: true})
@@ -60,7 +71,6 @@ class Events extends React.Component {
             const permissionStatus = await Permissions.check(
                 PERMISSIONS.IOS.LOCATION_ALWAYS
             )
-            console.log('ISO LOCATION', permissionStatus)
             request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {
                 console.log('PERMISSIN ASK IOS', res)
             })
@@ -76,7 +86,6 @@ class Events extends React.Component {
             )
 
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('LOCATION ACCESS')
                 this.getGeoLocation(submit)
             } else {
                 Alert.alert(
@@ -105,17 +114,19 @@ class Events extends React.Component {
                     ],
                     {cancelable: false}
                 )
-                console.log('Location permission not granted!!!!')
             }
         }
     }
 
     getEvents = async () => {
         const token = await getAuthToken()
+        const {
+            location: {latitude, longitude},
+        } = this.state
         const url = API.EVENT
         const config = {
             headers: {
-                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC93d3cucXV5dGVjaC5uZXRcL3J1bmZhc3Qtc2Z0cFwvUnVuRmFzdFwvcHVibGljXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjEzNDY0NTUwLCJleHAiOjE2NDUwMDA1NTAsIm5iZiI6MTYxMzQ2NDU1MCwianRpIjoiUHhDMUZVY0VuZWpOb2xnRiIsInN1YiI6MTQ3LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Kgfx3uLYyhNRD4fyQBeMnXk9VzrRoOMTlh6_XdqIxRU`,
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 latitude,
@@ -123,31 +134,46 @@ class Events extends React.Component {
                 radius: '20',
             }),
         }
-        const {
-            location: {latitude, longitude},
-        } = this.state
-        const data = {
-            latitude,
-            longitude,
-            radius: '20',
-        }
-        console.log('CONFIG EVENTS', config)
 
         try {
             const res = await Axios.get(url, config)
-            console.log('EVENTS', res)
+            if (res?.data?.code == 200) {
+                if (res?.data?.status) {
+                    if (res?.data?.data?.result?.length) {
+                        this.setState({
+                            events: res?.data?.data?.result,
+                            isLoading: false,
+                            error: false,
+                        })
+                    }
+                } else {
+                    this.setState({
+                        isLoading: false,
+                        error: true,
+                        msg: res?.data?.message,
+                    })
+                }
+            }
         } catch (error) {
-            console.log('EVENTS ERROR', error)
+            this.setState({isLoading: false, error: true, msg: error?.message})
         }
     }
 
     componentDidMount() {
         this.getLocation()
+
+        this.unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.getLocation()
+        })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
     }
 
     render() {
         const {params} = this.props
-        const {visible} = this.state
+        const {visible, isLoading, events, error, msg} = this.state
 
         return (
             <View style={HomeStyles.container}>
@@ -159,11 +185,31 @@ class Events extends React.Component {
                     />
                 ) : (
                     <>
-                        <FlatList
-                            data={[1, 2, 3, 4, 5]}
-                            renderItem={this.renderItem}
-                            keyExtractor={(item, index) => `${index}`}
-                        />
+                        {isLoading ? (
+                            <ActivityIndicator
+                                size="small"
+                                color={Colors.WHITE}
+                            />
+                        ) : error ? (
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{color: Colors.WHITE}}>{msg}</Text>
+                            </View>
+                        ) : (
+                            <FlatList
+                                data={this.state.events}
+                                renderItem={this.renderItem}
+                                keyExtractor={(item, index) => `${index}`}
+                                ListEmptyComponent={() => {
+                                    return (
+                                        <View style={{alignItems: 'center'}}>
+                                            <Text style={{color: Colors.WHITE}}>
+                                                Don't have any events near you
+                                            </Text>
+                                        </View>
+                                    )
+                                }}
+                            />
+                        )}
                         <View style={HomeStyles.spacing} />
                     </>
                 )}

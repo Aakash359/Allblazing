@@ -318,45 +318,51 @@ class AddMember extends Component {
         }
     }
 
-    renderItem = ({item}) => (
-        <TouchableOpacity
-            activeOpacity={0.7}
-            // onPress={() => this.setState({ischecked: !this.state.ischecked})}
-            onPress={() => this.OnPress(item)}
-            style={AddMemberStyles.container}>
-            <View style={[AddMemberStyles.userWrapper]}>
-                <View
-                    style={{
-                        backgroundColor: Colors.LIGHT_RED,
-                        borderRadius: 10,
-                    }}>
-                    <Image
-                        source={{
-                            uri: item.image,
-                        }}
-                        style={AddMemberStyles.userImage}
-                    />
+    renderItem = ({item}) => {
+        const image = item?.image
+            ? item?.image === 'N/A'
+                ? Constants.Images.tabBarProfile
+                : {uri: item?.image}
+            : Constants.Images.tabBarProfile
+        return (
+            <TouchableOpacity
+                activeOpacity={0.7}
+                // onPress={() => this.setState({ischecked: !this.state.ischecked})}
+                onPress={() => this.OnPress(item)}
+                style={AddMemberStyles.container}>
+                <View style={[AddMemberStyles.userWrapper]}>
+                    <View
+                        style={{
+                            backgroundColor: Colors.LIGHT_RED,
+                            borderRadius: 10,
+                        }}>
+                        <Image
+                            source={image}
+                            style={AddMemberStyles.userImage}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <View>
+                        <Text style={AddMemberStyles.username}>
+                            {item.full_name}
+                        </Text>
+                        <Text style={AddMemberStyles.location}>
+                            Santee, United States
+                        </Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={AddMemberStyles.username}>
-                        {item.full_name}
-                    </Text>
-                    <Text style={AddMemberStyles.location}>
-                        Santee, United States
-                    </Text>
-                </View>
-            </View>
-            <Image
-                source={
-                    this.state.arrSelectedUsers.includes(item.user_id)
-                        ? Constants.Images.checkbox
-                        : Constants.Images.checkoff
-                }
-                resizeMode="contain"
-                style={AddMemberStyles.icon}
-            />
-        </TouchableOpacity>
-    )
+                <Image
+                    source={
+                        this.state.arrSelectedUsers.includes(item.user_id)
+                            ? Constants.Images.checkbox
+                            : Constants.Images.checkoff
+                    }
+                    resizeMode="contain"
+                    style={AddMemberStyles.icon}
+                />
+            </TouchableOpacity>
+        )
+    }
 
     render() {
         // const {nam} = this.state;

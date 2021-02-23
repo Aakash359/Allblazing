@@ -38,9 +38,6 @@ class FeedScreen extends Component {
             t: translate,
         } = this.props
     }
-    // componentDidMount() {
-    //   this.FeedList();
-    // }
 
     componentDidMount() {
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -52,13 +49,6 @@ class FeedScreen extends Component {
         this.unsubscribe()
     }
 
-    // componentDidUpdate(prevProps) {
-    //   console.log("I'M ON FEED SCREEN",this.props.isFocused);
-    //   if(prevProps !== this.props && this.props.isFocused) {
-    //     this.FeedList()
-    //   }
-    // }
-
     UserPostList = async () => {
         const {addFeedDetails, user_id} = this.props
         const token = await getAuthToken()
@@ -66,22 +56,15 @@ class FeedScreen extends Component {
             headers: {Authorization: `Bearer ${token}`},
             params: {id: user_id},
         }
-        // console.log('token===>', config);
         this.setState({
             isLoadingUserPost: true,
         })
-        Axios.get(API.USER_POST_FEED, config)
+        Axios.post(API.USER_POST_FEED, {}, config)
             .then((response) => {
-                console.log('response ====', response)
-                if (response.data.data.result) {
-                    console.log(
-                        '===>response FEED USER LIST',
-                        response.data.data.result
-                    )
+                if (response?.data?.data?.result) {
                     this.setState({
                         userPostList: response?.data?.data?.result || [],
                     })
-                    // addFeedDetails(response?.data?.data?.result)
                 }
             })
             .finally(() => {
@@ -98,15 +81,12 @@ class FeedScreen extends Component {
             headers: {Authorization: `Bearer ${token}`},
             params: {id: user_id},
         }
-        // console.log('token===>', config);
         this.setState({
             isLoading: true,
         })
         Axios.get(API.POST_LIST, config)
             .then((response) => {
-                console.log('response ====', response)
                 if (response.data.data.result) {
-                    console.log('===>response', response.data.data.result)
                     this.setState({list: response?.data?.data?.result})
                     addFeedDetails(response?.data?.data?.result)
                 }
@@ -119,12 +99,9 @@ class FeedScreen extends Component {
     }
     _Like = async (item) => {
         const token = await getAuthToken()
-        console.log('==>', item.id)
-        console.log('tokens==>', token)
         const config = {
             headers: {Authorization: `Bearer ${token}`},
         }
-        // console.log(config);
         let newList = this.state.list.map((el) =>
             el.id === item.id
                 ? {
@@ -146,9 +123,7 @@ class FeedScreen extends Component {
             },
             config
         )
-            .then((response) => {
-                console.log('data===>', response.data)
-            })
+            .then((response) => {})
             .finally(() => {})
     }
 
@@ -237,28 +212,63 @@ class FeedScreen extends Component {
         )
     }
 
-    filterData = ({item}) => (
-        <TouchableOpacity
-            activeOpacity={0.7}
-            style={[
-                FeedStyles.optionalSectionView,
-                {
-                    borderWidth: 1,
-                    borderColor: Colors.LIGHT_RED,
-                    borderRadius: 23,
-                    marginRight: 10,
-                },
-            ]}
-            onPress={() => {
-                this.props.navigation.navigate('LiveFeed')
-            }}>
-            <Image
-                source={{uri: item.post}}
-                style={[FeedStyles.userImage, {marginRight: 0}]}
-                resizeMode="cover"
-            />
-        </TouchableOpacity>
-    )
+    filterData = ({item}) => {
+        const pic =
+            item?.autherImage === 'N/A'
+                ? Constants.Images.tabBarProfile
+                : {uri: item?.autherImage}
+        const colors = [
+            Colors.LIGHT_RED,
+            Colors.LIGHT_YELLOW,
+            Colors.LIGHT_GREEN,
+            Colors.LIGHT_BLUE,
+        ]
+        const color = colors[Math.floor(Math.random() * colors.length)]
+        const images = Constants.Images.feedUser
+        let selectedIcon = item?.live
+            ? 'live'
+            : item?.runners_type === 'runner'
+            ? 'rocket'
+            : 'bicep'
+        return (
+            <TouchableOpacity
+                activeOpacity={0.7}
+                style={[
+                    FeedStyles.optionalSectionView,
+                    {
+                        borderWidth: 2,
+                        borderColor: color,
+                        borderRadius: 24,
+                        marginRight: 10,
+                    },
+                ]}
+                onPress={() => {
+                    this.props.navigation.navigate('LiveFeed')
+                }}>
+                <Image
+                    source={pic}
+                    style={[FeedStyles.userImage, {marginRight: 0}]}
+                    resizeMode="cover"
+                />
+                <Image
+                    source={images[selectedIcon]}
+                    style={{
+                        width: 25,
+                        height: 15,
+                        position: 'absolute',
+                        bottom: -2,
+                        right:
+                            selectedIcon === 'rocket'
+                                ? -5
+                                : selectedIcon === 'live'
+                                ? -10
+                                : -2,
+                    }}
+                    resizeMode="contain"
+                />
+            </TouchableOpacity>
+        )
+    }
 
     ListEmptyComponent = () => {
         return (
@@ -316,10 +326,9 @@ class FeedScreen extends Component {
                                 }}
                             />
                             <FlatList
-                                // style={MyProfileStyles.sectionMainView}
                                 scrollEnabled={false}
                                 contentContainerStyle={FollowersStyles.flatList}
-                                data={this.state.list.reverse()}
+                                data={this.state.list}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `2-${index}`}
                                 ListEmptyComponent={this.ListEmptyComponent}

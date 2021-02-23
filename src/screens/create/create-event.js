@@ -1,237 +1,271 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {CreateEventStyles} from '../../styles';
-import Constants from '../../constants';
-import {func, shape} from 'prop-types';
-import {connect} from 'react-redux';
-import ImagePicker from 'react-native-image-crop-picker';
-import {withTranslation} from 'react-i18next';
-import {Alert} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Colors from '../../constants/colors';
+    View,
+    Image,
+    Text,
+    TouchableOpacity,
+    TextInput,
+    FlatList,
+    ScrollView,
+    SafeAreaView,
+} from 'react-native'
+import {useNavigation} from '@react-navigation/native'
+import {CreateEventStyles} from '../../styles'
+import Constants from '../../constants'
+import {func, shape} from 'prop-types'
+import {connect} from 'react-redux'
+import ImagePicker from 'react-native-image-crop-picker'
+import {withTranslation} from 'react-i18next'
+import {Alert} from 'react-native'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import Colors from '../../constants/colors'
 import DatePickerAI from '../../components/popups/date-picker'
-import { DatePicker } from 'react-native-wheel-picker-android';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {DatePicker} from 'react-native-wheel-picker-android'
+import RNDateTimePicker from '@react-native-community/datetimepicker'
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
 import moment from 'moment'
-import { Platform } from 'react-native';
+import {Platform} from 'react-native'
 class CreateEvent extends Component {
-  constructor(props) {
-    super(props);
-    this.actionSheetRef = React.createRef();
-    this.state = {
-      photo: '',
-      name: '',
-      address1: '',
-      address2: '',
-      date: '',
-      description: '',
-      time: '',
-      isLoading: false,
-      isEnabled: false,
-      EventTypeSelectedId: 2,
-      EventCategorySelectedId: 4,
-      eventType: [
-        {
-          id: 0,
-          name: 'Individual',
-        },
-        {
-          id: 1,
-          name: 'Group',
-        },
-      ],
-      Category: [
-        {
-          id: 0,
-          name: 'Train',
-        },
-        {
-          id: 1,
-          name: 'Race',
-        },
-        {
-          id: 2,
-          name: 'Coach',
-        },
-        {
-          id: 3,
-          name: 'Club',
-        },
-      ],
-      tempDateTime: new Date(),
-      showDate: false,
-      tempDate: new Date(),
-      showTime: false
-    };
-  }
-
-  NameStore = () => {
-    if (this.state.photo === '') {
-      Alert.alert('', 'Please select image', '');
-    } else if (this.state.data > 0) {
-      Alert.alert('', 'Please select event type', '');
-    } else if (this.state.Category > 0) {
-      Alert.alert('', 'Please select event category', '');
-    } else if (this.state.name === '') {
-      Alert.alert('', 'Please enter full name', '');
-    } else if (this.state.date === '') {
-      Alert.alert('', 'Please enter date', '');
-    } else if (this.state.description === '') {
-      Alert.alert('', 'Please enter description', '');
-    } else {
-      this.props.navigation.navigate('AddMember', {
-        iseventPage: true,
-        name: this.state.name,
-        photo: this.state.photo,
-        isEnabled: this.state.isEnabled,
-        eventType: this.state.eventType?.[this.state.EventTypeSelectedId]?.name,
-        Category: 1 || this.state.Category?.[this.state.EventCategorySelectedId]?.id.toString(),
-        address1: this.state.address1,
-        address2: this.state.address2,
-        time: this.state.time,
-        date: this.state.tempDateTime,
-        tempDate: this.state.tempDate,
-        description: this.state.description,
-        imageDetails: this.state.imagedetails
-      });
+    constructor(props) {
+        super(props)
+        this.actionSheetRef = React.createRef()
+        this.state = {
+            photo: '',
+            name: '',
+            address1: '',
+            address2: '',
+            date: '',
+            description: '',
+            time: '',
+            isLoading: false,
+            isEnabled: false,
+            EventTypeSelectedId: 2,
+            EventCategorySelectedId: 4,
+            eventType: [
+                {
+                    id: 0,
+                    name: 'Individual',
+                },
+                {
+                    id: 1,
+                    name: 'Group',
+                },
+            ],
+            Category: [
+                {
+                    id: 0,
+                    name: 'Train',
+                },
+                {
+                    id: 1,
+                    name: 'Race',
+                },
+                {
+                    id: 2,
+                    name: 'Coach',
+                },
+                {
+                    id: 3,
+                    name: 'Club',
+                },
+            ],
+            tempDateTime: new Date(),
+            showDate: false,
+            tempDate: new Date(),
+            showTime: false,
+        }
     }
-  };
-  choosePhotosFromGallery = (index) => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: false,
-      includeBase64: true,
-    })
-    .then((photo) => {
-      // console.log('image details ', photo);
-      const {mime, filename, data, path} = photo;
-      const uri = `data:${mime};base64,${data}`;
-      this.setState(() => {
-        return {photo: photo.path, imagedetails: photo};
-      });
-      // console.log(photo.path);
-    });
-  };
-  handleBtn = (Btn) => {
-    this.setState({EventTypeSelectedId: Btn});
-  };
-  
-  renderItem = ({item, option}) => (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={[
-        CreateEventStyles.halfView,
-        {
-          backgroundColor:
-            this.state.EventTypeSelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
-        },
-      ]}
-      onPress={() => this.handleBtn(item.id)}>
-      <Text style={[CreateEventStyles.groupName]}>{item.name}</Text>
-    </TouchableOpacity>
-  );
-  handleBtns = (Btn) => {
-    this.setState({EventCategorySelectedId: Btn});
-  };
-  renderItems = ({item, option}) => (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={[
-        CreateEventStyles.halfView,
-        {
-          backgroundColor:
-            this.state.EventCategorySelectedId == item.id ? Colors.LIGHT_BLUE : '#292929',
-        },
-      ]}
-      onPress={() => this.handleBtns(item.id)}>
-      <Text style={[CreateEventStyles.groupName]}>{item.name}</Text>
-    </TouchableOpacity>
-  );
 
-  onChangeDate = (e,date) => {
-    this.setState({date: date ? `${moment(date).format('dddd, Do MMM, YYYY')}`  : this.state.date, tempDateTime: date || this.state.tempDateTime, showDate: Platform.OS === 'ios' ? this.state.showDate: !this.state.showDate})
-  }
-    onChangeTime = (e,time) => {
-      this.setState({time: time ? `${ moment(time).format('LT')}` : this.state.time, tempDate: time || this.state.tempDate, showTime: Platform.OS === 'ios' ? this.state.showTime : !this.state.showTime})
-  }
+    NameStore = () => {
+        if (this.state.photo === '') {
+            Alert.alert('', 'Please select image', '')
+        } else if (this.state.data > 0) {
+            Alert.alert('', 'Please select event type', '')
+        } else if (this.state.Category > 0) {
+            Alert.alert('', 'Please select event category', '')
+        } else if (this.state.name === '') {
+            Alert.alert('', 'Please enter full name', '')
+        } else if (this.state.date === '') {
+            Alert.alert('', 'Please enter date', '')
+        } else if (this.state.description === '') {
+            Alert.alert('', 'Please enter description', '')
+        } else {
+            this.props.navigation.navigate('AddMember', {
+                iseventPage: true,
+                name: this.state.name,
+                photo: this.state.photo,
+                isEnabled: this.state.isEnabled,
+                eventType: this.state.eventType?.[
+                    this.state.EventTypeSelectedId
+                ]?.name,
+                Category:
+                    1 ||
+                    this.state.Category?.[
+                        this.state.EventCategorySelectedId
+                    ]?.id.toString(),
+                address1: this.state.address1,
+                address2: this.state.address2,
+                time: this.state.time,
+                date: this.state.tempDateTime,
+                tempDate: this.state.tempDate,
+                description: this.state.description,
+                imageDetails: this.state.imagedetails,
+            })
+        }
+    }
+    choosePhotosFromGallery = (index) => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: false,
+            includeBase64: true,
+        }).then((photo) => {
+            // console.log('image details ', photo);
+            const {mime, filename, data, path} = photo
+            const uri = `data:${mime};base64,${data}`
+            this.setState(() => {
+                return {photo: photo.path, imagedetails: photo}
+            })
+            // console.log(photo.path);
+        })
+    }
+    handleBtn = (Btn) => {
+        this.setState({EventTypeSelectedId: Btn})
+    }
 
+    renderItem = ({item, option}) => (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+                CreateEventStyles.halfView,
+                {
+                    backgroundColor:
+                        this.state.EventTypeSelectedId == item.id
+                            ? Colors.LIGHT_BLUE
+                            : '#292929',
+                },
+            ]}
+            onPress={() => this.handleBtn(item.id)}>
+            <Text style={[CreateEventStyles.groupName]}>{item.name}</Text>
+        </TouchableOpacity>
+    )
+    handleBtns = (Btn) => {
+        this.setState({EventCategorySelectedId: Btn})
+    }
+    renderItems = ({item, option}) => (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+                CreateEventStyles.halfView,
+                {
+                    backgroundColor:
+                        this.state.EventCategorySelectedId == item.id
+                            ? Colors.LIGHT_BLUE
+                            : '#292929',
+                },
+            ]}
+            onPress={() => this.handleBtns(item.id)}>
+            <Text style={[CreateEventStyles.groupName]}>{item.name}</Text>
+        </TouchableOpacity>
+    )
 
-  render() {
-    const {
-      name,
-      photo,
-      date,
-      time,
-      address1,
-      address2,
-      description,
-      isEnabled,
-      isLoading,
-    } = this.state;
-    const {
-      navigation: {goBack, navigate},
-      route: {params},
-      t: translate,
-    } = this.props;
+    onChangeDate = (e, date) => {
+        this.setState({
+            date: date
+                ? `${moment(date).format('dddd, Do MMM, YYYY')}`
+                : this.state.date,
+            tempDateTime: date || this.state.tempDateTime,
+            showDate:
+                Platform.OS === 'ios'
+                    ? this.state.showDate
+                    : !this.state.showDate,
+        })
+    }
+    onChangeTime = (e, time) => {
+        this.setState({
+            time: time ? `${moment(time).format('LT')}` : this.state.time,
+            tempDate: time || this.state.tempDate,
+            showTime:
+                Platform.OS === 'ios'
+                    ? this.state.showTime
+                    : !this.state.showTime,
+        })
+    }
 
-    
-    return (
-      <SafeAreaView style={CreateEventStyles.container}>
-        <ScrollView style={CreateEventStyles.innerContainer}>
-          <View style={CreateEventStyles.imageView}>
-            <TouchableOpacity onPress={() => this.choosePhotosFromGallery()}>
-              {photo == '' ? (
-                <Image
-                  source={Constants.Images.imageIcon}
-                  style={CreateEventStyles.imageIcon}
-                />
-              ) : (
-                <Image
-                  source={{uri: photo}}
-                  style={{borderRadius: 16, height: '100%', width: '100%'}}
-                />
-              )}
-            </TouchableOpacity>
+    render() {
+        const {
+            name,
+            photo,
+            date,
+            time,
+            address1,
+            address2,
+            description,
+            isEnabled,
+            isLoading,
+        } = this.state
+        const {
+            navigation: {goBack, navigate},
+            route: {params},
+            t: translate,
+        } = this.props
 
-            {photo == '' ? (
-              <Text style={CreateEventStyles.imageText}>Add event image</Text>
-            ) : null}
-          </View>
-          <View style={CreateEventStyles.liveEventView}>
-            <Text style={CreateEventStyles.groupType}>Live Event</Text>
+        return (
+            <SafeAreaView style={CreateEventStyles.container}>
+                <ScrollView style={CreateEventStyles.innerContainer}>
+                    <View style={CreateEventStyles.imageView}>
+                        <TouchableOpacity
+                            onPress={() => this.choosePhotosFromGallery()}>
+                            {photo == '' ? (
+                                <Image
+                                    source={Constants.Images.imageIcon}
+                                    style={CreateEventStyles.imageIcon}
+                                />
+                            ) : (
+                                <Image
+                                    source={{uri: photo}}
+                                    style={{
+                                        borderRadius: 16,
+                                        height: '100%',
+                                        width: '100%',
+                                    }}
+                                />
+                            )}
+                        </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => this.setState({isEnabled: !isEnabled})}>
-              <Image
-                source={
-                  isEnabled
-                    ? Constants.Images.toggleOn
-                    : Constants.Images.toggleOff
-                }
-                style={{
-                  marginTop: 10,
-                  alignSelf: 'center',
-                  height: 36,
-                  width: 48,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={CreateEventStyles.eventType}>Event Type</Text>
-          {/* <View style={CreateEventStyles.rowStyle}>
+                        {photo == '' ? (
+                            <Text style={CreateEventStyles.imageText}>
+                                Add event image
+                            </Text>
+                        ) : null}
+                    </View>
+                    <View style={CreateEventStyles.liveEventView}>
+                        <Text style={CreateEventStyles.groupType}>
+                            Live Event
+                        </Text>
+
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() =>
+                                this.setState({isEnabled: !isEnabled})
+                            }>
+                            <Image
+                                source={
+                                    isEnabled
+                                        ? Constants.Images.toggleOn
+                                        : Constants.Images.toggleOff
+                                }
+                                style={{
+                                    marginTop: 10,
+                                    alignSelf: 'center',
+                                    height: 36,
+                                    width: 48,
+                                }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={CreateEventStyles.eventType}>Event Type</Text>
+                    {/* <View style={CreateEventStyles.rowStyle}>
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() =>this._handleBtn('01')}
@@ -245,25 +279,27 @@ class CreateEvent extends Component {
               <Text style={[CreateEventStyles.groupName,{color:this.state.handleColor == '02' ? 'white' : '#898989'}]}>Group</Text>
             </TouchableOpacity>
           </View> */}
-          <View style={CreateEventStyles.rowStyle}>
-            <FlatList
-              numColumns={2}
-              scrollEnabled={false}
-              data={this.state.eventType}
-              renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
-          <Text style={CreateEventStyles.eventType}>Event Category</Text>
-          <View style={CreateEventStyles.rowStyle}>
-            <FlatList
-              numColumns={2}
-              scrollEnabled={false}
-              data={this.state.Category}
-              renderItem={this.renderItems}
-              keyExtractor={(item) => item.id}
-            />
-            {/* <TouchableOpacity
+                    <View style={CreateEventStyles.rowStyle}>
+                        <FlatList
+                            numColumns={2}
+                            scrollEnabled={false}
+                            data={this.state.eventType}
+                            renderItem={this.renderItem}
+                            keyExtractor={(item) => item.id}
+                        />
+                    </View>
+                    <Text style={CreateEventStyles.eventType}>
+                        Event Category
+                    </Text>
+                    <View style={CreateEventStyles.rowStyle}>
+                        <FlatList
+                            numColumns={2}
+                            scrollEnabled={false}
+                            data={this.state.Category}
+                            renderItem={this.renderItems}
+                            keyExtractor={(item) => item.id}
+                        />
+                        {/* <TouchableOpacity
               activeOpacity={0.7}
               style={CreateEventStyles.halfView}>
               <Text style={CreateEventStyles.groupName}>Train</Text>
@@ -285,176 +321,244 @@ class CreateEvent extends Component {
               style={CreateEventStyles.halfView}>
               <Text style={CreateEventStyles.groupName}>Club</Text>
             </TouchableOpacity> */}
-          </View>
+                    </View>
 
-          <View style={CreateEventStyles.searchView}>
-            <TextInput
-              placeholder="Event Name"
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={name}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({name: text});
-              }}
-              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-          </View>
-          
-           <TouchableWithoutFeedback onPress={() => {
-             this.setState({showDate: true})
-             }}>
-          <View style={CreateEventStyles.searchView} >
+                    <View style={CreateEventStyles.searchView}>
+                        <TextInput
+                            placeholder="Event Name"
+                            placeholderTextColor={Constants.Colors.GREY_BORDER}
+                            value={name}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            onChangeText={(text) => {
+                                this.setState({name: text})
+                            }}
+                            style={[
+                                CreateEventStyles.groupName,
+                                {textAlign: 'left'},
+                            ]}
+                            underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                        />
+                    </View>
 
-            <TextInput
-              placeholder="Date"
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={date}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({date: text});
-              }}
-              style={CreateEventStyles.groupName}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-              editable={false}
-              />
-            
-            <Image
-              source={Constants.Images.calendar}
-              style={CreateEventStyles.calendarIcon}
-              />
-          </View>
-              </TouchableWithoutFeedback>
-           <TouchableWithoutFeedback onPress={() => this.setState({showTime: true})}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.setState({showDate: true})
+                        }}>
+                        <View style={CreateEventStyles.searchView}>
+                            <TextInput
+                                placeholder="Date"
+                                placeholderTextColor={
+                                    Constants.Colors.GREY_BORDER
+                                }
+                                value={date}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                onChangeText={(text) => {
+                                    this.setState({date: text})
+                                }}
+                                style={CreateEventStyles.groupName}
+                                underlineColorAndroid={
+                                    Constants.Colors.TRANSPARENT
+                                }
+                                editable={false}
+                            />
 
-          <View style={CreateEventStyles.searchView}>
-            <TextInput
-              placeholder="Time"
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={time}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({time: text});
-              }}
-              style={CreateEventStyles.groupName}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-              editable={false}
-            />
-            <Image
-              source={Constants.Images.clock}
-              style={CreateEventStyles.clockIcon}
-            />
-          </View>
-          </TouchableWithoutFeedback>
-          <View style={[CreateEventStyles.searchView, ]}>
-            <TextInput
-              placeholder="Event Address Line 1"
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={address1}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({address1: text});
-              }}
-              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-          </View>
-          <View style={CreateEventStyles.searchView}>
-            <TextInput
-              placeholder="Event Address Line 2"
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={address2}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({address2: text});
-              }}
-              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-          </View>
-          <View style={CreateEventStyles.searchView}>
-            <TextInput
-              multiline
-              numberOfLines={5}
-              placeholder="Description..."
-              placeholderTextColor={Constants.Colors.GREY_BORDER}
-              value={description}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(text) => {
-                this.setState({description: text});
-              }}
-              style={CreateEventStyles.description}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-          </View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => this.NameStore()}
-            // onPress={() => navigate('AddMember',{iseventPage: true})}
-            style={CreateEventStyles.nextView}>
-            <Text style={CreateEventStyles.nextText}>Create Event</Text>
-          </TouchableOpacity>
-        </ScrollView>
-        {this.state.showDate && <View>
-          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showDate: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
-            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
-          </TouchableOpacity>}
-          <RNDateTimePicker
-            testID="dateTimePicker"
-            value={this.state.tempDateTime}
-            mode="date"
-            is24Hour={true}
-            display="spinner"
-            onChange={this.onChangeDate}
-            textColor="#fff"
-            onTouchCancel={() => this.setState({showDate: Platform.OS === 'ios'? this.state.showDate: !this.state.showDate})}
-            /></View>}
-            {this.state.showTime && <View>
-          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showTime: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
-            <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
-          </TouchableOpacity>}
-          <RNDateTimePicker
-            testID="TimePicker"
-            value={this.state.tempDate}
-            mode="time"
-            is24Hour={true}
-            display="spinner"
-            onChange={this.onChangeTime}
-            textColor="#fff"
-            onTouchCancel={() => this.setState({showTime: Platform.OS === 'ios'? this.state.showTime: !this.state.showTime})}
-
-            /></View>}
-      </SafeAreaView>
-    );
-  }
+                            <Image
+                                source={Constants.Images.calendar}
+                                style={CreateEventStyles.calendarIcon}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback
+                        onPress={() => this.setState({showTime: true})}>
+                        <View style={CreateEventStyles.searchView}>
+                            <TextInput
+                                placeholder="Time"
+                                placeholderTextColor={
+                                    Constants.Colors.GREY_BORDER
+                                }
+                                value={time}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                onChangeText={(text) => {
+                                    this.setState({time: text})
+                                }}
+                                style={CreateEventStyles.groupName}
+                                underlineColorAndroid={
+                                    Constants.Colors.TRANSPARENT
+                                }
+                                editable={false}
+                            />
+                            <Image
+                                source={Constants.Images.clock}
+                                style={CreateEventStyles.clockIcon}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <View style={[CreateEventStyles.searchView]}>
+                        <TextInput
+                            placeholder="Event Address Line 1"
+                            placeholderTextColor={Constants.Colors.GREY_BORDER}
+                            value={address1}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            onChangeText={(text) => {
+                                this.setState({address1: text})
+                            }}
+                            style={[
+                                CreateEventStyles.groupName,
+                                {textAlign: 'left'},
+                            ]}
+                            underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                        />
+                    </View>
+                    <View style={CreateEventStyles.searchView}>
+                        <TextInput
+                            placeholder="Event Address Line 2"
+                            placeholderTextColor={Constants.Colors.GREY_BORDER}
+                            value={address2}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            onChangeText={(text) => {
+                                this.setState({address2: text})
+                            }}
+                            style={[
+                                CreateEventStyles.groupName,
+                                {textAlign: 'left'},
+                            ]}
+                            underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                        />
+                    </View>
+                    <View style={CreateEventStyles.searchView}>
+                        <TextInput
+                            multiline
+                            numberOfLines={5}
+                            placeholder="Description..."
+                            placeholderTextColor={Constants.Colors.GREY_BORDER}
+                            value={description}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            onChangeText={(text) => {
+                                this.setState({description: text})
+                            }}
+                            style={CreateEventStyles.description}
+                            underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                        />
+                    </View>
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => this.NameStore()}
+                        // onPress={() => navigate('AddMember',{iseventPage: true})}
+                        style={CreateEventStyles.nextView}>
+                        <Text style={CreateEventStyles.nextText}>
+                            Create Event
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
+                {this.state.showDate && (
+                    <View>
+                        {Platform.OS === 'ios' && (
+                            <TouchableOpacity
+                                onPress={() => this.setState({showDate: false})}
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                }}>
+                                <Text
+                                    style={{
+                                        color: '#fff',
+                                        width: 80,
+                                        paddingVertical: 5,
+                                        textAlign: 'center',
+                                        marginTop: 15,
+                                    }}>
+                                    Done
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                        <RNDateTimePicker
+                            testID="dateTimePicker"
+                            value={this.state.tempDateTime}
+                            mode="date"
+                            is24Hour={true}
+                            display="spinner"
+                            onChange={this.onChangeDate}
+                            textColor="#fff"
+                            onTouchCancel={() =>
+                                this.setState({
+                                    showDate:
+                                        Platform.OS === 'ios'
+                                            ? this.state.showDate
+                                            : !this.state.showDate,
+                                })
+                            }
+                        />
+                    </View>
+                )}
+                {this.state.showTime && (
+                    <View>
+                        {Platform.OS === 'ios' && (
+                            <TouchableOpacity
+                                onPress={() => this.setState({showTime: false})}
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                }}>
+                                <Text
+                                    style={{
+                                        color: '#fff',
+                                        width: 80,
+                                        paddingVertical: 5,
+                                        textAlign: 'center',
+                                        marginTop: 15,
+                                    }}>
+                                    Done
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                        <RNDateTimePicker
+                            testID="TimePicker"
+                            value={this.state.tempDate}
+                            mode="time"
+                            is24Hour={true}
+                            display="spinner"
+                            onChange={this.onChangeTime}
+                            textColor="#fff"
+                            onTouchCancel={() =>
+                                this.setState({
+                                    showTime:
+                                        Platform.OS === 'ios'
+                                            ? this.state.showTime
+                                            : !this.state.showTime,
+                                })
+                            }
+                        />
+                    </View>
+                )}
+            </SafeAreaView>
+        )
+    }
 }
-
-
 
 // export default CreateEvent;
 
 CreateEvent.propTypes = {
-  loginSuccess: func.isRequired,
-  navigation: shape({
-    dispatch: func.isRequired,
-    goBack: func.isRequired,
-  }).isRequired,
-  t: func.isRequired,
-};
+    loginSuccess: func.isRequired,
+    navigation: shape({
+        dispatch: func.isRequired,
+        goBack: func.isRequired,
+    }).isRequired,
+    t: func.isRequired,
+}
 
-const mapStateToProps = () => ({});
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
-  // addFullName: (params) => setFullName(params),
-};
+    // addFullName: (params) => setFullName(params),
+}
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(CreateEvent));
+    mapStateToProps,
+    mapDispatchToProps
+)(withTranslation()(CreateEvent))
