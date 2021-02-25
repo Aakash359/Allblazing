@@ -202,9 +202,12 @@ class Home extends React.Component {
                         <FlatList
                             style={{maxHeight: 50}}
                             scrollEnabled={false}
-                            contentContainerStyle={
-                                MyProfileStyles.sectionMainView
-                            }
+                            contentContainerStyle={[
+                                MyProfileStyles.sectionMainView,
+                                {
+                                    backgroundColor: 'rgba(100,100,100,0.4)',
+                                },
+                            ]}
                             data={optionList}
                             renderItem={this.renderItem}
                             keyExtractor={(id, index) => index.toString()}
@@ -236,6 +239,8 @@ class Home extends React.Component {
         <View
             style={{
                 flexDirection: 'row',
+                flex: 1,
+                // backgroundColor: 'red',
             }}>
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -244,9 +249,13 @@ class Home extends React.Component {
                     {
                         backgroundColor:
                             item === this.state.option
-                                ? Constants.Colors.TAB
+                                ? this.state.option === 'Map'
+                                    ? Constants.Colors.TAB
+                                    : Constants.Colors.TAB
+                                : this.state.option === 'Map'
+                                ? null
                                 : Constants.Colors.TAB_BACK,
-                        paddingRight: 45,
+                        paddingHorizontal: item === 'Map' ? 45 : 35,
                     },
                 ]}
                 onPress={() => {
@@ -259,6 +268,8 @@ class Home extends React.Component {
                             color:
                                 item === this.state.option
                                     ? Constants.Colors.WHITE
+                                    : this.state.option === 'Map'
+                                    ? Constants.Colors.LIGHT_BLACK
                                     : Constants.Colors.PRIVCYTEXT,
                         },
                     ]}>
@@ -298,10 +309,11 @@ class Home extends React.Component {
                 )}
                 {this.state.option !== 'Map' && (
                     <FlatList
-                        style={{maxHeight: 50}}
+                        style={{maxHeight: 50, flex: 1}}
                         scrollEnabled={false}
                         contentContainerStyle={[
                             MyProfileStyles.sectionMainView,
+                            {},
                         ]}
                         data={optionList}
                         renderItem={this.renderItem}

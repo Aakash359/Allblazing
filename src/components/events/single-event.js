@@ -7,7 +7,6 @@ import UserImages from '../user-images'
 import moment from 'moment'
 
 export const SingleEvent = ({onPress, event}) => {
-    // console.log('Event Details', event)
     const date = moment(event?.data).format('D')
     const month = moment(event?.data).format('MMM')
 

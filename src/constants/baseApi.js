@@ -44,6 +44,8 @@ const API = {
     ACCEPT_REJECT_FRIEND_REQUEST: `${BASE_URL}/friend`,
     GET_FRIEND_LIST: `${BASE_URL}/friend?type=Friend`,
     GET_FRIEND_REQUEST: `${BASE_URL}/friend?type=Request`,
+    ACCEPT_GROUP_REQUEST: `${BASE_URL}/group/accept`,
+    REJECT_GROUP_REQUEST: `${BASE_URL}/group/reject`,
     // USERLIST : BASE_URL +
 }
 
