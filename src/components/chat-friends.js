@@ -18,7 +18,7 @@ export const ChatFriends = ({
       <Image source={type === 'chat' ? { uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' } : Constants.Images.inviteUser1} style={InviteFriendsStyles.userImage} />
       {type === 'chat' ? (
         <View>
-            <Text style={InviteFriendsStyles.username}>{ data && data.name}</Text>
+            <Text style={InviteFriendsStyles.username}>{ data && data.user2}</Text>
           <Text style={InviteFriendsStyles.location}>Santee, United States</Text>
         </View>
       ) : (

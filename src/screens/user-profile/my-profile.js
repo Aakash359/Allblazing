@@ -20,8 +20,7 @@ import {connect} from 'react-redux';
 import {withTranslation} from 'react-i18next';
 import Axios from 'axios';
 import API from '../../constants/baseApi';
-import { getAuthToken } from '../../helpers/auth';
-import { withNavigationFocus } from '@react-navigation/compat';
+import {getAuthToken, setUserId} from '../../helpers/auth';
 import {ActivityIndicator} from 'react-native';
 import {setMottoDescription, setProfileDetails} from '../../reducers/baseServices/profile';
 
@@ -35,11 +34,17 @@ class MyProfile extends Component {
     };
   }
 
+  // componentDidMount() {
+  //   this.UserProfileDetails();
+  // }
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       this.UserProfileDetails();
     });
     
+  }
+  componentWillUnmount() {
+   this.unsubscribe() 
   }
   // componentWillUnmount() {
   //  this.unsubscribe.remove() 
@@ -49,7 +54,7 @@ class MyProfile extends Component {
     const {user_id, addProfileDetail,} = this.props;
     console.log('userid==>', user_id);
     const token = await getAuthToken();
-    // console.log('====>', token);
+    console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
     };
@@ -69,6 +74,7 @@ class MyProfile extends Component {
         if (response.data.data.result) {
           this.setState({list: response?.data?.data?.result});
           addProfileDetail(response?.data?.data?.result);
+          setUserId(response?.data?.data?.result?.user_id.toString())
           console.log('profile response==>', response?.data?.data?.result);
         }
       })

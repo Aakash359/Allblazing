@@ -6,6 +6,10 @@ import { LOGIN,
   loginSuccess, } from '../actions/auth-action-types';
 import httpClient from './http-client';
 import { navigate } from '../routes/navigation-service';
+import {
+  setAuthToken,
+  setUserId
+} from '../helpers/auth';
 export function* login(data) {
   yield put(loginRequested());
 
@@ -22,8 +26,11 @@ export function* login(data) {
       console.log("Eooorrrrrr",error,result)
     yield put(loginFailure(error));
     } else {
+       
+       setAuthToken(result.data.token);
+    setUserId(result.data.user_id.toString());
       yield put(loginSuccess(result.data));
-    setTimeout(()=>navigate('Dashboard'),3000)
+     
     
   }
 }

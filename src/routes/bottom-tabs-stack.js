@@ -63,7 +63,9 @@ const TabNavigator = (props) => {
           // />)
         }  
     }} 
-    name="Create" component={() => null} />
+        name="Create"
+        component={() => null}
+      />
       <Tab.Screen options={{ tabBarLabel: t('Chat') }} name="Chat" component={ChatStack} />
       <Tab.Screen options={{ tabBarLabel: t('Me') }} name="Me" component={ProfileStack} />
     </Tab.Navigator>

@@ -25,6 +25,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment'
+import { Platform } from 'react-native';
 class CreateEvent extends Component {
   constructor(props) {
     super(props);
@@ -78,17 +79,17 @@ class CreateEvent extends Component {
 
   NameStore = () => {
     if (this.state.photo === '') {
-      Alert.alert('', 'please Select Image', '');
+      Alert.alert('', 'Please select image', '');
     } else if (this.state.data > 0) {
-      Alert.alert('', 'Please select Event Type', '');
+      Alert.alert('', 'Please select event type', '');
     } else if (this.state.Category > 0) {
-      Alert.alert('', 'Please select Event Category', '');
+      Alert.alert('', 'Please select event category', '');
     } else if (this.state.name === '') {
-      Alert.alert('', 'Please Enter Full Name', '');
+      Alert.alert('', 'Please enter full name', '');
     } else if (this.state.date === '') {
-      Alert.alert('', 'Please Enter date', '');
+      Alert.alert('', 'Please enter date', '');
     } else if (this.state.description === '') {
-      Alert.alert('', 'Please Enter description', '');
+      Alert.alert('', 'Please enter description', '');
     } else {
       this.props.navigation.navigate('AddMember', {
         iseventPage: true,
@@ -96,11 +97,11 @@ class CreateEvent extends Component {
         photo: this.state.photo,
         isEnabled: this.state.isEnabled,
         eventType: this.state.eventType?.[this.state.EventTypeSelectedId]?.name,
-        Category: this.state.Category?.[this.state.EventCategorySelectedId]?.id.toString(),
+        Category: 1 || this.state.Category?.[this.state.EventCategorySelectedId]?.id.toString(),
         address1: this.state.address1,
         address2: this.state.address2,
         time: this.state.time,
-        date: this.state.date,
+        date: this.state.tempDateTime,
         tempDate: this.state.tempDate,
         description: this.state.description,
         imageDetails: this.state.imagedetails
@@ -113,25 +114,16 @@ class CreateEvent extends Component {
       height: 400,
       cropping: false,
       includeBase64: true,
-    }).then((image) => {
-      ImageResizer.createResizedImage(
-        Platform.OS === 'android'
-          ? image.path
-          : image.path.replace('file://', ''),
-        image.width / 3,
-        image.height / 3,
-        'JPEG',
-        85,
-      ).then(({ uri }) => {
-       console.log("MYYURRL",uri)
-        // const {path} = photo;
-        // const uri = `data:${mime};base64,${data}`;
-        this.setState(() => {
-          return { photo: uri,};
-        });
-        // console.log(path);
-      });
     })
+    .then((photo) => {
+      // console.log('image details ', photo);
+      const {mime, filename, data, path} = photo;
+      const uri = `data:${mime};base64,${data}`;
+      this.setState(() => {
+        return {photo: photo.path, imagedetails: photo};
+      });
+      // console.log(photo.path);
+    });
   };
   handleBtn = (Btn) => {
     this.setState({EventTypeSelectedId: Btn});
@@ -169,10 +161,11 @@ class CreateEvent extends Component {
     </TouchableOpacity>
   );
 
-  onChangeDate = (e,date) => this.setState({date: date.toDateString(), tempDateTime: date})
+  onChangeDate = (e,date) => {
+    this.setState({date: date ? `${moment(date).format('dddd, Do MMM, YYYY')}`  : this.state.date, tempDateTime: date || this.state.tempDateTime, showDate: Platform.OS === 'ios' ? this.state.showDate: !this.state.showDate})
+  }
     onChangeTime = (e,time) => {
-      
-      this.setState({time: `${ moment(time).format('HH:mm')}`, tempDate: time})
+      this.setState({time: time ? `${ moment(time).format('LT')}` : this.state.time, tempDate: time || this.state.tempDate, showTime: Platform.OS === 'ios' ? this.state.showTime : !this.state.showTime})
   }
 
 
@@ -305,12 +298,14 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({name: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
           
-           <TouchableWithoutFeedback onPress={() => this.setState({showDate: true})}>
+           <TouchableWithoutFeedback onPress={() => {
+             this.setState({showDate: true})
+             }}>
           <View style={CreateEventStyles.searchView} >
 
             <TextInput
@@ -355,7 +350,7 @@ class CreateEvent extends Component {
             />
           </View>
           </TouchableWithoutFeedback>
-          <View style={CreateEventStyles.searchView}>
+          <View style={[CreateEventStyles.searchView, ]}>
             <TextInput
               placeholder="Event Address Line 1"
               placeholderTextColor={Constants.Colors.GREY_BORDER}
@@ -365,7 +360,7 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({address1: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
@@ -379,7 +374,7 @@ class CreateEvent extends Component {
               onChangeText={(text) => {
                 this.setState({address2: text});
               }}
-              style={CreateEventStyles.groupName}
+              style={[CreateEventStyles.groupName, {textAlign: 'left'}]}
               underlineColorAndroid={Constants.Colors.TRANSPARENT}
             />
           </View>
@@ -408,9 +403,9 @@ class CreateEvent extends Component {
           </TouchableOpacity>
         </ScrollView>
         {this.state.showDate && <View>
-          <TouchableOpacity onPress={() => this.setState({showDate: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showDate: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
             <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
           <RNDateTimePicker
             testID="dateTimePicker"
             value={this.state.tempDateTime}
@@ -419,11 +414,12 @@ class CreateEvent extends Component {
             display="spinner"
             onChange={this.onChangeDate}
             textColor="#fff"
+            onTouchCancel={() => this.setState({showDate: Platform.OS === 'ios'? this.state.showDate: !this.state.showDate})}
             /></View>}
             {this.state.showTime && <View>
-          <TouchableOpacity onPress={() => this.setState({showTime: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
+          {Platform.OS === 'ios' && <TouchableOpacity onPress={() => this.setState({showTime: false})} style={{flexDirection: 'row', justifyContent: 'flex-end'}} >
             <Text style={{color: '#fff', width: 80, paddingVertical: 5, textAlign: 'center', marginTop: 15}} >Done</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
           <RNDateTimePicker
             testID="TimePicker"
             value={this.state.tempDate}
@@ -432,6 +428,8 @@ class CreateEvent extends Component {
             display="spinner"
             onChange={this.onChangeTime}
             textColor="#fff"
+            onTouchCancel={() => this.setState({showTime: Platform.OS === 'ios'? this.state.showTime: !this.state.showTime})}
+
             /></View>}
       </SafeAreaView>
     );

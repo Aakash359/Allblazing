@@ -67,7 +67,7 @@ class Home extends React.Component {
 
     this.state = {
       keyword: '',
-      option: 'Events',
+      option: 'Map',
       region: {
         latitude: 30.7333,
         latitudeDelta: 0.0922,
@@ -219,9 +219,10 @@ class Home extends React.Component {
     <View
       style={{
         flexDirection: 'row',
+      
       }}>
       <TouchableOpacity
-        activeOpacity={0.7}
+        activeOpacity={0.4}
         style={[
           MyProfileStyles.sectionView2,
           {
@@ -230,6 +231,8 @@ class Home extends React.Component {
                 ? Constants.Colors.TAB
                 : Constants.Colors.TAB_BACK,
             paddingRight: 45,
+            opacity:1
+            
           },
         ]}
         onPress={() => {

@@ -7,24 +7,51 @@ import {InviteFriendsStyles} from '../styles';
 export const ChatGroup = ({
   hasChats,
   navigation,
-  test,
-  data,
-  isMyGroupPage,
-}) => (
-  <TouchableOpacity
-    activeOpacity={0.7}
-    onPress={() => navigation('GroupDetail', {data: data, checking:isMyGroupPage})}
-    style={InviteFriendsStyles.container}>
-    <View style={InviteFriendsStyles.userWrapper}>
-      <Image
-        source={
-          data.post == 'N/A' ? Constants.Images.groupDetails : {uri: data.post}
-        }
-        style={InviteFriendsStyles.userImage}
-      />
-      <View>
-        <Text style={InviteFriendsStyles.username}>{data.name}</Text>
-        <Text style={InviteFriendsStyles.location}>{data.description}</Text>
+  group,
+  type
+
+}) => { 
+
+  const getMembers = () => {
+    let members = group?.userInfo?.userData || []
+    let nameMembers = members.filter(i => i?.full_name)
+    let getThreeMembers = nameMembers.slice(0, nameMembers.length > 3 ? 3 : nameMembers.length).map(mem => mem?.full_name)
+    let res = ''
+    getThreeMembers.map(name => res += `${name.split(' ')[0]}, `)
+    res = res.slice(0, -2) + ' '
+    if(nameMembers.length) {
+      if(members.length > 3){
+      
+        return res += `and ${members.length - getThreeMembers.length} others`
+      }
+      else
+        return `${res}`
+    }
+    else {
+      return members.length + ' others'
+    }
+  }
+
+  const members = getMembers()
+
+  // React.useEffect(() => {
+  //   console.log(getMembers())
+  // }, [group])
+  
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => navigation('GroupDetail',
+        { groupId: group?.group_id, group, type })}
+      style={[InviteFriendsStyles.container, {height: 80}]}
+    >
+    <View style={[InviteFriendsStyles.userWrapper, {maxWidth: '70%'}]}>
+      <Image source={Constants.Images.groupDetails} style={InviteFriendsStyles.userImage} />
+      <View >
+        <Text style={InviteFriendsStyles.username}>{group?.name}</Text>
+        <View >
+        <Text numberOfLines={2} ellipsizeMode="tail" style={InviteFriendsStyles.location}>{members}</Text>
+        </View>
       </View>
     </View>
     {hasChats && (
@@ -34,6 +61,7 @@ export const ChatGroup = ({
     )}
   </TouchableOpacity>
 );
+}
 
 ChatGroup.propTypes = {
   hasChats: bool,

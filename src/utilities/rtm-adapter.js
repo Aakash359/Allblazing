@@ -38,14 +38,14 @@ export default class RtmAdapter extends EventEmitter {
     });
   }
 
-  async login(uid) {
-     console.log("dtaaaa",{ uid: uid,
-      token: config.token,})
+  async login(uid,token) {
+     console.log("LoginData",uid,token)
     await this.client.createClient(config.appId);
     this.uid = uid;
+    this.token = token;
     return this.client.login({
       uid: this.uid,
-      token: config.token,
+      token: this.token,
     });
     this.client.sendMessageToPeer()
   }

@@ -8,7 +8,9 @@ import RtmAdapter from '../../utilities/rtm-adapter';
 import { scale, } from 'react-native-size-matters';
 import { GiftedChat ,Bubble,Composer,InputToolbar,Send,} from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
-import moment from 'moment';
+import moment from 'moment'
+import { connect } from 'react-redux';
+import {withTranslation} from 'react-i18next';
 class ChatOneToOne extends React.Component {
   constructor(props) {
     super(props);
@@ -36,8 +38,8 @@ class ChatOneToOne extends React.Component {
             this.setState({ messages: GiftedChat.append(this.state.messages, newMessage) })
           console.log('Messg' , newMessage)
           firestore()
-          .collection('101_103')
-          .doc(thread._id)
+          .collection('Messages')
+          .doc('100_101')
           .collection('MESSAGES')
           .add({
           text,
@@ -50,8 +52,8 @@ class ChatOneToOne extends React.Component {
           })
 
           await firestore()
-          .collection(value)
-          .doc(thread._id)
+          .collection('Messages')
+          .doc('100_101')
           .set(
           {
           latestMessage: {
@@ -81,8 +83,8 @@ class ChatOneToOne extends React.Component {
                   let name   = params.name
                   this.setState({name:name})
                 this.unsubscribeListener = firestore()
-              .collection('101_103')
-              .doc(thread._id)
+              .collection('Messages')
+              .doc('100_101')
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
               .onSnapshot(querySnapshot => {
@@ -461,4 +463,17 @@ width: 0,
 },
 });
 
-export default ChatOneToOne;
+const mapStateToProps = ({auth: {email,status,data,code,user_id},user:{loginStatus}}) => ({
+  email,status,data ,code ,loginStatus,user_id
+});
+
+const mapDispatchToProps = {
+  // addLoginDetail: (params) => setLoginDetails(params),
+  // loginSuccess: actions.loginSuccess,
+  // login: actions.login,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(ChatOneToOne));

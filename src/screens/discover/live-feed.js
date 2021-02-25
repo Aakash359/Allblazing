@@ -1,5 +1,5 @@
 import React, { useState, useRef,useEffect ,useCallback} from 'react';
-import { View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView, TextInput, SafeAreaView,Platform,ActivityIndicator,PermissionsAndroid,Dimensions } from 'react-native';
+import {StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, FlatList, ScrollView, TextInput, SafeAreaView,Platform,ActivityIndicator,PermissionsAndroid,Dimensions } from 'react-native';
 import { LiveFeedStyles ,HeaderStyles} from '../../styles';
 import Constants from '../../constants';
 import { PermisionPopup } from '../../components';
@@ -11,9 +11,21 @@ import {
   ClientRole,
  
 } from 'react-native-agora';
+import API from '../../constants/baseApi'
 import { useNavigation } from '@react-navigation/native';
-import { GiftedChat, Send, InputToolbar, Time } from 'react-native-gifted-chat';
+import { GiftedChat ,Bubble,Composer,InputToolbar,Send,} from 'react-native-gifted-chat'
 import RtmAdapter from '../../utilities/rtm-adapter';
+import moment from 'moment';
+import { scale, } from 'react-native-size-matters';
+import {
+  getAuthToken,
+  getGroupImage,
+  getGroupName,
+  getUserId,
+} from '../../helpers/auth';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 function LiveFeed(props) {
    const client = new RtmAdapter()
   const [like, setLike] = useState(false);
@@ -22,39 +34,216 @@ function LiveFeed(props) {
   const [messages, setMessages] = useState([ ]);
  const AgoraEngine = useRef();
   const [joined, setJoined] = useState(false);
-  const [flash, setflash] = useState(true);
+  const [isTyping, setisTyping] = useState(true);
   const [chat, setChat] = useState([]);
   const [userCount, setUserCount] = useState([]);
+  const [token, setToken] = useState('222');
+   const [RTMtoken, setRTMToken] = useState('11');
   const [streamID, setStreamID] = useState(0);
 const dimensions = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height,
 };
    const navigation = useNavigation();
-  // const comment = [
-  //   {
-  //     image: Constants.Images.user1, message: 'Hello!', name: 'Cassey -',
-  //   },
-  //   {
-  //     image: Constants.Images.user2, message: 'Hello!', name: 'Clark -',
-  //   },
-  //   {
-  //     image: Constants.Images.user3, message: 'Hello!', name: 'Alex -',
-  //   },
-  //   {
-  //     image: Constants.Images.user4, message: 'Hello!', name: 'Jordan -',
-  //   },
-  //   {
-  //     image: Constants.Images.user5, message: 'Hello!', name: 'Mike -',
-  //   },
-  //   {
-  //     image: Constants.Images.user6, message: 'Hello!', name: 'Carey -',
-  //   },
-  // ];
-// const onSend = useCallback((messages = []) => {
-//     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-//   }, [])
+ 
 
+  const getRtmToken = async () => {
+    const token = props.token
+    const formdata = new FormData()
+    formdata.append('role', '1')
+    formdata.append('user_id', props.user_id)
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+    axios.post(API.RTM, formdata, config)
+      .then((response) => {
+        if (response?.data) {
+            console.log('mount chat ',response?.data);
+          let token = response.data.data.scalar
+          var id = props.user_id.toString()
+          client.login(id,token).then((data) => {
+            console.log('mount chat ', data);
+            subscribeChannelMessage();
+    
+            client.join(channel)
+              .then(() => {
+                console.log('join channel success RTM', channel);
+                setChannel(channel)
+                setJoined(true)
+              })
+              .catch(() => {
+                console.warn('join failured');
+              });
+          });
+   
+        }
+      }).catch(e => console.log("errrorrr", e))
+      
+  }
+  
+  const  getRtcToken = async () => {
+    const token = props.token
+     const formdata = new FormData()
+    formdata.append('channel_name', channel);
+    formdata.append('role', '1')
+     formdata.append('user_id', props.user_id)
+        const config = {
+            headers: {Authorization: `Bearer ${token}`},
+        }
+       
+        
+          axios
+            .post(API.RTC_TOKEN, formdata,config)
+            .then((response) => {
+                
+                if (response?.data) {
+                    console.log('===>response', response?.data?.data?.scalar);
+                  
+                  let token =response.data.data.scalar
+                  setToken(token)              
+                   init().then(() => {
+               AgoraEngine.current.joinChannel(
+              token,
+              channel,
+              null,
+              props.user_id,
+            )
+          }).catch(e =>console.log("errrorrr",e))
+                }
+            })
+            .finally(() => {
+              
+            })
+    }
+
+  
+  function renderBubble(props) {
+        let User =  props.currentMessage.user
+        
+       console.log('Props', props)
+      
+       
+            if (User._id === '1')
+            {
+              return (
+             
+               
+                <View style={{alignSelf: 'flex-start',
+                              flexDirection: 'row',
+                              margin: scale(15),}}>     
+               
+                <Bubble
+                  
+                  {...props}
+                  wrapperStyle={{
+                    
+                    right: {
+                      alignItems: 'flex-end',
+                      backgroundColor: '#636363',
+                      borderBottomLeftRadius: scale(10),
+                      borderBottomRightRadius:0,
+                      borderTopLeftRadius: scale(10),
+                      borderTopRightRadius: scale(10),
+                      justifyContent: 'center',
+                      marginVertical: scale(5),
+                      padding: scale(8),
+                    },
+                  }}
+                  textStyle={{
+                    right: {
+                    color: 'white',
+                   },
+                   left: {
+                    color: 'white',
+                   }
+                  }}
+                 />
+                 
+                   <View style={styles.rightTriangle}/> 
+                   <Text style={{textAlign:'left',alignSelf:"flex-start",justifyContent:'flex-start',
+                  alignItems:'baseline',position:'absolute',right:15,bottom:-12,color:'#898989',fontSize:12}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
+                </View>
+                );
+            }
+            else {
+              return (
+             
+                <View style={{flexDirection: 'row',
+                              margin: scale(14),}} >
+                   
+                <View style={styles.leftTriangle}/>
+               
+                <Bubble
+                  
+                  {...props}
+                  wrapperStyle={{
+                    left: {
+                      alignItems: 'flex-start',
+                      backgroundColor:'#252525',
+                      borderBottomRightRadius: scale(10),
+                      borderTopLeftRadius:scale(10),
+                      borderTopRightRadius: scale(10),
+                      borderBottomLeftRadius:0,
+                      justifyContent: 'center',
+                      marginVertical: scale(5),
+                      padding: scale(8),
+                      
+                    },
+                   
+                  }}
+                  textStyle={{
+                    right: {
+                    color: 'white',
+                   },
+                   left: {
+                    color: 'white',
+                   }
+                  }}
+                />
+                    
+                    <Text style={{textAlign:'left',alignSelf:"flex-end",justifyContent:'flex-start',
+                  alignItems:'baseline',position:'absolute',left:15,bottom:-12,color:'#898989',fontSize:12}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
+           
+                 </View>
+                  
+  
+              );
+
+            }
+            
+          }
+    function  renderComposer(props)
+      { 
+        return ( <Composer {...props} placeholder={'Write your messasge...'} 
+        placeholderTextColor={'white'}/> ); 
+      }
+
+     function renderInputToolbar (props) {
+       
+       return <InputToolbar {...props} 
+       containerStyle={styles.ChatOneToOneContainer}/>
+     }
+
+    function renderFooter(){
+      if (isTyping){
+        return (<Text>{this.user.name} is typing</Text>)
+      }
+      return null;
+     }
+
+
+     function renderSend(props) {
+      return (
+        <Send {...props}
+         >
+         <Icon name="send-sharp"  style={{ marginRight:-10}}size={30} color="white" />
+        </Send>
+      );
+    }
+    
+    
+  
+  
   function subscribeChannelMessage() {
     client.on('error', () => {
       Logger.log(evt);
@@ -103,6 +292,7 @@ const dimensions = {
     });
   }
   const init = async () => {
+    
     AgoraEngine.current = await RtcEngine.create(
       '22143d65ab6a440099dec92cbb2c6f2f',
     );
@@ -159,7 +349,7 @@ const dimensions = {
       'LeaveChannel',
       (data) => {
         console.log('LeaeveChhannel', data);
-       
+       client.leave(channel)
     navigation.navigate('Home')
         
       },
@@ -169,60 +359,7 @@ const dimensions = {
       // if (uid === 1) setBroadcasterVideoState(state);
     });
   };
-  const permissionAsk = async () => { if (Platform.OS === 'android') await requestCameraAndAudioPermission(); }
-  
-  const destroy = async () => { await AgoraEngine.current.destroy(); }
-  
-  useEffect(() => {
-   
-    client.login("12").then((data) => {
-   
-    console.log('mount chat ', data);
-    subscribeChannelMessage();
-    
-      client.join(channel)
-      .then(() => {
-        console.log('join channel success',channel);
-        setChannel(channel)
-        setJoined(true)
-      })
-      .catch(() => {
-        console.warn('join failured');
-      });
-    });
-    
-    // console.log('ISSSSBRODSSST', isBroadcaster, uid);
-  //   permissionAsk()
-  //   init().then(() =>
-  //     AgoraEngine.current.joinChannel(
-  //       '00622143d65ab6a440099dec92cbb2c6f2fIADhEFw+yio/mhKRGC2zNgDnKqUmU+SuH6vi+4B9s2PB6oaYxM0NvtUaIgARmgAAueEwYAQAAQA5qn5gAwA5qn5gAgA5qn5gBAA5qn5g',
-  //       'live_cast',
-  //       null,
-  //       2,
-  //     ),
-  //   );
-  //  destroy()
-  
-  }, []);
-  
-  const onSwitchCamera = () => {
-     console.log("Called22") 
-    AgoraEngine.current.switchCamera()
-  };
-  const LeaveChannel = () => {
-    client.leave(channel)
-    AgoraEngine.current.leaveChannel()
-  };
-  const touchOn = () => {
-     console.log("Called") 
-     AgoraEngine.current.setCameraTorchOn(true)
-  } 
-
-  const SendMessge = () => {
-  console.log('mesaageData',streamID,message)
-    AgoraEngine.current.sendStreamMessage(streamID,message)
-  }
-  async function requestCameraAndAudioPermission() {
+  const requestCameraAndAudioPermission = async()=> {
     try {
       const granted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -242,16 +379,32 @@ const dimensions = {
       console.warn(err);
     }
   }
-
+  const permissionAsk = async () => { if (Platform.OS === 'android') await requestCameraAndAudioPermission(); }
+  
+  const destroy = async () => { await AgoraEngine.current.destroy(); }
+  
+  useEffect( () => {
+     permissionAsk()
+    getRtcToken()
+     getRtmToken()
+     
+   
+  }, []);
+  
+ 
+  const LeaveChannel = () => {
+    client.logout()
+     client.destroy()
+    AgoraEngine.current.leaveChannel()
+  };
+ 
   function renderSend(props) {
       return (
         <Send {...props} >
        <Image
           source={Constants.Images.send}
           style={LiveFeedStyles.messageIcon}
-        />
-          
-        
+        />   
         </Send>
       );
   }
@@ -284,7 +437,8 @@ const dimensions = {
         <TouchableOpacity
           style = {{width:60}}
                 activeOpacity={0.7}
-                onPress={ LeaveChannel}>
+          onPress={LeaveChannel}
+        >
                 <Image
                   resizeMode="contain"
                   style={HeaderStyles.crossIcon}
@@ -306,19 +460,19 @@ const dimensions = {
               color="#fff"
              
             />
-            <Text style={{ color: 'white' }}>Joining Stream, Please Wait</Text>
+          <Text style={{ color: 'white' }}>Joining Stream, Please Wait</Text>
           </View>
       ) : (
           <>
             
            
-              {/* <RtcLocalView.SurfaceView
+              <RtcLocalView.SurfaceView
                 style={{width: dimensions.width,
                 height: dimensions.height / 3,
     position:'relative'
     }}
-                channelId={'live_cast'}
-              /> */}
+                channelId={channel}
+              />
         
                 {/* <RtcRemoteView.SurfaceView
                   uid={1}
@@ -332,7 +486,7 @@ const dimensions = {
                 <View style={LiveFeedStyles.levelStyle}>
                   <Text style={LiveFeedStyles.liveText}>Live</Text>
                 </View>
-                <Text style={LiveFeedStyles.followerView}>{'187 Viewers'}</Text>
+                <Text style={LiveFeedStyles.followerView}>{userCount.length+'Viewers'}</Text>
               </View>
               <TouchableOpacity
                 onPress={() => {}}
@@ -395,12 +549,31 @@ const dimensions = {
                 }}
               /> */}
                <GiftedChat
-        messages={messages}
+          messages={messages}
+          listViewProps={{
+            style: {
+              backgroundColor: 'black',
+            },
+          }}
+          renderUsernameOnMessage={true}
+          renderAvatar={() => null}
+          renderTime={() => null}
+          alwaysShowSend={true} 
+          textInputStyle={ { color: 'white'}}
+          renderBubble={renderBubble}
+          renderComposer={renderComposer}
+          renderInputToolbar={renderInputToolbar}
+          renderSend={renderSend}
+          renderFooter={renderFooter}
         onSend={(messages) => onSend(messages)}
-        user={{
-          _id: '1',
-        }}
-      />
+          isTyping={true}
+          user={{
+            _id: '1',
+            name: 'manoj'
+          }}
+        
+          
+        />
             </View>
           </>
             )}
@@ -416,4 +589,61 @@ const dimensions = {
   );
 }
 
-export default LiveFeed;
+const styles = StyleSheet.create({
+
+ChatOneToOneContainer : {
+alignItems: 'flex-start',
+backgroundColor: '#212121',
+borderTopLeftRadius: scale(10),
+borderTopRightRadius: scale(10),
+justifyContent: 'center',
+padding: scale(14),
+borderTopWidth:0,
+},
+
+
+leftTriangle: {
+alignSelf: 'flex-end',
+backgroundColor: 'transparent',
+borderRightColor: 'transparent',
+borderRightWidth: scale(15),
+borderStyle: 'solid',
+marginLeft:-1.5,
+borderTopColor: '#252525',
+borderTopWidth: scale(15),
+height: 0,
+marginBottom: scale(5),
+transform: [{rotate: '180deg'}],
+width: 0,
+},
+rightTriangle: {
+alignSelf: 'flex-end',
+backgroundColor: 'transparent',
+borderRightColor: 'transparent',
+borderRightWidth: scale(15),
+borderStyle: 'solid',
+borderTopColor: '#636363',
+marginLeft:-1.5,
+borderTopWidth: scale(15),
+height: 0,
+marginBottom: scale(5),
+transform: [{rotate: '270deg'}],
+width: 0,
+},
+});
+
+const mapStateToProps = ({auth:{token,user_id}}) => {
+    return {
+        user_id,token
+    }
+}
+
+const mapDispatchToProps = {
+    // addFullName: (params) => setFullName(params),
+    addCreateGroupDetail: (params) => setCreateGroupDetails(params),
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withTranslation()(LiveFeed))

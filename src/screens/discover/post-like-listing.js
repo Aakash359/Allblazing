@@ -48,9 +48,12 @@ class PostLikeListing extends Component {
 
   _fetchPost = async() => {
     const token = await getAuthToken();
+    const { user_id } = this.props
+    const {userId} = this.props.route.params
     console.log('====>', token);
     const config = {
       headers: {Authorization: `Bearer ${token}`},
+      params: {id: userId || user_id}
     };
     this.setState({
       isLoading: true,
@@ -139,6 +142,16 @@ class PostLikeListing extends Component {
       
     </View>
   );
+
+  ListEmptyComponent = () => {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <Text style={{color: '#fff'}} >You didn't post anything.</Text>
+        {/* <TouchableOpacity activeOpacity={0.7} onPress={() => this.props.navigation.navigate('CreatePost')} ><Text style={{color: '#fff'}}>Please click here to post</Text></TouchableOpacity> */}
+      </View>
+    )
+  }
+
   render() {
     const {isLoading} = this.state;
 
@@ -164,6 +177,8 @@ class PostLikeListing extends Component {
               data={this.state.list}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => `2-${index}`}
+              ListEmptyComponent={this.ListEmptyComponent}
+              // ListFooterComponent={this.ListEmptyComponent}
             />
           )}
         </View>
@@ -183,7 +198,11 @@ PostLikeListing.propTypes = {
   t: func.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({profile: {user_id}}) => {
+  return {
+    user_id
+  }
+};
 
 const mapDispatchToProps = {
   // addFullName: (params) => setFullName(params),

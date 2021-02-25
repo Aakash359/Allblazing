@@ -69,7 +69,7 @@ class Userage extends Component {
     });
 
     if (this.state.age === '') {
-      Alert.alert('', 'Please Select your Age', '');
+      Alert.alert('', 'Please select your age', '');
     } else {
       axios
         .post(

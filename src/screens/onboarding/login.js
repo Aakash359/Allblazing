@@ -84,7 +84,8 @@ class Login extends Component {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': 'AllBlazing',
-          'message': 'AllBlazing access to your location '
+          'message': 'AllBlazing access to your location ',
+          buttonPositive: "OK"
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -95,7 +96,7 @@ class Login extends Component {
         // alert("Location permission denied");
       }
     } catch (err) {
-      console.warn(err)
+      console.log(err)
     }
   }
   

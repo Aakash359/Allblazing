@@ -79,12 +79,6 @@ const PlusIconPopup = ({
   </AnimatedModal>
 );
 
-PlusIconPopup.propTypes = {
-  onClose: func.isRequired,
-  onFacebook: func.isRequired,
-  onStrava: func.isRequired,
-  onWhatsApp: func.isRequired,
-  t: func.isRequired,
-};
+
 
 export default withTranslation()(PlusIconPopup);

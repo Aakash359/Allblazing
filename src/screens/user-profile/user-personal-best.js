@@ -26,7 +26,7 @@ class UserPersonalBest extends Component {
   }
   TimeStore = () => {
     if (this.state.time === 0) {
-      Alert.alert('', 'Please Select  Recent time', '');
+      Alert.alert('', 'Please select  recent time', '');
     } else {
       setUserRecentTime(this.state.time);
       this.props.navigation.navigate('Distance');
@@ -50,7 +50,7 @@ class UserPersonalBest extends Component {
     });
     console.log('==>',time);
     if (this.state.time === '') {
-      Alert.alert('', 'Please Select your Age', '');
+      Alert.alert('', 'Please select your age', '');
     } else {
       axios
         .post(

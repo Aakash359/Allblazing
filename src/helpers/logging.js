@@ -4,11 +4,11 @@ export const logError = (error, name) => {
   const n = name ? name + ' -->> ' : '';
   if (process.env.NODE_ENV !== 'production') {
     if (error.response && error.response.data && error.response.data.message) {
-      console.warn(n, error.response.data.message, error.response);
+      console.log(n, error.response.data.message, error.response);
     } else if (error.code && error.message) {
-      console.warn(n, error.code, error.message);
+      console.log(n, error.code, error.message);
     } else {
-      console.warn(n, error, error.response);
+      console.log(n, error, error.response);
     }
   }
 };

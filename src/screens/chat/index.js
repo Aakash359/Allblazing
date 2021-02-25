@@ -24,23 +24,36 @@ class Chats extends React.Component {
     this.setState({ activeTab: val });
   }
 
-  componentDidMount() {
-    this.unsubscribe = firestore()
-      .collection('101_103')
-      .onSnapshot(querySnapshot => {
-        const threads = querySnapshot.docs.map(documentSnapshot => {
-          console.log("myQuerySnapShot", documentSnapshot)
-          return {
-            _id: documentSnapshot.id,
-            name: documentSnapshot.data.name,
-            latestMessage: { text: '' },
-            ...documentSnapshot.data()
-          }
-        })
-        console.log("Threads " , threads)
-         this.setState({threds: threads})
-      })
-   
+  async componentDidMount() {
+   const  unsbuscribe =  firestore()
+     .collection('chatroom')
+     .where("ID", "array-contains", '100').where("user2", "==", 'atul').onSnapshot(querySnapshot => {
+       const threads = querySnapshot.docs.map(documentSnapshot => {
+            console.log("myQuerySnapShot",documentSnapshot)
+            return {
+              // _id: documentSnapshot.id,
+              // name: documentSnapshot.data.name,
+              // latestMessage: { text: '' },
+              ...documentSnapshot.data()
+            }
+         
+       })
+       console.log("Threads ", threads)
+    this.setState({threds: threads})
+    })
+    // var data = await docRef.where("ID", "array-contains", '101').where("user1", "==", 'manoj').get()
+    
+    //  .then((querySnapshot) => {
+    //                 querySnapshot.forEach((doc) => {
+    //                     console.log(doc.id, ' => ', doc.data());
+    //                 });
+    //             });
+      // .onSnapshot(querySnapshot => {
+      //   const threads = querySnapshot.docs
+      //   console.log("Threads " , threads)
+      //   //this.setState({threds: threads})
+      // })
+    
       }
 
   componentWillUnmount() {

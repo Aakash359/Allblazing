@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Alert,
+  Linking
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {func} from 'prop-types';
@@ -42,6 +43,8 @@ import { ActivityIndicator } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
 import Axios from 'axios';
+import Permissions, { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions'
+import { times } from '../../data';
 
 class Location extends Component {
   constructor() {
@@ -53,96 +56,99 @@ class Location extends Component {
     };
   }
 
-  getAddress = ({latitude, longitude}) => {
+  getAddress = async ({latitude, longitude}, submit = false) => {
+    console.log("GETTING ADDRESS");
     const GOOGLE_API_KEY = 'AIzaSyDu_SQanN6PpTQR3_6L2LA9fSro9xFseVA'
     let api = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
     console.log("API HIT", api);
     Axios.get(api).then(res => {
       console.log("GET DATA FROM LANG LONG",res?.data?.results[0]?.formatted_address);
-      this.setState({address: res?.data?.results[0]?.formatted_address})
+      this.setState({address: res?.data?.results[0]?.formatted_address}, async() => {
+        setUserAddress(this.state.address)
+        .then(a => {
+
+          if(submit) this.onSubmit()
+        })
+      })
     })
     .catch(e => {
       console.log("DATE DATA FROM LANG LONG ERROR", e);
+      // this.getLocation()
     })
   }  
 
-  getGeoLocation = () => {
-    Geolocation.getCurrentPosition(position => {
+  getGeoLocation = async (submit = false) => {
+
+    console.log("GETTING LOCATION");
+
+   Geolocation.getCurrentPosition(position => {
       console.log("POSTION", position);
       this.setState({location: position.coords}, () => {
+        console.log(this.state.location);
         setUserLocation(position.coords)
-        this.getAddress(position.coords)
+        this.getAddress(position.coords, submit)
       })
 
     }, e => {
-      console.log("POSITION EROOR", e);
-    }, {
-      enableHighAccuracy: true
+      console.log("POSITION ERROR", e.message);
     })
   } 
 
-  getLocation =async () => {
+  getLocation = async (submit = false) => {
 
     if(Platform.OS === 'ios'){
+      const permissionStatus = await Permissions.check(PERMISSIONS.IOS.LOCATION_ALWAYS)
+      console.log("ISO LOCATION", permissionStatus);
+      request(PERMISSIONS.IOS.LOCATION_ALWAYS)
+      .then(res => {
+        console.log("PERMISSIN ASK IOS", res);
+      })
        Geolocation.requestAuthorization();
-      this.getGeoLocation();
+      this.getGeoLocation(submit);
   }else {
   
-      let granted = await PermissionsAndroid.request(
+    let granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
             'title': 'AllBlazing',
             'message': 'AllBlazing access to your location '
           }
       );
+
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    console.log("LOCATION ACCESS");
+       this.getGeoLocation(submit)
+  } else {
+    Alert.alert('AllBalzing', 'Please allow location to go ahead', [
+      {text: "Ok", onPress: () => {
+        Linking.canOpenURL('app-settings:')
+        .then(s => {
+          if(s) {
+            return Linking.openURL('app-settings:')
+          }
+          else {
+            Alert.alert('AllBlazing', 'Please open settings manually.')
+          }
+        })
+      }}
+    ], {cancelable: false})
+      console.log('Location permission not granted!!!!');
+  }
   
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  
-          this.getGeoLocation();
-  
-      } else {
-        this.getLocation()
-  
-          console.log('Location permission not granted!!!!');
-  
-      }
-  
+  } 
   }
 
-  //  const {status} = await Permissions.askAsync(Permissions.Location)
-  //   .then(res => {
-  //     console.log(res);
-  //   })
-  //   if(status === 'granted'){
-  //     Geolocation.getCurrentPosition(position => {
-  //     console.log(position);
-  //   }, e => {
-  //     console.log(e);
-  //   })
-  //   }
-  //   else {
-  //     Geolocation.requestAuthorization()
-  //   }
-    
-  }
 
-  setUserAddLoc = async () => {
-    const {location, address} = this.state
-    setUserLocation(location)
-    .then(v => {
-      setUserAddress(address)
-      .then(v => {
-
-        this.onSubmit()
-      })
-
-    })
-  }
 
   componentDidMount() {
 
     this.getLocation()
   }
+
+  shouldComponentUpdate(props, state) {
+    return state.location !== this.state.location
+  }
+ 
 
   onSubmit = async () => {
     const {addUserProfileDetails} = this.props;
@@ -161,7 +167,7 @@ class Location extends Component {
     const Time = await getUserRecentTime();
     const token = await getOtpToken() || await getAuthToken()
     const authToken = await getAuthToken()
-    const address = await getUserAddress() || '';
+    const address = await getUserAddress();
     const {latitude, longitude} = await getUserLocation();
     console.log("USER DETAILS: =====", name, Age, Type, Distance, Time, "Token", token, address, {latitude, longitude});
     const config = {
@@ -169,20 +175,24 @@ class Location extends Component {
     };
     // console.log(name, Age, Type, Distance, Time);
     // console.log(config);
+
+    const payload = {
+      full_name: name,
+      age: Age,
+      type: Type,
+      distance: Distance,
+      time: Time|| times[0]?.value,
+      latitude: latitude || 74.777899,
+      longitude: longitude || 25.345678,
+      level:1,
+      address: address || 'Select'
+    }
+    
+    console.log("PAYLOAD===============>", payload);
     axios
       .post(
         API.COMPLETE_PROFILE,
-        {
-          full_name: name,
-          age: Age,
-          type: Type,
-          distance: Distance,
-          time: Time,
-          latitude: latitude || 0.0,
-          longitude: longitude || 0.0,
-          level:1,
-          address: address || 'Select'
-        },
+        payload,
         config,
       )
       .then((response) => {
@@ -223,6 +233,7 @@ class Location extends Component {
       });
   };
   render() {
+
     const {
       navigation: {goBack, navigate},
       route: {params},
@@ -256,7 +267,10 @@ class Location extends Component {
               AuthStyle.loginTouchable,
               {backgroundColor: Constants.Colors.TEXT_COLOR2},
             ]}
-            onPress={this.setUserAddLoc}>
+            onPress={() => {
+                this.getLocation(true)
+              }
+            }>
             <Text
               style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>
               {translate('profile.Share My Location')}
@@ -265,7 +279,9 @@ class Location extends Component {
           <TouchableOpacity
             // activeOpacity={0.7}
             style={[OTPStyles.button, LocationStyles.button]}
-            onPress={this.onSubmit}>
+            // onPress={this.onSubmit}
+            onPress={() => this.props.navigation.navigate('EditLocation', {signUpManual: true})}
+            >
               {this.state.isLoading ? (
                 <ActivityIndicator color="white" size={25}/>
               ):(

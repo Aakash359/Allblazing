@@ -47,5 +47,5 @@ export {
   UserImages,
   LogoutPopup,
   MoreOptionsPopup,
-  PlusIconPopup
+  PlusIconPopup,
 };

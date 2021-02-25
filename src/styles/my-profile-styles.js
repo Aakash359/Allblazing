@@ -111,14 +111,16 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.Colors.TAB_BACK,
     marginHorizontal: 10,
     borderRadius: 30,
+     opacity:0.6
   },
   sectionMainView2: {
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: Constants.Colors.PRIMARY,
+    //backgroundColor: Constants.Colors.PRIMARY,
     marginHorizontal: 10,
     borderRadius: 30,
+    opacity:1
   },
   sectionView: {
     borderRadius: 30,

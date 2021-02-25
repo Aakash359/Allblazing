@@ -1,0 +1,4 @@
+export const SET_CODE = 'SET_CODE'
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
+export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN'
+export const REMOVE_ALL = 'REMOVE_ALL'
