@@ -21,6 +21,7 @@ import {func, shape} from 'prop-types'
 import {withTranslation} from 'react-i18next'
 import {getAuthToken} from '../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
+import Axios from 'axios'
 
 class UserProfile extends Component {
     constructor(props) {
@@ -188,6 +189,35 @@ class UserProfile extends Component {
                 })
             })
     }
+
+    sendFriendRequest = async () => {
+        const url = API.SEND_FRIEND_REQUEST
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        const id =
+            this.props.route.params.follow_id || this.props.route.params.id
+        const payload = {
+            friend_id: id,
+        }
+
+        try {
+            const res = await Axios.post(url, payload, config)
+            console.log('FRIEND REQUEST', res)
+            if (res?.status) {
+                Alert.alert('Friend Request', res?.data?.message)
+            } else {
+                Alert.alert('Friend Request', res?.data?.message)
+            }
+        } catch (error) {
+            console.log('FRIEND REQUEST ERROR', error)
+            Alert.alert('Friend Request', error?.message)
+        }
+    }
+
     render() {
         // const {nam} = this.state;
         const {
@@ -258,12 +288,12 @@ class UserProfile extends Component {
                                                 color="white"
                                                 size={25}
                                             />
-                                        ) : !this.state.list.follow ? (
+                                        ) : !this.state.list?.friend ? (
                                             <TouchableOpacity
                                                 activeOpacity={0.7}
                                                 // onPress={() => setFollowStatus(!followStatus)}
                                                 onPress={() =>
-                                                    this.handleUserFollow()
+                                                    this.sendFriendRequest()
                                                 }>
                                                 <Image
                                                     source={
@@ -303,6 +333,7 @@ class UserProfile extends Component {
                                                     this.props.route.params
                                                         .follow_id ||
                                                     this.props.route.params.id,
+                                                my: false,
                                             }
                                         )
                                     }}>
@@ -411,10 +442,15 @@ class UserProfile extends Component {
 
                 {this.props.route?.params?.visible && (
                     <MoreOptionsPopup
-                        // hasFollowBtn
+                        hasFollowBtn={!this.state.list.follow}
                         hasUnFollowBtn={
-                            this.props.route?.params?.iseventPage ? true : false
+                            this.state.list.follow
+                                ? true
+                                : this.props.route?.params?.iseventPage
+                                ? true
+                                : false
                         }
+                        onfollow={this.handleUserFollow}
                         onUnfollow={() => this.OnUnfollow()}
                         visible={this.props.route?.params?.visible}
                         onBlock={() => {

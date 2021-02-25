@@ -328,7 +328,7 @@ class FeedScreen extends Component {
                             <FlatList
                                 scrollEnabled={false}
                                 contentContainerStyle={FollowersStyles.flatList}
-                                data={this.state.list}
+                                data={this.state.list.reverse()}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `2-${index}`}
                                 ListEmptyComponent={this.ListEmptyComponent}

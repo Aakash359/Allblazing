@@ -116,6 +116,8 @@ const Images = {
     videoIcon: require('../assets/videoIcon.png'),
     whatsApp: require('../assets/whatsapp.png'),
     yellowLocation: require('../assets/yellow-location.png'),
+    accept: require('../assets/accept.png'),
+    cancel: require('../assets/cancel.png'),
     feedUser: {
         live: require('../assets/live-feed.png'),
         rocket: require('../assets/rocket-feed.png'),
