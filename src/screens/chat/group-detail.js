@@ -62,6 +62,7 @@ class GroupDetail extends React.Component {
 
         try {
             const res = await Axios.get(url, config)
+            console.log('GROUP DETAILS', res)
             this.setState({groupDetails: res?.data?.data}, () => {
                 this.setHederOptions()
             })
@@ -99,10 +100,6 @@ class GroupDetail extends React.Component {
         this.unSubscribe = this.props.navigation.addListener('focus', () => {
             this.getGroupDetails()
         })
-    }
-
-    componentWillUnmount() {
-        this.unSubscribe()
     }
 
     renderItem = () => {
@@ -314,7 +311,7 @@ class GroupDetail extends React.Component {
             Alert.alert('Accept Request', error?.message)
         }
     }
-    onRejectRequest = async () => {
+    onRejectRequest = async (withdraw = false) => {
         const {
             group: {id},
         } = this.props.route.params
@@ -329,14 +326,20 @@ class GroupDetail extends React.Component {
             const res = await Axios.get(url, config)
             console.log('REJECT REQUEST', res)
             if (res?.data?.status) {
-                Alert.alert('Reject Request', res?.data?.message, [
-                    {
-                        text: 'Ok',
-                        onPress: () => {
-                            this.props.navigation.goBack()
+                Alert.alert(
+                    withdraw ? 'Withdraw Request' : 'Reject Request',
+                    withdraw
+                        ? 'Request withdraw successfully.'
+                        : res?.data?.message,
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => {
+                                this.props.navigation.goBack()
+                            },
                         },
-                    },
-                ])
+                    ]
+                )
             } else {
                 Alert.alert('Reject Request', res?.data?.message)
             }
@@ -449,7 +452,9 @@ class GroupDetail extends React.Component {
                             ) : type === GROUP_TYPES?.REQUESTED ? (
                                 requestType === 'send' ? (
                                     <TouchableOpacity
-                                        onPress={() => this.onRejectRequest()}
+                                        onPress={() =>
+                                            this.onRejectRequest(true)
+                                        }
                                         activeOpacity={0.7}
                                         style={GroupDetailStyles.nextView}>
                                         {this.state.isLoading ? (
@@ -530,6 +535,15 @@ class GroupDetail extends React.Component {
                         leaveGroup
                         visible={this.state.visible}
                         reportBtnTitle="Report Group"
+                        onReport={() => {
+                            const {groupId} = this.props.route.params
+                            this.setState({visible: false})
+                            this.props.navigation.navigate('BlockReportUser', {
+                                isBlockPage: false,
+                                id: groupId,
+                                isGroup: true,
+                            })
+                        }}
                         onBlock={this.onLeave}
                         onClose={() => this.setState({visible: false})}
                     />

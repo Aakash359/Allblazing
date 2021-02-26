@@ -24,6 +24,10 @@ import {
 } from '../../helpers/auth'
 import axios from 'axios'
 import {ActivityIndicator} from 'react-native'
+import Axios from 'axios'
+import Geolocation from '@react-native-community/geolocation'
+import {PermissionsAndroid} from 'react-native'
+import Permissions, {PERMISSIONS, request} from 'react-native-permissions'
 
 class AddMember extends Component {
     constructor(props) {
@@ -33,7 +37,9 @@ class AddMember extends Component {
             UserListLoading: false,
             isLoading: false,
             list: [],
+            groupList: [],
             arrSelectedUsers: [],
+            location: {},
         }
     }
     // const [checked, setCheck] = useState(false);
@@ -41,31 +47,58 @@ class AddMember extends Component {
     // const [isLoading,setIsLoding]=useState(false);
 
     selectAll = () => {
-        const {list, arrSelectedUsers} = this.state
-        const selectedList = list.reduce((data, instance) => {
-            data.push(instance.user_id)
-            return data
-        }, [])
-        // console.log("ALL SELECTED LIST", selectedList);
+        const {list, groupList, arrSelectedUsers} = this.state
+        const {iseventPage, eventType} = this.props.route.params
+        let pick = iseventPage && eventType === 'Group' ? 'group_id' : 'user_id'
+        let selectedList = []
+        if (iseventPage && eventType === 'Group') {
+            selectedList = groupList.reduce((data, instance) => {
+                data.push(instance[pick])
+                return data
+            }, [])
+        } else {
+            selectedList = list.reduce((data, instance) => {
+                data.push(instance[pick])
+                return data
+            }, [])
+            // console.log("ALL SELECTED LIST", selectedList);
+        }
         this.setState({arrSelectedUsers: selectedList})
     }
 
     setHeaderRight = () => {
+        const {iseventPage, eventType} = this.props.route.params
+
         this.props.navigation.setOptions({
-            headerRight: () => (
-                <TouchableOpacity
-                    style={HeaderStyles.row}
-                    onPress={this.selectAll}>
-                    <Text style={HeaderStyles.headerRightTextStyle}>
-                        Select All
-                    </Text>
-                </TouchableOpacity>
-            ),
+            headerRight: () => {
+                console.log(eventType)
+                if (iseventPage && eventType === 'Individual') return null
+                else {
+                    return (
+                        <TouchableOpacity
+                            style={HeaderStyles.row}
+                            onPress={this.selectAll}>
+                            <Text style={HeaderStyles.headerRightTextStyle}>
+                                Select All
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                }
+            },
+            headerTitle:
+                iseventPage && eventType === 'Group'
+                    ? 'Add Group'
+                    : 'Add Member',
         })
     }
 
     componentDidMount() {
-        this.UserList()
+        const {iseventPage, eventType} = this.props.route.params
+        if (iseventPage && eventType === 'Group') {
+            this.GroupList()
+        } else {
+            this.UserList()
+        }
         this.setHeaderRight()
     }
 
@@ -81,7 +114,7 @@ class AddMember extends Component {
         axios
             .get(API.USER_LIST, config)
             .then((response) => {
-                console.log('response ====', response.data.data.result)
+                console.log('response ====', response.data.data)
                 if (response?.data?.data?.result) {
                     // console.log('===>response', response.data.data.result);
                     this.setState({list: response?.data?.data?.result})
@@ -92,6 +125,34 @@ class AddMember extends Component {
                     UserListLoading: false,
                 })
             })
+    }
+
+    GroupList = async () => {
+        this.setState({
+            UserListLoading: true,
+        })
+        const token = await getAuthToken()
+        const url = API.GROUP_LISTING
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: {
+                type: 'active',
+            },
+        }
+        try {
+            const res = await Axios.get(url, config)
+            console.log('GROUP LISTING', res?.data?.data)
+            if (res?.data?.status) {
+                this.setState({
+                    groupList: res?.data?.data?.result,
+                    UserListLoading: false,
+                })
+            }
+        } catch (error) {
+            console.log('ALL GROUPS ERROR', error)
+        }
     }
 
     CreateGroup = async () => {
@@ -182,6 +243,76 @@ class AddMember extends Component {
                 })
             })
     }
+
+    getGeoLocation = async (submit = false) => {
+        console.log('GETTING LOCATION')
+
+        Geolocation.getCurrentPosition(
+            (position) => {
+                console.log('POSTION', position)
+                this.setState({location: position.coords}, () => {
+                    console.log('Location', this.state.location)
+                    this.OnEvent()
+                })
+            },
+            (e) => {
+                console.log('POSITION ERROR', e.message)
+            }
+        )
+    }
+
+    getLocation = async (submit = false) => {
+        if (Platform.OS === 'ios') {
+            const permissionStatus = await Permissions.check(
+                PERMISSIONS.IOS.LOCATION_ALWAYS
+            )
+            request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {
+                console.log('PERMISSIN ASK IOS', res)
+            })
+            Geolocation.requestAuthorization()
+            this.getGeoLocation(submit)
+        } else {
+            let granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: 'AllBlazing',
+                    message: 'AllBlazing access to your location ',
+                }
+            )
+
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                this.getGeoLocation(submit)
+            } else {
+                Alert.alert(
+                    'AllBalzing',
+                    'Please allow location to go ahead',
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => {
+                                Linking.canOpenURL('app-settings:').then(
+                                    (s) => {
+                                        if (s) {
+                                            return Linking.openURL(
+                                                'app-settings:'
+                                            )
+                                        } else {
+                                            Alert.alert(
+                                                'AllBlazing',
+                                                'Please open settings manually.'
+                                            )
+                                        }
+                                    }
+                                )
+                            },
+                        },
+                    ],
+                    {cancelable: false}
+                )
+            }
+        }
+    }
+
     OnEvent = async () => {
         this.setState({isLoading: true})
         const {
@@ -192,6 +323,7 @@ class AddMember extends Component {
         const {arrSelectedUsers} = this.state
         if (arrSelectedUsers.length < 1) {
             Alert.alert('', 'Please select member!')
+            this.setState({isLoading: false})
             return
         }
         const name = this.props.route.params.name
@@ -208,6 +340,10 @@ class AddMember extends Component {
         const imageDetials = this.props.route.params.imageDetails
         const user_id = await getUserId()
 
+        const {
+            location: {latitude, longitude},
+        } = this.state
+
         const token = await getAuthToken()
         const config = {
             headers: {Authorization: `Bearer ${token}`},
@@ -223,6 +359,7 @@ class AddMember extends Component {
             name: imageDetials?.filename || 'image.jpg',
             type: imageDetials.mime,
         })
+        let pick = eventType === 'Group' ? 'group' : 'member'
         formdata.append('event_type', eventType)
         formdata.append('description', description)
         formdata.append('time', new Date(tempDate).getTime())
@@ -230,11 +367,22 @@ class AddMember extends Component {
         formdata.append('category_id', Category)
         formdata.append('status', isEnabled ? '1' : '0')
         formdata.append('address_first', address1)
-        // formdata.append('address_second', address2);
-        formdata.append('groups[1]', this.props.user_id)
-        for (let index = 0; index < arrSelectedUsers.length; index++) {
-            const element = arrSelectedUsers[index]
-            formdata.append(`groups[${index + 2}]`, element)
+        formdata.append('latitude', latitude)
+        formdata.append('longitude', longitude)
+        formdata.append('latitude_first', latitude)
+        formdata.append('longitude_first', longitude)
+        formdata.append('address_second', address2)
+        if (eventType === 'Group') {
+            for (let index = 0; index < arrSelectedUsers.length; index++) {
+                const element = arrSelectedUsers[index]
+                formdata.append(`${pick}[${index + 1}]`, element)
+            }
+        } else {
+            formdata.append(`member_id`, arrSelectedUsers[0])
+            // for (let index = 0; index < arrSelectedUsers.length; index++) {
+            //     const element = arrSelectedUsers[index]
+            //     formdata.append(`${pick}[${index + 2}]`, element)
+            // }
         }
 
         console.log(formdata)
@@ -294,18 +442,25 @@ class AddMember extends Component {
     }
 
     OnPress = (item) => {
-        console.log('item.user_id ', item.user_id)
+        const {iseventPage, eventType} = this.props.route.params
+        let pick = iseventPage && eventType === 'Group' ? 'group_id' : 'user_id'
+        console.log('item.user_id ', item[pick])
         // let oldUserList = this.state.
-        if (this.state.arrSelectedUsers.includes(item.user_id)) {
-            this.removePeople(item.user_id)
+        if (iseventPage && eventType === 'Individual') {
+            this.setState({arrSelectedUsers: [item[pick]]})
         } else {
-            this.setState({
-                arrSelectedUsers: [
-                    ...this.state.arrSelectedUsers,
-                    item.user_id,
-                ],
-            })
+            if (this.state.arrSelectedUsers.includes(item[pick])) {
+                this.removePeople(item[pick])
+            } else {
+                this.setState({
+                    arrSelectedUsers: [
+                        ...this.state.arrSelectedUsers,
+                        item[pick],
+                    ],
+                })
+            }
         }
+
         console.log('Selected Members', this.state.arrSelectedUsers)
     }
 
@@ -318,19 +473,42 @@ class AddMember extends Component {
         }
     }
 
+    getMembers = (members) => {
+        // let members = group?.userInfo?.userData || []
+        let nameMembers = members.filter((i) => i?.full_name)
+        let getThreeMembers = nameMembers
+            .slice(0, nameMembers.length > 3 ? 3 : nameMembers.length)
+            .map((mem) => mem?.full_name)
+        let res = ''
+        getThreeMembers.map((name) => (res += `${name.split(' ')[0]}, `))
+        res = res.slice(0, -2) + ' '
+        if (nameMembers.length) {
+            if (members.length > 3) {
+                return (res += `and ${
+                    members.length - getThreeMembers.length
+                } others`)
+            } else return `${res}`
+        } else {
+            return members.length + ' others'
+        }
+    }
+
     renderItem = ({item}) => {
         const image = item?.image
             ? item?.image === 'N/A'
                 ? Constants.Images.tabBarProfile
                 : {uri: item?.image}
             : Constants.Images.tabBarProfile
+        const {iseventPage, eventType} = this.props.route.params
+        let pick = iseventPage && eventType === 'Group' ? 'group_id' : 'user_id'
+
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
                 // onPress={() => this.setState({ischecked: !this.state.ischecked})}
                 onPress={() => this.OnPress(item)}
                 style={AddMemberStyles.container}>
-                <View style={[AddMemberStyles.userWrapper]}>
+                <View style={[AddMemberStyles.userWrapper, {maxWidth: '60%'}]}>
                     <View
                         style={{
                             backgroundColor: Colors.LIGHT_RED,
@@ -344,16 +522,25 @@ class AddMember extends Component {
                     </View>
                     <View>
                         <Text style={AddMemberStyles.username}>
-                            {item.full_name}
+                            {iseventPage && eventType === 'Group'
+                                ? item?.name
+                                : item.full_name}
                         </Text>
-                        <Text style={AddMemberStyles.location}>
-                            Santee, United States
-                        </Text>
+                        <View>
+                            <Text
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                                style={AddMemberStyles.location}>
+                                {iseventPage && eventType === 'Group'
+                                    ? this.getMembers(item?.userInfo?.userData)
+                                    : item?.address}
+                            </Text>
+                        </View>
                     </View>
                 </View>
                 <Image
                     source={
-                        this.state.arrSelectedUsers.includes(item.user_id)
+                        this.state.arrSelectedUsers.includes(item[pick])
                             ? Constants.Images.checkbox
                             : Constants.Images.checkoff
                     }
@@ -372,6 +559,7 @@ class AddMember extends Component {
             route: {params},
             t: translate,
         } = this.props
+        const {iseventPage, eventType} = params
 
         return (
             <View style={{flex: 1}}>
@@ -387,9 +575,13 @@ class AddMember extends Component {
                     </View>
                 ) : (
                     <FlatList
-                        data={this.state.list}
+                        data={
+                            iseventPage && eventType === 'Group'
+                                ? this.state.groupList
+                                : this.state.list
+                        }
                         renderItem={this.renderItem}
-                        keyExtractor={(item) => item.user_id}
+                        keyExtractor={(item, i) => i}
                     />
                 )}
 
@@ -401,7 +593,7 @@ class AddMember extends Component {
                     onPress={() =>
                         !this.state.isLoading
                             ? this.props.route.params.iseventPage
-                                ? this.OnEvent()
+                                ? this.getLocation()
                                 : this.CreateGroup()
                             : null
                     }

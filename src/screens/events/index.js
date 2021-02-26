@@ -27,16 +27,19 @@ class Events extends React.Component {
         }
     }
 
-    onEventPress = () => {
+    onEventPress = (eventId) => {
         const {
             navigation: {navigate},
         } = this.props
 
-        navigate('SingleEventDetail')
+        navigate('SingleEventDetail', {eventId})
     }
 
     renderItem = ({item}) => (
-        <SingleEvent onPress={this.onEventPress} event={item} />
+        <SingleEvent
+            onPress={() => this.onEventPress(item?.event_id)}
+            event={item}
+        />
     )
 
     onMarkerPress = () => {
@@ -196,7 +199,7 @@ class Events extends React.Component {
                             </View>
                         ) : (
                             <FlatList
-                                data={this.state.events}
+                                data={this.state.events.reverse()}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {
