@@ -91,7 +91,7 @@ class Distance extends Component {
           keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
           keyboardShouldPersistTaps="always">
           <View style={ConnectUserTypeStyles.wrapper}>
-            <StepBar count={5} selected={[0, 1, 2, 3, 4]} />
+            <StepBar count={5} selected={[0, 1, 2, 3, ]} />
             <View style={ConnectUserTypeStyles.inputWrapper}>
               <Text style={ConnectUserTypeStyles.input}>
                 {translate('distance.title')}

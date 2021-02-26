@@ -29,7 +29,8 @@ class UserPersonalBest extends Component {
       Alert.alert('', 'Please select  recent time', '');
     } else {
       setUserRecentTime(this.state.time);
-      this.props.navigation.navigate('Distance');
+      this.setState({time:0})
+      this.props.navigation.navigate('Location');
     }
   };
  

@@ -1,6 +1,6 @@
 {
   "Full Name": "Full Name",
-  "Your FullName?": "What's your Name?",
+  "Your FullName?": "What's your name?",
   "Finish": "Finish",
   "Gender": "Gender",
   "Male": "Male",
@@ -197,7 +197,9 @@
     "reportBtnSubtitle": "Tell us what they did",
     "reportConfirmation": "'Is this person bothering you? Tell us what they did'",
     "unfollowBtnTitle": "Unfollow",
-    "unfollowBtnSubtitle": "You will stop seeing post in your feed"
+    "unfollowBtnSubtitle": "You will stop seeing post in your feed",
+    "followBtnTitle": "Follow",
+    "followBtnSubtitle": "You will start seeing post in your feed"
   },
   "blockReasons": {
     "messages": "Inappropriate messages",

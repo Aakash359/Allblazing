@@ -3,8 +3,8 @@ import Constants from '../constants';
 
 const styles = {
   background: {
-    height: Constants.BaseStyle.DEVICE_HEIGHT,
-    width: Constants.BaseStyle.DEVICE_WIDTH,
+    flex:1,
+  
   },
   button: {
     bottom: (Constants.BaseStyle.DEVICE_HEIGHT * 5) / 100,
@@ -84,8 +84,9 @@ const styles = {
     height: 35,
     justifyContent: 'center',
     marginTop: Constants.BaseStyle.scale(10),
+    marginHorizontal:Constants.BaseStyle.scale(5),
     padding: Constants.BaseStyle.scale(10),
-    width: '31%',
+    width: '30%',
   },
   raceActive: { backgroundColor: Constants.Colors.TEXT_COLOR2 },
   raceActiveText: { color: Constants.Colors.TEXT_COLOR_WHITE },
@@ -95,13 +96,13 @@ const styles = {
     textAlign: 'center',
   },
   row: {
-    flex: 1,
+    justifyContent: 'center',
+    alignSelf:'center',
     width:'95%',
     alignItems: 'center',
     flexDirection: 'row',
-    position:'absolute',
-    justifyContent: 'space-between',
-    marginHorizontal: Constants.BaseStyle.scale(20),
+  flexWrap: 'wrap',
+    // marginHorizontal: Constants.BaseStyle.scale(20),
     marginTop: Constants.BaseStyle.scale(10),
   },
   subHeader: {
@@ -114,7 +115,7 @@ const styles = {
     width: 55,
   },
   switchContainer: {
-    marginLeft: 0,
+   
     marginRight: Constants.BaseStyle.scale(20),
   },
   switchContainerOn: { marginRight: 0 },

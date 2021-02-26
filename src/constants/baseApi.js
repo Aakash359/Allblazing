@@ -28,6 +28,7 @@ const API = {
     CONTACT_US: BASE_URL + '/contact_us',
     USER_LIST: BASE_URL + '/user_list',
     RTC_TOKEN: BASE_URL + '/agoraRtcToken',
+     CREATE_CHANNEL: BASE_URL + '/channel',
     RTM: BASE_URL + '/agoraRtmToken',
     GROUP_TYPE: BASE_URL + '/groupType',
     EVENT: BASE_URL + '/event',
@@ -41,6 +42,11 @@ const API = {
     PRIVACY_POLICY: `${BASE_URL}/static/privacy`,
     TERMS_CONDITIONS: `${BASE_URL}/static/term`,
     FAQ: `${BASE_URL}/faq`,
+    USER_POST_FEED: `${BASE_URL}/post/user_list`,
+    SEND_FRIEND_REQUEST: `${BASE_URL}/friend`,
+    ACCEPT_REJECT_FRIEND_REQUEST: `${BASE_URL}/friend`,
+    GET_FRIEND_LIST: `${BASE_URL}/friend?type=Friend`,
+    GET_FRIEND_REQUEST: `${BASE_URL}/friend?type=Request`,
     // USERLIST : BASE_URL +
 }
 

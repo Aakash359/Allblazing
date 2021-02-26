@@ -4,7 +4,9 @@ import { bool, func, shape } from 'prop-types';
 import { HomeStyles } from '../../styles';
 import { ChatFriends } from '../../components';
 import Constants from '../../constants';
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 class Chats extends React.Component {
   constructor() {
     super();
@@ -13,11 +15,14 @@ class Chats extends React.Component {
 
   renderItem = ({ item }) => {
     const {
-      route: { params }, navigation: { navigate },
+      route: { params }, navigation: { navigate },user_id
     } = this.props;
     const { activeTab } = this.state;
-
-    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} data = {item} />;
+const nameObj = item.users.filter(data => {
+              return data.id != user_id.toString()
+})
+    console.log( "nameeeee",nameObj)
+    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} data = {item} nameObj ={nameObj} />;
   }
 
   onTabPress = (val) => {
@@ -25,9 +30,12 @@ class Chats extends React.Component {
   }
 
   async componentDidMount() {
-   const  unsbuscribe =  firestore()
+     const { user_id } = this.props
+    console.log(user_id, "IDDDD")
+        this.unsubscribe = this.props.navigation.addListener('focus', async() => {
+              firestore()
      .collection('chatroom')
-     .where("ID", "array-contains", '100').where("user2", "==", 'atul').onSnapshot(querySnapshot => {
+     .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
        const threads = querySnapshot.docs.map(documentSnapshot => {
             console.log("myQuerySnapShot",documentSnapshot)
             return {
@@ -41,20 +49,25 @@ class Chats extends React.Component {
        console.log("Threads ", threads)
     this.setState({threds: threads})
     })
-    // var data = await docRef.where("ID", "array-contains", '101').where("user1", "==", 'manoj').get()
+        })
+    }
+  // async componentDidMount() {
+   
+     
+  //   // var data = await docRef.where("ID", "array-contains", '101').where("user1", "==", 'manoj').get()
     
-    //  .then((querySnapshot) => {
-    //                 querySnapshot.forEach((doc) => {
-    //                     console.log(doc.id, ' => ', doc.data());
-    //                 });
-    //             });
-      // .onSnapshot(querySnapshot => {
-      //   const threads = querySnapshot.docs
-      //   console.log("Threads " , threads)
-      //   //this.setState({threds: threads})
-      // })
+  //   //  .then((querySnapshot) => {
+  //   //                 querySnapshot.forEach((doc) => {
+  //   //                     console.log(doc.id, ' => ', doc.data());
+  //   //                 });
+  //   //             });
+  //     // .onSnapshot(querySnapshot => {
+  //     //   const threads = querySnapshot.docs
+  //     //   console.log("Threads " , threads)
+  //     //   //this.setState({threds: threads})
+  //     // })
     
-      }
+  //     }
 
   componentWillUnmount() {
     
@@ -105,4 +118,19 @@ Chats.propTypes = {
   route: shape({ params: shape({ isMapView: bool }) }).isRequired,
 };
 
-export default Chats;
+const mapStateToProps = ({auth:{token,user_id}}) => {
+    return {
+        user_id,token
+    }
+}
+
+const mapDispatchToProps = {
+    // addFullName: (params) => setFullName(params),
+    // addCreateGroupDetail: (params) => setCreateGroupDetails(params),
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withTranslation()(Chats))
+

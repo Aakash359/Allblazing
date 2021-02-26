@@ -20,26 +20,40 @@ class ChatOneToOne extends React.Component {
       channel: 'live_streaming',
       name: '',
       id: '101',
-      isTyping:true
+      isTyping: true,
+      userData:[]
     };
   
   }
 
+Id_generator(id,id2)
+{
+let num1 = parseInt(id);
+let num2 = parseInt(id2);
+if(num1>num2){
+return `${num2}_${num1}`
+}
+else{
+return `${num1}_${num2}`
+}
+
+}
 
   async handleSend(newMessage = []) {
     const {
     
       route: {params},
-      t: translate,
+      t: translate,user_id
     } = this.props;
             const { thread } = params
- 
+       let another_id   = params.id
+    let threadName = this.Id_generator(user_id, another_id)
           const text = newMessage[0].text
             this.setState({ messages: GiftedChat.append(this.state.messages, newMessage) })
           console.log('Messg' , newMessage)
           firestore()
           .collection('Messages')
-          .doc('100_101')
+          .doc(threadName)
           .collection('MESSAGES')
           .add({
           text,
@@ -74,17 +88,19 @@ class ChatOneToOne extends React.Component {
   componentDidMount() {
        const {
     
-      route: {params},
+      route: {params},user_id,
       t: translate,
-    } = this.props;
-                  let thread= params.thread
-              
-             
-                  let name   = params.name
-                  this.setState({name:name})
+       } = this.props;
+     let thread= params.thread
+    let another_id = params.id;
+    let userData = params.userData;
+    let threadName = this.Id_generator(user_id, another_id)
+    console.log("threadDATAA" ,userData)
+                 
+                  this.setState({id:user_id,userData:userData})
                 this.unsubscribeListener = firestore()
               .collection('Messages')
-              .doc('100_101')
+              .doc(threadName)
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
               .onSnapshot(querySnapshot => {
@@ -93,7 +109,6 @@ class ChatOneToOne extends React.Component {
 
               const data = {
               _id: doc.id,
-
               ...firebaseData
               }
 
@@ -128,16 +143,16 @@ class ChatOneToOne extends React.Component {
                   // });
                 }
 
-  renderBubble(props) {
+  renderBubble(props ,id) {
                    
     //           let User = props.currentMessage.user
     //          let name = this.props.route.params.name
    
     let User = props.currentMessage.user
-              console.log('Props', props)
+              console.log('Props',props ,id)
 
 
-              if (User._id === '101')
+              if (User._id === id)
               {
               return (
 
@@ -303,17 +318,24 @@ class ChatOneToOne extends React.Component {
         <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
           <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>
-        <Image
-          source={{ uri: 'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg' }}
+        {this.state.userData.length >0 ?<Image
+          source={{ uri: this.state.userData['0'].pic  }}
           style={{
             borderRadius: Constants.BaseStyle.scale(25),
             height: Constants.BaseStyle.scale(50),
             width: Constants.BaseStyle.scale(50),
           }}
-        />
+        />:<Image
+          source={Constants.Images.profilePic}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(25),
+            height: Constants.BaseStyle.scale(50),
+            width: Constants.BaseStyle.scale(50),
+          }}
+        />}
         <View>
-          <Text style={InviteFriendsStyles.username}>Shane Wafff</Text>
-          <Text style={InviteFriendsStyles.location}>Santee</Text>
+          <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].name}</Text>
+          <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
@@ -332,7 +354,7 @@ class ChatOneToOne extends React.Component {
     const {
       message, visible,
     } = this.state;
-
+        
     return (
       <View style={HomeStyles.container}>
         {this.renderHeader({
@@ -375,12 +397,12 @@ style: {
   marginBottom:scale(30),
 },
 }}
-renderUsernameOnMessage={true}
+renderUsernameOnMessage={false}
 renderAvatar={() => null}
 renderTime={() => null}
 alwaysShowSend={true}
 textInputStyle={ { color: 'white'}}
-renderBubble={this.renderBubble}
+renderBubble={props => this.renderBubble(props,this.props.user_id)}
 renderComposer={this.renderComposer}
 renderInputToolbar={this.renderInputToolbar}
 renderSend={this.renderSend}

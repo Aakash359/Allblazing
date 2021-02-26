@@ -27,6 +27,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 function LiveFeed(props) {
+   console.log("porssss", props.name, props.image);
    const client = new RtmAdapter()
   const [like, setLike] = useState(false);
     const [channel, setChannel] = useState('live_streaming');
@@ -38,6 +39,7 @@ function LiveFeed(props) {
   const [chat, setChat] = useState([]);
   const [userCount, setUserCount] = useState([]);
   const [token, setToken] = useState('222');
+   const [likes, setLikes] = useState(0);
    const [RTMtoken, setRTMToken] = useState('11');
   const [streamID, setStreamID] = useState(0);
 const dimensions = {
@@ -432,6 +434,7 @@ const dimensions = {
         padding: Constants.BaseStyle.scale(4),}}/>
      }
   return (
+   
     <SafeAreaView style={[LiveFeedStyles.container]}>
       <View style={LiveFeedStyles.sectionMainView2}>
         <TouchableOpacity
@@ -486,16 +489,27 @@ const dimensions = {
                 <View style={LiveFeedStyles.levelStyle}>
                   <Text style={LiveFeedStyles.liveText}>Live</Text>
                 </View>
-                <Text style={LiveFeedStyles.followerView}>{userCount.length+'Viewers'}</Text>
+                <Text style={LiveFeedStyles.followerView}>{userCount.length+ ' ' + 'Viewers'}</Text>
               </View>
               <TouchableOpacity
                 onPress={() => {}}
               >
-                <Image
-                  source={Constants.Images.rotatePhone}
-                  resizeMode='contain'
-                  style={LiveFeedStyles.icon}
-                />
+                {props.image?<Image
+          source={{ uri: props.image  }}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(25),
+            height: Constants.BaseStyle.scale(50),
+            width: Constants.BaseStyle.scale(50),
+          }}
+        />:<Image
+          source={Constants.Images.profilePic}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(25),
+            height: Constants.BaseStyle.scale(50),
+            width: Constants.BaseStyle.scale(50),
+          }}
+        />}
+                
               </TouchableOpacity>
             </View>
             <View style={{ height: dimensions.height / 2, }}>
@@ -507,7 +521,7 @@ const dimensions = {
               style={LiveFeedStyles.liveUserIcone}
             />
             <View style={LiveFeedStyles.sectionView}>
-              <Text style={LiveFeedStyles.heading}>{'Cameron Williamson, 23'}</Text>
+              <Text style={LiveFeedStyles.heading}>{props.full_name +' , '+'23'}</Text>
               <Text style={LiveFeedStyles.subHeading}>{'text'}</Text>
             </View>
           </View>
@@ -521,7 +535,7 @@ const dimensions = {
                   style={LiveFeedStyles.heartIcon}
                 />
               </TouchableOpacity>
-              <Text style={LiveFeedStyles.followText}>{'500'}</Text>
+              <Text style={LiveFeedStyles.followText}>{likes}</Text>
             </View>
                 </View>
                
@@ -632,9 +646,9 @@ width: 0,
 },
 });
 
-const mapStateToProps = ({auth:{token,user_id}}) => {
+const mapStateToProps = ({auth:{token,user_id,image,full_name}}) => {
     return {
-        user_id,token
+        user_id,token, image ,full_name ,
     }
 }
 

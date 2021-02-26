@@ -1,37 +1,58 @@
-import { func } from 'prop-types';
-import React from 'react';
-import { TouchableOpacity, Text, View, Image } from 'react-native';
-import constants from '../../constants';
-import { HomeStyles } from '../../styles';
-import UserImages from '../user-images';
+import {func} from 'prop-types'
+import React from 'react'
+import {TouchableOpacity, Text, View, Image} from 'react-native'
+import constants from '../../constants'
+import {HomeStyles} from '../../styles'
+import UserImages from '../user-images'
+import moment from 'moment'
 
-export const SingleEvent = ({ onPress }) => (
-  <TouchableOpacity activeOpacity={1} style={HomeStyles.item} onPress={onPress}>
-    <View style={HomeStyles.row}>
-      <View style={HomeStyles.dateView}>
-        <Text style={HomeStyles.title}>{'30'}</Text>
-        <Text style={HomeStyles.title}>{'Oct'}</Text>
-      </View>
-      <View style={HomeStyles.wrapper}>
-        <Text style={HomeStyles.header}>{'Emily Vs Maaike, 1km Race'}</Text>
-        <Text style={HomeStyles.location}>{'NY, US United States'}</Text>
-      </View>
-    </View>
-    <Text style={HomeStyles.description}>
-      {'Emily and Maaike go head to head over 1km. For more info on the runners\' stats... Alongside the professional 10km event, there’s also a 5km and 10km event for recreational...'}
-    </Text>
-    <View style={[HomeStyles.row, HomeStyles.usersRow]}>
-      <View style={HomeStyles.icons}>
-        <View style={HomeStyles.iconWrapper}>
-          <Image source={constants.Images.femaleWhite} style={HomeStyles.icon} />
-        </View>
-        <Text style={HomeStyles.iconText}>{'Women Only'}</Text>
-      </View>
-      <UserImages users={[1, 2, 3, 4, 5]} />
-    </View>
-  </TouchableOpacity>
-);
+export const SingleEvent = ({onPress, event}) => {
+    // console.log('Event Details', event)
+    const date = moment(event?.data).format('D')
+    const month = moment(event?.data).format('MMM')
 
-SingleEvent.propTypes = { onPress: func.isRequired };
+    return (
+        <TouchableOpacity
+            activeOpacity={1}
+            style={HomeStyles.item}
+            onPress={onPress}>
+            <View style={HomeStyles.row}>
+                <View style={HomeStyles.dateView}>
+                    <Text style={HomeStyles.title}>{date}</Text>
+                    <Text style={HomeStyles.title}>{month}</Text>
+                </View>
+                <View style={HomeStyles.wrapper}>
+                    <Text style={HomeStyles.header}>{event?.group_name}</Text>
+                    <Text style={HomeStyles.location}>
+                        {event?.event_address_one}
+                        {event?.event_address_two &&
+                            `, ${event?.event_address_two}`}
+                    </Text>
+                </View>
+            </View>
+            <Text style={HomeStyles.description}>{event?.description}</Text>
+            <View style={[HomeStyles.row, HomeStyles.usersRow]}>
+                <View style={HomeStyles.icons}>
+                    <View
+                        style={[
+                            HomeStyles.iconWrapper,
+                            {backgroundColor: 'transparent'},
+                        ]}>
+                        <Image
+                            source={constants.Images.tabBarProfile}
+                            style={HomeStyles.icon}
+                        />
+                    </View>
+                    <Text style={HomeStyles.iconText}>
+                        {event?.category_name}
+                    </Text>
+                </View>
+                {/* <UserImages users={[1, 2, 3, 4, 5]} /> */}
+            </View>
+        </TouchableOpacity>
+    )
+}
 
-export default SingleEvent;
+SingleEvent.propTypes = {onPress: func.isRequired}
+
+export default SingleEvent

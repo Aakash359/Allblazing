@@ -22,7 +22,7 @@ function* HttpClient(payload, isLoader = false, authorization = false) {
   const data = { ...payload };
 
   if (authorization) {
-    alert("called")
+
     const authToken = yield select(({ user: { token } }) => token);
 
     if (authToken) {
@@ -43,7 +43,7 @@ function* HttpClient(payload, isLoader = false, authorization = false) {
       // headers: { 'Authorization': authentication = '' },
     } = yield call(axiosInstance, data);
 console.log("axoid repsonese ", result)
-    yield put(hideLoader());
+    // yield put(hideLoader());
 
     
 
@@ -52,7 +52,7 @@ console.log("axoid repsonese ", result)
       result,
     };
   } catch (error) {
-    yield put(hideLoader());
+    // yield put(hideLoader());
     
       if (error.code === 'ECONNABORTED') {
         const message = 'Please make sure you\'re connected with internet or our servers are not responding.';

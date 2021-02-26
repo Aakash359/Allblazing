@@ -56,7 +56,7 @@ export const ChatGroup = ({
     </View>
     {hasChats && (
       <View style={InviteFriendsStyles.chatCount}>
-        <Text style={InviteFriendsStyles.chatText}>{data.count}</Text>
+        <Text style={InviteFriendsStyles.chatText}>{'1'}</Text>
       </View>
     )}
   </TouchableOpacity>

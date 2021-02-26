@@ -24,6 +24,10 @@ import {
   ClientRole,
  
 } from 'react-native-agora';
+import API from '../../constants/baseApi';
+import axios from 'axios';
+import { connect } from 'react-redux';
+
 const dimensions = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height,
@@ -46,6 +50,7 @@ class CreateStream extends React.Component {
       flash: false,
       minutes_Counter: '00',
       seconds_Counter: '00',
+      channel:''
       
     };
     this.AgoraEngine = React.createRef();
@@ -100,19 +105,47 @@ class CreateStream extends React.Component {
       await this.requestCameraAndAudioPermission();
     }
   }
+  creatChannel = async (channel) => {
+   
+    const token = this.props.token
+     const formdata = new FormData()
+    formdata.append('channel_id', channel);
+        const config = {
+            headers: {Authorization: `Bearer ${token}`},
+        }
+          axios
+            .post(API.CREATE_CHANNEL, formdata,config)
+            .then((response) => {
+                 console.log('===>response', response?.data)      
+                if (response?.data) {
+                          
+                  
+                  this.setState({ rtmToken:token })              
+                }
+            })
+    }
   destroy = async () => { await AgoraEngine.current.destroy(); }
   componentDidMount() {
+     const {
+    
+      route: {params},
+      t: translate,user_id
+    } = this.props;
+            const { token } = params
+       const {channel}  = params
+    this.permissionAsk()
+    this.init().then(() => {
+      this.AgoraEngine.current.joinChannel(
+        token,
+        channel,
+        null,
+        this.props.user_id,
+      )
+      this.creatChannel(channel)
+    })
     Keyboard.addListener('keyboardDidShow', this.onKeyboardOpen);
     Keyboard.addListener('keyboardDidHide', this.onKeyboardHide);
-   this.permissionAsk()
-    this.init().then(() =>
-      this.AgoraEngine.current.joinChannel(
-        '00622143d65ab6a440099dec92cbb2c6f2fIAArXiUys+6hcAAmz2gW3wVdJ8iQnVK+gTwA2W34dQMGRsgIv5MAAAAAEABFd1n8RZMvYAEAAQBFky9g',
-        'live_stream',
-        null,
-        0,
-      ),
-    );
+   
    
   }
 onSwitchCamera = () => {
@@ -323,5 +356,19 @@ CreateStream.propTypes = {
   route: shape({params: shape({isEditMode: bool})}).isRequired,
   t: func.isRequired,
 };
+const mapStateToProps = ({auth:{token,user_id,image,full_name}}) => {
+    return {
+        user_id,token, image ,full_name ,
+    }
+}
 
-export default withTranslation()(CreateStream);
+const mapDispatchToProps = {
+    // addFullName: (params) => setFullName(params),
+    addCreateGroupDetail: (params) => setCreateGroupDetails(params),
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withTranslation()(CreateStream))
+

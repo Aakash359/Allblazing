@@ -6,6 +6,7 @@ import { LOGIN,
   loginSuccess, } from '../actions/auth-action-types';
 import httpClient from './http-client';
 import { navigate } from '../routes/navigation-service';
+import { Alert } from 'react-native';
 import {
   setAuthToken,
   setUserId
@@ -23,16 +24,20 @@ export function* login(data) {
   );
 
     if (error) {
-      console.log("Eooorrrrrr",error,result)
+      console.log("Eooorrrrrr",error)
     yield put(loginFailure(error));
-    } else {
-       
-       setAuthToken(result.data.token);
+  } 
+  console.log("LOGIN REPSONE ",result.code)
+      if (result.code === 200) {
+          setAuthToken(result.data.token);
     setUserId(result.data.user_id.toString());
-      yield put(loginSuccess(result.data));
+      yield put(loginSuccess(result.data)); 
+      }
+      else {
+        yield put(loginFailure(error));
+        Alert.alert(result.message)
+      }
      
-    
-  }
 }
 
 // export function* logout() {
