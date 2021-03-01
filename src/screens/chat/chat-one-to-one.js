@@ -45,7 +45,6 @@ return `${num1}_${num2}`
       route: {params},
       t: translate,user_id
     } = this.props;
-            const { thread } = params
        let another_id   = params.id
     let threadName = this.Id_generator(user_id, another_id)
           const text = newMessage[0].text
@@ -67,7 +66,7 @@ return `${num1}_${num2}`
 
           await firestore()
           .collection('Messages')
-          .doc('100_101')
+          .doc(threadName)
           .set(
           {
           latestMessage: {
@@ -91,11 +90,11 @@ return `${num1}_${num2}`
       route: {params},user_id,
       t: translate,
        } = this.props;
-     let thread= params.thread
+     
     let another_id = params.id;
     let userData = params.userData;
     let threadName = this.Id_generator(user_id, another_id)
-    console.log("threadDATAA" ,userData)
+    console.log("threadDATAA" ,userData,another_id)
                  
                   this.setState({id:user_id,userData:userData})
                 this.unsubscribeListener = firestore()
@@ -279,39 +278,6 @@ return `${num1}_${num2}`
               }
 
 
-
-
-  renderItem = (item) => {
-    if (item.index % 2 === 0) {
-      return (
-        <View style={HomeStyles.ChatOneToOneContainerOuter2}>
-          <View style={HomeStyles.ChatOneToOneContainer2}>
-            <Text style={[InviteFriendsStyles.username]}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            </Text>
-            <Text style={[InviteFriendsStyles.location,
-              ChatStyles.chatTimeText2,
-            ]}
-            >
-              {'10:36am'}
-            </Text>
-          </View>
-          <View style={HomeStyles.ChatTrinangleRight} />
-        </View>
-      );
-    }
-
-    return (
-      <View style={HomeStyles.ChatOneToOneContainerOuter}>
-        <View style={HomeStyles.ChatTrinangleLeft} />
-        <View style={HomeStyles.ChatOneToOneContainer}>
-          <Text style={[InviteFriendsStyles.username]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </Text>
-          <Text style={[InviteFriendsStyles.location, ChatStyles.chatTimeText]}>{'04:36pm'}</Text>
-        </View>
-      </View>
-    );
-  }
-
   renderHeader = ({ goBack }) => (
     <View style={HomeStyles.ChatOneToOneHeader}>
       <View style={[InviteFriendsStyles.userWrapper]}>
@@ -335,7 +301,7 @@ return `${num1}_${num2}`
         />}
         <View>
           <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].name}</Text>
-          <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text>
+         {/* <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text> */}
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>

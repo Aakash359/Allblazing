@@ -58,10 +58,10 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      emailId: 'soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
+      emailId: 'abcd@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
       isRemember: true,
       isShow: false,
-      password: '12345678',         //'tarun123', 12345678
+      password: 'tarun123',         //'tarun123', 12345678
       isLoading: false,
     };
   }

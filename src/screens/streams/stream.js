@@ -62,7 +62,7 @@ class Stream extends React.Component {
     
     this.AgoraEngine.current.enableVideo();
     
-    this.AgoraEngine.current.enableAudio();
+     //this.AgoraEngine.current.enableAudio();
     this.AgoraEngine.current.setChannelProfile(ChannelProfile.LiveBroadcasting);
       
   
@@ -247,8 +247,9 @@ onButtonStart = () => {
       route: { params },
       t: translate,
     } = this.props;
-  const  {channelName}  = params
-
+    const { channelName } = params
+    const  {id}  = params
+console.log("Dattaaaaa",channelName ,this.props.user_id)
 
     return (
       <View style ={{flex:1}}>
@@ -265,10 +266,8 @@ onButtonStart = () => {
             <RtcRemoteView.SurfaceView
               style={{width: dimensions.width,
                 height: dimensions.height,}}
-              uid={this.props.user_id}
+              uid={id}
               channelId={channelName}
-              renderMode={VideoRenderMode.Hidden}
-              zOrderMediaOverlay={true}
             />
             
   

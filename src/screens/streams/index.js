@@ -41,12 +41,11 @@ class CreateStream extends React.Component {
 
     this.state = {
       timer: null,
-      height: (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100,
       isFocused: false,
       selected: [],
       title: '',
       toggle: false,
-      joined: false,
+      joined: true,
       flash: false,
       minutes_Counter: '00',
       seconds_Counter: '00',
@@ -137,7 +136,7 @@ class CreateStream extends React.Component {
     this.init().then(() => {
       this.AgoraEngine.current.joinChannel(
         token,
-        channel,
+       channel,
         null,
         this.props.user_id,
       )
@@ -268,8 +267,9 @@ onButtonStart = () => {
     const {
       route: { params },
       t: translate,
+      user_id
     } = this.props;
-
+const {channel}  = params
     return (
       <View style ={{flex:1}}>
         {!joined ?
@@ -281,15 +281,23 @@ onButtonStart = () => {
             />
             <Text style={{ color: 'white' }}>Joining Stream, Please Wait</Text>
           </View>
-          : <View style={{ flex: 1 }}>
+          : <View style={{ flex: 1}}>
             <RtcLocalView.SurfaceView
-              uid={0}
+              uid={this.props.user_id}
               style={{width: dimensions.width,
                 height: dimensions.height,}}
-              channelId={'live_stream'}
+             channelId={channel}
             />
               
-            <View style={StreamStyles.row}>
+            <View style={{ justifyContent: 'center',
+    alignSelf:'center',
+    width:'95%',
+    alignItems: 'center',
+    flexDirection: 'row',
+
+  position:'absolute',
+    // marginHorizontal: Constants.BaseStyle.scale(20),
+    marginTop: Constants.BaseStyle.scale(10),}}>
               <View style={StreamStyles.header}>
                  <Image
                 resizeMode="contain"
