@@ -1,15 +1,29 @@
 import {func} from 'prop-types'
 import React from 'react'
 import {TouchableOpacity, Text, View, Image} from 'react-native'
-import constants from '../../constants'
+import constants, {Colors} from '../../constants'
 import {HomeStyles} from '../../styles'
 import UserImages from '../user-images'
 import moment from 'moment'
 
 export const SingleEvent = ({onPress, event}) => {
-    // console.log('Event Details', event)
-    const date = moment(event?.data).format('D')
-    const month = moment(event?.data).format('MMM')
+    let mdate = new Date()
+
+    if (isNaN(new Date(event?.date))) {
+        mdate = new Date()
+    } else {
+        mdate = new Date(event?.date)
+    }
+    const date = moment(mdate).format('D')
+    const month = moment(mdate).format('MMM')
+    const colors = [
+        Colors.LIGHT_BLUE,
+        Colors.LIGHT_RED,
+        Colors.LIGHT_GREEN,
+        Colors.LIGHT_YELLOW,
+    ]
+
+    const color = Math.floor(Math.random() * colors.length)
 
     return (
         <TouchableOpacity
@@ -17,12 +31,16 @@ export const SingleEvent = ({onPress, event}) => {
             style={HomeStyles.item}
             onPress={onPress}>
             <View style={HomeStyles.row}>
-                <View style={HomeStyles.dateView}>
+                <View
+                    style={[
+                        HomeStyles.dateView,
+                        // {backgroundColor: colors[color]},
+                    ]}>
                     <Text style={HomeStyles.title}>{date}</Text>
                     <Text style={HomeStyles.title}>{month}</Text>
                 </View>
                 <View style={HomeStyles.wrapper}>
-                    <Text style={HomeStyles.header}>{event?.group_name}</Text>
+                    <Text style={HomeStyles.header}>{event?.event_name}</Text>
                     <Text style={HomeStyles.location}>
                         {event?.event_address_one}
                         {event?.event_address_two &&
@@ -30,7 +48,9 @@ export const SingleEvent = ({onPress, event}) => {
                     </Text>
                 </View>
             </View>
-            <Text style={HomeStyles.description}>{event?.description}</Text>
+            <Text style={HomeStyles.description}>
+                {event?.event_description}
+            </Text>
             <View style={[HomeStyles.row, HomeStyles.usersRow]}>
                 <View style={HomeStyles.icons}>
                     <View

@@ -531,8 +531,8 @@ const dimensions = {
                 onPress={() => { setLike(!like); }}
               >
                 <Image
-                  source={like ? Constants.Images.selectedHeart : Constants.Images.heart}
-                  style={LiveFeedStyles.heartIcon}
+                    source={Constants.Images.send}
+                    style={LiveFeedStyles.messageIcon}
                 />
               </TouchableOpacity>
               <Text style={LiveFeedStyles.followText}>{likes}</Text>

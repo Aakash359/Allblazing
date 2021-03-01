@@ -35,6 +35,7 @@ class UserProfile extends Component {
             option: 'Goals',
             optionList: ['Goals', "PB's", 'Likes'],
             list: [],
+            requestLoading: false,
         }
     }
     componentDidMount() {
@@ -243,6 +244,7 @@ class UserProfile extends Component {
     return chatIDpre.join('_');
   };
     sendFriendRequest = async () => {
+        this.setState({requestLoading: true})
         const url = API.SEND_FRIEND_REQUEST
         const token = await getAuthToken()
         const config = {
@@ -264,9 +266,11 @@ class UserProfile extends Component {
             } else {
                 Alert.alert('Friend Request', res?.data?.message)
             }
+            this.setState({requestLoading: false})
         } catch (error) {
             console.log('FRIEND REQUEST ERROR', error)
             Alert.alert('Friend Request', error?.message)
+            this.setState({requestLoading: false})
         }
     }
 
@@ -343,20 +347,30 @@ class UserProfile extends Component {
                                                 size={25}
                                             />
                                         ) : !this.state.list?.friend ? (
-                                            <TouchableOpacity
-                                                activeOpacity={0.7}
-                                                // onPress={() => setFollowStatus(!followStatus)}
-                                                onPress={() =>
-                                                    this.sendFriendRequest()
-                                                }>
-                                                <Image
-                                                    source={
-                                                        Constants.Images.add
+                                            this.state.requestLoading ? (
+                                                <ActivityIndicator
+                                                    size="small"
+                                                    color={
+                                                        Constants.Colors.WHITE
                                                     }
-                                                    resizeMode="contain"
-                                                    style={ProfileStyles.icon}
                                                 />
-                                            </TouchableOpacity>
+                                            ) : (
+                                                <TouchableOpacity
+                                                    activeOpacity={0.7}
+                                                    onPress={() =>
+                                                        this.sendFriendRequest()
+                                                    }>
+                                                    <Image
+                                                        source={
+                                                            Constants.Images.add
+                                                        }
+                                                        resizeMode="contain"
+                                                        style={
+                                                            ProfileStyles.icon
+                                                        }
+                                                    />
+                                                </TouchableOpacity>
+                                            )
                                         ) : //   (
                                         //     <TouchableOpacity
                                         //   activeOpacity={0.7}

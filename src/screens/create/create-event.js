@@ -25,6 +25,9 @@ import RNDateTimePicker from '@react-native-community/datetimepicker'
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
 import moment from 'moment'
 import {Platform} from 'react-native'
+import {getAuthToken} from '../../helpers/auth'
+import API from '../../constants/baseApi'
+import Axios from 'axios'
 class CreateEvent extends Component {
     constructor(props) {
         super(props)
@@ -39,36 +42,19 @@ class CreateEvent extends Component {
             time: '',
             isLoading: false,
             isEnabled: false,
-            EventTypeSelectedId: 2,
-            EventCategorySelectedId: 4,
+            EventTypeSelectedId: null,
+            EventCategorySelectedId: null,
             eventType: [
                 {
-                    id: 0,
+                    id: 1,
                     name: 'Individual',
                 },
                 {
-                    id: 1,
+                    id: 2,
                     name: 'Group',
                 },
             ],
-            Category: [
-                {
-                    id: 0,
-                    name: 'Train',
-                },
-                {
-                    id: 1,
-                    name: 'Race',
-                },
-                {
-                    id: 2,
-                    name: 'Coach',
-                },
-                {
-                    id: 3,
-                    name: 'Club',
-                },
-            ],
+            Category: [],
             tempDateTime: new Date(),
             showDate: false,
             tempDate: new Date(),
@@ -76,19 +62,45 @@ class CreateEvent extends Component {
         }
     }
 
+    getEventCategory = async () => {
+        const url = API.EVENT_CATEGORY
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        try {
+            const res = await Axios.get(url, config)
+            if (res?.data?.status) {
+                this.setState({Category: res?.data?.data?.result})
+            }
+        } catch (error) {
+            console.log('ERROR EVENT CATEGORY', error)
+        }
+    }
+
     NameStore = () => {
         if (this.state.photo === '') {
             Alert.alert('', 'Please select image', '')
-        } else if (this.state.data > 0) {
+        } else if (!this.state.EventTypeSelectedId) {
             Alert.alert('', 'Please select event type', '')
-        } else if (this.state.Category > 0) {
+        } else if (!this.state.EventCategorySelectedId) {
             Alert.alert('', 'Please select event category', '')
         } else if (this.state.name === '') {
-            Alert.alert('', 'Please enter full name', '')
+            Alert.alert('', 'Please enter event name', '')
         } else if (this.state.date === '') {
             Alert.alert('', 'Please enter date', '')
+        } else if (this.state.time === '') {
+            Alert.alert('', 'Please enter time', '')
+        } else if (this.state.address1 === '') {
+            Alert.alert('', 'Please enter address line 1', '')
+        } else if (this.state.address2 === '') {
+            Alert.alert('', 'Please enter address line 2', '')
         } else if (this.state.description === '') {
             Alert.alert('', 'Please enter description', '')
+        } else if (this.state.description?.length < 50) {
+            Alert.alert('', 'Please enter minimum 50 characters')
         } else {
             this.props.navigation.navigate('AddMember', {
                 iseventPage: true,
@@ -96,13 +108,10 @@ class CreateEvent extends Component {
                 photo: this.state.photo,
                 isEnabled: this.state.isEnabled,
                 eventType: this.state.eventType?.[
-                    this.state.EventTypeSelectedId
+                    this.state.EventTypeSelectedId - 1
                 ]?.name,
-                Category:
-                    1 ||
-                    this.state.Category?.[
-                        this.state.EventCategorySelectedId
-                    ]?.id.toString(),
+                Category: this.state.EventCategorySelectedId,
+
                 address1: this.state.address1,
                 address2: this.state.address2,
                 time: this.state.time,
@@ -190,6 +199,10 @@ class CreateEvent extends Component {
                     ? this.state.showTime
                     : !this.state.showTime,
         })
+    }
+
+    componentDidMount() {
+        this.getEventCategory()
     }
 
     render() {
