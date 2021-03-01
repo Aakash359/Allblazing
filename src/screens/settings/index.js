@@ -60,11 +60,7 @@ const settingList = [
         payload: {title: 'settings.Terms & Conditions'},
         route: 'StaticContent',
     },
-    {
-        label: 'settings.Strava',
-        payload: {title: 'settings.Strava'},
-        route: 'Strava',
-    },
+
     {
         label: 'settings.Logout',
         payload: {},

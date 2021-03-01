@@ -20,6 +20,8 @@ import API from '../../constants/baseApi'
 import {getAuthToken} from '../../helpers/auth'
 import Axios from 'axios'
 import {ActivityIndicator} from 'react-native'
+import moment from 'moment'
+import {connect} from 'react-redux'
 
 class SingleEventDetail extends React.Component {
     constructor(props) {
@@ -29,27 +31,18 @@ class SingleEventDetail extends React.Component {
             eventDetails: {},
             isLoading: false,
             user: {},
+            Category: [],
         }
     }
 
-    onPress = () => {
-        const {
-            navigation: {navigate, setParams},
-            route: {params},
-        } = this.props
+    enviteFriend = () => {
+        const {eventDetails: event_id} = this.state
 
-        if (params?.isMember) {
-            const payload = {
-                hasCheckBox: false,
-                hasTick: true,
-                routeName: 'SingleEventDetail',
-                title: 'events.MyFriends',
-            }
-
-            navigate('StravaUsers', payload)
-        } else {
-            setParams({isMember: true})
+        const payload = {
+            event_id,
         }
+
+        navigate('StravaUsers', payload)
     }
 
     renderItem = () => <InvitedUser onPress={this.onEventPress} />
@@ -114,7 +107,26 @@ class SingleEventDetail extends React.Component {
             console.log('ERROR EVENT DETAILS', error)
         }
     }
+
+    getEventCategory = async () => {
+        const url = API.EVENT_CATEGORY
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        try {
+            const res = await Axios.get(url, config)
+            if (res?.data?.status) {
+                this.setState({Category: res?.data?.data?.result})
+            }
+        } catch (error) {
+            console.log('ERROR EVENT CATEGORY', error)
+        }
+    }
     componentDidMount() {
+        this.getEventCategory()
         this.subscribe = this.props.navigation.addListener('focus', () => {
             this.getEventDetails()
         })
@@ -124,9 +136,36 @@ class SingleEventDetail extends React.Component {
         const {
             route: {params},
             t: translate,
+            user_id,
         } = this.props
 
-        const {eventDetails, isLoading, user} = this.state
+        const {eventDetails, isLoading, user, Category} = this.state
+        const userImage = user?.image
+            ? user?.image === 'N/A'
+                ? Constants.Images.tabBarProfile
+                : {uri: user?.image}
+            : Constants.Images.tabBarProfile
+
+        const eventImage = eventDetails?.image
+            ? eventDetails?.image === 'N/A'
+                ? Constants.Images.tabBarProfile
+                : {uri: eventDetails?.image}
+            : Constants.Images.tabBarProfile
+
+        const eventCateogry = Category.find(
+            (i) => i?.id === eventDetails?.event_category_id
+        )?.name
+
+        const eventTime = moment(
+            new Date(parseInt(eventDetails?.time, 10))
+        ).format('LT')
+        const eventDate = moment(
+            new Date(parseInt(eventDetails?.date, 10))
+        ).format('DD MMM YYYY')
+
+        const isMyEvent = eventDetails?.user_id === user_id
+
+        console.log('IS MY EVENT', isMyEvent)
 
         return (
             <View style={[CommonStyles.container, EventDetailStyles.container]}>
@@ -148,11 +187,8 @@ class SingleEventDetail extends React.Component {
                         />
                         <View style={EventDetailStyles.userContainer}>
                             <Image
-                                resizeMode="contain"
-                                source={{
-                                    uri:
-                                        'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
-                                }}
+                                resizeMode="cover"
+                                source={userImage}
                                 style={InviteFriendsStyles.userImage}
                             />
                             <View style={EventDetailStyles.userInformation}>
@@ -179,14 +215,14 @@ class SingleEventDetail extends React.Component {
                                         EventDetailStyles.eventType,
                                         EventDetailStyles.marginLeft,
                                     ]}>
-                                    {translate('events.Racing')}
+                                    {translate(`events.${eventCateogry}`)}
                                 </Text>
                                 <Text
                                     style={[
                                         EventDetailStyles.subtitle,
                                         EventDetailStyles.marginLeft,
                                     ]}>
-                                    {'(1 Km)'}
+                                    {''}
                                 </Text>
                             </View>
                         </View>
@@ -210,9 +246,11 @@ class SingleEventDetail extends React.Component {
                                     EventDetailStyles.subtitle,
                                     EventDetailStyles.marginLeft,
                                 ]}>
-                                {
-                                    '121 Dizzy Cir, Santee, SC 29142, United States'
-                                }
+                                {`${eventDetails?.event_address_one} ${
+                                    eventDetails?.event_address_two
+                                        ? `, ${eventDetails?.event_address_two}`
+                                        : ''
+                                }`}
                             </Text>
                         </View>
                         <View
@@ -230,7 +268,7 @@ class SingleEventDetail extends React.Component {
                                     EventDetailStyles.subtitle,
                                     EventDetailStyles.marginLeft,
                                 ]}>
-                                {'11:00 AM, 20 Oct 2020'}
+                                {`${eventTime}, ${eventDate}`}
                             </Text>
                         </View>
                         <View style={EventDetailStyles.divider} />
@@ -238,22 +276,26 @@ class SingleEventDetail extends React.Component {
                             {translate('events.Description')}
                         </Text>
                         <Text style={EventDetailStyles.eventDescription}>
-                            {
-                                "Emily and Maaike go head to head over 1km. For more info on the runners' stats."
-                            }
+                            {eventDetails?.description}
                         </Text>
                         <View style={EventDetailStyles.divider} />
-                        <View style={[EventDetailStyles.members]}>
-                            <UserImages
-                                style={EventDetailStyles.memberImages}
-                                users={[1, 2, 3, 4, 5]}
-                            />
-                            <Text style={EventDetailStyles.subtitle}>
-                                {translate('events.Members are watching')}
-                            </Text>
-                        </View>
-                        <View style={EventDetailStyles.divider} />
-                        {!params?.isMember && (
+                        {eventDetails?.watchers && (
+                            <>
+                                <View style={[EventDetailStyles.members]}>
+                                    <UserImages
+                                        style={EventDetailStyles.memberImages}
+                                        users={[1, 2, 3, 4, 5]}
+                                    />
+                                    <Text style={EventDetailStyles.subtitle}>
+                                        {translate(
+                                            'events.Members are watching'
+                                        )}
+                                    </Text>
+                                </View>
+                                <View style={EventDetailStyles.divider} />
+                            </>
+                        )}
+                        {eventDetails?.requested && (
                             <>
                                 <Text style={EventDetailStyles.header}>
                                     {translate('events.invitation')}
@@ -299,7 +341,7 @@ class SingleEventDetail extends React.Component {
                                 <View style={EventDetailStyles.divider} />
                             </>
                         )}
-                        {!params?.isInviteSent && (
+                        {!isMyEvent && eventDetails?.join ? (
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={[
@@ -308,11 +350,29 @@ class SingleEventDetail extends React.Component {
                                 ]}
                                 onPress={this.onPress}>
                                 <Text style={EventDetailStyles.buttonText}>
-                                    {params?.isMember
+                                    {translate('events.Join')}
+                                    {/* {isMyEvent
                                         ? translate('events.invite')
-                                        : translate('events.Join')}
+                                        : translate('events.Join')} */}
                                 </Text>
                             </TouchableOpacity>
+                        ) : (
+                            isMyEvent && (
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    style={[
+                                        EventDetailStyles.button,
+                                        EventDetailStyles.inviteBtn,
+                                    ]}
+                                    onPress={this.onPress}>
+                                    <Text style={EventDetailStyles.buttonText}>
+                                        {translate('events.invite')}
+                                        {/* {isMyEvent
+                                            ? translate('events.invite')
+                                            : translate('events.Join')} */}
+                                    </Text>
+                                </TouchableOpacity>
+                            )
                         )}
                         {params?.isInviteSent && (
                             <View style={EventDetailStyles.margin}>
@@ -350,4 +410,10 @@ SingleEventDetail.propTypes = {
     t: func.isRequired,
 }
 
-export default withTranslation()(SingleEventDetail)
+const mapStatesToProps = ({auth: {user_id}}) => {
+    return {
+        user_id,
+    }
+}
+
+export default connect(mapStatesToProps)(withTranslation()(SingleEventDetail))
