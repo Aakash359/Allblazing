@@ -21,7 +21,7 @@ class Chats extends React.Component {
 const nameObj = item.users.filter(data => {
               return data.id != user_id.toString()
 })
-    console.log( "nameeeee",nameObj)
+    // console.log( "nameeeee",nameObj)
     return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} data = {item} nameObj ={nameObj} />;
   }
 

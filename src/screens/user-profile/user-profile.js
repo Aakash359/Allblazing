@@ -22,6 +22,7 @@ import {withTranslation} from 'react-i18next'
 import {getAuthToken} from '../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
 import Axios from 'axios'
+import firestore from '@react-native-firebase/firestore';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -99,9 +100,9 @@ class UserProfile extends Component {
         </TouchableOpacity>
     )
 
-    // componentDidMount() {
-    //   this.displayOptions();
-    // }
+    componentDidMount() {
+      
+    }
     OnUnfollow = async () => {
         const {
             navigation: {goBack, navigate},
@@ -190,7 +191,58 @@ class UserProfile extends Component {
                 })
             })
     }
-
+    startChat = () => {
+         const {
+            navigation: {goBack, navigate},
+        } = this.props
+        const user = [];
+          const chatID = [];
+       const details = []
+        const data = this.props.route.params.data
+        const data2 = this.props.user_id;
+      const  user1 = {
+            id: data.user_id,
+            pic: data.autherImage,
+            name: data.autherName,
+            address:"dummmy"
+           
+      }
+       
+        details.push(user1)
+ const user2 = {
+            id: data2.user_id,
+            pic: data2.image,
+     name: data2.full_name,
+            address:"dummy"
+           
+        }
+       
+        user.push(user1,user2)
+        
+        
+    chatID.push(data.user_id.toString());
+        chatID.push(data2.user_id.toString());
+        console.log("IDDSSSS",chatID ,user)
+        firestore()
+        .collection('chatroom')
+        .add({
+          ID:chatID,
+          users: user
+        })
+            .then((data2) => {
+            console.log("dataaaaaaFIREBASE CREEATED",data2)
+          navigate('ChatOneToOne' ,{id:data.user_id,userData:details})
+        })
+    }
+    chatID = (id1,id2) => {
+    const chatterID = id1;
+    const chateeID = id2;
+    const chatIDpre = [];
+    chatIDpre.push(chatterID);
+    chatIDpre.push(chateeID);
+    chatIDpre.sort();
+    return chatIDpre.join('_');
+  };
     sendFriendRequest = async () => {
         this.setState({requestLoading: true})
         const url = API.SEND_FRIEND_REQUEST
@@ -278,7 +330,9 @@ class UserProfile extends Component {
                                                 }
                                             </Text>
                                         </View>
-                                        <TouchableOpacity activeOpacity={0.7}>
+                                        <TouchableOpacity activeOpacity={0.7} onPress={() =>
+                                                    this.startChat()
+                                                }>
                                             <Image
                                                 source={Constants.Images.chat}
                                                 resizeMode="contain"
@@ -502,8 +556,8 @@ UserProfile.propTypes = {
     t: func.isRequired,
 }
 
-const mapStateToProps = ({profile: follow_id}) => ({
-    follow_id,
+const mapStateToProps = ({profile: follow_id,auth:user_id}) => ({
+    follow_id,user_id
 })
 
 const mapDispatchToProps = {

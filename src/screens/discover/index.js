@@ -142,6 +142,7 @@ class FeedScreen extends Component {
                         // console.log("USER SCREEN PRESSED")
                         this.props.navigation.navigate('UserProfile', {
                             id: item.user_id,
+                            data:item
                         })
                     }}>
                     <View
@@ -214,7 +215,8 @@ class FeedScreen extends Component {
         )
     }
 
-    filterData = ({item}) => {
+    filterData = ({ item }) => {
+        console.log("ITEEEMRSS",item)
         const pic =
             item?.autherImage === 'N/A'
                 ? Constants.Images.tabBarProfile
@@ -245,7 +247,7 @@ class FeedScreen extends Component {
                     },
                 ]}
                 onPress={() => {
-                    this.props.navigation.navigate('Stream',{channelName:item?.channel_id})
+                    this.props.navigation.navigate('Stream',{channelName:item?.channel_id,id:item.user_id})
                 }}>
                 <Image
                     source={pic}
