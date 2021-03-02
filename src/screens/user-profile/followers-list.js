@@ -188,7 +188,7 @@ class FollowersList extends Component {
                 </View>
                 <View>
                     <Text style={FollowingStyles.nameText}>
-                        {request ? item?.full_mane : item.followingName}
+                        {request ? item?.full_name : item.followingName}
                     </Text>
                     <Text style={FollowingStyles.locationText}>
                         Santee, United States
