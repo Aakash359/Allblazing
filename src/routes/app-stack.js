@@ -43,9 +43,9 @@ import FeedDetailScreen from '../screens/discover/feed-detail'
 import PostLikeListing from '../screens/discover/post-like-listing'
 import Notifications from '../screens/home/notifications'
 import Runners from '../screens/home/runners'
-import LiveStream from '../screens/streams';
-import Stream from '../screens/streams/stream';
-import StreamSelection from '../screens/streams/stream-selection';
+import LiveStream from '../screens/streams'
+import Stream from '../screens/streams/stream'
+import StreamSelection from '../screens/streams/stream-selection'
 import FollowersList from '../screens/user-profile/followers-list'
 import FollowingList from '../screens/user-profile/following-list'
 import EditProfile from '../screens/user-profile/edit-profile'
@@ -224,7 +224,7 @@ export default function MainNavigator() {
                     headerTintColor: Constants.Colors.WHITE,
                     headerTitle: route?.params?.title
                         ? translate(route.params.title)
-                        : translate('settings.Strava Users'),
+                        : translate('settings.My Friends'),
                     headerTitleAlign: 'center',
                 })}
             />
@@ -406,9 +406,9 @@ export default function MainNavigator() {
                     headerTitleAlign: 'center',
                 })}
             />
-             <AppStack.Screen
+            <AppStack.Screen
                 name="StreamSelection"
-                component={ StreamSelection}
+                component={StreamSelection}
                 options={() => ({
                     headerBackTitleVisible: false,
                     headerTintColor: Constants.Colors.WHITE,
@@ -416,16 +416,16 @@ export default function MainNavigator() {
                     headerTitleAlign: 'center',
                 })}
             />
-           
+
             <AppStack.Screen
                 name="LiveStream"
                 component={LiveStream}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
             />
-             <AppStack.Screen
+            <AppStack.Screen
                 name="Stream"
                 component={Stream}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
             />
             <AppStack.Screen
                 name="Runners"
@@ -596,7 +596,7 @@ export default function MainNavigator() {
             <AppStack.Screen
                 name="LiveFeed"
                 component={LiveFeed}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
             />
             <AppStack.Screen
                 name="FollowersList"

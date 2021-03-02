@@ -28,7 +28,7 @@ const API = {
     CONTACT_US: BASE_URL + '/contact_us',
     USER_LIST: BASE_URL + '/user_list',
     RTC_TOKEN: BASE_URL + '/agoraRtcToken',
-     CREATE_CHANNEL: BASE_URL + '/channel',
+    CREATE_CHANNEL: BASE_URL + '/channel',
     RTM: BASE_URL + '/agoraRtmToken',
     GROUP_TYPE: BASE_URL + '/groupType',
     EVENT: BASE_URL + '/event',
@@ -51,6 +51,10 @@ const API = {
     REJECT_GROUP_REQUEST: `${BASE_URL}/group/reject`,
     EVENT_CATEGORY: `${BASE_URL}/event_category`,
     REPORT_GROUP: `${BASE_URL}/group/report`,
+    EVENT_INVITE: `${BASE_URL}/event/invite`,
+    WITHDRAW_EVENT_INVITE: `${BASE_URL}/event/withdraw`,
+    ACCEPT_EVENT_INVITE: `${BASE_URL}/event/accept`,
+    REJECT_EVENT_INVITE: `${BASE_URL}/event/decline`,
     // USERLIST : BASE_URL +
 }
 

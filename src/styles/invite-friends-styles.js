@@ -113,9 +113,22 @@ export default StyleSheet.create({
         color: Constants.Colors.LIGHT_ORANGE,
         fontSize: 12,
     },
+    accept: {
+        ...Constants.Fonts.Small,
+        color: Constants.Colors.LIGHT_GREEN,
+        fontSize: 12,
+    },
     pendingBtn: {
         alignItems: 'center',
         borderColor: Constants.Colors.LIGHT_ORANGE,
+        borderWidth: 1,
+        flex: 0.3,
+        height: 24,
+        justifyContent: 'center',
+    },
+    acceptBtn: {
+        alignItems: 'center',
+        borderColor: Constants.Colors.LIGHT_GREEN,
         borderWidth: 1,
         flex: 0.3,
         height: 24,
