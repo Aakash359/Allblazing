@@ -213,6 +213,22 @@ export const getUserId = async () => {
         return null
     }
 }
+export const setUserCred = async (data) => {
+    const {email, password, remember} = data
+    console.log('ASYNC STORAGE: ', data)
+    if (remember) {
+        try {
+            await AsyncStorage.setItem(
+                'userCred',
+                JSON.stringify({email, password})
+            )
+        } catch (error) {
+            logError(error, '[setUserCread] AsyncStorge Error')
+        }
+    } else {
+        await AsyncStorage.removeItem('userCred')
+    }
+}
 export const setForgotOtpToken = async (value = '') => {
     try {
         await AsyncStorage.setItem(FORGOTTOKEN, value)
