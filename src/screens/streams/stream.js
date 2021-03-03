@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Keyboard,
-  PermissionsAndroid
+  PermissionsAndroid,
+  Alert
 } from 'react-native';
 import Share from 'react-native-share';
 import {CommonActions} from '@react-navigation/native';
@@ -60,7 +61,7 @@ class Stream extends React.Component {
       '22143d65ab6a440099dec92cbb2c6f2f',
     );
     
-    this.AgoraEngine.current.enableVideo();
+  this.AgoraEngine.current.enableVideo();
     
      //this.AgoraEngine.current.enableAudio();
     this.AgoraEngine.current.setChannelProfile(ChannelProfile.LiveBroadcasting);
@@ -96,7 +97,23 @@ class Stream extends React.Component {
     
     this.AgoraEngine.current.addListener('RemoteVideoStateChanged', (uid, state) => {
       // if (uid === 1) setBroadcasterVideoState(state);
-      console.log("Startuusss changed" ,state)
+      console.log("Startuusss changed", state)
+      if (state == 0) {
+     Alert.alert(
+        '',
+        'Stream is finished by user',
+        [
+          {
+            text: 'OK', onPress: () => {
+              this.LeaveChannel()
+              console.log('OK Pressed')
+            }
+          },
+          ],
+        {Cancelable: false},
+      );
+        
+      }
     });
   };
   permissionAsk = async () => {
@@ -268,6 +285,8 @@ console.log("Dattaaaaa",channelName ,this.props.user_id)
                 height: dimensions.height,}}
               uid={id}
               channelId={channelName}
+              renderMode={VideoRenderMode.Hidden}
+                           
             />
             
   
