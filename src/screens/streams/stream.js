@@ -266,7 +266,7 @@ console.log("Dattaaaaa",channelName ,this.props.user_id)
             <RtcRemoteView.SurfaceView
               style={{width: dimensions.width,
                 height: dimensions.height,}}
-              uid={id}
+              uid={192}
               channelId={channelName}
             />
             
