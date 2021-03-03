@@ -12,6 +12,8 @@ import {getAuthToken} from '../../helpers/auth'
 import Axios from 'axios'
 import {ActivityIndicator} from 'react-native'
 import {Colors} from '../../constants'
+import _ from 'lodash'
+import {RefreshControl} from 'react-native'
 
 class Events extends React.Component {
     constructor(props) {
@@ -24,6 +26,7 @@ class Events extends React.Component {
             isLoading: true,
             error: false,
             msg: '',
+            refreshing: false,
         }
     }
 
@@ -53,13 +56,9 @@ class Events extends React.Component {
     )
 
     getGeoLocation = async (submit = false) => {
-        console.log('GETTING LOCATION')
-
         Geolocation.getCurrentPosition(
             (position) => {
-                console.log('POSTION', position)
                 this.setState({location: position.coords}, () => {
-                    console.log('Location', this.state.location)
                     this.getEvents()
                 })
             },
@@ -74,9 +73,7 @@ class Events extends React.Component {
             const permissionStatus = await Permissions.check(
                 PERMISSIONS.IOS.LOCATION_ALWAYS
             )
-            request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {
-                console.log('PERMISSIN ASK IOS', res)
-            })
+            request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {})
             Geolocation.requestAuthorization()
             this.getGeoLocation(submit)
         } else {
@@ -144,9 +141,10 @@ class Events extends React.Component {
                 if (res?.data?.status) {
                     if (res?.data?.data?.result?.length) {
                         this.setState({
-                            events: res?.data?.data?.result,
+                            events: _.reverse(res?.data?.data?.result),
                             isLoading: false,
                             error: false,
+                            refreshing: false,
                         })
                     }
                 } else {
@@ -154,11 +152,17 @@ class Events extends React.Component {
                         isLoading: false,
                         error: true,
                         msg: res?.data?.message,
+                        refreshing: false,
                     })
                 }
             }
         } catch (error) {
-            this.setState({isLoading: false, error: true, msg: error?.message})
+            this.setState({
+                isLoading: false,
+                error: true,
+                msg: error?.message,
+                refreshing: false,
+            })
         }
     }
 
@@ -173,10 +177,14 @@ class Events extends React.Component {
     componentWillUnmount() {
         this.unsubscribe()
     }
+    onRefresh = () => {
+        this.setState({refreshing: true})
+        this.getLocation()
+    }
 
     render() {
         const {params} = this.props
-        const {visible, isLoading, events, error, msg} = this.state
+        const {visible, isLoading, events, error, msg, refreshing} = this.state
 
         return (
             <View style={HomeStyles.container}>
@@ -199,7 +207,14 @@ class Events extends React.Component {
                             </View>
                         ) : (
                             <FlatList
-                                data={this.state.events.reverse()}
+                                refreshControl={
+                                    <RefreshControl
+                                        tintColor={Colors.WHITE}
+                                        refreshing={refreshing}
+                                        onRefresh={this.onRefresh}
+                                    />
+                                }
+                                data={this.state.events}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {

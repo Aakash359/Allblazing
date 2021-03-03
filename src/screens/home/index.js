@@ -22,6 +22,14 @@ import Events from '../events'
 import Map from '../events/map-view'
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import homeStyles from '../../styles/home-styles'
+import Geolocation from '@react-native-community/geolocation'
+import {connect} from 'react-redux'
+import {getAuthToken} from '../../helpers/auth'
+import API from '../../constants/baseApi'
+import Axios from 'axios'
+import {setProfileDetails} from '../../reducers/baseServices/profile'
+import _ from 'lodash'
+
 const optionList = ['Map', 'Events', 'Runners']
 const markers = [
     {
@@ -32,33 +40,6 @@ const markers = [
         image:
             'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
         title: '',
-    },
-]
-
-const events = [
-    {
-        coordinate: {
-            latitude: 30.7435,
-            longitude: 76.7784,
-        },
-        title: '',
-        type: 'racing',
-    },
-    {
-        coordinate: {
-            latitude: 30.721,
-            longitude: 76.7784,
-        },
-        title: '',
-        type: 'coaching',
-    },
-    {
-        coordinate: {
-            latitude: 30.7585,
-            longitude: 76.7895,
-        },
-        title: '',
-        type: 'training',
     },
 ]
 
@@ -74,10 +55,102 @@ class Home extends React.Component {
                 latitudeDelta: 0.0922,
                 longitude: 76.7794,
                 longitudeDelta: 0.0421,
-                showEvents: true,
             },
+            showEvents: true,
+            events: [],
         }
     }
+
+    getPosition = Geolocation.watchPosition((position) => {
+        this.setState({region: {...this.state.region, ...position.coords}})
+    })
+
+    getEvents = async () => {
+        const token = await getAuthToken()
+        const {
+            region: {latitude, longitude},
+        } = this.state
+        const url = API.EVENT
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                latitude,
+                longitude,
+                radius: '20',
+            }),
+        }
+
+        try {
+            const res = await Axios.get(url, config)
+            if (res?.data?.code == 200) {
+                if (res?.data?.status) {
+                    if (res?.data?.data?.result?.length) {
+                        this.setState({
+                            events: _.reverse(res?.data?.data?.result),
+                            isLoading: false,
+                            error: false,
+                            refreshing: false,
+                        })
+                    }
+                } else {
+                    this.setState({
+                        isLoading: false,
+                        error: true,
+                        msg: res?.data?.message,
+                        refreshing: false,
+                    })
+                }
+            }
+        } catch (error) {
+            this.setState({
+                isLoading: false,
+                error: true,
+                msg: error?.message,
+                refreshing: false,
+            })
+        }
+    }
+    UserProfileDetails = async () => {
+        const {user_id, addProfileDetail} = this.props
+        const token = await getAuthToken()
+        const config = {
+            headers: {Authorization: `Bearer ${token}`},
+        }
+        this.setState({
+            Loading: true,
+        })
+        Axios.post(
+            API.PROFILE_DETAILS,
+            {
+                user_id: user_id,
+            },
+            config
+        )
+            .then((response) => {
+                if (response.data.data.result) {
+                    this.setState({list: response?.data?.data?.result})
+                    addProfileDetail(response?.data?.data?.result)
+                }
+            })
+            .finally(() => {
+                this.setState({
+                    Loading: false,
+                })
+            })
+    }
+
+    componentDidMount() {
+        this.getEvents()
+        this.UserProfileDetails()
+    }
+
+    componentWillUnmount() {
+        Geolocation.stopObserving()
+        Geolocation.clearWatch(this.getPosition)
+    }
+
     renderCustomMarker = (marker) => {
         let image = Constants.Images.blueLocation
 
@@ -162,33 +235,43 @@ class Home extends React.Component {
                         style={[StyleSheet.absoluteFillObject]}
                         provider={PROVIDER_GOOGLE}
                         region={this.state.region}
-                        customMapStyle={Constants.MapStyle}>
+                        customMapStyle={Constants.MapStyle}
+                        showsUserLocation>
                         {markers.map((marker, index) => (
                             <Marker
                                 key={`marker-${index}`}
-                                coordinate={marker.coordinate}
+                                coordinate={this.state.region}
                                 title={marker.title}
                                 description={marker.description}
                                 // onPress={onMarkerPress}
                             >
                                 <View style={MapViewStyles.outerCircle}>
                                     <Image
-                                        source={{uri: marker.image}}
+                                        source={{uri: this.props.image}}
                                         style={MapViewStyles.image}
                                     />
                                 </View>
                             </Marker>
                         ))}
                         {this.state.showEvents &&
-                            events.map((marker, index) => (
-                                <Marker
-                                    key={`custom-marker-${index}`}
-                                    coordinate={marker.coordinate}
-                                    // onPress={onEventPress}
-                                >
-                                    {this.renderCustomMarker(marker)}
-                                </Marker>
-                            ))}
+                            this.state.events.map((marker, index) => {
+                                if (marker?.latitude_first) {
+                                    return (
+                                        <Marker
+                                            key={`custom-marker-${index}`}
+                                            coordinate={{
+                                                latitude:
+                                                    marker?.latitude_first,
+                                                longitude:
+                                                    marker?.longitude_first,
+                                            }}
+                                            // onPress={onEventPress}
+                                        >
+                                            {this.renderCustomMarker(marker)}
+                                        </Marker>
+                                    )
+                                }
+                            })}
                     </MapView>
 
                     <View style={{position: 'absolute'}}>
@@ -297,6 +380,11 @@ class Home extends React.Component {
         } = this.props
         const {keyword, option} = this.state
 
+        console.log(
+            'EVENTS',
+            this.state.events.filter((i) => i?.latitude_first)
+        )
+
         return (
             <View style={HomeStyles.container}>
                 {this.state.option !== 'Map' && (
@@ -367,4 +455,39 @@ Home.propTypes = {
     }).isRequired,
 }
 
-export default Home
+const mapStateToProps = ({
+    profile: {
+        image,
+        full_name,
+        age,
+        time,
+        gender,
+        motto_description,
+        followingCount,
+        followerCount,
+        groupCount,
+        postCount,
+        level,
+        address,
+    },
+    auth: {user_id},
+}) => ({
+    image,
+    full_name,
+    age,
+    gender,
+    level,
+    time,
+    motto_description,
+    user_id,
+    followingCount,
+    followerCount,
+    groupCount,
+    postCount,
+    address,
+})
+const mapDispatchToProps = {
+    addProfileDetail: (params) => setProfileDetails(params),
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
