@@ -22,7 +22,7 @@ import {withTranslation} from 'react-i18next'
 import {getAuthToken} from '../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
 import Axios from 'axios'
-import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore'
 
 class UserProfile extends Component {
     constructor(props) {
@@ -43,6 +43,7 @@ class UserProfile extends Component {
     }
 
     UserProfileDetails = async () => {
+        this.setState({Loading: true})
         const id =
             this.props.route.params.follow_id || this.props.route.params.id
         console.log('userid==>', id)
@@ -51,9 +52,7 @@ class UserProfile extends Component {
         const config = {
             headers: {Authorization: `Bearer ${token}`},
         }
-        this.setState({
-            Loading: true,
-        })
+
         axios
             .post(
                 API.PROFILE_DETAILS,
@@ -75,6 +74,7 @@ class UserProfile extends Component {
             .finally(() => {
                 this.setState({
                     Loading: false,
+                    isLoading: false,
                 })
             })
     }
@@ -100,9 +100,6 @@ class UserProfile extends Component {
         </TouchableOpacity>
     )
 
-    componentDidMount() {
-      
-    }
     OnUnfollow = async () => {
         const {
             navigation: {goBack, navigate},
@@ -192,57 +189,54 @@ class UserProfile extends Component {
             })
     }
     startChat = () => {
-         const {
+        const {
             navigation: {goBack, navigate},
         } = this.props
-        const user = [];
-          const chatID = [];
-       const details = []
+        const user = []
+        const chatID = []
+        const details = []
         const data = this.props.route.params.data
-        const data2 = this.props.user_id;
-      const  user1 = {
+        const data2 = this.props.user_id
+        const user1 = {
             id: data.user_id,
             pic: data.autherImage,
             name: data.autherName,
-            address:"dummmy"
-           
-      }
-       
+            address: 'dummmy',
+        }
+
         details.push(user1)
- const user2 = {
+        const user2 = {
             id: data2.user_id,
             pic: data2.image,
-     name: data2.full_name,
-            address:"dummy"
-           
+            name: data2.full_name,
+            address: 'dummy',
         }
-       
-        user.push(user1,user2)
-        
-        
-    chatID.push(data.user_id.toString());
-        chatID.push(data2.user_id.toString());
-        console.log("IDDSSSS",chatID ,user)
+
+        user.push(user1, user2)
+
+        chatID.push(data.user_id.toString())
+        chatID.push(data2.user_id.toString())
+        console.log('IDDSSSS', chatID, user)
         firestore()
-        .collection('chatroom')
-        .add({
-          ID:chatID,
-          users: user
-        })
+            .collection('chatroom')
+            .add({
+                ID: chatID,
+                users: user,
+            })
             .then((data2) => {
-            console.log("dataaaaaaFIREBASE CREEATED",data2)
-          navigate('ChatOneToOne' ,{id:data.user_id,userData:details})
-        })
+                console.log('dataaaaaaFIREBASE CREEATED', data2)
+                navigate('ChatOneToOne', {id: data.user_id, userData: details})
+            })
     }
-    chatID = (id1,id2) => {
-    const chatterID = id1;
-    const chateeID = id2;
-    const chatIDpre = [];
-    chatIDpre.push(chatterID);
-    chatIDpre.push(chateeID);
-    chatIDpre.sort();
-    return chatIDpre.join('_');
-  };
+    chatID = (id1, id2) => {
+        const chatterID = id1
+        const chateeID = id2
+        const chatIDpre = []
+        chatIDpre.push(chatterID)
+        chatIDpre.push(chateeID)
+        chatIDpre.sort()
+        return chatIDpre.join('_')
+    }
     sendFriendRequest = async () => {
         this.setState({requestLoading: true})
         const url = API.SEND_FRIEND_REQUEST
@@ -330,9 +324,9 @@ class UserProfile extends Component {
                                                 }
                                             </Text>
                                         </View>
-                                        <TouchableOpacity activeOpacity={0.7} onPress={() =>
-                                                    this.startChat()
-                                                }>
+                                        <TouchableOpacity
+                                            activeOpacity={0.7}
+                                            onPress={() => this.startChat()}>
                                             <Image
                                                 source={Constants.Images.chat}
                                                 resizeMode="contain"
@@ -556,8 +550,9 @@ UserProfile.propTypes = {
     t: func.isRequired,
 }
 
-const mapStateToProps = ({profile: follow_id,auth:user_id}) => ({
-    follow_id,user_id
+const mapStateToProps = ({profile: follow_id, auth: user_id}) => ({
+    follow_id,
+    user_id,
 })
 
 const mapDispatchToProps = {

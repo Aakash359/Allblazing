@@ -517,7 +517,7 @@ class AddMember extends Component {
                         <Image
                             source={image}
                             style={AddMemberStyles.userImage}
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
                     </View>
                     <View>
@@ -582,6 +582,15 @@ class AddMember extends Component {
                         }
                         renderItem={this.renderItem}
                         keyExtractor={(item, i) => i}
+                        ListEmptyComponent={() => {
+                            return (
+                                // <View style={{justifyContent: 'center', alignItems="center"}}>
+                                <Text style={{color: Constants.Colors.WHITE}}>
+                                    No Data Found
+                                </Text>
+                                // </View>
+                            )
+                        }}
                     />
                 )}
 
