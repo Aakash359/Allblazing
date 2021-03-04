@@ -147,7 +147,6 @@ class Home extends React.Component {
     }
 
     componentWillUnmount() {
-        Geolocation.stopObserving()
         Geolocation.clearWatch(this.getPosition)
     }
 
@@ -431,7 +430,7 @@ class Home extends React.Component {
           /> */}
                 {/* <Invite source="home" navigation={navigation} /> */}
                 {/* </ScrollView> */}
-                {this.state.option !== 'Map' && (
+                {this.state.option === 'Events' && (
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Filter')}
                         activeOpacity={0.7}

@@ -517,7 +517,7 @@ class AddMember extends Component {
                         <Image
                             source={image}
                             style={AddMemberStyles.userImage}
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
                     </View>
                     <View>

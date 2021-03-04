@@ -23,6 +23,7 @@ class Events extends React.Component {
             visible: false,
             location: {},
             events: [],
+            filterEvents: [],
             isLoading: true,
             error: false,
             msg: '',
@@ -167,10 +168,19 @@ class Events extends React.Component {
     }
 
     componentDidMount() {
-        this.getLocation()
+        const params = this?.props?.route?.params || {}
+        if (params?.filter) {
+            this.getFilterEvents(params)
+        } else {
+            this.getLocation()
+        }
 
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.getLocation()
+            if (params?.filter) {
+                this.getFilterEvents(params)
+            } else {
+                this.getLocation()
+            }
         })
     }
 
@@ -182,10 +192,51 @@ class Events extends React.Component {
         this.getLocation()
     }
 
+    getFilterEvents = async ({
+        connect,
+        gender,
+        selectedLevel,
+        distance,
+        location: {latitude, longitude},
+        isEnabled,
+    }) => {
+        const url = API.FILTER_EVENTS
+        const token = await getAuthToken()
+        const config = {
+            params: {
+                token,
+            },
+            body: JSON.stringify({
+                runners_type: connect,
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
+            }),
+        }
+        try {
+            const res = await Axios.get(url, config)
+            console.log('FILTER, EVENTS', res)
+            if (res?.data?.status) {
+                this.setState({
+                    filterEvents: res?.data?.data?.result || [],
+                    isLoading: false,
+                })
+            } else {
+                this.setState({isLoading: false})
+            }
+        } catch (error) {
+            console.log('ERROR FILTER EVENTS', error)
+            this.setState({isLoading: false})
+        }
+    }
+
     render() {
         const {params} = this.props
         const {visible, isLoading, events, error, msg, refreshing} = this.state
-
+        const {filter} = this?.props?.route?.params || {}
         return (
             <View style={HomeStyles.container}>
                 {params?.isMapView ? (
@@ -214,7 +265,11 @@ class Events extends React.Component {
                                         onRefresh={this.onRefresh}
                                     />
                                 }
-                                data={this.state.events}
+                                data={
+                                    filter
+                                        ? this.state.filterEvents
+                                        : this.state.events
+                                }
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {
