@@ -46,7 +46,8 @@ return `${num1}_${num2}`
       t: translate,user_id
     } = this.props;
        let another_id   = params.id
-    let threadName = this.Id_generator(user_id, another_id)
+    let threadName = params.type === 'chat' ? this.Id_generator(user_id, another_id) : another_id;
+    console.log("tthreeaddddName",threadName)
           const text = newMessage[0].text
             this.setState({ messages: GiftedChat.append(this.state.messages, newMessage) })
           console.log('Messg' , newMessage)
@@ -90,8 +91,8 @@ return `${num1}_${num2}`
       route: {params},user_id,
       t: translate,
        } = this.props;
-     
-    let another_id = params.id;
+    if (params.type === 'chat') {
+      let another_id = params.id;
     let userData = params.userData;
     let threadName = this.Id_generator(user_id, another_id)
     console.log("threadDATAA" ,userData,another_id)
@@ -123,6 +124,44 @@ return `${num1}_${num2}`
               console.log('DataFireStore-------->', messages )
                 this.setState({ messages:messages })
               })
+       
+    }
+    else {
+    let dummyArray = []
+      let userData = params.userData;
+      dummyArray.push(userData)
+    let threadName = params.id
+    console.log("threadDATAANEW" , dummyArray)
+                 
+                  this.setState({id:user_id,userData:dummyArray})
+                this.unsubscribeListener = firestore()
+              .collection('Messages')
+              .doc(threadName)
+              .collection('MESSAGES')
+              .orderBy('createdAt', 'desc')
+              .onSnapshot(querySnapshot => {
+              const messages = querySnapshot.docs.map(doc => {
+              const firebaseData = doc.data()
+
+              const data = {
+              _id: doc.id,
+              ...firebaseData
+              }
+
+              if (!firebaseData.system) {
+              data.user = {
+              ...firebaseData.user,
+
+              }
+              }
+
+              return data
+              })
+              console.log('DataFireStore-------->', messages )
+                this.setState({ messages:messages })
+              })
+    }
+    
 
                   // this.client.login(`10`).then(() => {
                   // let channel = this.state.channel
@@ -278,14 +317,21 @@ return `${num1}_${num2}`
               }
 
 
-  renderHeader = ({ goBack }) => (
+  renderHeader = ({ goBack ,params }) => (
     <View style={HomeStyles.ChatOneToOneHeader}>
       <View style={[InviteFriendsStyles.userWrapper]}>
         <TouchableOpacity activeOpacity={0.7} onPress={() => goBack()}>
           <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>
-        {this.state.userData.length >0 ?<Image
-          source={{ uri: this.state.userData['0'].pic  }}
+        {this.state.userData.length >0 && params.type ==='chat' ?<Image
+          source={{ uri: this.state.userData['0'].pic   }}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(25),
+            height: Constants.BaseStyle.scale(50),
+            width: Constants.BaseStyle.scale(50),
+          }}
+        />:this.state.userData.length >0 && params.type ==='groups' ?<Image
+          source={{ uri: this.state.userData['0'].group_pic   }}
           style={{
             borderRadius: Constants.BaseStyle.scale(25),
             height: Constants.BaseStyle.scale(50),
@@ -300,7 +346,8 @@ return `${num1}_${num2}`
           }}
         />}
         <View>
-          <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].name}</Text>
+          {params.type === 'chat' ? <Text style={InviteFriendsStyles.username}>{this.state.userData.length > 0 && this.state.userData['0'].name}</Text> :
+          <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].gname}</Text>}
          {/* <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text> */}
         </View>
       </View>
@@ -313,6 +360,7 @@ return `${num1}_${num2}`
 
   render() {
     const {
+      route: {params},
       navigation: {
         goBack, navigate,
       },
@@ -324,7 +372,7 @@ return `${num1}_${num2}`
     return (
       <View style={HomeStyles.container}>
         {this.renderHeader({
-          goBack, route: 'Events', title: 'Events',
+          goBack, params
         })}
         {/* <FlatList
           data={[1, 2, 3, 4, 5]}

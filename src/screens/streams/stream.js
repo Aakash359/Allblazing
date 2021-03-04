@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
     Keyboard,
     PermissionsAndroid,
+    Alert,
 } from 'react-native'
 import Share from 'react-native-share'
 import {CommonActions} from '@react-navigation/native'
@@ -90,6 +91,22 @@ class Stream extends React.Component {
             (uid, state) => {
                 // if (uid === 1) setBroadcasterVideoState(state);
                 console.log('Startuusss changed', state)
+                if (state == 0) {
+                    Alert.alert(
+                        '',
+                        'Stream is finished by user',
+                        [
+                            {
+                                text: 'OK',
+                                onPress: () => {
+                                    this.LeaveChannel()
+                                    console.log('OK Pressed')
+                                },
+                            },
+                        ],
+                        {Cancelable: false}
+                    )
+                }
             }
         )
     }
@@ -259,8 +276,9 @@ class Stream extends React.Component {
                                 width: dimensions.width,
                                 height: dimensions.height,
                             }}
-                            uid={id}
+                            uid={192}
                             channelId={channelName}
+                            renderMode={VideoRenderMode.Hidden}
                         />
 
                         <View style={StreamStyles.button}>
