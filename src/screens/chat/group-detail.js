@@ -62,7 +62,7 @@ class GroupDetail extends React.Component {
 
         try {
             const res = await Axios.get(url, config)
-            console.log('GROUP DETAILS', res)
+            console.log('GROUP DETAILS', res?.data?.data)
             this.setState({groupDetails: res?.data?.data}, () => {
                 this.setHederOptions()
             })
@@ -99,6 +99,17 @@ class GroupDetail extends React.Component {
     componentDidMount() {
         this.unSubscribe = this.props.navigation.addListener('focus', () => {
             this.getGroupDetails()
+        })
+         const {
+            group:{userInfo},
+         } = this.props.route.params
+        console.log("MYYYGROUPPDETAIL", userInfo)
+        
+        let data = userInfo.userData.map(data => {
+            return {
+                id: data.user_id,
+                name:data.name
+            }
         })
     }
 
@@ -349,6 +360,49 @@ class GroupDetail extends React.Component {
         }
     }
 
+     startChat = () => {
+         const {
+            navigation: {goBack, navigate},
+        } = this.props
+        const user = [];
+          const chatID = [];
+       const details = []
+        const data = this.props.route.params.data
+        const data2 = this.props.user_id;
+      const  user1 = {
+            id: data.user_id,
+            pic: data.autherImage,
+            name: data.autherName,
+            address:"dummmy"
+           
+      }
+       
+        details.push(user1)
+ const user2 = {
+            id: data2.user_id,
+            pic: data2.image,
+     name: data2.full_name,
+            address:"dummy"
+           
+        }
+       
+        user.push(user1,user2)
+        
+        
+    chatID.push(data.user_id.toString());
+        chatID.push(data2.user_id.toString());
+        console.log("IDDSSSS",chatID ,user)
+        firestore()
+        .collection('chatroom')
+        .add({
+          ID:chatID,
+          users: user
+        })
+            .then((data2) => {
+            console.log("dataaaaaaFIREBASE CREEATED",data2)
+          navigate('ChatOneToOne' ,{id:data.user_id,userData:details})
+        })
+    }
     render() {
         const {
             navigation: {navigate, goBack},
@@ -406,7 +460,16 @@ class GroupDetail extends React.Component {
                                             style={ChatStyles.icon}
                                         />
                                     </TouchableOpacity>
-                                ) : null}
+                                    ) : null}
+                                <TouchableOpacity
+                                    onPress={this.startChat}
+                                       >
+                                        <Image
+                                            source={Constants.Images.chat}
+                                            resizeMode="contain"
+                                            style={ChatStyles.icon}
+                                        />
+                                    </TouchableOpacity>
                             </View>
                         </ImageBackground>
                         <View>
