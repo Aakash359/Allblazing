@@ -22,6 +22,17 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.328851660223-on5jefuhaghsn028v57r0ems0272ra10</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -59,12 +70,12 @@
 	<string>Please allow us to access your camera to be able to change your profile picture.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Please allow us to access your contacts.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This will help us to recommend you nearby locations while searching for nearby users.
+</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This will help us to recommend you nearby locations while searching for nearby users.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This will help us to recommend you nearby locations while searching for nearby users.
-</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This will help us to recommend you nearby locations while searching for nearby users.
 </string>
 	<key>NSMicrophoneUsageDescription</key>

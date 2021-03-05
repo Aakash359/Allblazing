@@ -520,6 +520,7 @@ export const LoginStyles = StyleSheet.create({
   },
 
   socialIconsWrapper: {
+    
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-evenly',

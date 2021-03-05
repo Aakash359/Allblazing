@@ -21,6 +21,10 @@ target 'RunFast' do
 
   pod 'agora-react-native-rtm', :path => '../node_modules/agora-react-native-rtm'
 
+  pod 'Firebase/Analytics'
+  pod 'GoogleSignIn', '~> 5.0.2'
+
+
   target 'RunFastTests' do
     inherit! :complete
     # Pods for testing

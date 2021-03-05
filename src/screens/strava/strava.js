@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Text, View} from 'react-native'
 import {Colors} from '../../constants'
-import {WebView} from 'react-native-webview'
+// import {WebView} from 'react-native-webview'
 import {Dimensions} from 'react-native'
 import queryString from 'query-string'
 import {getStravaAccessCode, setStravaAccessCode} from '../../helpers/auth'
@@ -170,21 +170,8 @@ export class strava extends Component {
                             {user?.firstname} {user.lastname}
                         </Text>
                     </View>
-                ) : (
-                    <WebView
-                        ref="myWebView"
-                        source={{
-                            uri: url,
-                        }}
-                        // style={{width: 200, height: 500, backgroundColor: '#fff'}}
-                        containerStyle={{width, height}}
-                        onNavigationStateChange={this._onNavigationStateChange.bind(
-                            this
-                        )}
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        startInLoadingState={true}
-                    />
+                ) : ( null
+                  
                 )}
             </>
         )

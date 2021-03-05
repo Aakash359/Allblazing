@@ -8,6 +8,8 @@ import {
   ScrollView,
   Alert, Platform,
   ActivityIndicator,
+  
+  
 } from 'react-native';
 import {func, shape} from 'prop-types';
 import {connect,useDispatch} from 'react-redux';
@@ -19,10 +21,15 @@ import * as actions from '../../actions/user-action-types';
 import {setLoginDetails} from '../../reducers/baseServices/auth';
 import axios from 'axios';
 import API from '../../constants/baseApi';
-import { setAuthToken, setLoginUserId } from '../../helpers/auth';
+import { setAuthToken, setLoginUserId ,getAuthToken,} from '../../helpers/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
+import { GoogleSignin, GoogleSigninButton,statusCodes } from '@react-native-community/google-signin';
+import { email } from '../../constants/images';
+import InstagramLogin from 'react-native-instagram-login';
+
+import { LoginManager,AccessToken,GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
 
 Geolocation?.setRNConfiguration({
   skipPermissionRequests: false,
@@ -46,10 +53,7 @@ const socialIcons = [
     icon: Constants.Images.twitter,
     name: 'twitter',
   },
-  {
-    icon: Constants.Images.tiktok,
-    name: 'tiktok',
-  },
+ 
 ];
 
 class Login extends Component {
@@ -63,6 +67,15 @@ class Login extends Component {
       isShow: false,
       password: '12345678',         //'tarun123', 12345678
       isLoading: false,
+      loggedIn: false,
+      user: [],
+      email:'',
+      password:'',
+      social_id:'',
+      user_name: '',
+      token: '',
+      profile_pic: '',
+
     };
   }
 
@@ -99,18 +112,87 @@ class Login extends Component {
       console.log(err)
     }
   }
-  
+ 
 
 
   componentDidMount() {
-    // this.getLastUserCred()
-    if(Platform.OS === 'ios') {
+
+   if(Platform.OS === 'ios') {
 
       Geolocation.requestAuthorization()
     }else {
       this.getLocation()
+     
     }
   }
+
+  
+  
+  _signIn = async () => {
+    const {
+      navigation: {navigate},
+    } = this.props;
+   
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+
+     
+      this._hit_Gmail_Api(userInfo.user.email,userInfo.user.id)
+      
+  
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  _hit_Gmail_Api = async (email,social_id) => {
+   
+    const {
+      navigation: {navigate},
+    } = this.props;
+
+ 
+
+    this.setState({
+      isLoading: true,
+    });
+    axios
+      .post(API.GMAIL_SIGN, {
+        email: email,
+        social_id: social_id
+      })
+      .then( async (response) => {
+     
+        if (response?.data?.code === 200) {
+          
+        
+          console.log("Gamil-Response", response)
+          console.log("User-Id", response?.data?.data?.user_id)
+          await  AsyncStorage.setItem('socail_id', response?.data?.data?.user_id.toString() );
+          
+          setAuthToken( response?.data?.data?.token);
+          this.props.addLoginDetail(response?.data?.data);
+          setLoginUserId(JSON.stringify(response?.data?.data));
+          navigate('Username',{data:response?.data?.data?.user_id,});
+         
+        }
+        
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+};
 
   componentWillUnmount() {
     if (this.timer) {
@@ -119,13 +201,9 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps ,nextProps) {
-    console.log("LOGINNNNNNN", nextProps)
-    // if(prevProps.changedProp !== this.props.changedProp){
-    //     this.setState({          
-    //         changedProp: this.props.changedProp
-    //     });
-    // }
-}
+   
+   
+  }
 
 
 
@@ -150,61 +228,202 @@ class Login extends Component {
       );
       return;
     }
-    // this.setState({
-    //   isLoading: true,
-    // });
-let data = {
+  
+    let data = {
         email: emailId,
         password: password,
       }
     this.props.login(data)
-    // axios
-    //   .post(API.LOG_IN, {
-    //     email: emailId,
-    //     password: password,
-    //   })
-    //   .then(async (response) => {
-    //     if (response?.data?.code === 401) {
-    //       Alert.alert(
-    //         '',
-    //         response?.data?.message ?? '',
-            
-    //       );
-    //     }
-    //     if (response?.data?.code === 200) {
-    //       console.log("=======>>>responselogin",response?.data?.data);
-    //       setAuthToken(response?.data?.data?.token);
-    //       addLoginDetail(response?.data?.data);
-    //       setLoginUserId(JSON.stringify(response?.data?.data));
-    //       if(this.state.isRemember) {
-    //         try {
-    //           await AsyncStorage.setItem('userCred', JSON.stringify({email: emailId, password}))
-    //           console.log('CRED SAVED', JSON.stringify({email: emailId, password}));
-    //         } catch (error) {
-    //           console.log("CRED NOT SAVED", error.message);
-    //         }
-    //     }
-    //     else {
-    //       console.log('remember is false');
-    //       await AsyncStorage.removeItem('userCred')
-          
-    //     }
-    //       loginSuccess();
-    //       if(response?.data?.data?.completeProfile) {
-    //         navigate('Overview');
+   
+   };
 
-    //       }else {
-    //         navigate('Username')
-    //       }
-    //     }
-    //   })
-    //   .finally(() => {
-    //     this.setState({
-    //       isLoading: false,
-    //     });
-    //   });
+   
+    Facebook_Sign_In = () => {
+      const {
+        navigation: {navigate},
+            } = this.props;
+           
+      LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']).then(
+         (result) => {
+          if (result.isCancelled) {
+            console.log('Login cancelled')
+          } else {
+            
+            AccessToken.getCurrentAccessToken().then(
+              (data) => {
+                let accessToken = data.accessToken
+                
+  
+                const responseInfoCallback = (error, result) => {
+                  if (error) {
+                    console.log(error)
+                    alert('Error fetching data: ' + error.toString());
+                  } else 
+                    {
+
+                    axios
+                    .post(API.GMAIL_SIGN, {
+                      social_id: result.id,
+                      email: result.email
+                    })
+                    .then(async (response) => {
+                      
+                      if (response?.data?.code === 200) 
+                      {
+                        console.log("Response", response.data)
+                        await  AsyncStorage.setItem('socail_id', response?.data?.data?.user_id.toString() );
+                        setAuthToken( response?.data?.data?.token);
+                        this.props.addLoginDetail(response?.data?.data);
+                        setLoginUserId(JSON.stringify(response?.data?.data));
+                        navigate('Username',{data:response?.data?.data?.user_id});
+                        
+                      }
+                      
+                    })
+                    .finally(() => {
+                      this.setState({
+                        isLoading: false,
+                      });
+                    });
+                      
+               
+                  }
+                }
+  
+                const infoRequest = new GraphRequest(
+                  '/me',
+                  {
+                    accessToken: accessToken,
+                    parameters: {
+                      fields: {
+                        string: 'email,name,first_name,middle_name,last_name'
+                      }
+                    }
+                  },
+                  responseInfoCallback
+                );
+  
+                
+                new GraphRequestManager().addRequest(infoRequest).start()
+               
+              }
+
+              
+            
+              
+            )
+            console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+          }
+        },
+        function (error) {
+          console.log('Login fail with error: ' + error)
+        }
+      )
+      }
+
+    //   FBLogout = (accessToken) => {
+    //     let logout =
+    //         new GraphRequest(
+    //             "me/permissions/",
+    //             {
+    //                 accessToken: accessToken,
+    //                 httpMethod: 'DELETE'
+    //             },
+    //             (error, result) => {
+    //                 if (error) {
+    //                     console.log('Error fetching data: ' + error.toString());
+    //                 } else {
+    //                     LoginManager.logOut();
+    //                 }
+    //             });
+    //     new GraphRequestManager().addRequest(logout).start();
+    // };
+
+     
+ instagramLogin = async (data)=>{
+
+   const { navigation: {navigate},
+          } = this.props;
+
+   this.setState({
+        isLoading: true,
+      });
+      axios
+        .post(API.GMAIL_SIGN, {
+          social_id: data.user_id,
+          email:'maxhuston140@gmail.com',
+        })
+        .then(async (response) => {
+          console.log("Response", response)
+          console.log("User-Id", response?.data?.data?.user_id)
+          if (response?.data?.code === 200) {
+            await  AsyncStorage.setItem('socail_id', response?.data?.data?.user_id.toString() );
+            setAuthToken( response?.data?.data?.token);
+            this.props.addLoginDetail(response?.data?.data);
+            setLoginUserId(JSON.stringify(response?.data?.data));
+            navigate('Username',{data:response?.data?.data?.user_id});
+           
+            
+          }
+          
+        })
+        .finally(() => {
+          this.setState({
+            isLoading: false,
+          });
+        });
+
+    
+  }
+
+  
+
+   
+ 
+  onClear() {
+    CookieManager.clearAll(true)
+      .then((res) => {
+        this.setState({ token: null })
+      });
+    }
+
+   get_Response_Info = (error, result) => {
+    if (error) {
+      //Alert for the Error
+      Alert.alert('Error fetching data: ' + error.toString());
+    } else {
+      //response alert
+      alert(JSON.stringify(result));
+      this.setState({ user_name: 'Welcome' + ' ' + result.name });
+      this.setState({ token: 'User Token: ' + ' ' + result.id });
+      this.setState({ profile_pic: result.picture.data.url });
+    }
   };
 
+  setIgToken = (data) => {
+    this.setState({ token: data.access_token , user_id: data.user_id })
+  }
+
+ 
+
+Socail_Api_Hit(item) 
+{
+switch(item) {
+  case 'google' : this._signIn()
+  break;
+  case 'facebook' : this.Facebook_Sign_In()
+  break;
+  case 'insta' : this.instagramLogin.show()
+  break;
+  case 'twitter' : this.Twitter_Sign_In()
+   
+}
+
+
+
+
+
+}
   render() {
     const {emailId, password, isShow, isRemember, isLoading} = this.state;
     const {
@@ -213,7 +432,7 @@ let data = {
       email,
      loginStatus
     } = this.props;
-    console.log("LOGINNNNNNN",  loginStatus)
+   
 
     return (
       <View style={CommonStyles.container}>
@@ -336,17 +555,45 @@ let data = {
                   style={{width: Constants.BaseStyle.scale(80)}}
                 />
               </View>
+              <View style={{alignSelf:'center'}}> 
+              
+              </View>
+              
+        
+      
+            <InstagramLogin
+              ref={ref => (this.instagramLogin = ref)}
+              appId='253283979675368'
+              appSecret='5351441242872675a8ddeb8f8d8b60bb'
+              redirectUrl='https://www.google.com/'
+              scopes={['user_profile', 'user_media']}
+              onLoginSuccess={this.instagramLogin}
+              onLoginFailure={(data) => console.log(data)}
+            />
+           
+       
+             
+        
               <View style={LoginStyles.socialIconsWrapper}>
                 {socialIcons.map((social) => (
-                  <TouchableOpacity activeOpacity={0.7} key={social.name}>
+                  
+                  
+                  
+                  <TouchableOpacity activeOpacity={0.7} key={social.name}
+                  onPress={()=> this.Socail_Api_Hit(social.name)} >
+                    
                     <Image
                       source={social.icon}
                       resizeMode="contain"
                       style={LoginStyles.socialIcon}
                     />
+                    
                   </TouchableOpacity>
+                 
+                  
                 ))}
               </View>
+            
             </View>
           </View>
         </ScrollView>
