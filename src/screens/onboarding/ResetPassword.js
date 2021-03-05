@@ -87,7 +87,7 @@ class ChangePassword extends Component {
     if (newPassword.length < 1) {
       Alert.alert(
         '',
-        'Please fill the newPassword!',
+        'Please enter the new password ',
         [
           {
             text: 'Cancel',
@@ -105,7 +105,7 @@ class ChangePassword extends Component {
     }else if(confirmPassword.length < 1){
       Alert.alert(
           '',
-          'Please fill the Confirmpassword!',
+          'Please enter the confirm password',
           [
             {
               text: 'Cancel',

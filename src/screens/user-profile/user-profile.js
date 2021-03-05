@@ -278,7 +278,9 @@ class UserProfile extends Component {
                                                 }
                                             </Text>
                                         </View>
-                                        <TouchableOpacity activeOpacity={0.7}>
+                                        <TouchableOpacity activeOpacity={0.7}
+                                        
+                                        >
                                             <Image
                                                 source={Constants.Images.chat}
                                                 resizeMode="contain"
@@ -317,18 +319,7 @@ class UserProfile extends Component {
                                                     />
                                                 </TouchableOpacity>
                                             )
-                                        ) : //   (
-                                        //     <TouchableOpacity
-                                        //   activeOpacity={0.7}
-                                        //   // onPress={() => setFollowStatus(!followStatus)}
-                                        //   onPress={() => this.handleUserFollow()}>
-                                        //     <Image
-                                        //       source={Constants.Images.add}
-                                        //       resizeMode="contain"
-                                        //       style={ProfileStyles.icon}
-                                        //     />
-                                        // </TouchableOpacity>
-                                        //   )
+                                        ) : 
                                         null}
                                     </View>
                                 </ImageBackground>

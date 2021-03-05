@@ -41,7 +41,7 @@ componentDidMount(){
     if (this.state.name === '') {
       Alert.alert(
         '',
-        'Please Enter Full Name',
+        'Please enter the full Name',
         [
           {
             text: 'Cancel',
@@ -143,7 +143,7 @@ componentDidMount(){
               <InputField
                 value={this.state.name}
                 style={{color:'white'}}
-                placeholder={translate('full name')}
+                placeholder={translate('Full Name')}
                 onChangeText={(text) => this.setState({name: text})}
               />
             </View>

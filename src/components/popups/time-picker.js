@@ -20,12 +20,13 @@ const TimePicker = ({
   onValueChange,
   second,
   visible,
+  value,
   t: translate,
 }) => (
   <AnimatedModal visible={visible}>
     <View style={PopupStyles.container}>
       <View style={PopupStyles.wrapper}>
-        <Text style={PopupStyles.header}>{translate('What is your recent 1km time?')}</Text>
+        <Text style={PopupStyles.header}>{translate('What is your recent '+ value+' time?')}</Text>
         <View style={PopupStyles.divider} />
         <View style={PopupStyles.pickersContainer}>
           <Text style={PopupStyles.hourLabel}>{translate('HR')}</Text>

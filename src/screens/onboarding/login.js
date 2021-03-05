@@ -204,7 +204,7 @@ class Login extends Component {
    
    
   }
-
+  
 
 
   onLogin = async () => {
@@ -213,7 +213,7 @@ class Login extends Component {
     if (emailId.length < 1) {
       Alert.alert(
         '',
-        'Please enter email id',
+        'Please enter your email Id',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
@@ -223,7 +223,7 @@ class Login extends Component {
     } else if (password.length < 1) {
       Alert.alert(
         '',
-        'Please enter password',
+        'Please enter your password',
         
       );
       return;

@@ -81,7 +81,7 @@ class Register extends Component {
 
     const {email, password} = this.state;
     if (email.length < 1) {
-      Alert.alert('', 'Please enter email id',
+      Alert.alert('', 'Please enter your email Id',
       [
         {
           text: 'Cancel',
@@ -96,8 +96,10 @@ class Register extends Component {
       {Cancelable:false}
       );
       return;
-    } else if (password.length < 8) {
-      Alert.alert('', 'Please enter password at least 8 characters!',
+    } 
+
+    else if (password.length < 8) {
+      Alert.alert('', 'Your password should be atleast 8 characters',
       [
         {
           text: 'Cancel',
