@@ -57,6 +57,7 @@ const API = {
     REJECT_EVENT_INVITE: `${BASE_URL}/event/decline`,
     FILTER_EVENTS: `${BASE_URL}/event-filters`,
     RUNNERS_NEAR_ME: `${BASE_URL}/runner-near-me-list`,
+    FILTER_RUNNERS: `${BASE_URL}/runners-filters`,
     // USERLIST : BASE_URL +
 }
 

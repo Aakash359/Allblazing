@@ -455,19 +455,21 @@ class SingleEventDetail extends React.Component {
                                 <View style={EventDetailStyles.divider} />
                             </>
                         ) : null}
-                        {!isMyEvent && eventDetails?.join ? (
+                        {!isMyEvent && eventDetails?.channelName ? (
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={[
                                     EventDetailStyles.button,
                                     EventDetailStyles.inviteBtn,
                                 ]}
-                                onPress={this.joinEventWatching}>
+                                onPress={() => {
+                                    this.props.navigation.navigate('LiveFeed', {
+                                        type: 'join',
+                                        channelName: eventDetails?.channelName,
+                                    }) // 'join'
+                                }}>
                                 <Text style={EventDetailStyles.buttonText}>
                                     {translate('events.Join')}
-                                    {/* {isMyEvent
-                                        ? translate('events.invite')
-                                        : translate('events.Join')} */}
                                 </Text>
                             </TouchableOpacity>
                         ) : isMyEvent &&
@@ -527,7 +529,8 @@ class SingleEventDetail extends React.Component {
                             <TouchableOpacity
                                 onPress={() => {
                                     this.props.navigation.navigate('LiveFeed', {
-                                        type: 'record',
+                                        type: 'live',
+                                        channelName: `event_${eventDetails?.event_id}`,
                                     }) // 'join'
                                 }}
                                 activeOpacity={0.7}
