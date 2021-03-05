@@ -24,7 +24,12 @@ class InviteFriends extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {visible: false, runners: [], isLoading: false}
+        this.state = {
+            visible: false,
+            runners: [],
+            isLoading: false,
+            filterRunners: [],
+        }
     }
 
     getRunners = async () => {
@@ -53,6 +58,48 @@ class InviteFriends extends React.Component {
         }
     }
 
+    getFilterRuners = async ({
+        connect,
+        gender,
+        selectedLevel,
+        distance,
+        location: {latitude, longitude},
+        isEnabled,
+    }) => {
+        this.setState({isLoading: true})
+        const url = API.FILTER_RUNNERS
+        const token = await getAuthToken()
+        const config = {
+            params: {
+                token,
+            },
+            body: JSON.stringify({
+                runners_type: connect,
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
+            }),
+        }
+        try {
+            const res = await Axios.get(url, config)
+            console.log('FILTER, EVENTS', res)
+            if (res?.data?.status) {
+                this.setState({
+                    filterRunners: res?.data?.data?.result || [],
+                    isLoading: false,
+                })
+            } else {
+                this.setState({isLoading: false})
+            }
+        } catch (error) {
+            console.log('ERROR FILTER EVENTS', error)
+            this.setState({isLoading: false})
+        }
+    }
+
     onStrava = () => {
         const {
             navigation: {navigate},
@@ -69,7 +116,28 @@ class InviteFriends extends React.Component {
     }
 
     componentDidMount() {
-        this.getRunners()
+        console.log('FILTERS CDM: ===> : ', this.props.filter)
+        const {filter} = this.props
+        if (this.props.filter?.data) {
+            console.log('GETTING FILTER EVENTS')
+            this.getFilterRuners(this.props.filter?.runnersFilters)
+            this.getRunners()
+        } else {
+            this.getRunners()
+        }
+
+        this.unsubscribe = this.props.navigation.addListener('focus', () => {
+            console.log('FILTERS CDM: ===> : ', this.props.filter)
+            console.log('FILTER CDM FILTER DATA', this.props.filter?.data)
+            if (this.props.filter?.data) {
+                console.log('FILTER CDM RUN')
+                this.getFilterRuners(this.props.filter?.runnersFilters)
+                this.getRunners()
+            } else {
+                console.log('FILTER CDM NOT RUN')
+                this.getRunners()
+            }
+        })
     }
 
     renderItem = ({item}) => {
@@ -120,161 +188,11 @@ class InviteFriends extends React.Component {
     }
 
     render() {
-        const {params} = this.props
+        const {params, filter} = this.props
 
-        const {visible, isLoading, runners, error} = this.state
+        const {visible, isLoading, runners, filterRunners, error} = this.state
         const {source, t: translate} = this.props
         const Component = source === 'home' ? View : ScrollView
-
-        // return (
-        //     <>
-        //         {isLoading ? (
-        //             <ActivityIndicator
-        //                 size="small"
-        //                 color={Constants.Colors.WHITE}
-        //             />
-        //         ) : runners?.length ? (
-        //             <View styel={{marginVertical: 100}}>
-        //                 <FlatList
-        //                     data={runners}
-        //                     keyExtractor={(item, i) => i.toString()}
-        //                     // renderItem={this.renderItem}
-        //                     renderItem={({item}) => {
-        //                         let image = ''
-        //                         return (
-        //                             <TouchableOpacity
-        //                                 activeOpacity={0.7}
-        //                                 // onPress={() => this.setState({ischecked: !this.state.ischecked})}
-        //                                 // onPress={() => this.OnPress(item)}
-        //                                 style={{
-        //                                     alignItems: 'center',
-        //                                     backgroundColor:
-        //                                         Constants.Colors.PRIMARY,
-        //                                     borderRadius: 5,
-        //                                     flexDirection: 'row',
-        //                                     justifyContent: 'space-between',
-        //                                     marginHorizontal: 20,
-        //                                 }}>
-        //                                 <View
-        //                                     style={[
-        //                                         {
-        //                                             maxWidth: '60%',
-        //                                             alignItems: 'center',
-        //                                             borderRadius: 5,
-        //                                             flexDirection: 'row',
-        //                                             justifyContent:
-        //                                                 'space-between',
-        //                                             textAlign: 'left',
-        //                                         },
-        //                                     ]}>
-        //                                     <View
-        //                                         style={{
-        //                                             backgroundColor:
-        //                                                 Constants.Colors
-        //                                                     .LIGHT_RED,
-        //                                             borderRadius: 10,
-        //                                         }}>
-        //                                         <Image
-        //                                             source={image}
-        //                                             style={{
-        //                                                 width: 40,
-        //                                                 height: 70,
-        //                                             }}
-        //                                             resizeMode="contain"
-        //                                         />
-        //                                     </View>
-        //                                     <View>
-        //                                         <Text
-        //                                             style={
-        //                                                 AddMemberStyles.username
-        //                                             }>
-        //                                             {item.full_name}
-        //                                         </Text>
-        //                                         <View>
-        //                                             <Text
-        //                                                 numberOfLines={1}
-        //                                                 ellipsizeMode="tail"
-        //                                                 style={
-        //                                                     AddMemberStyles.location
-        //                                                 }>
-        //                                                 {item?.address}
-        //                                             </Text>
-        //                                         </View>
-        //                                     </View>
-        //                                 </View>
-        //                             </TouchableOpacity>
-        //                         )
-        //                     }}
-        //                 />
-        //             </View>
-        //         ) : (
-        //             <View
-        //                 style={{
-        //                     flex: 1,
-        //                     justifyContent: 'center',
-        //                     alignItems: 'center',
-        //                     marginBottom: Platform.OS === 'ios' ? 100 : 70,
-        //                 }}>
-        //                 <Image
-        //                     resizeMode="contain"
-        //                     style={[
-        //                         InviteFriendsStyles.runners,
-        //                         source === 'home' &&
-        //                             InviteFriendsStyles.homeRunners,
-        //                     ]}
-        //                     source={Constants.Images.runners}
-        //                 />
-        //                 <Text style={{color: '#fff'}}>andfdf dsf </Text>
-
-        //                 <Text style={InviteFriendsStyles.description}>
-        //                     {translate('settings.InviteFriendsDescription')}
-        //                 </Text>
-        //                 <View style={InviteFriendsStyles.row}>
-        //                     <Text style={InviteFriendsStyles.code}>
-        //                         {'ALLBLAZING123456'}
-        //                     </Text>
-        //                     <TouchableOpacity
-        //                         activeOpacity={0.7}
-        //                         onPress={() =>
-        //                             Clipboard.setString('ALLBLAZING123456')
-        //                         }>
-        //                         <Image
-        //                             resizeMode="contain"
-        //                             style={InviteFriendsStyles.copy}
-        //                             source={Constants.Images.copy}
-        //                         />
-        //                     </TouchableOpacity>
-        //                 </View>
-
-        //                 <TouchableOpacity
-        //                     activeOpacity={0.7}
-        //                     style={[
-        //                         InviteFriendsStyles.button,
-        //                         InviteFriendsStyles.inviteBtn,
-        //                         source === 'home' &&
-        //                             InviteFriendsStyles.homeInviteBtn,
-        //                     ]}
-        //                     onPress={() => this.setState({visible: true})}>
-        //                     <Text
-        //                         style={[
-        //                             AuthStyle.buttonText,
-        //                             {color: Constants.Colors.WHITE},
-        //                         ]}>
-        //                         {translate('settings.Invite Friends')}
-        //                     </Text>
-        //                 </TouchableOpacity>
-        //             </View>
-        //         )}
-        //         {visible && (
-        //             <InviteOptionPopup
-        //                 onFacebook={() => this.setState({visible: false})}
-        //                 // onStrava={this.onStrava}
-        //                 onWhatsApp={() => this.setState({visible: false})}
-        //                 onClose={() => this.setState({visible: false})}
-        //             />
-        //         )}
-        //     </>
-        // )
 
         return (
             <View style={HomeStyles.container}>
@@ -299,14 +217,18 @@ class InviteFriends extends React.Component {
                             </View>
                         ) : runners?.length ? (
                             <FlatList
-                                data={runners}
+                                data={
+                                    filter?.runnersFilters && filter?.data
+                                        ? filterRunners
+                                        : runners
+                                }
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {
                                     return (
                                         <View style={{alignItems: 'center'}}>
                                             <Text style={{color: Colors.WHITE}}>
-                                                Don't have any events near you
+                                                Don't have any runners near you
                                             </Text>
                                         </View>
                                     )
