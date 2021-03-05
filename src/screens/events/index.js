@@ -138,7 +138,6 @@ class Events extends React.Component {
 
         try {
             const res = await Axios.get(url, config)
-            console.log('EVENTS DATA: ====>', res)
             if (res?.data?.code == 200) {
                 if (res?.data?.status) {
                     if (res?.data?.data?.result?.length) {
@@ -165,14 +164,13 @@ class Events extends React.Component {
                 msg: error?.message,
                 refreshing: false,
             })
+            console.log('ERROR EVENTS: ', error)
         }
     }
 
     componentDidMount() {
-        console.log('FILTERS CDM: ===> : ', this.props.filter)
         const {filter} = this.props
         if (filter?.data) {
-            console.log('GETTING FILTER EVENTS')
             this.getFilterEvents(filter?.eventsFilters)
             this.getLocation()
         } else {
@@ -180,14 +178,10 @@ class Events extends React.Component {
         }
 
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            console.log('FILTERS CDM: ===> : ', this.props.filter)
-            console.log('FILTER CDM FILTER DATA', this.props.filter?.data)
             if (this.props.filter?.data) {
-                console.log('FILTER CDM RUN')
                 this.getFilterEvents(filter?.eventsFilters)
                 this.getLocation()
             } else {
-                console.log('FILTER CDM NOT RUN')
                 this.getLocation()
             }
         })
@@ -197,8 +191,6 @@ class Events extends React.Component {
         this.unsubscribe()
     }
     shouldComponentUpdate(newProps) {
-        console.log('FILTERS: ===> : ', this.props.filter, newProps)
-
         return true
     }
 
@@ -234,7 +226,6 @@ class Events extends React.Component {
         }
         try {
             const res = await Axios.get(url, config)
-            console.log('FILTER, EVENTS', res)
             if (res?.data?.status) {
                 this.setState({
                     filterEvents: res?.data?.data?.result || [],

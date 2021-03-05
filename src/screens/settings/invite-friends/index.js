@@ -43,7 +43,6 @@ class InviteFriends extends React.Component {
         }
         try {
             const res = await Axios.get(url, config)
-            console.log('RUNNERS NEAR ME: ', res)
             if (res?.data?.status) {
                 this.setState({
                     runners: res?.data?.data?.result,
@@ -85,7 +84,6 @@ class InviteFriends extends React.Component {
         }
         try {
             const res = await Axios.get(url, config)
-            console.log('FILTER, EVENTS', res)
             if (res?.data?.status) {
                 this.setState({
                     filterRunners: res?.data?.data?.result || [],
@@ -116,10 +114,8 @@ class InviteFriends extends React.Component {
     }
 
     componentDidMount() {
-        console.log('FILTERS CDM: ===> : ', this.props.filter)
         const {filter} = this.props
         if (this.props.filter?.data) {
-            console.log('GETTING FILTER EVENTS')
             this.getFilterRuners(this.props.filter?.runnersFilters)
             this.getRunners()
         } else {
@@ -127,14 +123,10 @@ class InviteFriends extends React.Component {
         }
 
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            console.log('FILTERS CDM: ===> : ', this.props.filter)
-            console.log('FILTER CDM FILTER DATA', this.props.filter?.data)
             if (this.props.filter?.data) {
-                console.log('FILTER CDM RUN')
                 this.getFilterRuners(this.props.filter?.runnersFilters)
                 this.getRunners()
             } else {
-                console.log('FILTER CDM NOT RUN')
                 this.getRunners()
             }
         })
