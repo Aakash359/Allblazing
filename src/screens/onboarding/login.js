@@ -321,23 +321,7 @@ class Login extends Component {
       )
       }
 
-    //   FBLogout = (accessToken) => {
-    //     let logout =
-    //         new GraphRequest(
-    //             "me/permissions/",
-    //             {
-    //                 accessToken: accessToken,
-    //                 httpMethod: 'DELETE'
-    //             },
-    //             (error, result) => {
-    //                 if (error) {
-    //                     console.log('Error fetching data: ' + error.toString());
-    //                 } else {
-    //                     LoginManager.logOut();
-    //                 }
-    //             });
-    //     new GraphRequestManager().addRequest(logout).start();
-    // };
+  
 
      
  instagramLogin = async (data)=>{

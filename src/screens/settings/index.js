@@ -10,6 +10,8 @@ import {withTranslation} from 'react-i18next'
 import {removeAuthTokenFromRedux} from '../../reducers/baseServices/auth'
 import AsyncStorage from '@react-native-community/async-storage'
 
+
+
 const settingList = [
     {
         hasArrow: false,
@@ -100,7 +102,7 @@ class Settings extends Component {
         navigate(data.route, data.payload)
     }
 
-    onLogout = async () => {
+    onLogout = async (accessToken) => {
         const {
             logOutSuccess,
             navigation: {navigate},
@@ -115,11 +117,12 @@ class Settings extends Component {
         allKeys.splice(index, 1)
         console.log('NEW_KEYS', newKeys)
         console.log('ALL KEYS AFTER REMOVE', allKeys)
-
         const token = await AsyncStorage.multiRemove(allKeys)
+        AsyncStorage.clear();
         console.log('========>>tokenNullll', token)
         this.setState({logoutPopup: false})
         logOutSuccess('')
+        
     }
 
     render() {

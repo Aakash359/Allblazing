@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "328851660223-r3dlgorfuos5ut0u6d0jjcl1b6fe453g.apps.googleusercontent.com",
+          "client_id": "328851660223-lmdardudqsrabm33var3kvh49ebpg7mu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.runfast",
-            "certificate_hash": "4763909d03476f6dd6fb519d449e18718a513450"
+            "certificate_hash": "b301d98cbd279222353fd2c80caeff2005f3351e"
           }
         },
         {
