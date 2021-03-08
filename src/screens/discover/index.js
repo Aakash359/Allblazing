@@ -93,7 +93,7 @@ class FeedScreen extends Component {
             .then((response) => {
                 if (response.data.data.result) {
                     this.setState({
-                        list: _.reverse(response?.data?.data?.result),
+                        list: response?.data?.data?.result,
                     })
                     addFeedDetails(response?.data?.data?.result)
                 }
