@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
     ScrollView,
+    RefreshControl,
 } from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {FollowersStyles, FeedStyles} from '../../styles'
@@ -21,6 +22,7 @@ import moment from 'moment'
 import {ActivityIndicator} from 'react-native'
 import Colors from '../../constants/colors'
 import {withNavigationFocus} from '@react-navigation/compat'
+import _ from 'lodash'
 
 class FeedScreen extends Component {
     constructor(props) {
@@ -31,6 +33,7 @@ class FeedScreen extends Component {
             like: false,
             list: [],
             userPostList: [],
+            refreshing: false,
         }
         const {
             navigation: {goBack, navigate, getParam, isLoading},
@@ -40,14 +43,14 @@ class FeedScreen extends Component {
     }
 
     componentDidMount() {
-        this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.FeedList()
-            this.UserPostList()
-        })
+        // this.unsubscribe = this.props.navigation.addListener('focus', () => {
+        this.FeedList()
+        this.UserPostList()
+        // })
     }
-    componentWillUnmount() {
-        this.unsubscribe()
-    }
+    // componentWillUnmount() {
+    //     this.unsubscribe()
+    // }
 
     UserPostList = async () => {
         const {addFeedDetails, user_id} = this.props
@@ -61,7 +64,7 @@ class FeedScreen extends Component {
         })
         Axios.post(API.USER_POST_FEED, {}, config)
             .then((response) => {
-                console.log("USERRRFEDDDD",response.data)
+                console.log('USERRRFEDDDD', response.data)
                 if (response?.data?.data?.result) {
                     this.setState({
                         userPostList: response?.data?.data?.result || [],
@@ -71,6 +74,7 @@ class FeedScreen extends Component {
             .finally(() => {
                 this.setState({
                     isLoadingUserPost: false,
+                    // refreshing: false,
                 })
             })
     }
@@ -87,15 +91,17 @@ class FeedScreen extends Component {
         })
         Axios.get(API.POST_LIST, config)
             .then((response) => {
-                
                 if (response.data.data.result) {
-                    this.setState({list: response?.data?.data?.result})
+                    this.setState({
+                        list: _.reverse(response?.data?.data?.result),
+                    })
                     addFeedDetails(response?.data?.data?.result)
                 }
             })
             .finally(() => {
                 this.setState({
                     isLoading: false,
+                    refreshing: false,
                 })
             })
     }
@@ -142,6 +148,7 @@ class FeedScreen extends Component {
                         // console.log("USER SCREEN PRESSED")
                         this.props.navigation.navigate('UserProfile', {
                             id: item.user_id,
+                            data: item,
                         })
                     }}>
                     <View
@@ -207,7 +214,7 @@ class FeedScreen extends Component {
                             FeedStyles.feedImg,
                             {marginVertical: 0, margin: 0},
                         ]}
-                        resizeMode="contain"
+                        resizeMode="cover"
                     />
                 </TouchableOpacity>
             </View>
@@ -245,7 +252,10 @@ class FeedScreen extends Component {
                     },
                 ]}
                 onPress={() => {
-                    this.props.navigation.navigate('Stream',{channelName:item?.channel_id})
+                    this.props.navigation.navigate('Stream', {
+                        channelName: item?.channel_id,
+                        id: item.user_id,
+                    })
                 }}>
                 <Image
                     source={pic}
@@ -286,9 +296,14 @@ class FeedScreen extends Component {
             </View>
         )
     }
+    onRefresh = async () => {
+        this.setState({refreshing: true})
+        this.FeedList()
+        this.UserPostList()
+    }
 
     render() {
-        const {isLoading} = this.state
+        const {isLoading, refreshing} = this.state
 
         const {
             navigation: {goBack, navigate, getParam},
@@ -309,33 +324,51 @@ class FeedScreen extends Component {
                             <ActivityIndicator color="white" size={25} />
                         </View>
                     ) : (
-                        <ScrollView>
-                            <FlatList
-                                data={this.state.userPostList}
-                                contentContainerStyle={
-                                    FeedStyles.sectionMainView
-                                }
-                                renderItem={this.filterData}
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                keyExtractor={(item, index) => `1-${index}`}
-                                ListEmptyComponent={() => {
-                                    return (
-                                        <Text style={{color: Colors.WHITE}}>
-                                            No active feeds.
-                                        </Text>
-                                    )
-                                }}
-                            />
-                            <FlatList
+                        <View>
+                            <ScrollView
                                 scrollEnabled={false}
+                                style={{
+                                    height: 120,
+                                    marginBottom: 0,
+                                    marginTop: -30,
+                                    padding: 0,
+                                }}>
+                                <FlatList
+                                    data={this.state.userPostList}
+                                    contentContainerStyle={
+                                        FeedStyles.sectionMainView
+                                    }
+                                    renderItem={this.filterData}
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    keyExtractor={(item, index) => `1-${index}`}
+                                    ListEmptyComponent={() => {
+                                        return (
+                                            <Text style={{color: Colors.WHITE}}>
+                                                No active feeds.
+                                            </Text>
+                                        )
+                                    }}
+                                />
+                            </ScrollView>
+
+                            <FlatList
+                                refreshControl={
+                                    <RefreshControl
+                                        tintColor={Constants.Colors.WHITE}
+                                        refreshing={refreshing}
+                                        onRefresh={this.onRefresh}
+                                    />
+                                }
+                                // scrollEnabled={false}
                                 contentContainerStyle={FollowersStyles.flatList}
-                                data={this.state.list.reverse()}
+                                data={this.state.list}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `2-${index}`}
                                 ListEmptyComponent={this.ListEmptyComponent}
+                                initialNumToRender={1}
                             />
-                        </ScrollView>
+                        </View>
                     )}
                 </View>
             </>
@@ -362,7 +395,6 @@ const mapStateToProps = ({
     likeCount,
     user_id,
 })
-
 
 const mapDispatchToProps = {
     addFeedDetails: (params) => setFeedDetails(params),

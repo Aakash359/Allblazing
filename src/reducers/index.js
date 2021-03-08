@@ -9,10 +9,10 @@ import profile from './baseServices/profile'
 import strava from './baseServices/strava'
 
 const config = {
-  blacklist: ['auth','user','profile'],
-  key: 'root',
-  storage: AsyncStorage,
-};
+    // blacklist: ['auth', 'user', 'profile'],
+    key: 'root',
+    storage: AsyncStorage,
+}
 
 const reducers = persistCombineReducers(config, {
     app,

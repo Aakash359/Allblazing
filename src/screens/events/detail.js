@@ -20,6 +20,16 @@ import API from '../../constants/baseApi'
 import {getAuthToken} from '../../helpers/auth'
 import Axios from 'axios'
 import {ActivityIndicator} from 'react-native'
+import moment from 'moment'
+import {connect} from 'react-redux'
+import {Alert} from 'react-native'
+
+export const inviteStatus = {
+    pending: 0,
+    accept: 1,
+    notSend: 2,
+    noActions: 3,
+}
 
 class SingleEventDetail extends React.Component {
     constructor(props) {
@@ -29,35 +39,35 @@ class SingleEventDetail extends React.Component {
             eventDetails: {},
             isLoading: false,
             user: {},
+            Category: [],
         }
     }
 
-    onPress = () => {
+    inviteFriend = () => {
         const {
-            navigation: {navigate, setParams},
-            route: {params},
+            eventDetails: {event_id},
+        } = this.state
+        const {
+            navigation: {navigate},
         } = this.props
 
-        if (params?.isMember) {
-            const payload = {
-                hasCheckBox: false,
-                hasTick: true,
-                routeName: 'SingleEventDetail',
-                title: 'events.MyFriends',
-            }
-
-            navigate('StravaUsers', payload)
-        } else {
-            setParams({isMember: true})
+        const payload = {
+            event_id,
         }
+
+        navigate('StravaUsers', payload)
     }
 
-    renderItem = () => <InvitedUser onPress={this.onEventPress} />
+    renderItem = ({invite_status, eventDetails}) => (
+        <InvitedUser
+            onPress={this.onEventPress}
+            invite_status={invite_status}
+            eventDetails={eventDetails}
+        />
+    )
 
     getUserDetails = async (id) => {
-        console.log('userid==>', id)
         const token = await getAuthToken()
-        console.log('====>', token)
         const config = {
             headers: {Authorization: `Bearer ${token}`},
         }
@@ -70,9 +80,7 @@ class SingleEventDetail extends React.Component {
             config
         )
             .then((response) => {
-                console.log('response==>', response)
                 if (response.data.data.result) {
-                    console.log('===>details', response.data.data.result)
                     this.setState({user: response?.data?.data?.result})
                 }
             })
@@ -114,7 +122,114 @@ class SingleEventDetail extends React.Component {
             console.log('ERROR EVENT DETAILS', error)
         }
     }
+
+    getEventCategory = async () => {
+        const url = API.EVENT_CATEGORY
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        try {
+            const res = await Axios.get(url, config)
+            if (res?.data?.status) {
+                this.setState({Category: res?.data?.data?.result})
+            }
+        } catch (error) {
+            console.log('ERROR EVENT CATEGORY', error)
+        }
+    }
+
+    withdrawIntive = async () => {
+        const {
+            eventDetails: {invite_id},
+        } = this.state
+        const url = `${API.WITHDRAW_EVENT_INVITE}/${invite_id}`
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        try {
+            const res = await Axios.post(url, {}, config)
+            console.log('WITHDRAW INVITE REQUEST', res)
+            if (res?.data?.status) {
+                Alert.alert('Withdraw Invitation', res?.data?.message)
+                this.getEventDetails()
+            } else {
+                Alert.alert('Withdraw Invitation', res?.data?.message)
+            }
+        } catch (error) {
+            console.log(('ERROR WITHDRAW REQUEST', error))
+        }
+    }
+
+    acceptInvitation = async () => {
+        const token = await getAuthToken()
+        const {
+            eventDetails: {invite_id},
+        } = this.state
+        const url = `${API.ACCEPT_EVENT_INVITE}/${invite_id}`
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: {
+                invite_id,
+            },
+        }
+
+        try {
+            const res = await Axios.post(url, {}, config)
+            console.log('ACCEPT INVITATION', res)
+            if (res?.data?.status) {
+                Alert.alert('Accept Invitation', res?.data?.message)
+                this.getEventDetails()
+            } else {
+                Alert.alert('Accept Invitation', res?.data?.message)
+            }
+        } catch (error) {
+            Alert.alert('Accept Invitation', error?.message)
+            console.log('ERROR ACCEPT INVITATION', error)
+        }
+    }
+
+    rejectInvitation = async () => {
+        const token = await getAuthToken()
+        const {
+            eventDetails: {invite_id},
+        } = this.state
+        const url = `${API.REJECT_EVENT_INVITE}/${invite_id}`
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: {
+                invite_id,
+            },
+        }
+
+        try {
+            const res = await Axios.post(url, {}, config)
+            console.log('REJECT INVITATION', res)
+            if (res?.data?.status) {
+                Alert.alert('Reject Invitation', res?.data?.message)
+                this.getEventDetails()
+            } else {
+                Alert.alert('Reject Invitation', res?.data?.message)
+            }
+        } catch (error) {
+            Alert.alert('Reject Invitation', error?.message)
+            console.log('ERROR REJECT INVITATION', error)
+        }
+    }
+
+    joinEventWatching = async () => {}
+
     componentDidMount() {
+        this.getEventCategory()
         this.subscribe = this.props.navigation.addListener('focus', () => {
             this.getEventDetails()
         })
@@ -124,10 +239,41 @@ class SingleEventDetail extends React.Component {
         const {
             route: {params},
             t: translate,
+            user_id,
         } = this.props
 
-        const {eventDetails, isLoading, user} = this.state
+        const {eventDetails, isLoading, user, Category} = this.state
+        const userImage = user?.image
+            ? user?.image === 'N/A'
+                ? Constants.Images.tabBarProfile
+                : {uri: user?.image}
+            : Constants.Images.tabBarProfile
 
+        const eventImage = eventDetails?.image
+            ? eventDetails?.image === 'N/A'
+                ? {
+                      uri:
+                          'https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg',
+                  }
+                : {uri: eventDetails?.image}
+            : {
+                  uri:
+                      'https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg',
+              }
+
+        const eventCateogry = Category.find(
+            (i) => i?.id === eventDetails?.event_category_id
+        )?.name
+
+        const eventTime = moment(
+            new Date(parseInt(eventDetails?.time, 10))
+        ).format('LT')
+        const eventDate = moment(
+            new Date(parseInt(eventDetails?.date, 10))
+        ).format('DD MMM YYYY')
+
+        const isMyEvent = eventDetails?.user_id === user_id
+        const {invite_status} = eventDetails
         return (
             <View style={[CommonStyles.container, EventDetailStyles.container]}>
                 {isLoading ? (
@@ -141,18 +287,17 @@ class SingleEventDetail extends React.Component {
                         showsVerticalScrollIndicator={false}>
                         <Image
                             style={EventDetailStyles.headerImage}
-                            source={{
-                                uri:
-                                    'https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg',
-                            }}
+                            source={
+                                eventImage || {
+                                    uri:
+                                        'https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg',
+                                }
+                            }
                         />
                         <View style={EventDetailStyles.userContainer}>
                             <Image
-                                resizeMode="contain"
-                                source={{
-                                    uri:
-                                        'https://franchisematch.com/wp-content/uploads/2015/02/john-doe.jpg',
-                                }}
+                                resizeMode="cover"
+                                source={userImage}
                                 style={InviteFriendsStyles.userImage}
                             />
                             <View style={EventDetailStyles.userInformation}>
@@ -179,20 +324,20 @@ class SingleEventDetail extends React.Component {
                                         EventDetailStyles.eventType,
                                         EventDetailStyles.marginLeft,
                                     ]}>
-                                    {translate('events.Racing')}
+                                    {translate(`events.${eventCateogry}`)}
                                 </Text>
                                 <Text
                                     style={[
                                         EventDetailStyles.subtitle,
                                         EventDetailStyles.marginLeft,
                                     ]}>
-                                    {'(1 Km)'}
+                                    {''}
                                 </Text>
                             </View>
                         </View>
                         <View style={EventDetailStyles.row}>
                             <Text style={EventDetailStyles.eventTitle}>
-                                Emily Vs Maaike, 1km Race
+                                {eventDetails?.name}
                             </Text>
                         </View>
                         <View
@@ -210,9 +355,11 @@ class SingleEventDetail extends React.Component {
                                     EventDetailStyles.subtitle,
                                     EventDetailStyles.marginLeft,
                                 ]}>
-                                {
-                                    '121 Dizzy Cir, Santee, SC 29142, United States'
-                                }
+                                {`${eventDetails?.event_address_one} ${
+                                    eventDetails?.event_address_two
+                                        ? `, ${eventDetails?.event_address_two}`
+                                        : ''
+                                }`}
                             </Text>
                         </View>
                         <View
@@ -230,37 +377,44 @@ class SingleEventDetail extends React.Component {
                                     EventDetailStyles.subtitle,
                                     EventDetailStyles.marginLeft,
                                 ]}>
-                                {'11:00 AM, 20 Oct 2020'}
+                                {`${eventTime}, ${eventDate}`}
                             </Text>
                         </View>
                         <View style={EventDetailStyles.divider} />
                         <Text style={EventDetailStyles.header}>
                             {translate('events.Description')}
                         </Text>
-                        <Text style={EventDetailStyles.eventDescription}>
-                            {
-                                "Emily and Maaike go head to head over 1km. For more info on the runners' stats."
-                            }
+                        <Text
+                            numberOfLines={5}
+                            style={EventDetailStyles.eventDescription}>
+                            {eventDetails?.description}
                         </Text>
                         <View style={EventDetailStyles.divider} />
-                        <View style={[EventDetailStyles.members]}>
-                            <UserImages
-                                style={EventDetailStyles.memberImages}
-                                users={[1, 2, 3, 4, 5]}
-                            />
-                            <Text style={EventDetailStyles.subtitle}>
-                                {translate('events.Members are watching')}
-                            </Text>
-                        </View>
-                        <View style={EventDetailStyles.divider} />
-                        {!params?.isMember && (
+                        {eventDetails?.watchers && (
+                            <>
+                                <View style={[EventDetailStyles.members]}>
+                                    <UserImages
+                                        style={EventDetailStyles.memberImages}
+                                        users={[1, 2, 3, 4, 5]}
+                                    />
+                                    <Text style={EventDetailStyles.subtitle}>
+                                        {translate(
+                                            'events.Members are watching'
+                                        )}
+                                    </Text>
+                                </View>
+                                <View style={EventDetailStyles.divider} />
+                            </>
+                        )}
+                        {!isMyEvent &&
+                        invite_status === inviteStatus?.noActions ? (
                             <>
                                 <Text style={EventDetailStyles.header}>
                                     {translate('events.invitation')}
                                 </Text>
                                 <Text
                                     style={EventDetailStyles.eventDescription}>
-                                    Kelly Norman sent you an invitation to
+                                    {user?.full_name} sent you an invitation to
                                     record live stream
                                 </Text>
                                 <View
@@ -270,6 +424,7 @@ class SingleEventDetail extends React.Component {
                                         EventDetailStyles.margin,
                                     ]}>
                                     <TouchableOpacity
+                                        onPress={this.rejectInvitation}
                                         activeOpacity={0.7}
                                         style={[
                                             EventDetailStyles.button,
@@ -283,6 +438,7 @@ class SingleEventDetail extends React.Component {
                                         </Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
+                                        onPress={this.acceptInvitation}
                                         activeOpacity={0.7}
                                         style={[
                                             EventDetailStyles.button,
@@ -298,42 +454,93 @@ class SingleEventDetail extends React.Component {
                                 </View>
                                 <View style={EventDetailStyles.divider} />
                             </>
-                        )}
-                        {!params?.isInviteSent && (
+                        ) : null}
+                        {!isMyEvent && eventDetails?.join ? (
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={[
                                     EventDetailStyles.button,
                                     EventDetailStyles.inviteBtn,
                                 ]}
-                                onPress={this.onPress}>
+                                onPress={this.joinEventWatching}>
                                 <Text style={EventDetailStyles.buttonText}>
-                                    {params?.isMember
+                                    {translate('events.Join')}
+                                    {/* {isMyEvent
                                         ? translate('events.invite')
-                                        : translate('events.Join')}
+                                        : translate('events.Join')} */}
                                 </Text>
                             </TouchableOpacity>
-                        )}
-                        {params?.isInviteSent && (
+                        ) : isMyEvent &&
+                          invite_status === inviteStatus?.notSend ? (
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={[
+                                    EventDetailStyles.button,
+                                    EventDetailStyles.inviteBtn,
+                                ]}
+                                onPress={this.inviteFriend}>
+                                <Text style={EventDetailStyles.buttonText}>
+                                    {translate('events.invite')}
+                                    {/* {isMyEvent
+                                            ? translate('events.invite')
+                                            : translate('events.Join')} */}
+                                </Text>
+                            </TouchableOpacity>
+                        ) : null}
+                        {[inviteStatus?.pending, inviteStatus?.accept].includes(
+                            invite_status
+                        ) && isMyEvent ? (
                             <View style={EventDetailStyles.margin}>
                                 <FlatList
                                     data={[1]}
-                                    renderItem={this.renderItem}
+                                    renderItem={({item}) => (
+                                        <this.renderItem
+                                            item={item}
+                                            invite_status={invite_status}
+                                            eventDetails={eventDetails}
+                                        />
+                                    )}
                                     keyExtractor={(item, index) => `${index}`}
                                 />
-                                <TouchableOpacity
-                                    activeOpacity={0.7}
-                                    style={[
-                                        EventDetailStyles.button,
-                                        EventDetailStyles.margin,
-                                        EventDetailStyles.inviteBtn,
-                                    ]}>
-                                    <Text style={EventDetailStyles.buttonText}>
-                                        {translate('events.Withdraw Request')}
-                                    </Text>
-                                </TouchableOpacity>
+                                {invite_status === inviteStatus?.pending && (
+                                    <TouchableOpacity
+                                        onPress={this.withdrawIntive}
+                                        activeOpacity={0.7}
+                                        style={[
+                                            EventDetailStyles.button,
+                                            EventDetailStyles.margin,
+                                            EventDetailStyles.inviteBtn,
+                                        ]}>
+                                        <Text
+                                            style={
+                                                EventDetailStyles.buttonText
+                                            }>
+                                            {translate(
+                                                'events.Withdraw Request'
+                                            )}
+                                        </Text>
+                                    </TouchableOpacity>
+                                )}
                             </View>
-                        )}
+                        ) : !isMyEvent &&
+                          invite_status === inviteStatus?.accept ? (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate('LiveFeed', {
+                                        type: 'record',
+                                    }) // 'join'
+                                }}
+                                activeOpacity={0.7}
+                                style={[
+                                    EventDetailStyles.button,
+                                    EventDetailStyles.margin,
+                                    EventDetailStyles.inviteBtn,
+                                ]}>
+                                <Text style={EventDetailStyles.buttonText}>
+                                    {translate('events.Record Event')}
+                                </Text>
+                            </TouchableOpacity>
+                        ) : null}
                     </ScrollView>
                 )}
             </View>
@@ -350,4 +557,10 @@ SingleEventDetail.propTypes = {
     t: func.isRequired,
 }
 
-export default withTranslation()(SingleEventDetail)
+const mapStatesToProps = ({auth: {user_id}}) => {
+    return {
+        user_id,
+    }
+}
+
+export default connect(mapStatesToProps)(withTranslation()(SingleEventDetail))

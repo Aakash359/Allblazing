@@ -29,7 +29,7 @@ const API = {
     CONTACT_US: BASE_URL + '/contact_us',
     USER_LIST: BASE_URL + '/user_list',
     RTC_TOKEN: BASE_URL + '/agoraRtcToken',
-     CREATE_CHANNEL: BASE_URL + '/channel',
+    CREATE_CHANNEL: BASE_URL + '/channel',
     RTM: BASE_URL + '/agoraRtmToken',
     GROUP_TYPE: BASE_URL + '/groupType',
     EVENT: BASE_URL + '/event',

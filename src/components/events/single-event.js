@@ -9,10 +9,10 @@ import moment from 'moment'
 export const SingleEvent = ({onPress, event}) => {
     let mdate = new Date()
 
-    if (isNaN(new Date(event?.date))) {
+    if (isNaN(new Date(parseInt(event?.date, 10)))) {
         mdate = new Date()
     } else {
-        mdate = new Date(event?.date)
+        mdate = new Date(parseInt(event?.date, 10))
     }
     const date = moment(mdate).format('D')
     const month = moment(mdate).format('MMM')

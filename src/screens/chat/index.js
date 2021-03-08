@@ -10,19 +10,26 @@ import { withTranslation } from 'react-i18next';
 class Chats extends React.Component {
   constructor() {
     super();
-    this.state = { activeTab: '0' ,threds:[] };
+    this.state = { activeTab: '0', threds: [],groupThreds:[] };
   }
 
   renderItem = ({ item }) => {
     const {
-      route: { params }, navigation: { navigate },user_id
+      route: { params }, navigation: { navigate }, user_id
     } = this.props;
     const { activeTab } = this.state;
-const nameObj = item.users.filter(data => {
-              return data.id != user_id.toString()
-})
-    console.log( "nameeeee",nameObj)
-    return <ChatFriends hasCheckBox={params?.hasCheckBox} hasTick={params?.hasTick} navigation={navigate} type={activeTab === '0' ? 'chat' : 'groups'} data = {item} nameObj ={nameObj} />;
+    if (activeTab === '0') {
+      const nameObj = item.users.filter(data => {
+        return data.id != user_id.toString()
+        
+      })
+      return <ChatFriends   navigation={navigate} type={'chat'} data={item} nameObj={nameObj} />;
+    }
+    else {
+     return <ChatFriends navigation={navigate} type={'groups'} data={item} nameObj={item.members} />;
+    }
+    // console.log( "nameeeee",nameObj)
+    
   }
 
   onTabPress = (val) => {
@@ -30,14 +37,14 @@ const nameObj = item.users.filter(data => {
   }
 
   async componentDidMount() {
-     const { user_id } = this.props
+    const { user_id } = this.props
     console.log(user_id, "IDDDD")
-        this.unsubscribe = this.props.navigation.addListener('focus', async() => {
-              firestore()
-     .collection('chatroom')
-     .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
-       const threads = querySnapshot.docs.map(documentSnapshot => {
-            console.log("myQuerySnapShot",documentSnapshot)
+    this.unsubscribe = this.props.navigation.addListener('focus', async () => {
+ firestore()
+        .collection('chatroom')
+        .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
+          const threads = querySnapshot.docs.map(documentSnapshot => {
+            console.log("myQuerySnapShot", documentSnapshot)
             return {
               // _id: documentSnapshot.id,
               // name: documentSnapshot.data.name,
@@ -45,12 +52,29 @@ const nameObj = item.users.filter(data => {
               ...documentSnapshot.data()
             }
          
-       })
-       console.log("Threads ", threads)
-    this.setState({threds: threads})
-    })
+          })
+
+        firestore()
+            .collection('Groups')
+          .where("group_id", "==", '172').onSnapshot(querySnapshot => {
+        const threads2 = querySnapshot.docs.map(documentSnapshot => {
+          console.log("myQuerySnapShot", documentSnapshot)
+          return {
+            // _id: documentSnapshot.id,
+            // name: documentSnapshot.data.name,
+            // latestMessage: { text: '' },
+            ...documentSnapshot.data()
+          }
+         
         })
-    }
+           console.log("Groupsss ", threads2)
+          this.setState({ threds: threads,groupThreds: threads2 })
+        })
+    })
+  
+          
+      })
+  }
   // async componentDidMount() {
    
      
@@ -100,11 +124,15 @@ const nameObj = item.users.filter(data => {
         {this.renderHeader({
           navigate, route: 'Events', title: 'Events',
         })}
-        <FlatList
+        {this.state.activeTab ==='0'?<FlatList
           data={this.state.threds}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `${index}`}
-        />
+        />:<FlatList
+          data={this.state.groupThreds}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => `${index}`}
+        />}
       </View>
     );
   }
