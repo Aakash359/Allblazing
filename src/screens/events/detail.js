@@ -58,17 +58,16 @@ class SingleEventDetail extends React.Component {
         navigate('StravaUsers', payload)
     }
 
-    renderItem = ({invite_status}) => (
+    renderItem = ({invite_status, eventDetails}) => (
         <InvitedUser
             onPress={this.onEventPress}
             invite_status={invite_status}
+            eventDetails={eventDetails}
         />
     )
 
     getUserDetails = async (id) => {
-        console.log('userid==>', id)
         const token = await getAuthToken()
-        console.log('====>', token)
         const config = {
             headers: {Authorization: `Bearer ${token}`},
         }
@@ -81,9 +80,7 @@ class SingleEventDetail extends React.Component {
             config
         )
             .then((response) => {
-                console.log('response==>', response)
                 if (response.data.data.result) {
-                    console.log('===>details', response.data.data.result)
                     this.setState({user: response?.data?.data?.result})
                 }
             })
@@ -500,6 +497,7 @@ class SingleEventDetail extends React.Component {
                                         <this.renderItem
                                             item={item}
                                             invite_status={invite_status}
+                                            eventDetails={eventDetails}
                                         />
                                     )}
                                     keyExtractor={(item, index) => `${index}`}
@@ -527,7 +525,11 @@ class SingleEventDetail extends React.Component {
                         ) : !isMyEvent &&
                           invite_status === inviteStatus?.accept ? (
                             <TouchableOpacity
-                                // onPress={this.withdrawIntive}
+                                onPress={() => {
+                                    this.props.navigation.navigate('LiveFeed', {
+                                        type: 'record',
+                                    }) // 'join'
+                                }}
                                 activeOpacity={0.7}
                                 style={[
                                     EventDetailStyles.button,

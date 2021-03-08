@@ -31,7 +31,7 @@ import Axios from 'axios'
 import {GROUP_TYPES} from './chat-group'
 import {connect} from 'react-redux'
 import {Alert} from 'react-native'
-
+import firestore from '@react-native-firebase/firestore'
 class GroupDetail extends React.Component {
     constructor() {
         super()
@@ -44,6 +44,9 @@ class GroupDetail extends React.Component {
             groupDetails: {},
             visible: false,
             leaveGroupIsLoading: false,
+            ID: [],
+            discr:'',
+            members:[]
         }
     }
 
@@ -101,16 +104,29 @@ class GroupDetail extends React.Component {
             this.getGroupDetails()
         })
          const {
-            group:{userInfo},
+            group:{userInfo,group_id,image},
          } = this.props.route.params
-        console.log("MYYYGROUPPDETAIL", userInfo)
+        console.log("MYYYGROUPPDETAIL", group_id ,image)
         
         let data = userInfo.userData.map(data => {
             return {
                 id: data.user_id,
-                name:data.name
+                name:data.full_name
             }
         })
+        let ids = userInfo.userData.map(data => {
+            return data.user_id.toString()
+                
+            
+        })
+        
+        let discr =`${data['0'].name.split(" ")[0]} ,${data['1'].name} and ${data.length} others`
+        this.setState({ID:ids,members:data ,discr:discr})
+        console.log("IDS", ids)
+        // let finlData = {
+        //     ID: ids,
+        //     admin_id:
+        // }
     }
 
     renderItem = () => {
@@ -363,44 +379,42 @@ class GroupDetail extends React.Component {
      startChat = () => {
          const {
             navigation: {goBack, navigate},
-        } = this.props
-        const user = [];
-          const chatID = [];
-       const details = []
-        const data = this.props.route.params.data
-        const data2 = this.props.user_id;
+         } = this.props
+          const {
+              groupDetails,
+              ID,members
+        } = this.state
+        //  const userdata = []
+        
       const  user1 = {
-            id: data.user_id,
-            pic: data.autherImage,
-            name: data.autherName,
-            address:"dummmy"
-           
+            address: this.state.discr,
+            group_pic: groupDetails?.group_image,
+            gname: groupDetails?.group_name,      
       }
-       
-        details.push(user1)
- const user2 = {
-            id: data2.user_id,
-            pic: data2.image,
-     name: data2.full_name,
-            address:"dummy"
-           
-        }
-       
-        user.push(user1,user2)
-        
-        
-    chatID.push(data.user_id.toString());
-        chatID.push(data2.user_id.toString());
-        console.log("IDDSSSS",chatID ,user)
+        //  userdata.push(user1)
+      
+         let gname = groupDetails?.group_name;
+         let admin_id = groupDetails?.group_id;
+         let admin_name = '';
+         let group_pic = groupDetails?.group_image;
+        let group_info = groupDetails?.group_description;
+         let group_id = groupDetails?.group_id;
         firestore()
-        .collection('chatroom')
+        .collection('Groups')
         .add({
-          ID:chatID,
-          users: user
+          ID:ID,
+            users: members,
+            gname:gname,
+            admin_id:admin_id ,
+            admin_name:'',
+            group_pic: group_pic,
+            group_info: group_info,
+            group_id:group_id
+          
         })
             .then((data2) => {
             console.log("dataaaaaaFIREBASE CREEATED",data2)
-          navigate('ChatOneToOne' ,{id:data.user_id,userData:details})
+          navigate('ChatOneToOne' ,{id:admin_id,userData:user1,type:'groups'})
         })
     }
     render() {

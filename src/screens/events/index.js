@@ -12,6 +12,8 @@ import {getAuthToken} from '../../helpers/auth'
 import Axios from 'axios'
 import {ActivityIndicator} from 'react-native'
 import {Colors} from '../../constants'
+import _ from 'lodash'
+import {RefreshControl} from 'react-native'
 
 class Events extends React.Component {
     constructor(props) {
@@ -21,9 +23,11 @@ class Events extends React.Component {
             visible: false,
             location: {},
             events: [],
+            filterEvents: [],
             isLoading: true,
             error: false,
             msg: '',
+            refreshing: false,
         }
     }
 
@@ -53,13 +57,9 @@ class Events extends React.Component {
     )
 
     getGeoLocation = async (submit = false) => {
-        console.log('GETTING LOCATION')
-
         Geolocation.getCurrentPosition(
             (position) => {
-                console.log('POSTION', position)
                 this.setState({location: position.coords}, () => {
-                    console.log('Location', this.state.location)
                     this.getEvents()
                 })
             },
@@ -74,9 +74,7 @@ class Events extends React.Component {
             const permissionStatus = await Permissions.check(
                 PERMISSIONS.IOS.LOCATION_ALWAYS
             )
-            request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {
-                console.log('PERMISSIN ASK IOS', res)
-            })
+            request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((res) => {})
             Geolocation.requestAuthorization()
             this.getGeoLocation(submit)
         } else {
@@ -144,9 +142,10 @@ class Events extends React.Component {
                 if (res?.data?.status) {
                     if (res?.data?.data?.result?.length) {
                         this.setState({
-                            events: res?.data?.data?.result,
+                            events: _.reverse(res?.data?.data?.result),
                             isLoading: false,
                             error: false,
+                            refreshing: false,
                         })
                     }
                 } else {
@@ -154,30 +153,90 @@ class Events extends React.Component {
                         isLoading: false,
                         error: true,
                         msg: res?.data?.message,
+                        refreshing: false,
                     })
                 }
             }
         } catch (error) {
-            this.setState({isLoading: false, error: true, msg: error?.message})
+            this.setState({
+                isLoading: false,
+                error: true,
+                msg: error?.message,
+                refreshing: false,
+            })
         }
     }
 
     componentDidMount() {
-        this.getLocation()
+        const params = this?.props?.route?.params || {}
+        if (params?.filter) {
+            this.getFilterEvents(params)
+        } else {
+            this.getLocation()
+        }
 
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.getLocation()
+            if (params?.filter) {
+                this.getFilterEvents(params)
+            } else {
+                this.getLocation()
+            }
         })
     }
 
     componentWillUnmount() {
         this.unsubscribe()
     }
+    onRefresh = () => {
+        this.setState({refreshing: true})
+        this.getLocation()
+    }
+
+    getFilterEvents = async ({
+        connect,
+        gender,
+        selectedLevel,
+        distance,
+        location: {latitude, longitude},
+        isEnabled,
+    }) => {
+        const url = API.FILTER_EVENTS
+        const token = await getAuthToken()
+        const config = {
+            params: {
+                token,
+            },
+            body: JSON.stringify({
+                runners_type: connect,
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
+            }),
+        }
+        try {
+            const res = await Axios.get(url, config)
+            console.log('FILTER, EVENTS', res)
+            if (res?.data?.status) {
+                this.setState({
+                    filterEvents: res?.data?.data?.result || [],
+                    isLoading: false,
+                })
+            } else {
+                this.setState({isLoading: false})
+            }
+        } catch (error) {
+            console.log('ERROR FILTER EVENTS', error)
+            this.setState({isLoading: false})
+        }
+    }
 
     render() {
         const {params} = this.props
-        const {visible, isLoading, events, error, msg} = this.state
-
+        const {visible, isLoading, events, error, msg, refreshing} = this.state
+        const {filter} = this?.props?.route?.params || {}
         return (
             <View style={HomeStyles.container}>
                 {params?.isMapView ? (
@@ -199,7 +258,18 @@ class Events extends React.Component {
                             </View>
                         ) : (
                             <FlatList
-                                data={this.state.events.reverse()}
+                                refreshControl={
+                                    <RefreshControl
+                                        tintColor={Colors.WHITE}
+                                        refreshing={refreshing}
+                                        onRefresh={this.onRefresh}
+                                    />
+                                }
+                                data={
+                                    filter
+                                        ? this.state.filterEvents
+                                        : this.state.events
+                                }
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {

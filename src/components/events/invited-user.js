@@ -6,7 +6,11 @@ import Constants from '../../constants'
 import {InviteFriendsStyles} from '../../styles'
 import {inviteStatus} from '../../screens/events/detail'
 
-export const InvitedUser = ({t: translate, invite_status}) => {
+export const InvitedUser = ({
+    t: translate,
+    invite_status,
+    eventDetails: {InvitedUserImage, InvitedUserName},
+}) => {
     const [checked, setCheck] = useState(false)
 
     return (
@@ -20,7 +24,7 @@ export const InvitedUser = ({t: translate, invite_status}) => {
                     InviteFriendsStyles.invitedUserWrapper,
                 ]}>
                 <Image
-                    source={Constants.Images.inviteUser2}
+                    source={{uri: InvitedUserImage}}
                     style={[
                         InviteFriendsStyles.userImage,
                         InviteFriendsStyles.invitedUserImage,
@@ -33,7 +37,7 @@ export const InvitedUser = ({t: translate, invite_status}) => {
                                 InviteFriendsStyles.username,
                                 InviteFriendsStyles.namePadding,
                             ]}>
-                            Shane Watson
+                            {InvitedUserName}
                         </Text>
                         <Text
                             style={[

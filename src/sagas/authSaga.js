@@ -15,26 +15,30 @@ import {loginSuccess as userLogginSuccess} from '../actions/user-action-types'
 export function* login(data) {
     yield put(loginRequested())
 
-    const {error, result} = yield call(httpClient, {
-        data: data.payload,
-        method: 'post',
-        url: '/login',
-    })
-    console.log('RESULT LOGIN', result)
-    // console.log('LOGIN REPSONE ', result.code)
-    if (error) {
-        console.log('Eooorrrrrr', error)
-        yield put(loginFailure(error))
-    }
-    if (result.code === 200) {
-        setAuthToken(result.data.token)
-        setUserId(result.data.user_id.toString())
-        setUserCred(data.payload)
-        yield put(loginSuccess(result.data))
-        yield put(userLogginSuccess(''))
-    } else {
-        yield put(loginFailure(error))
-        Alert.alert(result.message)
+    try {
+        const {error, result} = yield call(httpClient, {
+            data: data.payload,
+            method: 'post',
+            url: '/login',
+        })
+        console.log('RESULT LOGIN', result)
+        // console.log('LOGIN REPSONE ', result.code)
+        if (error) {
+            console.log('Eooorrrrrr', error)
+            yield put(loginFailure(error))
+        }
+        if (result.code === 200) {
+            setAuthToken(result.data.token)
+            setUserId(result.data.user_id.toString())
+            setUserCred(data.payload)
+            yield put(loginSuccess(result.data))
+            yield put(userLogginSuccess(''))
+        } else {
+            yield put(loginFailure(error))
+            Alert.alert(result.message)
+        }
+    } catch (error) {
+        Alert.alert('Login', 'Something went wrong, Please try again later')
     }
 }
 
