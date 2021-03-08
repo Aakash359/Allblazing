@@ -558,22 +558,27 @@ function LiveFeed(props) {
                                         {props.full_name + ' , ' + '23'}
                                     </Text>
                                     <Text style={LiveFeedStyles.subHeading}>
-                                        {'text'}
+                                        {''}
                                     </Text>
                                 </View>
                             </View>
                             <View style={LiveFeedStyles.sectionView}>
-                                <View style={LiveFeedStyles.heartView}>
+                                <View style={[LiveFeedStyles.heartView]}>
                                     <TouchableOpacity
                                         onPress={() => {
                                             setLike(!like)
                                         }}>
                                         <Image
                                             source={Constants.Images.heart}
-                                            style={LiveFeedStyles.messageIcon}
+                                            style={LiveFeedStyles.heartIcon}
+                                            resizeMode="contain"
                                         />
                                     </TouchableOpacity>
-                                    <Text style={LiveFeedStyles.followText}>
+                                    <Text
+                                        style={[
+                                            LiveFeedStyles.followText,
+                                            {marginLeft: 5},
+                                        ]}>
                                         {likes}
                                     </Text>
                                 </View>

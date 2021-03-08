@@ -28,8 +28,8 @@ import { PermissionsAndroid } from 'react-native';
 import { GoogleSignin, GoogleSigninButton,statusCodes } from '@react-native-community/google-signin';
 import { email } from '../../constants/images';
 import InstagramLogin from 'react-native-instagram-login';
-
 import { LoginManager,AccessToken,GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
+
 
 Geolocation?.setRNConfiguration({
   skipPermissionRequests: false,
@@ -67,7 +67,6 @@ class Login extends Component {
       isShow: false,
       password: '12345678',         //'tarun123', 12345678
       isLoading: false,
-      loggedIn: false,
       user: [],
       email:'',
       password:'',
@@ -178,7 +177,6 @@ class Login extends Component {
           console.log("Gamil-Response", response)
           console.log("User-Id", response?.data?.data?.user_id)
           await  AsyncStorage.setItem('socail_id', response?.data?.data?.user_id.toString() );
-          
           setAuthToken( response?.data?.data?.token);
           this.props.addLoginDetail(response?.data?.data);
           setLoginUserId(JSON.stringify(response?.data?.data));
@@ -364,12 +362,7 @@ class Login extends Component {
 
    
  
-  onClear() {
-    CookieManager.clearAll(true)
-      .then((res) => {
-        this.setState({ token: null })
-      });
-    }
+
 
    get_Response_Info = (error, result) => {
     if (error) {

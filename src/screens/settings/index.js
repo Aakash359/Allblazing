@@ -9,7 +9,8 @@ import {clearAsyncStorage, removeAuthToken} from '../../helpers/auth'
 import {withTranslation} from 'react-i18next'
 import {removeAuthTokenFromRedux} from '../../reducers/baseServices/auth'
 import AsyncStorage from '@react-native-community/async-storage'
-
+import { GoogleSignin,} from '@react-native-community/google-signin';
+import { LoginManager,GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
 
 
 const settingList = [
@@ -97,6 +98,36 @@ class Settings extends Component {
 
         navigate(data.route, data.payload)
     }
+    Google_signOut = async () => {
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          this.setState({ user: null }); // Remember to remove the user from your app's state as well
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      FB_Logout = (accessToken) => {
+        let logout =
+            new GraphRequest(
+                "me/permissions/",
+                {
+                    accessToken: accessToken,
+                    httpMethod: 'DELETE'
+                },
+                (error, result) => {
+                    if (error) {
+                        console.log('Error fetching data: ' + error.toString());
+                    } else {
+                        LoginManager.logOut();
+                    }
+                });
+        new GraphRequestManager().addRequest(logout).start();
+    };
+
+   
+
 
     onLogout = async (accessToken) => {
         const {
@@ -116,6 +147,9 @@ class Settings extends Component {
         const token = await AsyncStorage.multiRemove(allKeys)
         AsyncStorage.clear();
         console.log('========>>tokenNullll', token)
+        this.Google_signOut()
+        this.FB_Logout()
+       
         this.setState({logoutPopup: false})
         logOutSuccess('')
         

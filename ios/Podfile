@@ -25,6 +25,8 @@ target 'RunFast' do
   pod 'GoogleSignIn', '~> 5.0.2'
 
 
+  pod 'react-native-cookies', :path => '../node_modules/@react-native-community/cookies'
+
   target 'RunFastTests' do
     inherit! :complete
     # Pods for testing

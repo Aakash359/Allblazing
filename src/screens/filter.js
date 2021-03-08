@@ -19,7 +19,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import {GOOGLE_API_KEY} from '../config/config'
 import Axios from 'axios'
 
-const Filter = ({t: translate, navigation: {goBack, navigate}}) => {
+const Filter = ({t: translate, navigation: {goBack, navigate}, route}) => {
     const [isEnabled, setIsEnabled] = React.useState(true)
     const [connect, setConnectType] = React.useState('train')
     const [distance, setDistance] = React.useState(null)
@@ -30,6 +30,7 @@ const Filter = ({t: translate, navigation: {goBack, navigate}}) => {
     const [address, setAddress] = React.useState(null)
 
     const applyFilters = () => {
+        const {type} = route?.params || {}
         if (!location?.latitude || !location?.longitude) {
             return Alert.alert(
                 'Filter',
@@ -42,14 +43,36 @@ const Filter = ({t: translate, navigation: {goBack, navigate}}) => {
         if (connect === 'race' && !distance) {
             return Alert.alert('Filter', 'Please select a distance')
         }
-        navigate('Events', {
-            isEnabled,
-            connect,
-            distance: parseInt(distance),
-            gender,
-            selectedLevel: parseInt(selectedLevel),
-            location,
-            filter: true,
+        navigate('Overview', {
+            data: true,
+            eventsFilters:
+                type === 'Events'
+                    ? {
+                          isEnabled,
+                          connect,
+                          distance: parseInt(distance),
+                          gender,
+                          selectedLevel: parseInt(selectedLevel),
+                          location,
+                          address,
+                          filter: true,
+                          type: route?.params?.type,
+                      }
+                    : null,
+            runnersFilters:
+                type === 'Runners'
+                    ? {
+                          isEnabled,
+                          connect,
+                          distance: parseInt(distance),
+                          gender,
+                          selectedLevel: parseInt(selectedLevel),
+                          location,
+                          address,
+                          filter: true,
+                          type: route?.params?.type,
+                      }
+                    : null,
         })
     }
 
@@ -62,7 +85,7 @@ const Filter = ({t: translate, navigation: {goBack, navigate}}) => {
         setLocation(null)
         setShow(false)
         setAddress(null)
-        goBack()
+        navigate('Overview', {data: false})
     }
 
     const getCoords = async (address) => {
@@ -78,6 +101,32 @@ const Filter = ({t: translate, navigation: {goBack, navigate}}) => {
             console.log('ERROR ADDRESS COORDS: ', error)
         }
     }
+
+    React.useEffect(() => {
+        console.log('new filters: ', route.params)
+        let {filter, type} = route?.params
+        if (type === 'Events') {
+            if (filter?.data && filter?.events) {
+                setIsEnabled(filter?.events?.isEnabled)
+                setConnectType(filter?.events?.connect)
+                setDistance(filter?.events?.distance)
+                setGender(filter?.events?.gender)
+                setLevel(filter?.events?.selectedLevel)
+                setLocation(filter?.events?.location)
+                setAddress(filter?.events?.address)
+            }
+        } else {
+            if (filter?.data && filter?.runners) {
+                setIsEnabled(filter?.runners?.isEnabled)
+                setConnectType(filter?.runners?.connect)
+                setDistance(filter?.runners?.distance)
+                setGender(filter?.runners?.gender)
+                setLevel(filter?.runners?.selectedLevel)
+                setLocation(filter?.runners?.location)
+                setAddress(filter?.runners?.address)
+            }
+        }
+    }, [])
 
     return (
         <>

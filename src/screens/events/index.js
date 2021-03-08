@@ -164,20 +164,23 @@ class Events extends React.Component {
                 msg: error?.message,
                 refreshing: false,
             })
+            console.log('ERROR EVENTS: ', error)
         }
     }
 
     componentDidMount() {
-        const params = this?.props?.route?.params || {}
-        if (params?.filter) {
-            this.getFilterEvents(params)
+        const {filter} = this.props
+        if (filter?.data) {
+            this.getFilterEvents(filter?.eventsFilters)
+            this.getLocation()
         } else {
             this.getLocation()
         }
 
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            if (params?.filter) {
-                this.getFilterEvents(params)
+            if (this.props.filter?.data) {
+                this.getFilterEvents(filter?.eventsFilters)
+                this.getLocation()
             } else {
                 this.getLocation()
             }
@@ -187,6 +190,10 @@ class Events extends React.Component {
     componentWillUnmount() {
         this.unsubscribe()
     }
+    shouldComponentUpdate(newProps) {
+        return true
+    }
+
     onRefresh = () => {
         this.setState({refreshing: true})
         this.getLocation()
@@ -200,6 +207,7 @@ class Events extends React.Component {
         location: {latitude, longitude},
         isEnabled,
     }) => {
+        this.setState({isLoading: true})
         const url = API.FILTER_EVENTS
         const token = await getAuthToken()
         const config = {
@@ -218,7 +226,6 @@ class Events extends React.Component {
         }
         try {
             const res = await Axios.get(url, config)
-            console.log('FILTER, EVENTS', res)
             if (res?.data?.status) {
                 this.setState({
                     filterEvents: res?.data?.data?.result || [],
@@ -234,9 +241,9 @@ class Events extends React.Component {
     }
 
     render() {
-        const {params} = this.props
+        const {params, filter} = this.props
         const {visible, isLoading, events, error, msg, refreshing} = this.state
-        const {filter} = this?.props?.route?.params || {}
+        // const {filter} = this?.props?.route?.params || {}
         return (
             <View style={HomeStyles.container}>
                 {params?.isMapView ? (
@@ -266,7 +273,7 @@ class Events extends React.Component {
                                     />
                                 }
                                 data={
-                                    filter
+                                    filter?.eventsFilters && filter?.data
                                         ? this.state.filterEvents
                                         : this.state.events
                                 }
