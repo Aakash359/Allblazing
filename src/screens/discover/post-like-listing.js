@@ -119,7 +119,7 @@ class PostLikeListing extends Component {
             <TouchableOpacity
               activeOpacity={0.7}
               style={FeedStyles.heartView}
-              onPress={() => this._Like(item)}
+              // onPress={() => this._Like(item)}
               // onPress={() => {
               //   setLike(!like);
               // }}

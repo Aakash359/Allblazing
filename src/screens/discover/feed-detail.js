@@ -38,6 +38,7 @@ class FeedDetailScreen extends Component {
     const likeCount = this.props.route.params.data.likeCount;
     const likeStatus = this.props.route.params.data.likeStatus;
     const created_at = this.props.route.params.data.created_at;
+    
     const post = this.props.route.params.data.post;
     const authorImage = this.props.route.params.data.autherImage === 'N/A' ? '' : this.props.route.params.data.autherImage
     return (
@@ -56,6 +57,7 @@ class FeedDetailScreen extends Component {
             <Image source={{uri: authorImage || post}} style={FeedDetailStyles.userImage} />
             <View style={FeedDetailStyles.nameView}>
               <Text style={FollowersStyles.nameText}>{autherName}</Text>
+              <Text style={FollowersStyles.nameText}>{created_at}</Text>
               <Text style={FollowersStyles.locationText}>
                 {moment(created_at).format('LT')}
               </Text>

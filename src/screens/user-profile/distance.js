@@ -49,6 +49,7 @@ class Distance extends Component {
     this.setState({
       time: payload,
       visible: true,
+      
     });
   };
 
@@ -161,6 +162,7 @@ class Distance extends Component {
         {visible && (
           <TimePicker
             visible
+            value={this.state.time}
             hour={hour}
             minute={minute}
             second={second}

@@ -1,9 +1,17 @@
 package com.runfast;
-
+import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.util.Base64;
+import android.util.Log;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.cookies.CookieManagerPackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import io.agora.agora_rtm.AgoraRTMPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -13,6 +21,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -30,8 +40,9 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
 //           packages.add(new SplashScreenReactPackage());
+          new RNGoogleSigninPackage();
           return packages;
-        }
+        };
 
         @Override
         protected String getJSMainModuleName() {
@@ -49,6 +60,22 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+      try {
+          PackageInfo info = getPackageManager().getPackageInfo(
+                  getPackageName(),
+                  PackageManager.GET_SIGNATURES);
+          for (Signature signature : info.signatures) {
+              MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+              messageDigest.update(signature.toByteArray());
+              Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+          }
+      }
+      catch (PackageManager.NameNotFoundException e) {
+
+      }
+      catch (NoSuchAlgorithmException e) {
+
+      }
   }
 
   /**
