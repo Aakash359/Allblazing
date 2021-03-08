@@ -422,7 +422,7 @@ class GroupDetail extends React.Component {
                             />
                             <FlatList
                                 scrollEnabled={false}
-                                data={[1, 2, 3]}
+                                data={this.state.groupDetails?.events || []}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                             />

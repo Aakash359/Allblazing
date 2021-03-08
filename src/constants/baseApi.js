@@ -58,6 +58,8 @@ const API = {
     FILTER_EVENTS: `${BASE_URL}/event-filters`,
     RUNNERS_NEAR_ME: `${BASE_URL}/runner-near-me-list`,
     FILTER_RUNNERS: `${BASE_URL}/runners-filters`,
+    BLOCKED_USERS: `${BASE_URL}/block_list`,
+    GROUP_MEMBERS: `${BASE_URL}/member_list`,
     // USERLIST : BASE_URL +
 }
 

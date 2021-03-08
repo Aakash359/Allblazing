@@ -36,6 +36,11 @@ const settingList = [
         route: 'InviteFriends',
     },
     {
+        label: 'settings.Blocked Users',
+        payload: {},
+        route: 'BlockedUsers',
+    },
+    {
         label: 'settings.Contact Us',
         payload: {title: 'settings.Contact Us'},
         route: 'ContactUS',

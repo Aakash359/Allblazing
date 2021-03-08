@@ -103,10 +103,13 @@ class FollowingList extends Component {
                 />
             </View>
 
-            <View>
+            <View style={{width: '60%'}}>
                 <Text style={FollowingStyles.nameText}>{item.followName}</Text>
-                <Text style={FollowingStyles.locationText}>
-                    Santee, United States
+                <Text
+                    style={FollowingStyles.locationText}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {item?.followAddress}
                 </Text>
             </View>
         </TouchableOpacity>

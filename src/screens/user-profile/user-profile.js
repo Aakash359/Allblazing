@@ -504,17 +504,22 @@ class UserProfile extends Component {
 
                 {this.props.route?.params?.visible && (
                     <MoreOptionsPopup
-                        hasFollowBtn={!this.state.list.follow}
+                        hasFollowBtn={
+                            !this.state.list.follow && !this.state.list.blocked
+                        }
                         hasUnFollowBtn={
-                            this.state.list.follow
-                                ? true
-                                : this.props.route?.params?.iseventPage
-                                ? true
+                            !this.state.list.blocked
+                                ? this.state.list.follow
+                                    ? true
+                                    : this.props.route?.params?.iseventPage
+                                    ? true
+                                    : false
                                 : false
                         }
                         onfollow={this.handleUserFollow}
                         onUnfollow={() => this.OnUnfollow()}
                         visible={this.props.route?.params?.visible}
+                        hasBlockBtn={!this.state.list.blocked}
                         onBlock={() => {
                             this.props.navigation.setParams({visible: false})
                             this.props.navigation.navigate('BlockReportUser', {
