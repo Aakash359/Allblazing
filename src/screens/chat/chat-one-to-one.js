@@ -46,7 +46,7 @@ return `${num1}_${num2}`
       t: translate,user_id
     } = this.props;
        let another_id   = params.id
-    let threadName = params.type === 'chat' ? this.Id_generator(user_id, another_id) : another_id;
+    let threadName = params.type === 'chat' ? this.Id_generator(user_id, another_id) : another_id.toString();
     console.log("tthreeaddddName",threadName)
           const text = newMessage[0].text
             this.setState({ messages: GiftedChat.append(this.state.messages, newMessage) })
@@ -130,8 +130,8 @@ return `${num1}_${num2}`
     let dummyArray = []
       let userData = params.userData;
       dummyArray.push(userData)
-    let threadName = params.id
-    console.log("threadDATAANEW" , dummyArray)
+    let threadName = params.id.toString()
+    console.log("threadDATAANEW" , dummyArray,threadName)
                  
                   this.setState({id:user_id,userData:dummyArray})
                 this.unsubscribeListener = firestore()
@@ -187,7 +187,7 @@ return `${num1}_${num2}`
     //          let name = this.props.route.params.name
    
     let User = props.currentMessage.user
-              console.log('Props',props ,id)
+    
 
 
               if (User._id === id)
@@ -348,7 +348,7 @@ return `${num1}_${num2}`
         <View>
           {params.type === 'chat' ? <Text style={InviteFriendsStyles.username}>{this.state.userData.length > 0 && this.state.userData['0'].name}</Text> :
           <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].gname}</Text>}
-         {/* <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text> */}
+       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>

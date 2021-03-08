@@ -33,7 +33,7 @@ class Userage extends Component {
     if (this.state.age === 0 ) {
       Alert.alert(
         '',
-        'Please Select age',
+        'Please select age',
         [
           {
             text: 'Cancel',

@@ -50,7 +50,7 @@ class ChatsGroup extends React.Component {
         }
         Axios.get(API.GROUP_LISTING, config)
             .then((res) => {
-                console.log('GROUP LISTING', res)
+                console.log('GROUP LISTING', res?.data?.data?.result)
                 this.setState({
                     myGroups: res?.data?.data?.result,
                     loader: {
@@ -157,6 +157,7 @@ class ChatsGroup extends React.Component {
                 this.setState(
                     {
                         requestedGroups: res?.data?.data,
+                        
                         loader: {
                             ...this.state.loader,
                             requestedGroups: {
@@ -169,7 +170,8 @@ class ChatsGroup extends React.Component {
                         this.getThreeRequest(res?.data?.data)
                     }
                 )
-            })
+            }
+            )
             .catch((e) => {
                 console.log('ERROR AREQLL GROUP LISTING', e)
                 this.setState({
@@ -216,7 +218,7 @@ class ChatsGroup extends React.Component {
             navigation: {navigate},
         } = this.props
         const {activeTab} = this.state
-
+console.log("iteeeemmmm",JSON.stringify(item))
         if (activeTab === '0') {
             return (
                 <ChatGroup
@@ -507,7 +509,7 @@ class ChatsGroup extends React.Component {
                                             margin: 10,
                                         }}>
                                         <Text style={{color: Colors.WHITE}}>
-                                            Recevied By Me
+                                             Requested received
                                         </Text>
                                         {resceived?.length > 3 ? (
                                             <TouchableOpacity

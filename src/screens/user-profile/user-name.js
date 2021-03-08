@@ -31,6 +31,8 @@ class Username extends Component {
 componentDidMount(){
   const full_name = this.props.route?.params?.full_name ?? '';
     console.log('fullname==>',full_name );
+    const data = this.props.route?.params?.data
+    console.log('fullname==>',data );
     this.setState({name: full_name})
 }
 
@@ -39,7 +41,7 @@ componentDidMount(){
     if (this.state.name === '') {
       Alert.alert(
         '',
-        'Please Enter Full Name',
+        'Please enter the full Name',
         [
           {
             text: 'Cancel',
@@ -141,7 +143,7 @@ componentDidMount(){
               <InputField
                 value={this.state.name}
                 style={{color:'white'}}
-                placeholder={translate('full name')}
+                placeholder={translate('Full Name')}
                 onChangeText={(text) => this.setState({name: text})}
               />
             </View>

@@ -106,7 +106,7 @@ async requestCameraAndAudioPermission() {
            
     
   componentDidMount() {
-    this.permissionAsk()
+    //this.permissionAsk()
    
     Keyboard.addListener('keyboardDidShow', this.onKeyboardOpen);
     Keyboard.addListener('keyboardDidHide', this.onKeyboardHide);

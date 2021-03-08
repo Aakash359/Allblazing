@@ -35,7 +35,7 @@ class ForgotPassword extends Component {
     } = this.props;
     const {email} = this.state;
     if (email.length < 1) {
-      Alert.alert('', 'Please enter email id');
+      Alert.alert('', 'Please enter your email Id');
       return;
     }
     this.setState({
@@ -47,22 +47,8 @@ class ForgotPassword extends Component {
       })
       .then((response) => {
         if (response?.data?.code === 200) {
-          Alert.alert(
-            '',
-            response?.data?.message ?? '',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel pressed'),
-                style: 'Cancel',
-              },
-              {
-                text: 'OK',
-                onPress: () => navigate('ForgotOTP',{email:this.state.email}),
-              },
-            ],
-            {Cancelable:false}
-          );
+          
+           this.setState({visible:true})
           setForgotPasswordUserId(response?.data?.data?.user_id.toString());
           console.log(response?.data?.data?.user_id.toString());
         }
@@ -100,10 +86,10 @@ class ForgotPassword extends Component {
 
         <SuccessPopup
           hasResendBtn
-          instructions={`${t('Forgot Password Success')} "xyz@gmail.com"`}
+          instructions={`${t('Forgot Password Success')} ${this.state.email}`}
           visible={visible}
-          onClick={() => this.setState({visible: false}, () => navigate('OTP'))}
-          onResend={() => this.setState({visible: false})}
+          onClick={() => this.setState({visible: false}, () =>navigate('ForgotOTP',{email:this.state.email}))}
+          hasResendBtn={false}
         />
         <View style={ForgotPassStyles.buttonsWrapper}>
           <TouchableOpacity
