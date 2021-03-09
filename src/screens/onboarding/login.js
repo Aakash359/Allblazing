@@ -306,9 +306,6 @@ class Login extends Component {
                
               }
 
-              
-            
-              
             )
             console.log('Login success with permissions: ' + result.grantedPermissions.toString())
           }
@@ -384,21 +381,18 @@ class Login extends Component {
  
 
 Socail_Api_Hit(item) 
-{
-switch(item) {
-  case 'google' : this._signIn()
-  break;
-  case 'facebook' : this.Facebook_Sign_In()
-  break;
-  case 'insta' : this.instagramLogin.show()
-  break;
-  case 'twitter' : this.Twitter_Sign_In()
-   
-}
 
-
-
-
+  {
+      switch(item) {
+        case 'google' : this._signIn()
+        break;
+        case 'facebook' : this.Facebook_Sign_In()
+        break;
+        case 'insta' : this.instagramLogin.show()
+        break;
+        case 'twitter' : this.Twitter_Sign_In()
+        
+      }
 
 }
   render() {
@@ -409,7 +403,7 @@ switch(item) {
       email,
      loginStatus
     } = this.props;
-   
+  
 
     return (
       <View style={CommonStyles.container}>
