@@ -103,7 +103,10 @@ return `${num1}_${num2}`
               .doc(threadName)
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(querySnapshot => {
+                  .onSnapshot(querySnapshot => {
+                    if (querySnapshot == null) {
+                  return
+                }
               const messages = querySnapshot.docs.map(doc => {
               const firebaseData = doc.data()
 
@@ -139,7 +142,13 @@ return `${num1}_${num2}`
               .doc(threadName)
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(querySnapshot => {
+                  .onSnapshot(querySnapshot => {
+                    if (querySnapshot == null) {
+                  return
+                    }
+                    else {
+                      
+                    }
               const messages = querySnapshot.docs.map(doc => {
               const firebaseData = doc.data()
 
@@ -348,7 +357,7 @@ return `${num1}_${num2}`
         <View>
           {params.type === 'chat' ? <Text style={InviteFriendsStyles.username}>{this.state.userData.length > 0 && this.state.userData['0'].name}</Text> :
           <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].gname}</Text>}
-       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text>
+       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address ||params.address}</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>

@@ -40,6 +40,27 @@ class UserProfile extends Component {
     }
     componentDidMount() {
         this.UserProfileDetails()
+        firestore()
+            .collection('chatroom')
+            .where("ID", "array-contains-any",["19","198"]).where("ID", "array-contains-any",["19","198"]).onSnapshot(querySnapshot => {
+               
+                if (querySnapshot == null) {
+                    return
+                }
+                else {
+                    const threads = querySnapshot.docs.map(documentSnapshot => {
+                       
+                        return {
+                            // _id: documentSnapshot.id,
+                            // name: documentSnapshot.data.name,
+                            // latestMessage: { text: '' },
+                            ...documentSnapshot.data()
+                        }
+         
+                    })
+                     console.log("myQuerySnapShot", JSON.stringify( threads))
+                }
+            })
     }
 
     UserProfileDetails = async () => {
@@ -197,6 +218,27 @@ class UserProfile extends Component {
         const details = []
         const data = this.props.route.params.data
         const data2 = this.props.user_id
+        firestore()
+            .collection('chatroom')
+            .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
+                console.log("myQuerySnapShot", querySnapshot)
+                if (querySnapshot == null) {
+                    return
+                }
+                else {
+                    const threads = querySnapshot.docs.map(documentSnapshot => {
+                       
+                        return {
+                            // _id: documentSnapshot.id,
+                            // name: documentSnapshot.data.name,
+                            // latestMessage: { text: '' },
+                            ...documentSnapshot.data()
+                        }
+         
+                    })
+                     console.log("myQuerySnapShot", threads)
+                }
+            })
         const user1 = {
             id: data.user_id,
             pic: data.autherImage,

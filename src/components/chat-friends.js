@@ -14,7 +14,7 @@ export const ChatFriends = ({
  nameObj
 }) => (
 
-  <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('ChatOneToOne' ,{thread: data ,id:type === 'chat' ?nameObj['0'].id:data.group_id,userData:type === 'chat' ?nameObj:data,type:type})} style={InviteFriendsStyles.container}>
+  <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('ChatOneToOne' ,{thread: data ,id:type === 'chat' ?nameObj['0'].id:data.group_id,userData:type === 'chat' ?nameObj:data,type:type,address: data.users['0'].name !=null && `${data.users['0'].name.split(" ")[0]} ,${data.users['1'].name} and ${data.users.length} others`})} style={InviteFriendsStyles.container}>
     <View style={InviteFriendsStyles.userWrapper}>
       <Image source={type === 'chat' ? { uri: nameObj.length >0 && nameObj['0'].pic } :type === 'groups'? { uri: data.group_pic } :Constants.Images.inviteUser1} style={InviteFriendsStyles.userImage} />
       {type === 'chat' ? (
@@ -27,7 +27,7 @@ export const ChatFriends = ({
       ) : (
         <View>
               <Text style={InviteFriendsStyles.username}>{data.gname}</Text>
-          <Text style={InviteFriendsStyles.location}>{ `${data.members['0'].name} ,${data.members['1'].name} and ${data.members.length} others` }</Text>
+       <Text style={InviteFriendsStyles.location}>{ data.users.length > 0 && `${data.users['0'].name} ,${data.users['1'].name} and ${data.users.length} others` }</Text>
         </View>
       )}
     </View>
