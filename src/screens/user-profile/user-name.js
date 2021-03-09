@@ -77,7 +77,7 @@ componentDidMount(){
       });
 
     if (name === '') {
-      Alert.alert('', 'Please enter full name', '');
+      Alert.alert('', 'Please enter your full name', '');
     } else {
       axios
         .post(

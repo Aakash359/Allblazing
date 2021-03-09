@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.Colors.TEXT_COLOR2,
     borderRadius: 4,
     marginBottom: height * 0.02,
+    marginTop: height * 0.02,
     marginHorizontal: 40,
     padding: 15,
     paddingTop: height * 0.02,

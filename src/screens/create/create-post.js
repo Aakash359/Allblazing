@@ -209,11 +209,12 @@ class CreatePost extends Component {
                     <View>
                         <Image
                             source={{uri: this.state.selectedImage}}
+                            
                             style={CreatePostStyles.postImage}
                         />
                         <TouchableOpacity
                             activeOpacity={0.7}
-                            onPress={() => this.setState({upload: false})}
+                            onPress={() => this.setState({upload: false,selectedImage:''})}
                             style={CreatePostStyles.closeIconView}>
                             <Image
                                 source={Constants.Images.closeRound}
@@ -223,7 +224,7 @@ class CreatePost extends Component {
                         <TouchableOpacity
                             activeOpacity={0.7}
                             disabled={this.state.isLoading}
-                            // onPress={() => navigation.navigate('Feed')}
+                           
                             onPress={() => this._handlePost()}
                             style={CreatePostStyles.nextView}>
                             {this.state.isLoading ? (
