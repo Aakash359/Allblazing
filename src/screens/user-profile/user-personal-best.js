@@ -38,10 +38,7 @@ class UserPersonalBest extends Component {
         const token = await getAuthToken()
         const config = {
             headers: {
-                Authorization: `Bearer ${
-                    token ||
-                    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvcXV5dGVjaC5uZXRcL3J1bmZhc3Qtc2Z0cFwvUnVuRmFzdFwvcHVibGljXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjE1Mjg1ODE4LCJleHAiOjE2NDY4MjE4MTgsIm5iZiI6MTYxNTI4NTgxOCwianRpIjoib3BOaHR4ejhobWwyb3ltbSIsInN1YiI6MTkyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.I1J7mGytRfclgfwfERM3ViXJjP6DGxfaDNqYkHqfFuc'
-                }`,
+                Authorization: `Bearer ${token || this.props?.token}`,
             },
         }
         try {
@@ -305,8 +302,9 @@ UserPersonalBest.propTypes = {
 
 // export default withTranslation()(UserPersonalBest);
 
-const mapStateToProps = ({auth: {email}}) => ({
+const mapStateToProps = ({auth: {email}, signUp: {token}}) => ({
     email,
+    token,
 })
 
 const mapDispatchToProps = {
