@@ -32,7 +32,7 @@ class MyProfile extends Component {
         super()
         this.state = {
             option: 'Goals',
-            Loading: false,
+            Loading: true,
             optionList: ['Goals', "PB's", 'Likes'],
         }
     }

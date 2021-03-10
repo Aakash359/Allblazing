@@ -156,6 +156,13 @@ class Events extends React.Component {
                         refreshing: false,
                     })
                 }
+            } else {
+                this.setState({
+                    isLoading: false,
+                    error: true,
+                    msg: res?.data?.message,
+                    refreshing: false,
+                })
             }
         } catch (error) {
             this.setState({
@@ -211,10 +218,14 @@ class Events extends React.Component {
         const url = API.FILTER_EVENTS
         const token = await getAuthToken()
         const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                ContentType: 'application/json',
+            },
             params: {
                 token,
             },
-            body: JSON.stringify({
+            data: JSON.stringify({
                 runners_type: connect,
                 gender,
                 level: selectedLevel,
@@ -244,6 +255,7 @@ class Events extends React.Component {
         const {params, filter} = this.props
         const {visible, isLoading, events, error, msg, refreshing} = this.state
         // const {filter} = this?.props?.route?.params || {}
+        console.log('Event isLoading', isLoading)
         return (
             <View style={HomeStyles.container}>
                 {params?.isMapView ? (
@@ -259,11 +271,12 @@ class Events extends React.Component {
                                 size="small"
                                 color={Colors.WHITE}
                             />
-                        ) : error ? (
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={{color: Colors.WHITE}}>{msg}</Text>
-                            </View>
                         ) : (
+                            // : error ? (
+                            //     <View style={{alignItems: 'center'}}>
+                            //         <Text style={{color: Colors.WHITE}}>{msg}</Text>
+                            //     </View>
+                            // )
                             <FlatList
                                 refreshControl={
                                     <RefreshControl

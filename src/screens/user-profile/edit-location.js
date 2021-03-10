@@ -31,7 +31,7 @@ import {
 } from '../../helpers/auth'
 import {Alert} from 'react-native'
 import {ActivityIndicator} from 'react-native'
-import {times} from '../../data'
+import {times, distanceList} from '../../data'
 
 class EditLocation extends Component {
     onChangeText = () => {}
@@ -85,7 +85,7 @@ class EditLocation extends Component {
             full_name: name,
             age: Age,
             type: Type,
-            distance: Distance,
+            distance: Distance || distanceList[0]?.value,
             time: Time || times[0]?.value,
             latitude: latitude || 74.777899,
             longitude: longitude || 25.345678,
