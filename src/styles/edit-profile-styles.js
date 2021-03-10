@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     ...Constants.Fonts.RegularBold,
     fontSize: Constants.BaseStyle.scale(16),
     width: '95%',
+ 
   },
   headerViewLike: {
     backgroundColor: Constants.Colors.CARD_LIGHTGREY,

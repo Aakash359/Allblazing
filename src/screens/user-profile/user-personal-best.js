@@ -21,7 +21,11 @@ import {
 import {StepBar} from '../../components'
 import Constants from '../../constants'
 import {times} from '../../data'
-import {getAuthToken, setUserRecentTime} from '../../helpers/auth'
+import {
+    getAuthToken,
+    setUserRecentTime,
+    setUserDistance,
+} from '../../helpers/auth'
 import API from '../../constants/baseApi'
 import axios from 'axios'
 import connect from 'react-redux/lib/connect/connect'
@@ -30,7 +34,13 @@ import {setTime} from '../../reducers/baseServices/profile'
 class UserPersonalBest extends Component {
     constructor() {
         super()
-        this.state = {time: 0, list: [], Loading: false, isLoading: true}
+        this.state = {
+            time: 0,
+            list: [],
+            Loading: false,
+            isLoading: true,
+            distance: null,
+        }
     }
 
     getDistanceList = async () => {
@@ -45,7 +55,10 @@ class UserPersonalBest extends Component {
             const res = await axios.get(url, config)
             if (res?.data?.status) {
                 const {Train, Race} = res?.data?.data
-                this.setState({list: Train, isLoading: false})
+                this.setState({
+                    list: Train,
+                    isLoading: false,
+                })
             } else {
                 this.setState({isLoading: false})
             }
@@ -64,6 +77,7 @@ class UserPersonalBest extends Component {
             Alert.alert('', 'Please select  recent time', '')
         } else {
             setUserRecentTime(this.state.time.toString())
+            setUserDistance(`${this.state.distance}`)
             this.setState({time: 0})
             this.props.navigation.navigate('Location')
         }
@@ -195,11 +209,14 @@ class UserPersonalBest extends Component {
                                             },
                                         ]}
                                         activeOpacity={0.7}
-                                        onPress={() =>
+                                        onPress={() => {
                                             this.onTypeChange(
                                                 `${t.range} minutes`
                                             )
-                                        }>
+                                            this.setState({
+                                                distance: t.trainDistance,
+                                            })
+                                        }}>
                                         <Text
                                             style={[
                                                 Repeat5KStyles.buttonText,

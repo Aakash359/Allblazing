@@ -6,12 +6,12 @@ const {height, width} = Dimensions.get('window')
 const styles = StyleSheet.create({
     closeIcon: {
         height: 40,
-        right: width * 0.1,
-        top: width * 0.05,
         width: 40,
     },
     closeIconView: {
         alignSelf: 'flex-end',
+        right: width * 0.1,
+        top: width * 0.05,
         position: 'absolute',
     },
     container: {

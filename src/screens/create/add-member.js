@@ -88,7 +88,7 @@ class AddMember extends Component {
             headerTitle:
                 iseventPage && eventType === 'Group'
                     ? 'Add Group'
-                    : 'Add Member',
+                    : 'Add Members',
         })
     }
 
