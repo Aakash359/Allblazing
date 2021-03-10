@@ -30,7 +30,7 @@ class UserPersonalBest extends Component {
     } else {
       setUserRecentTime(this.state.time);
       this.setState({time:0})
-      this.props.navigation.navigate('Location');
+      this.props.navigation.navigate('Location', {type: 'train'});
     }
   };
  

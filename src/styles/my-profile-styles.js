@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
         ...Constants.Fonts.RegularBold,
         color: Constants.Colors.WHITE,
         fontSize: Constants.BaseStyle.scale(16),
+        textShadowColor: 'rgba(1, 1, 1, 1)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 5,
+        
+        
+        
     },
     icon: {
         height: 40,

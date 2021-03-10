@@ -141,7 +141,7 @@ class FollowingList extends Component {
                             placeholder={`Search Following (${this.props.route.params.followingCount})`}
                             placeholderTextColor="#ccc"
                             value={this.state.search}
-                            style={{color: 'white', padding: 10}}
+                            style={{color: 'white',width:'90%'}}
                             autoCapitalize="none"
                             autoCorrect={false}
                             onChangeText={(text) => {

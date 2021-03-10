@@ -46,13 +46,20 @@ class ForgotPassword extends Component {
         email: email,
       })
       .then((response) => {
+        console.log("Forgot=====>", response)
+
+        if (response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
+          );
+        }
         if (response?.data?.code === 200) {
-          
-           this.setState({visible:true})
+          this.setState({visible:true})
           setForgotPasswordUserId(response?.data?.data?.user_id.toString());
           console.log(response?.data?.data?.user_id.toString());
         }
-        // navigate('ForgotOTP',{email:this.state.email});
+        
       })
       .finally(() => {
         this.setState({
