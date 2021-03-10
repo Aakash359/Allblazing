@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Text,
     Linking,
+    Alert,
 } from 'react-native'
 import Clipboard from '@react-native-community/clipboard'
 import {func, shape, string} from 'prop-types'
@@ -26,6 +27,7 @@ import {getAuthToken} from '../../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
 import {FlatList} from 'react-native-gesture-handler'
 import Colors from '../../../constants/colors'
+import Share from 'react-native-share'
 
 class InviteFriends extends React.Component {
     constructor(props) {
@@ -210,6 +212,34 @@ class InviteFriends extends React.Component {
                 )
             }
         }
+    }
+
+    FBShare = async () => {
+        const options = {
+            title: 'Share RunFast',
+            message: 'Please join RunFast and RunFast.',
+            url:
+                'https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/HiHowAreYouGame_wiki.png/220px-HiHowAreYouGame_wiki.png',
+            social: Share.Social.FACEBOOK,
+        }
+
+        try {
+            const res = await Share.open(options)
+            console.log('SHARE RESULT: ', res)
+        } catch (error) {
+            if (Platform.OS === 'ios') {
+                await Linking.openURL(
+                    'https://apps.apple.com/in/app/facebook/id284882215'
+                )
+            } else {
+                await Linking.openURL(
+                    'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_IN&gl=US'
+                )
+            }
+        }
+        this.setState({visible: false})
+
+        Alert.alert('Share')
     }
 
     render() {
@@ -424,7 +454,7 @@ class InviteFriends extends React.Component {
                 )}
                 {visible && (
                     <InviteOptionPopup
-                        onFacebook={() => this.setState({visible: false})}
+                        onFacebook={this.FBShare}
                         // onStrava={this.onStrava}
                         onWhatsApp={() => {
                             this.whatsAppShare()

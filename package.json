@@ -82,7 +82,7 @@
     "react-native-render-html": "^5.1.0",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.9.0",
-    "react-native-share": "^4.1.0",
+    "react-native-share": "^5.1.4",
     "react-native-size-matters": "^0.4.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swiper": "^1.6.0",
