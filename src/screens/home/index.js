@@ -144,7 +144,6 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        console.log('NEW PARAMS: ', this.props.route.params)
         if (this.props.route.params?.type === 'Events') {
             this.setState({eventFilters: this.props.route.params})
         } else {
@@ -155,7 +154,6 @@ class Home extends React.Component {
     }
 
     shouldComponentUpdate(newProps) {
-        console.log('NEW DATA: ===>', newProps?.route?.params || null)
         return true
     }
 
@@ -398,11 +396,6 @@ class Home extends React.Component {
             navigation: {navigate},
         } = this.props
         const {keyword, option} = this.state
-
-        console.log(
-            'EVENTS',
-            this.state.events.filter((i) => i?.latitude_first)
-        )
 
         return (
             <View style={HomeStyles.container}>

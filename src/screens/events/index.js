@@ -211,10 +211,14 @@ class Events extends React.Component {
         const url = API.FILTER_EVENTS
         const token = await getAuthToken()
         const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                ContentType: 'application/json',
+            },
             params: {
                 token,
             },
-            body: JSON.stringify({
+            data: JSON.stringify({
                 runners_type: connect,
                 gender,
                 level: selectedLevel,

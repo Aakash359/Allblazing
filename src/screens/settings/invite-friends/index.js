@@ -1,5 +1,12 @@
 import React from 'react'
-import {ScrollView, View, Image, TouchableOpacity, Text} from 'react-native'
+import {
+    ScrollView,
+    View,
+    Image,
+    TouchableOpacity,
+    Text,
+    Linking,
+} from 'react-native'
 import Clipboard from '@react-native-community/clipboard'
 import {func, shape, string} from 'prop-types'
 import {withTranslation} from 'react-i18next'
@@ -65,25 +72,34 @@ class InviteFriends extends React.Component {
         location: {latitude, longitude},
         isEnabled,
     }) => {
+        console.log('============================')
+        console.log('RUNNER FILTERS')
+        console.log('============================')
+
         this.setState({isLoading: true})
         const url = API.FILTER_RUNNERS
         const token = await getAuthToken()
         const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                ContentType: 'application/json',
+            },
             params: {
                 token,
             },
-            body: JSON.stringify({
-                runners_type: connect,
+            data: {
+                runnres_type: connect || 'train',
                 gender,
                 level: selectedLevel,
                 distance,
                 latitude,
                 longitude,
                 radius: isEnabled ? '200' : '500',
-            }),
+            },
         }
         try {
             const res = await Axios.get(url, config)
+            console.log(res)
             if (res?.data?.status) {
                 this.setState({
                     filterRunners: res?.data?.data?.result || [],
@@ -179,6 +195,23 @@ class InviteFriends extends React.Component {
         )
     }
 
+    whatsAppShare = async () => {
+        const canOpen = await Linking.canOpenURL(`whatsapp://send?text=yo`)
+        if (canOpen) {
+            await Linking.openURL(`whatsapp://send?text=yo`)
+        } else {
+            if (Platform.OS === 'ios') {
+                await Linking.openURL(
+                    'https://apps.apple.com/in/app/whatsapp-messenger/id310633997'
+                )
+            } else {
+                await Linking.openURL(
+                    'https://play.google.com/store/apps/details?id=com.whatsapp'
+                )
+            }
+        }
+    }
+
     render() {
         const {params, filter} = this.props
 
@@ -218,11 +251,107 @@ class InviteFriends extends React.Component {
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {
                                     return (
-                                        <View style={{alignItems: 'center'}}>
-                                            <Text style={{color: Colors.WHITE}}>
-                                                Don't have any runners near you
-                                            </Text>
-                                        </View>
+                                        <>
+                                            <View
+                                                style={{alignItems: 'center'}}>
+                                                <Text
+                                                    style={{
+                                                        color: Colors.WHITE,
+                                                    }}>
+                                                    Don't have any runners near
+                                                    you
+                                                </Text>
+                                            </View>
+                                            <View
+                                                style={{
+                                                    flex: 1,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    marginBottom:
+                                                        Platform.OS === 'ios'
+                                                            ? 100
+                                                            : 70,
+                                                }}>
+                                                <Image
+                                                    resizeMode="contain"
+                                                    style={[
+                                                        InviteFriendsStyles.runners,
+                                                        source === 'home' &&
+                                                            InviteFriendsStyles.homeRunners,
+                                                    ]}
+                                                    source={
+                                                        Constants.Images.runners
+                                                    }
+                                                />
+
+                                                <Text
+                                                    style={
+                                                        InviteFriendsStyles.description
+                                                    }>
+                                                    {translate(
+                                                        'settings.InviteFriendsDescription'
+                                                    )}
+                                                </Text>
+                                                <View
+                                                    style={
+                                                        InviteFriendsStyles.row
+                                                    }>
+                                                    <Text
+                                                        style={
+                                                            InviteFriendsStyles.code
+                                                        }>
+                                                        {'ALLBLAZING123456'}
+                                                    </Text>
+                                                    <TouchableOpacity
+                                                        activeOpacity={0.7}
+                                                        onPress={() =>
+                                                            Clipboard.setString(
+                                                                'ALLBLAZING123456'
+                                                            )
+                                                        }>
+                                                        <Image
+                                                            resizeMode="contain"
+                                                            style={
+                                                                InviteFriendsStyles.copy
+                                                            }
+                                                            source={
+                                                                Constants.Images
+                                                                    .copy
+                                                            }
+                                                        />
+                                                    </TouchableOpacity>
+                                                </View>
+
+                                                <TouchableOpacity
+                                                    activeOpacity={0.7}
+                                                    style={[
+                                                        InviteFriendsStyles.button,
+                                                        InviteFriendsStyles.inviteBtn,
+                                                        source === 'home' &&
+                                                            InviteFriendsStyles.homeInviteBtn,
+                                                    ]}
+                                                    onPress={() =>
+                                                        this.setState({
+                                                            visible: true,
+                                                        })
+                                                    }>
+                                                    <Text
+                                                        style={[
+                                                            AuthStyle.buttonText,
+                                                            {
+                                                                color:
+                                                                    Constants
+                                                                        .Colors
+                                                                        .WHITE,
+                                                            },
+                                                        ]}>
+                                                        {translate(
+                                                            'settings.Invite Friends'
+                                                        )}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
                                     )
                                 }}
                             />
@@ -244,7 +373,6 @@ class InviteFriends extends React.Component {
                                     ]}
                                     source={Constants.Images.runners}
                                 />
-                                <Text style={{color: '#fff'}}>andfdf dsf </Text>
 
                                 <Text style={InviteFriendsStyles.description}>
                                     {translate(
@@ -298,7 +426,10 @@ class InviteFriends extends React.Component {
                     <InviteOptionPopup
                         onFacebook={() => this.setState({visible: false})}
                         // onStrava={this.onStrava}
-                        onWhatsApp={() => this.setState({visible: false})}
+                        onWhatsApp={() => {
+                            this.whatsAppShare()
+                            this.setState({visible: false})
+                        }}
                         onClose={() => this.setState({visible: false})}
                     />
                 )}

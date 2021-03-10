@@ -62,6 +62,7 @@ const API = {
     BLOCKED_USERS: `${BASE_URL}/block_list`,
     GROUP_MEMBERS: `${BASE_URL}/member_list`,
     GMAIL_SIGN: `${BASE_URL}/social_signup`,
+    DISTANCE_LEVEL: `${BASE_URL}/level`,
     // USERLIST : 'BASE_URL +
 }
 
