@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   searchView: {
     backgroundColor: Constants.Colors.SECONDARY_COLOR,
     borderRadius: 12,
+    
     flexDirection: 'row',
     marginLeft: 4,
     alignItems: 'center',

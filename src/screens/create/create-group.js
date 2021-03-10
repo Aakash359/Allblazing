@@ -100,6 +100,7 @@ class CreateGroup extends Component {
         return {photo: photo.path, imagedetails: photo};
       });
       console.log(photo.path);
+    
     });
   };
   OnPress = (item) => {
@@ -216,7 +217,7 @@ class CreateGroup extends Component {
                 CreateGroupStyles.textAreaWrapper,
                 {paddingTop: Platform.OS === 'ios' ? 25 : 15, textAlignVertical:'top'}
               ]}
-              placeholder={translate(' description here...')}
+              placeholder={translate(' Description here...')}
               value={description}
               onChangeText={(text) => this.setState({description: text})}
               placeholderTextColor={Constants.Colors.TEXT_COLOR}

@@ -39,7 +39,7 @@ class Distance extends Component {
       Alert.alert('', 'Please select distance to race', '');
     } else {
       setUserDistance(this.state.time);
-  this.props.navigation.navigate('Location');
+     this.props.navigation.navigate('Location', {type: 'race'});
     }
     
   }
@@ -150,7 +150,7 @@ class Distance extends Component {
               style={AuthStyle.introButton}
               activeOpacity={0.7}
               onPress={() => this.DistanceStore()}
-              // onPress={() => navigate('Location')}
+              
               >
               <Text
                 style={[AuthStyle.buttonText, {color: Constants.Colors.WHITE}]}>

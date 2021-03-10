@@ -139,10 +139,17 @@ class ChangePassword extends Component {
       },config)
       .then((response) => {
         console.log('token ====', response.data);
+        
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
             
+          );
+        }
+        if (response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
           );
         }
         if (response?.data?.code === 200) {

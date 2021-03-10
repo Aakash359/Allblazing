@@ -62,8 +62,8 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      emailId: 'soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
-      isRemember: true,
+      emailId: '' ,      //'abcd@yopmail.com' //soni@yopmail.com
+      isRemember: false,
       isShow: false,
       password: '12345678',         //'tarun123', 12345678
       isLoading: false,
@@ -306,9 +306,6 @@ class Login extends Component {
                
               }
 
-              
-            
-              
             )
             console.log('Login success with permissions: ' + result.grantedPermissions.toString())
           }
@@ -381,24 +378,26 @@ class Login extends Component {
     this.setState({ token: data.access_token , user_id: data.user_id })
   }
 
+  Twitter_Sign_In=()=>{
+    return;
+    }
+  
+
  
 
 Socail_Api_Hit(item) 
-{
-switch(item) {
-  case 'google' : this._signIn()
-  break;
-  case 'facebook' : this.Facebook_Sign_In()
-  break;
-  case 'insta' : this.instagramLogin.show()
-  break;
-  case 'twitter' : this.Twitter_Sign_In()
-   
-}
 
-
-
-
+  {
+      switch(item) {
+        case 'google' : this._signIn()
+        break;
+        case 'facebook' : this.Facebook_Sign_In()
+        break;
+        case 'insta' : this.instagramLogin.show()
+        break;
+        case 'twitter' : this.Twitter_Sign_In()
+        
+      }
 
 }
   render() {
@@ -409,7 +408,7 @@ switch(item) {
       email,
      loginStatus
     } = this.props;
-   
+  
 
     return (
       <View style={CommonStyles.container}>
@@ -443,7 +442,7 @@ switch(item) {
                   placeholderTextColor={Constants.Colors.TEXT_COLOR}
                   underlineColorAndroid={Constants.Colors.TRANSPARENT}
                   autoCapitalize={'none'}
-                autoCorrect={false}
+                  autoCorrect={false}
                 />
                 {isShow ? (
                   <TouchableOpacity
