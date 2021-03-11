@@ -123,6 +123,7 @@ const Images = {
         rocket: require('../assets/rocket-feed.png'),
         bicep: require('../assets/strength-feed.png'),
     },
+    removeFriend: require('../assets/remove-friend.png'),
 }
 
 module.exports = Images
