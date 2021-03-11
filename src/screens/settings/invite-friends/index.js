@@ -255,7 +255,7 @@ class InviteFriends extends React.Component {
         //         )
         //     }
         // }
-        // this.setState({visible: false})
+        this.setState({visible: false})
     }
 
     render() {
