@@ -7,6 +7,7 @@ import Constants from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 class Chats extends React.Component { 
   constructor() {
     super();

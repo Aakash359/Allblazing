@@ -38,29 +38,27 @@ class UserProfile extends Component {
             requestLoading: false,
         }
     }
-    componentDidMount() {
+    Id_generator(id,id2)
+{
+let num1 = parseInt(id);
+let num2 = parseInt(id2);
+if(num1>num2){
+return `${num2}_${num1}`
+}
+else{
+return `${num1}_${num2}`
+}
+
+}
+
+   
+    async componentDidMount() {
+
         this.UserProfileDetails()
-        // firestore()
-        //     .collection('chatroom')
-        //     .where("ID", "array-contains-any",["19","198"]).where("ID", "array-contains-any",["19","198"]).onSnapshot(querySnapshot => {
+      
+           
+                      
 
-        //         if (querySnapshot == null) {
-        //             return
-        //         }
-        //         else {
-        //             const threads = querySnapshot.docs.map(documentSnapshot => {
-
-        //                 return {
-        //                     // _id: documentSnapshot.id,
-        //                     // name: documentSnapshot.data.name,
-        //                     // latestMessage: { text: '' },
-        //                     ...documentSnapshot.data()
-        //                 }
-
-        //             })
-        //              console.log("myQuerySnapShot", JSON.stringify( threads))
-        //         }
-        //     })
     }
 
     UserProfileDetails = async () => {
@@ -209,7 +207,7 @@ class UserProfile extends Component {
                 })
             })
     }
-    startChat = () => {
+    startChat = async() => {
         const {
             navigation: {goBack, navigate},
         } = this.props
@@ -218,32 +216,13 @@ class UserProfile extends Component {
         const details = []
         const data = this.props.route.params.data
         const data2 = this.props.user_id
-        firestore()
-            .collection('chatroom')
-            .where('ID', 'array-contains', user_id.toString())
-            .onSnapshot((querySnapshot) => {
-                console.log('myQuerySnapShot', querySnapshot)
-                if (querySnapshot == null) {
-                    return
-                } else {
-                    const threads = querySnapshot.docs.map(
-                        (documentSnapshot) => {
-                            return {
-                                // _id: documentSnapshot.id,
-                                // name: documentSnapshot.data.name,
-                                // latestMessage: { text: '' },
-                                ...documentSnapshot.data(),
-                            }
-                        }
-                    )
-                    console.log('myQuerySnapShot', threads)
-                }
-            })
+        console.log("HHHHHHProfile", data)
+        let another_id =  data.user_id ||data.folowing_id
         const user1 = {
-            id: data.user_id,
-            pic: data.autherImage,
-            name: data.autherName,
-            address: 'dummmy',
+            id: data.user_id ||data.folowing_id,
+            pic: data.autherImage|| data.followimage,
+            name: data.autherName || data.followingName,
+            address: data.autherAddress|| data.followAddress,
         }
 
         details.push(user1)
@@ -256,19 +235,30 @@ class UserProfile extends Component {
 
         user.push(user1, user2)
 
-        chatID.push(data.user_id.toString())
+        chatID.push(another_id.toString())
         chatID.push(data2.user_id.toString())
         console.log('IDDSSSS', chatID, user)
-        firestore()
-            .collection('chatroom')
-            .add({
+        
+        var threadName = this.Id_generator(this.props.user_id.user_id, another_id);
+        console.log(":thhrreeedname",threadName)
+        const messages = await firestore().collection('chatroom').doc(threadName).get()
+        if (messages._data === undefined) {
+            
+ firestore()
+            .collection('chatroom').doc(threadName)
+            .set({
                 ID: chatID,
                 users: user,
             })
             .then((data2) => {
                 console.log('dataaaaaaFIREBASE CREEATED', data2)
-                navigate('ChatOneToOne', {id: data.user_id, userData: details})
+                navigate('ChatOneToOne', {id: data.user_id, userData: details,type:'chat'})
             })
+        }
+        else {
+             navigate('ChatOneToOne', {id: data.user_id, userData: details,type:'chat'})
+        }
+       
     }
     chatID = (id1, id2) => {
         const chatterID = id1

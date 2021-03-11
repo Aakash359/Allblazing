@@ -40,17 +40,18 @@ class AllBlazing extends React.Component {
     });
     if (!firebase.apps.length) {
        
-       await firebase.initializeApp({
-          apiKey: "AIzaSyADwYfhbpfWVdz-aoa4VM5oCRQrmCW3Wmw",
-  authDomain: "testingapp-fc6e8.firebaseapp.com",
-  databaseURL: "https://testingapp-fc6e8-default-rtdb.firebaseio.com",
-  projectId: "testingapp-fc6e8",
-  storageBucket: "testingapp-fc6e8.appspot.com",
-  messagingSenderId: "454768514842",
-  appId: "1:454768514842:web:5e858a5ed1b2d523d3fea3",
-  measurementId: "G-6HF5W72G91"
-        });
-      }
+    }
+  //      await firebase.initializeApp({
+  //         apiKey: "AIzaSyADwYfhbpfWVdz-aoa4VM5oCRQrmCW3Wmw",
+  // authDomain: "testingapp-fc6e8.firebaseapp.com",
+  // databaseURL: "https://testingapp-fc6e8-default-rtdb.firebaseio.com",
+  // projectId: "testingapp-fc6e8",
+  // storageBucket: "testingapp-fc6e8.appspot.com",
+  //  messagingSenderId: "454768514842",
+  // appId: "1:454768514842:web:5e858a5ed1b2d523d3fea3",
+  // measurementId: "G-6HF5W72G91"
+  //       });
+  //     }
     SplashScreen.hide();
   }
 

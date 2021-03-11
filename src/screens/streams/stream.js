@@ -151,12 +151,118 @@ class Stream extends React.Component {
     destroy = async () => {
         await AgoraEngine.current.destroy()
     }
+<<<<<<< HEAD
+  }
+  
+  componentWillUnmount() {
+  
+    Keyboard.removeListener('keyboardDidShow', this.onKeyboardOpen);
+    Keyboard.removeListener('keyboardDidHide', this.onKeyboardHide);
+      clearInterval(this.state.timer);
+  }
+
+  onKeyboardOpen = () => {
+    this.setState({height: (Constants.BaseStyle.DEVICE_HEIGHT * 58) / 100});
+  };
+
+  onKeyboardHide = () => {
+    const {toggle} = this.state;
+
+    this.setState({
+      height: toggle
+        ? (Constants.BaseStyle.DEVICE_HEIGHT * 55) / 100
+        : (Constants.BaseStyle.DEVICE_HEIGHT * 38) / 100,
+    });
+  };
+
+
+
+  onDelete = () => {
+    clearInterval(this.state.timer);
+    
+   
+    this.AgoraEngine.current.leaveChannel();
+  };
+onButtonStart = () => {
+ 
+    let timer = setInterval(() => {
+ 
+      var num = (Number(this.state.seconds_Counter) + 1).toString(),
+        count = this.state.minutes_Counter;
+ 
+      if (Number(this.state.seconds_Counter) == 59) {
+        count = (Number(this.state.minutes_Counter) + 1).toString();
+        num = '00';
+      }
+ 
+      this.setState({
+        minutes_Counter: count.length == 1 ? '0' + count : count,
+        seconds_Counter: num.length == 1 ? '0' + num : num
+      });
+    }, 1000);
+    this.setState({ timer });
+ 
+    this.setState({startDisable : true})
+  }
+  render() {
+    const { height, selected, title, toggle, joined } = this.state;
+    const {
+      route: { params },
+      t: translate,
+    } = this.props;
+    const { channelName } = params
+    const  {id}  = params
+console.log("Dattaaaaa",channelName ,this.props.user_id)
+
+    return (
+      <View style ={{flex:1}}>
+        {!joined ?
+          <View style={{ flex:1 ,backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator
+              size={30}
+              color="#fff"
+             
+            />
+            <Text style={{ color: 'white' }}>Joining Stream, Please Wait</Text>
+          </View>
+          : <View style={{ flex: 1 }}>
+            <RtcRemoteView.SurfaceView
+              style={{width: dimensions.width,
+                height: dimensions.height,}}
+              uid={id}
+              channelId={channelName}
+              renderMode={VideoRenderMode.Hidden}
+                           
+            />
+            
+  
+            <View style={StreamStyles.button}>
+              
+              <TouchableOpacity
+                style={[AuthStyle.loginTouchable,{ height: Constants.BaseStyle.scale(50),backgroundColor:Constants.Colors.TAB}]}
+                activeOpacity={0.7}
+                onPress={this.onDelete}>
+                <Text
+                  style={[
+                    AuthStyle.buttonText,
+                    { color: Constants.Colors.WHITE },
+                  ]}>
+                  {translate('Finish')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>}
+      </View>)
+  }
+}
+=======
     componentDidMount() {
         const {
             route: {params},
             t: translate,
             user_id,
         } = this.props
+>>>>>>> dcb6bc165d236da730b7d978ae40419ebd668f40
 
         const {channelName} = params
         console.log('DATTAAAFORLIVE', channelName)
