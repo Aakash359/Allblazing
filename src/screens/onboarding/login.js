@@ -68,7 +68,7 @@ class Login extends Component {
         super()
         this.state = {
             emailId: '', //soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
-            isRemember: false,
+            isRemember: true,
             isShow: false,
             password: '', //'12345678',         //'tarun123', 12345678
             isLoading: false,
@@ -90,6 +90,7 @@ class Login extends Component {
             this.setState({
                 emailId: userCred?.email,
                 password: userCred?.password,
+                
             })
         } catch (error) {
             console.log('Unable to get User Last Cred')
@@ -379,6 +380,7 @@ class Login extends Component {
     }
     render() {
         const {emailId, password, isShow, isRemember, isLoading} = this.state
+        console.log("IsReamber=========>", isRemember)
         const {
             navigation: {navigate},
             t: translate,
