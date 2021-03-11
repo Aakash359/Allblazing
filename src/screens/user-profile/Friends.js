@@ -54,14 +54,12 @@ export class Friends extends Component {
                 style={FollowingStyles.sectionView}
                 activeOpacity={0.7}
                 onPress={() =>
-                    item?.folowing_id === this.props.user_id
+                    item?.friend_id === this.props.user_id
                         ? this.props.navigation.navigate('Me')
                         : this.props.navigation.navigate('UserProfile', {
                               iseventPage: false,
-                              id: request ? item?.friend_id : item.folowing_id,
-                              follow_id: request
-                                  ? item?.friend_id
-                                  : item.folowing_id,
+                              id: item?.friend_id,
+                              follow_id: item?.friend_id,
                           })
                 }>
                 <View
