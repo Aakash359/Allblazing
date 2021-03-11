@@ -138,7 +138,7 @@ class CreatePost extends Component {
         axios
             .post(API.POST, formData, config)
             .then((response) => {
-                console.log('CRETAE POST response' + JSON.stringify(response))
+                console.log('CRETAE POST response' + response)
                 if (response?.data?.code === 422) {
                     Alert.alert('', response?.data?.message ?? '')
                 }
@@ -162,6 +162,9 @@ class CreatePost extends Component {
 
                     // navigate('Discover');
                 }
+            })
+            .catch((e) => {
+                Alert.alert('Create Post', 'Unable to post.')
             })
             .finally(() => {
                 this.setState({
@@ -213,7 +216,12 @@ class CreatePost extends Component {
                         />
                         <TouchableOpacity
                             activeOpacity={0.7}
-                            onPress={() => this.setState({upload: false})}
+                            onPress={() =>
+                                this.setState({
+                                    upload: false,
+                                    selectedImage: '',
+                                })
+                            }
                             style={CreatePostStyles.closeIconView}>
                             <Image
                                 source={Constants.Images.closeRound}
@@ -223,7 +231,6 @@ class CreatePost extends Component {
                         <TouchableOpacity
                             activeOpacity={0.7}
                             disabled={this.state.isLoading}
-                            // onPress={() => navigation.navigate('Feed')}
                             onPress={() => this._handlePost()}
                             style={CreatePostStyles.nextView}>
                             {this.state.isLoading ? (

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "328851660223",
+    "project_id": "fir-642c3",
+    "storage_bucket": "fir-642c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328851660223:android:e2b74d78bd5075e504150a",
+        "android_client_info": {
+          "package_name": "com.runfast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328851660223-lmdardudqsrabm33var3kvh49ebpg7mu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.runfast",
+            "certificate_hash": "b301d98cbd279222353fd2c80caeff2005f3351e"
+          }
+        },
+        {
+          "client_id": "328851660223-13g6jah84kce1h77745npdi3ul2reavn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBxlFD7JrcpGzoyPRJhxo7Ue-Nw2Bevls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328851660223-13g6jah84kce1h77745npdi3ul2reavn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "328851660223-on5jefuhaghsn028v57r0ems0272ra10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quytech.RunFast"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

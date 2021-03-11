@@ -311,7 +311,7 @@ class UserProfile extends Component {
     }
 
     render() {
-        // const {nam} = this.state;
+       
         const {
             navigation: {goBack, navigate, setParams, isLoading},
             route: {params},
@@ -319,7 +319,7 @@ class UserProfile extends Component {
         } = this.props
         const id =
             this.props.route.params.follow_id || this.props.route.params.id
-        // console.log('id===>',id);
+    
         return (
             <View style={ProfileStyles.container}>
                 {this.state.Loading ? (
@@ -407,18 +407,7 @@ class UserProfile extends Component {
                                                     />
                                                 </TouchableOpacity>
                                             )
-                                        ) : //   (
-                                        //     <TouchableOpacity
-                                        //   activeOpacity={0.7}
-                                        //   // onPress={() => setFollowStatus(!followStatus)}
-                                        //   onPress={() => this.handleUserFollow()}>
-                                        //     <Image
-                                        //       source={Constants.Images.add}
-                                        //       resizeMode="contain"
-                                        //       style={ProfileStyles.icon}
-                                        //     />
-                                        // </TouchableOpacity>
-                                        //   )
+                                        ) : 
                                         null}
                                     </View>
                                 </ImageBackground>
@@ -546,17 +535,22 @@ class UserProfile extends Component {
 
                 {this.props.route?.params?.visible && (
                     <MoreOptionsPopup
-                        hasFollowBtn={!this.state.list.follow}
+                        hasFollowBtn={
+                            !this.state.list.follow && !this.state.list.blocked
+                        }
                         hasUnFollowBtn={
-                            this.state.list.follow
-                                ? true
-                                : this.props.route?.params?.iseventPage
-                                ? true
+                            !this.state.list.blocked
+                                ? this.state.list.follow
+                                    ? true
+                                    : this.props.route?.params?.iseventPage
+                                    ? true
+                                    : false
                                 : false
                         }
                         onfollow={this.handleUserFollow}
                         onUnfollow={() => this.OnUnfollow()}
                         visible={this.props.route?.params?.visible}
+                        hasBlockBtn={!this.state.list.blocked}
                         onBlock={() => {
                             this.props.navigation.setParams({visible: false})
                             this.props.navigation.navigate('BlockReportUser', {

@@ -1,10 +1,11 @@
-import {all, call, put, takeLatest} from 'redux-saga/effects'
+import {all, call, put, takeLatest, takeLeading} from 'redux-saga/effects'
 import {
     LOGIN,
     LOGOUT,
     loginFailure,
     loginRequested,
     loginSuccess,
+    getUserDetails,
 } from '../actions/auth-action-types'
 import httpClient from './http-client'
 import {navigate} from '../routes/navigation-service'
@@ -40,6 +41,17 @@ export function* login(data) {
     } catch (error) {
         Alert.alert('Login', 'Something went wrong, Please try again later')
     }
+}
+
+export function* saveUserDetails() {
+    takeLatest('GET_USER_DETAILS', getUserDetails)
+}
+
+export function* getUserDetail() {
+    Alert.alert('hell')
+    console.log('=============================')
+    console.log('AFTER LOGIN =============================')
+    console.log('=============================')
 }
 
 // export function* logout() {

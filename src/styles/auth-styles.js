@@ -89,6 +89,7 @@ export const AuthStyle = StyleSheet.create({
     fontSize: 28,
     marginLeft: Constants.BaseStyle.scale(5),
     marginVertical: Constants.BaseStyle.scale(0),
+    marginTop: Constants.BaseStyle.scale(20),
   },
   Reset: {
     ...Constants.Fonts.ExtraLargeBold,
@@ -331,6 +332,7 @@ export const ForgotPassStyles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.TEXT_COLOR_WHITE,
     marginHorizontal: Constants.BaseStyle.scale(40),
+    marginVertical: Constants.BaseStyle.scale(8),
     textAlign: 'center',
   },
   buttonsWrapper: {
@@ -345,9 +347,9 @@ export const ForgotPassStyles = StyleSheet.create({
   },
   wrapper2: {
     flex: 0.3,
-    width: '90%',
+    width: '100%',
 
-    marginTop: Constants.BaseStyle.scale(20),
+    marginTop: Constants.BaseStyle.scale(0),
   },
 });
 
@@ -421,7 +423,7 @@ export const OTPStyles = StyleSheet.create({
     alignSelf: 'center',
     height: Constants.BaseStyle.scale(60),
     marginTop: Constants.BaseStyle.scale(20),
-    width: '70%',
+    width: '60%',
   },
 });
 
@@ -520,6 +522,7 @@ export const LoginStyles = StyleSheet.create({
   },
 
   socialIconsWrapper: {
+    
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-evenly',

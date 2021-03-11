@@ -1,5 +1,13 @@
 import React from 'react'
-import {ScrollView, View, Image, TouchableOpacity, Text} from 'react-native'
+import {
+    ScrollView,
+    View,
+    Image,
+    TouchableOpacity,
+    Text,
+    Linking,
+    Alert,
+} from 'react-native'
 import Clipboard from '@react-native-community/clipboard'
 import {func, shape, string} from 'prop-types'
 import {withTranslation} from 'react-i18next'
@@ -19,12 +27,18 @@ import {getAuthToken} from '../../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
 import {FlatList} from 'react-native-gesture-handler'
 import Colors from '../../../constants/colors'
+import Share from 'react-native-share'
 
 class InviteFriends extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {visible: false, runners: [], isLoading: false}
+        this.state = {
+            visible: false,
+            runners: [],
+            isLoading: false,
+            filterRunners: [],
+        }
     }
 
     getRunners = async () => {
@@ -38,7 +52,6 @@ class InviteFriends extends React.Component {
         }
         try {
             const res = await Axios.get(url, config)
-            console.log('RUNNERS NEAR ME: ', res)
             if (res?.data?.status) {
                 this.setState({
                     runners: res?.data?.data?.result,
@@ -50,6 +63,56 @@ class InviteFriends extends React.Component {
         } catch (error) {
             this.setState({isLoading: false})
             console.log('ERROR RUNNERS NEAR ME: ', error)
+        }
+    }
+
+    getFilterRuners = async ({
+        connect,
+        gender,
+        selectedLevel,
+        distance,
+        location: {latitude, longitude},
+        isEnabled,
+    }) => {
+        console.log('============================')
+        console.log('RUNNER FILTERS')
+        console.log('============================')
+
+        this.setState({isLoading: true})
+        const url = API.FILTER_RUNNERS
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                ContentType: 'application/json',
+            },
+            params: {
+                token,
+            },
+            data: {
+                runnres_type: connect || 'train',
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
+            },
+        }
+        try {
+            const res = await Axios.get(url, config)
+            console.log(res)
+            if (res?.data?.status) {
+                this.setState({
+                    filterRunners: res?.data?.data?.result || [],
+                    isLoading: false,
+                })
+            } else {
+                this.setState({isLoading: false})
+            }
+        } catch (error) {
+            console.log('ERROR FILTER EVENTS', error)
+            this.setState({isLoading: false})
         }
     }
 
@@ -69,7 +132,22 @@ class InviteFriends extends React.Component {
     }
 
     componentDidMount() {
-        this.getRunners()
+        const {filter} = this.props
+        if (this.props.filter?.data) {
+            this.getFilterRuners(this.props.filter?.runnersFilters)
+            this.getRunners()
+        } else {
+            this.getRunners()
+        }
+
+        this.unsubscribe = this.props.navigation.addListener('focus', () => {
+            if (this.props.filter?.data) {
+                this.getFilterRuners(this.props.filter?.runnersFilters)
+                this.getRunners()
+            } else {
+                this.getRunners()
+            }
+        })
     }
 
     renderItem = ({item}) => {
@@ -119,162 +197,49 @@ class InviteFriends extends React.Component {
         )
     }
 
-    render() {
-        const {params} = this.props
+    whatsAppShare = async () => {
+        const canOpen = await Linking.canOpenURL(`whatsapp://send?text=yo`)
+        if (canOpen) {
+            await Linking.openURL(`whatsapp://send?text=yo`)
+        } else {
+            if (Platform.OS === 'ios') {
+                await Linking.openURL(
+                    'https://apps.apple.com/in/app/whatsapp-messenger/id310633997'
+                )
+            } else {
+                await Linking.openURL(
+                    'https://play.google.com/store/apps/details?id=com.whatsapp'
+                )
+            }
+        }
+    }
 
-        const {visible, isLoading, runners, error} = this.state
+    FBShare = async () => {
+       
+        const shareOptions = {
+            url:
+                'https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg',
+            title: 'Facebook Test',
+            message: 'This is a test',
+            social: Share.Social.FACEBOOK,
+        }
+
+        try {
+            const ShareResponse = await Share.shareSingle(shareOptions)
+            console.log(JSON.stringify(ShareResponse, null, 2))
+        } catch (error) {
+            console.log('Error =>', error)  
+        }
+        
+        this.setState({visible: false})
+    }
+
+    render() {
+        const {params, filter} = this.props
+
+        const {visible, isLoading, runners, filterRunners, error} = this.state
         const {source, t: translate} = this.props
         const Component = source === 'home' ? View : ScrollView
-
-        // return (
-        //     <>
-        //         {isLoading ? (
-        //             <ActivityIndicator
-        //                 size="small"
-        //                 color={Constants.Colors.WHITE}
-        //             />
-        //         ) : runners?.length ? (
-        //             <View styel={{marginVertical: 100}}>
-        //                 <FlatList
-        //                     data={runners}
-        //                     keyExtractor={(item, i) => i.toString()}
-        //                     // renderItem={this.renderItem}
-        //                     renderItem={({item}) => {
-        //                         let image = ''
-        //                         return (
-        //                             <TouchableOpacity
-        //                                 activeOpacity={0.7}
-        //                                 // onPress={() => this.setState({ischecked: !this.state.ischecked})}
-        //                                 // onPress={() => this.OnPress(item)}
-        //                                 style={{
-        //                                     alignItems: 'center',
-        //                                     backgroundColor:
-        //                                         Constants.Colors.PRIMARY,
-        //                                     borderRadius: 5,
-        //                                     flexDirection: 'row',
-        //                                     justifyContent: 'space-between',
-        //                                     marginHorizontal: 20,
-        //                                 }}>
-        //                                 <View
-        //                                     style={[
-        //                                         {
-        //                                             maxWidth: '60%',
-        //                                             alignItems: 'center',
-        //                                             borderRadius: 5,
-        //                                             flexDirection: 'row',
-        //                                             justifyContent:
-        //                                                 'space-between',
-        //                                             textAlign: 'left',
-        //                                         },
-        //                                     ]}>
-        //                                     <View
-        //                                         style={{
-        //                                             backgroundColor:
-        //                                                 Constants.Colors
-        //                                                     .LIGHT_RED,
-        //                                             borderRadius: 10,
-        //                                         }}>
-        //                                         <Image
-        //                                             source={image}
-        //                                             style={{
-        //                                                 width: 40,
-        //                                                 height: 70,
-        //                                             }}
-        //                                             resizeMode="contain"
-        //                                         />
-        //                                     </View>
-        //                                     <View>
-        //                                         <Text
-        //                                             style={
-        //                                                 AddMemberStyles.username
-        //                                             }>
-        //                                             {item.full_name}
-        //                                         </Text>
-        //                                         <View>
-        //                                             <Text
-        //                                                 numberOfLines={1}
-        //                                                 ellipsizeMode="tail"
-        //                                                 style={
-        //                                                     AddMemberStyles.location
-        //                                                 }>
-        //                                                 {item?.address}
-        //                                             </Text>
-        //                                         </View>
-        //                                     </View>
-        //                                 </View>
-        //                             </TouchableOpacity>
-        //                         )
-        //                     }}
-        //                 />
-        //             </View>
-        //         ) : (
-        //             <View
-        //                 style={{
-        //                     flex: 1,
-        //                     justifyContent: 'center',
-        //                     alignItems: 'center',
-        //                     marginBottom: Platform.OS === 'ios' ? 100 : 70,
-        //                 }}>
-        //                 <Image
-        //                     resizeMode="contain"
-        //                     style={[
-        //                         InviteFriendsStyles.runners,
-        //                         source === 'home' &&
-        //                             InviteFriendsStyles.homeRunners,
-        //                     ]}
-        //                     source={Constants.Images.runners}
-        //                 />
-        //                 <Text style={{color: '#fff'}}>andfdf dsf </Text>
-
-        //                 <Text style={InviteFriendsStyles.description}>
-        //                     {translate('settings.InviteFriendsDescription')}
-        //                 </Text>
-        //                 <View style={InviteFriendsStyles.row}>
-        //                     <Text style={InviteFriendsStyles.code}>
-        //                         {'ALLBLAZING123456'}
-        //                     </Text>
-        //                     <TouchableOpacity
-        //                         activeOpacity={0.7}
-        //                         onPress={() =>
-        //                             Clipboard.setString('ALLBLAZING123456')
-        //                         }>
-        //                         <Image
-        //                             resizeMode="contain"
-        //                             style={InviteFriendsStyles.copy}
-        //                             source={Constants.Images.copy}
-        //                         />
-        //                     </TouchableOpacity>
-        //                 </View>
-
-        //                 <TouchableOpacity
-        //                     activeOpacity={0.7}
-        //                     style={[
-        //                         InviteFriendsStyles.button,
-        //                         InviteFriendsStyles.inviteBtn,
-        //                         source === 'home' &&
-        //                             InviteFriendsStyles.homeInviteBtn,
-        //                     ]}
-        //                     onPress={() => this.setState({visible: true})}>
-        //                     <Text
-        //                         style={[
-        //                             AuthStyle.buttonText,
-        //                             {color: Constants.Colors.WHITE},
-        //                         ]}>
-        //                         {translate('settings.Invite Friends')}
-        //                     </Text>
-        //                 </TouchableOpacity>
-        //             </View>
-        //         )}
-        //         {visible && (
-        //             <InviteOptionPopup
-        //                 onFacebook={() => this.setState({visible: false})}
-        //                 // onStrava={this.onStrava}
-        //                 onWhatsApp={() => this.setState({visible: false})}
-        //                 onClose={() => this.setState({visible: false})}
-        //             />
-        //         )}
-        //     </>
-        // )
 
         return (
             <View style={HomeStyles.container}>
@@ -299,16 +264,116 @@ class InviteFriends extends React.Component {
                             </View>
                         ) : runners?.length ? (
                             <FlatList
-                                data={runners}
+                                data={
+                                    filter?.runnersFilters && filter?.data
+                                        ? filterRunners
+                                        : runners
+                                }
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                                 ListEmptyComponent={() => {
                                     return (
-                                        <View style={{alignItems: 'center'}}>
-                                            <Text style={{color: Colors.WHITE}}>
-                                                Don't have any events near you
-                                            </Text>
-                                        </View>
+                                        <>
+                                            <View
+                                                style={{alignItems: 'center'}}>
+                                                <Text
+                                                    style={{
+                                                        color: Colors.WHITE,
+                                                    }}>
+                                                    Don't have any runners near
+                                                    you
+                                                </Text>
+                                            </View>
+                                            <View
+                                                style={{
+                                                    flex: 1,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    marginBottom:
+                                                        Platform.OS === 'ios'
+                                                            ? 100
+                                                            : 70,
+                                                }}>
+                                                <Image
+                                                    resizeMode="contain"
+                                                    style={[
+                                                        InviteFriendsStyles.runners,
+                                                        source === 'home' &&
+                                                            InviteFriendsStyles.homeRunners,
+                                                    ]}
+                                                    source={
+                                                        Constants.Images.runners
+                                                    }
+                                                />
+
+                                                <Text
+                                                    style={
+                                                        InviteFriendsStyles.description
+                                                    }>
+                                                    {translate(
+                                                        'settings.InviteFriendsDescription'
+                                                    )}
+                                                </Text>
+                                                <View
+                                                    style={
+                                                        InviteFriendsStyles.row
+                                                    }>
+                                                    <Text
+                                                        style={
+                                                            InviteFriendsStyles.code
+                                                        }>
+                                                        {'ALLBLAZING123456'}
+                                                    </Text>
+                                                    <TouchableOpacity
+                                                        activeOpacity={0.7}
+                                                        onPress={() =>
+                                                            Clipboard.setString(
+                                                                'ALLBLAZING123456'
+                                                            )
+                                                        }>
+                                                        <Image
+                                                            resizeMode="contain"
+                                                            style={
+                                                                InviteFriendsStyles.copy
+                                                            }
+                                                            source={
+                                                                Constants.Images
+                                                                    .copy
+                                                            }
+                                                        />
+                                                    </TouchableOpacity>
+                                                </View>
+
+                                                <TouchableOpacity
+                                                    activeOpacity={0.7}
+                                                    style={[
+                                                        InviteFriendsStyles.button,
+                                                        InviteFriendsStyles.inviteBtn,
+                                                        source === 'home' &&
+                                                            InviteFriendsStyles.homeInviteBtn,
+                                                    ]}
+                                                    onPress={() =>
+                                                        this.setState({
+                                                            visible: true,
+                                                        })
+                                                    }>
+                                                    <Text
+                                                        style={[
+                                                            AuthStyle.buttonText,
+                                                            {
+                                                                color:
+                                                                    Constants
+                                                                        .Colors
+                                                                        .WHITE,
+                                                            },
+                                                        ]}>
+                                                        {translate(
+                                                            'settings.Invite Friends'
+                                                        )}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </>
                                     )
                                 }}
                             />
@@ -330,7 +395,6 @@ class InviteFriends extends React.Component {
                                     ]}
                                     source={Constants.Images.runners}
                                 />
-                                <Text style={{color: '#fff'}}>andfdf dsf </Text>
 
                                 <Text style={InviteFriendsStyles.description}>
                                     {translate(
@@ -382,9 +446,12 @@ class InviteFriends extends React.Component {
                 )}
                 {visible && (
                     <InviteOptionPopup
-                        onFacebook={() => this.setState({visible: false})}
+                        onFacebook={this.FBShare}
                         // onStrava={this.onStrava}
-                        onWhatsApp={() => this.setState({visible: false})}
+                        onWhatsApp={() => {
+                            this.whatsAppShare()
+                            this.setState({visible: false})
+                        }}
                         onClose={() => this.setState({visible: false})}
                     />
                 )}

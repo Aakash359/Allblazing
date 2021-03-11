@@ -189,7 +189,8 @@
     "Share to": "Share to",
     "Strava": "Strava",
     "Facebook": "Facebook",
-    "WhatsApp": "WhatsApp"
+    "WhatsApp": "WhatsApp",
+    "Blocked Users": "Blocked Users"
   },
   "actions": {
     "blockBtnTitle": "Block User",

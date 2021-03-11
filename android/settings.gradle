@@ -1,4 +1,10 @@
 rootProject.name = 'RunFast'
+include ':react-native-twitter-signin'
+project(':react-native-twitter-signin').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-twitter-signin/android')
+include ':@react-native-community_cookies'
+project(':@react-native-community_cookies').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/cookies/android')
+include ':react-native-webview'
+project(':react-native-webview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-webview/android')
 
 include ':agora-react-native-rtm'
 project(':agora-react-native-rtm').projectDir = new File(rootProject.projectDir, '../node_modules/agora-react-native-rtm/android')

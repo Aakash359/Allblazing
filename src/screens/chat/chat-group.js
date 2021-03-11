@@ -157,6 +157,7 @@ class ChatsGroup extends React.Component {
                 this.setState(
                     {
                         requestedGroups: res?.data?.data,
+                        
                         loader: {
                             ...this.state.loader,
                             requestedGroups: {
@@ -169,7 +170,8 @@ class ChatsGroup extends React.Component {
                         this.getThreeRequest(res?.data?.data)
                     }
                 )
-            })
+            }
+            )
             .catch((e) => {
                 console.log('ERROR AREQLL GROUP LISTING', e)
                 this.setState({
@@ -507,7 +509,7 @@ console.log("iteeeemmmm",JSON.stringify(item))
                                             margin: 10,
                                         }}>
                                         <Text style={{color: Colors.WHITE}}>
-                                            Recevied By Me
+                                             Requested received
                                         </Text>
                                         {resceived?.length > 3 ? (
                                             <TouchableOpacity

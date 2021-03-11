@@ -20,10 +20,23 @@ import * as actions from '../../actions/user-action-types'
 import {setLoginDetails} from '../../reducers/baseServices/auth'
 import axios from 'axios'
 import API from '../../constants/baseApi'
-import {setAuthToken, setLoginUserId} from '../../helpers/auth'
+import {setAuthToken, setLoginUserId, getAuthToken} from '../../helpers/auth'
 import AsyncStorage from '@react-native-community/async-storage'
 import Geolocation from '@react-native-community/geolocation'
 import {PermissionsAndroid} from 'react-native'
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-community/google-signin'
+import {email} from '../../constants/images'
+import InstagramLogin from 'react-native-instagram-login'
+import {
+    LoginManager,
+    AccessToken,
+    GraphRequest,
+    GraphRequestManager,
+} from 'react-native-fbsdk'
 
 Geolocation?.setRNConfiguration({
     skipPermissionRequests: false,
@@ -47,10 +60,6 @@ const socialIcons = [
         icon: Constants.Images.twitter,
         name: 'twitter',
     },
-    {
-        icon: Constants.Images.tiktok,
-        name: 'tiktok',
-    },
 ]
 
 class Login extends Component {
@@ -58,11 +67,18 @@ class Login extends Component {
     constructor() {
         super()
         this.state = {
-            emailId: 'soni@yopmail.com', //'abcd@yopmail.com' //soni@yopmail.com
+            emailId: '', //soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
             isRemember: true,
             isShow: false,
-            password: '12345678', //'tarun123', 12345678
+            password: '', //'12345678',         //'tarun123', 12345678
             isLoading: false,
+            user: [],
+            email: '',
+            password: '',
+            social_id: '',
+            user_name: '',
+            token: '',
+            profile_pic: '',
         }
     }
 
@@ -102,7 +118,6 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        console.log('LOGIN STATUS', this.props.loginStatus)
         this.getLastUserCred()
         if (Platform.OS === 'ios') {
             Geolocation.requestAuthorization()
@@ -111,36 +126,254 @@ class Login extends Component {
         }
     }
 
+    _signIn = async () => {
+        const {
+            navigation: {navigate},
+        } = this.props
+
+        try {
+            await GoogleSignin.hasPlayServices()
+            const userInfo = await GoogleSignin.signIn()
+
+            this._hit_Gmail_Api(userInfo.user.email, userInfo.user.id)
+        } catch (error) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                // user cancelled the login flow
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                // play services not available or outdated
+            } else {
+                // some other error happened
+            }
+        }
+    }
+
+    _hit_Gmail_Api = async (email, social_id) => {
+        const {
+            navigation: {navigate},
+        } = this.props
+
+        this.setState({
+            isLoading: true,
+        })
+        axios
+            .post(API.GMAIL_SIGN, {
+                email: email,
+                social_id: social_id,
+            })
+            .then(async (response) => {
+                if (response?.data?.code === 200) {
+                    console.log('Gamil-Response', response)
+                    console.log('User-Id', response?.data?.data?.user_id)
+                    await AsyncStorage.setItem(
+                        'socail_id',
+                        response?.data?.data?.user_id.toString()
+                    )
+                    setAuthToken(response?.data?.data?.token)
+                    this.props.addLoginDetail(response?.data?.data)
+                    setLoginUserId(JSON.stringify(response?.data?.data))
+                    navigate('Username', {data: response?.data?.data?.user_id})
+                }
+            })
+            .finally(() => {
+                this.setState({
+                    isLoading: false,
+                })
+            })
+    }
+
     componentWillUnmount() {
         if (this.timer) {
             clearTimeout(this.timer)
         }
     }
 
+    componentDidUpdate(prevProps, nextProps) {}
+
     onLogin = async () => {
-        console.log('ON LOGIN')
         const {emailId, password} = this.state
-        if (!emailId?.length) {
+        if (emailId.length < 1) {
             Alert.alert(
                 '',
-                'Please enter email id',
+                'Please enter your email Id',
                 [{text: 'OK', onPress: () => console.log('OK Pressed')}],
                 {Cancelable: false}
             )
             return
-        } else if (!password?.length) {
-            Alert.alert('', 'Please enter password')
+        } else if (password.length < 1) {
+            Alert.alert('', 'Please enter your password')
             return
         }
 
         let data = {
             email: emailId,
             password: password,
-            remember: this.state.isRemember,
         }
         this.props.login(data)
     }
 
+    Facebook_Sign_In = () => {
+        const {
+            navigation: {navigate},
+        } = this.props
+
+        LoginManager.logInWithPermissions([
+            'public_profile',
+            'email',
+            'user_friends',
+        ]).then(
+            (result) => {
+                if (result.isCancelled) {
+                    console.log('Login cancelled')
+                } else {
+                    AccessToken.getCurrentAccessToken().then((data) => {
+                        let accessToken = data.accessToken
+
+                        const responseInfoCallback = (error, result) => {
+                            if (error) {
+                                console.log(error)
+                                alert(
+                                    'Error fetching data: ' + error.toString()
+                                )
+                            } else {
+                                axios
+                                    .post(API.GMAIL_SIGN, {
+                                        social_id: result.id,
+                                        email: result.email,
+                                    })
+                                    .then(async (response) => {
+                                        if (response?.data?.code === 200) {
+                                            console.log(
+                                                'Response',
+                                                response.data
+                                            )
+                                            await AsyncStorage.setItem(
+                                                'socail_id',
+                                                response?.data?.data?.user_id.toString()
+                                            )
+                                            setAuthToken(
+                                                response?.data?.data?.token
+                                            )
+                                            this.props.addLoginDetail(
+                                                response?.data?.data
+                                            )
+                                            setLoginUserId(
+                                                JSON.stringify(
+                                                    response?.data?.data
+                                                )
+                                            )
+                                            navigate('Username', {
+                                                data:
+                                                    response?.data?.data
+                                                        ?.user_id,
+                                            })
+                                        }
+                                    })
+                                    .finally(() => {
+                                        this.setState({
+                                            isLoading: false,
+                                        })
+                                    })
+                            }
+                        }
+
+                        const infoRequest = new GraphRequest(
+                            '/me',
+                            {
+                                accessToken: accessToken,
+                                parameters: {
+                                    fields: {
+                                        string:
+                                            'email,name,first_name,middle_name,last_name',
+                                    },
+                                },
+                            },
+                            responseInfoCallback
+                        )
+
+                        new GraphRequestManager()
+                            .addRequest(infoRequest)
+                            .start()
+                    })
+                    console.log(
+                        'Login success with permissions: ' +
+                            result.grantedPermissions.toString()
+                    )
+                }
+            },
+            function (error) {
+                console.log('Login fail with error: ' + error)
+            }
+        )
+    }
+
+    instagramLogin = async (data) => {
+        const {
+            navigation: {navigate},
+        } = this.props
+
+        this.setState({
+            isLoading: true,
+        })
+        axios
+            .post(API.GMAIL_SIGN, {
+                social_id: data.user_id,
+                email: 'maxhuston140@gmail.com',
+            })
+            .then(async (response) => {
+                console.log('Response', response)
+                console.log('User-Id', response?.data?.data?.user_id)
+                if (response?.data?.code === 200) {
+                    await AsyncStorage.setItem(
+                        'socail_id',
+                        response?.data?.data?.user_id.toString()
+                    )
+                    setAuthToken(response?.data?.data?.token)
+                    this.props.addLoginDetail(response?.data?.data)
+                    setLoginUserId(JSON.stringify(response?.data?.data))
+                    navigate('Username', {data: response?.data?.data?.user_id})
+                }
+            })
+            .finally(() => {
+                this.setState({
+                    isLoading: false,
+                })
+            })
+    }
+
+    get_Response_Info = (error, result) => {
+        if (error) {
+            //Alert for the Error
+            Alert.alert('Error fetching data: ' + error.toString())
+        } else {
+            //response alert
+            alert(JSON.stringify(result))
+            this.setState({user_name: 'Welcome' + ' ' + result.name})
+            this.setState({token: 'User Token: ' + ' ' + result.id})
+            this.setState({profile_pic: result.picture.data.url})
+        }
+    }
+
+    setIgToken = (data) => {
+        this.setState({token: data.access_token, user_id: data.user_id})
+    }
+
+    Socail_Api_Hit(item) {
+        switch (item) {
+            case 'google':
+                this._signIn()
+                break
+            case 'facebook':
+                this.Facebook_Sign_In()
+                break
+            case 'insta':
+                this.instagramLogin.show()
+                break
+            case 'twitter':
+                this.Twitter_Sign_In()
+        }
+    }
     render() {
         const {emailId, password, isShow, isRemember, isLoading} = this.state
         const {
@@ -149,7 +382,6 @@ class Login extends Component {
             email,
             loginStatus,
         } = this.props
-        console.log('LOGINNNNNNN', loginStatus)
 
         return (
             <View style={CommonStyles.container}>
@@ -298,11 +530,26 @@ class Login extends Component {
                                     }}
                                 />
                             </View>
+                            <View style={{alignSelf: 'center'}}></View>
+
+                            <InstagramLogin
+                                ref={(ref) => (this.instagramLogin = ref)}
+                                appId="253283979675368"
+                                appSecret="5351441242872675a8ddeb8f8d8b60bb"
+                                redirectUrl="https://www.google.com/"
+                                scopes={['user_profile', 'user_media']}
+                                onLoginSuccess={this.instagramLogin}
+                                onLoginFailure={(data) => console.log(data)}
+                            />
+
                             <View style={LoginStyles.socialIconsWrapper}>
                                 {socialIcons.map((social) => (
                                     <TouchableOpacity
                                         activeOpacity={0.7}
-                                        key={social.name}>
+                                        key={social.name}
+                                        onPress={() =>
+                                            this.Socail_Api_Hit(social.name)
+                                        }>
                                         <Image
                                             source={social.icon}
                                             resizeMode="contain"

@@ -2,6 +2,7 @@ export const BASE_URL = 'https://quytech.net/runfast-sftp/RunFast/public/api'
 
 const API = {
     /** AUTH **/
+
     LOG_IN: BASE_URL + '/login',
     SIGN_UP: BASE_URL + '/signup',
     FORGOT_PASSWORD: BASE_URL + '/forgot_password',
@@ -58,7 +59,12 @@ const API = {
     REJECT_EVENT_INVITE: `${BASE_URL}/event/decline`,
     FILTER_EVENTS: `${BASE_URL}/event-filters`,
     RUNNERS_NEAR_ME: `${BASE_URL}/runner-near-me-list`,
-    // USERLIST : BASE_URL +
+    FILTER_RUNNERS: `${BASE_URL}/runners-filters`,
+    BLOCKED_USERS: `${BASE_URL}/block_list`,
+    GROUP_MEMBERS: `${BASE_URL}/member_list`,
+    GMAIL_SIGN: `${BASE_URL}/social_signup`,
+    DISTANCE_LEVEL: `${BASE_URL}/level`,
+    // USERLIST : 'BASE_URL +
 }
 
 export default API

@@ -58,6 +58,8 @@ class Home extends React.Component {
             },
             showEvents: true,
             events: [],
+            eventFilters: null,
+            runnerFilters: null,
         }
     }
 
@@ -142,8 +144,17 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.route.params?.type === 'Events') {
+            this.setState({eventFilters: this.props.route.params})
+        } else {
+            this.setState({eventFilters: this.props.route.params})
+        }
         this.getEvents()
         this.UserProfileDetails()
+    }
+
+    shouldComponentUpdate(newProps) {
+        return true
     }
 
     componentWillUnmount() {
@@ -227,6 +238,7 @@ class Home extends React.Component {
     }
     displayOptions = (data) => {
         const {keyword, option} = this.state
+        const {params} = this.props?.route
         if (data === 'Map') {
             return (
                 <View style={{flex: 1}}>
@@ -299,10 +311,16 @@ class Home extends React.Component {
             )
         }
         if (data === 'Events') {
-            return <Events params={true} navigation={this.props.navigation} />
+            return (
+                <Events
+                    params={true}
+                    filter={params}
+                    navigation={this.props.navigation}
+                />
+            )
         }
         if (data === 'Runners') {
-            return <Invite navigation={this.props.navigation} />
+            return <Invite navigation={this.props.navigation} filter={params} />
         }
     }
     renderCustomMarker = (marker) => {
@@ -379,11 +397,6 @@ class Home extends React.Component {
         } = this.props
         const {keyword, option} = this.state
 
-        console.log(
-            'EVENTS',
-            this.state.events.filter((i) => i?.latitude_first)
-        )
-
         return (
             <View style={HomeStyles.container}>
                 {this.state.option !== 'Map' && (
@@ -430,9 +443,23 @@ class Home extends React.Component {
           /> */}
                 {/* <Invite source="home" navigation={navigation} /> */}
                 {/* </ScrollView> */}
-                {this.state.option === 'Events' && (
+                {this.state.option !== 'Map' && (
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Filter')}
+                        onPress={() => {
+                            let params = this.props?.route?.params
+                            navigation.navigate('Filter', {
+                                type: this.state.option,
+                                filter: {
+                                    events: this.props?.route?.params
+                                        ?.eventsFilters,
+
+                                    runners: this.props?.route?.params
+                                        ?.runnersFilters,
+
+                                    data: params?.data,
+                                },
+                            })
+                        }}
                         activeOpacity={0.7}
                         style={homeStyles.wrapperActionButton}>
                         <Image

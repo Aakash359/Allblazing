@@ -186,12 +186,16 @@ class FollowersList extends Component {
                         style={{width: 60, height: 60, borderRadius: 12}}
                     />
                 </View>
-                <View>
+
+                <View style={{width: '60%'}}>
                     <Text style={FollowingStyles.nameText}>
                         {request ? item?.full_name : item.followingName}
                     </Text>
-                    <Text style={FollowingStyles.locationText}>
-                        Santee, United States
+                    <Text
+                        style={FollowingStyles.locationText}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {request ? item?.address : item?.followingAddress}
                     </Text>
                 </View>
                 {request && (

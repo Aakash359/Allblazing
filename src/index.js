@@ -12,6 +12,7 @@ import { applyMiddleware, createStore } from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 import { firebase }  from '@react-native-firebase/app';
+import { GoogleSignin,} from '@react-native-community/google-signin';
 const {
    persistor,
    store
@@ -32,6 +33,11 @@ class AllBlazing extends React.Component {
   }
 
   async componentDidMount() {
+    GoogleSignin.configure({
+      
+      webClientId: '328851660223-13g6jah84kce1h77745npdi3ul2reavn.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      
+    });
     if (!firebase.apps.length) {
        
        await firebase.initializeApp({
@@ -40,10 +46,7 @@ class AllBlazing extends React.Component {
   databaseURL: "https://testingapp-fc6e8-default-rtdb.firebaseio.com",
   projectId: "testingapp-fc6e8",
   storageBucket: "testingapp-fc6e8.appspot.com",
-
-
-
-         messagingSenderId: "454768514842",
+  messagingSenderId: "454768514842",
   appId: "1:454768514842:web:5e858a5ed1b2d523d3fea3",
   measurementId: "G-6HF5W72G91"
         });

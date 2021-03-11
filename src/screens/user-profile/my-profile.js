@@ -9,6 +9,7 @@ import {
     ImageBackground,
     ScrollView,
     SafeAreaView,
+    Alert,
 } from 'react-native'
 import {MyProfileStyles} from '../../styles'
 import Constants from '../../constants'
@@ -32,7 +33,7 @@ class MyProfile extends Component {
         super()
         this.state = {
             option: 'Goals',
-            Loading: false,
+            Loading: true,
             optionList: ['Goals', "PB's", 'Likes'],
         }
     }
@@ -80,6 +81,7 @@ class MyProfile extends Component {
                     )
                 }
             })
+
             .finally(() => {
                 this.setState({
                     Loading: false,

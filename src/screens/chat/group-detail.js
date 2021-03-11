@@ -117,8 +117,8 @@ class GroupDetail extends React.Component {
         let ids = userInfo.userData.map(data => {
             return data.user_id.toString() 
         })
-        
-        let discr =`${data['0'].name.split(" ")[0]} ,${data['1'].name} and ${data.length} others`
+        console.log("Data", data)
+        let discr =`${data['0'].name != null && data['0'].name.split(" ")[0]} ,${data['1'].name} and ${data.length} others`
         this.setState({ID:ids,members:data ,discr:discr})
         console.log("IDS", ids)
         // let finlData = {
@@ -497,7 +497,7 @@ class GroupDetail extends React.Component {
                             />
                             <FlatList
                                 scrollEnabled={false}
-                                data={[1, 2, 3]}
+                                data={this.state.groupDetails?.events || []}
                                 renderItem={this.renderItem}
                                 keyExtractor={(item, index) => `${index}`}
                             />

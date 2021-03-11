@@ -9,10 +9,12 @@ const styles = StyleSheet.create({
 calendarIcon: {
 height: 18,
 width: 16,
+alignSelf:'center'
 },
 clockIcon: {
-height: 16,
-width: 16,
+height: 18,
+width: 18,
+alignSelf:'center'
 },
 container: {
 backgroundColor: Constants.Colors.PRIMARY,

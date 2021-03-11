@@ -103,10 +103,13 @@ class FollowingList extends Component {
                 />
             </View>
 
-            <View>
+            <View style={{width: '60%'}}>
                 <Text style={FollowingStyles.nameText}>{item.followName}</Text>
-                <Text style={FollowingStyles.locationText}>
-                    Santee, United States
+                <Text
+                    style={FollowingStyles.locationText}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {item?.followAddress}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -141,7 +144,7 @@ class FollowingList extends Component {
                             placeholder={`Search Following (${this.props.route.params.followingCount})`}
                             placeholderTextColor="#ccc"
                             value={this.state.search}
-                            style={{color: 'white', padding: 10}}
+                            style={{color: 'white',width:'90%'}}
                             autoCapitalize="none"
                             autoCorrect={false}
                             onChangeText={(text) => {

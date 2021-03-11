@@ -87,7 +87,7 @@ class ChangePassword extends Component {
     if (newPassword.length < 1) {
       Alert.alert(
         '',
-        'Please fill the newPassword!',
+        'Please enter the new password ',
         [
           {
             text: 'Cancel',
@@ -105,7 +105,7 @@ class ChangePassword extends Component {
     }else if(confirmPassword.length < 1){
       Alert.alert(
           '',
-          'Please fill the Confirmpassword!',
+          'Please enter the confirm password',
           [
             {
               text: 'Cancel',
@@ -139,10 +139,17 @@ class ChangePassword extends Component {
       },config)
       .then((response) => {
         console.log('token ====', response.data);
+        
         if (response?.data?.code === 401) {
           Alert.alert(
             '',
             
+          );
+        }
+        if (response?.data?.code === 422) {
+          Alert.alert(
+            '',
+            response?.data?.message ?? '',
           );
         }
         if (response?.data?.code === 200) {
