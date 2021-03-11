@@ -28,6 +28,7 @@ import {ActivityIndicator} from 'react-native'
 import {FlatList} from 'react-native-gesture-handler'
 import Colors from '../../../constants/colors'
 import Share from 'react-native-share'
+import {connect} from 'react-redux'
 
 class InviteFriends extends React.Component {
     constructor(props) {
@@ -88,6 +89,13 @@ class InviteFriends extends React.Component {
             },
             params: {
                 token,
+                runnres_type: connect || 'train',
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
             },
             data: {
                 runnres_type: connect || 'train',
@@ -111,7 +119,7 @@ class InviteFriends extends React.Component {
                 this.setState({isLoading: false})
             }
         } catch (error) {
-            console.log('ERROR FILTER EVENTS', error)
+            console.log('ERROR FILTER RUNNERS', error)
             this.setState({isLoading: false})
         }
     }
@@ -161,6 +169,10 @@ class InviteFriends extends React.Component {
             <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={() => {
+                    if (item?.user_id === this.props.user_id) {
+                        // this.props.navigation.navigate('ME')
+                        null
+                    }
                     this.props.navigation.navigate('UserProfile', {
                         id: item.user_id,
                         data: item,
@@ -215,7 +227,6 @@ class InviteFriends extends React.Component {
     }
 
     FBShare = async () => {
-       
         const shareOptions = {
             url:
                 'https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg',
@@ -228,9 +239,9 @@ class InviteFriends extends React.Component {
             const ShareResponse = await Share.shareSingle(shareOptions)
             console.log(JSON.stringify(ShareResponse, null, 2))
         } catch (error) {
-            console.log('Error =>', error)  
+            console.log('Error =>', error)
         }
-        
+
         this.setState({visible: false})
     }
 
@@ -472,4 +483,10 @@ InviteFriends.propTypes = {
 
 InviteFriends.defaultProps = {source: null}
 
-export default withTranslation()(InviteFriends)
+const mapStateToProps = ({auth: {user_id}}) => {
+    return {
+        user_id,
+    }
+}
+
+export default withTranslation()(connect(mapStateToProps)(InviteFriends))

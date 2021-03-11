@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import io.agora.agora_rtm.AgoraRTMPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
