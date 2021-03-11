@@ -170,13 +170,14 @@ class InviteFriends extends React.Component {
                 activeOpacity={0.7}
                 onPress={() => {
                     if (item?.user_id === this.props.user_id) {
-                        // this.props.navigation.navigate('ME')
+                        this.props.navigation.navigate('Me')
                         null
+                    } else {
+                        this.props.navigation.navigate('UserProfile', {
+                            id: item.user_id,
+                            data: item,
+                        })
                     }
-                    this.props.navigation.navigate('UserProfile', {
-                        id: item.user_id,
-                        data: item,
-                    })
                 }}
                 style={AddMemberStyles.container}>
                 <View style={[AddMemberStyles.userWrapper, {maxWidth: '60%'}]}>

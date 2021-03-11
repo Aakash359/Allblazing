@@ -279,6 +279,35 @@ class UserProfile extends Component {
         chatIDpre.sort()
         return chatIDpre.join('_')
     }
+
+    withdrawFriendRequest = async () => {
+        this.setState({requestLoading: true})
+        const {friend_id} = this.state.list
+        const url = `${API.WITHDRAW_FRIEND_REQUEST}/${friend_id}`
+        const token = await getAuthToken()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+
+        try {
+            const res = await Axios.delete(url, config)
+            console.log('FRIEND REQUEST WITHDRAW', res)
+            if (res?.status) {
+                Alert.alert('', res?.data?.message)
+                this.UserProfileDetails()
+            } else {
+                Alert.alert('', res?.data?.message)
+            }
+            this.setState({requestLoading: false})
+        } catch (error) {
+            console.log('WITHDRAW FRIEND REQUEST ERROR', error)
+            Alert.alert('', error?.message)
+            this.setState({requestLoading: false})
+        }
+    }
+
     sendFriendRequest = async () => {
         this.setState({requestLoading: true})
         const url = API.SEND_FRIEND_REQUEST
@@ -298,14 +327,15 @@ class UserProfile extends Component {
             const res = await Axios.post(url, payload, config)
             console.log('FRIEND REQUEST', res)
             if (res?.status) {
-                Alert.alert('Friend Request', res?.data?.message)
+                Alert.alert('', res?.data?.message)
+                this.UserProfileDetails()
             } else {
-                Alert.alert('Friend Request', res?.data?.message)
+                Alert.alert('', res?.data?.message)
             }
             this.setState({requestLoading: false})
         } catch (error) {
             console.log('FRIEND REQUEST ERROR', error)
-            Alert.alert('Friend Request', error?.message)
+            Alert.alert('', error?.message)
             this.setState({requestLoading: false})
         }
     }
@@ -365,39 +395,44 @@ class UserProfile extends Component {
                                                 }
                                             </Text>
                                         </View>
-                                        <TouchableOpacity
-                                            activeOpacity={0.7}
-                                            onPress={() => this.startChat()}>
-                                            <Image
-                                                source={Constants.Images.chat}
-                                                resizeMode="contain"
-                                                style={ProfileStyles.icon}
-                                            />
-                                        </TouchableOpacity>
-                                        {this.props.route?.params
-                                            ?.iseventPage ? null : this.state
-                                              .FollowLoading ? (
-                                            <ActivityIndicator
-                                                color="white"
-                                                size={25}
-                                            />
-                                        ) : !this.state.list?.friend ? (
-                                            this.state.requestLoading ? (
-                                                <ActivityIndicator
-                                                    size="small"
-                                                    color={
-                                                        Constants.Colors.WHITE
-                                                    }
-                                                />
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+                                            }}>
+                                            {this.state.list?.private_status ? (
+                                                this.state.list?.friend ===
+                                                1 ? (
+                                                    <TouchableOpacity
+                                                        style={{
+                                                            marginRight: 10,
+                                                        }}
+                                                        activeOpacity={0.7}
+                                                        onPress={() =>
+                                                            this.startChat()
+                                                        }>
+                                                        <Image
+                                                            source={
+                                                                Constants.Images
+                                                                    .chat
+                                                            }
+                                                            resizeMode="contain"
+                                                            style={
+                                                                ProfileStyles.icon
+                                                            }
+                                                        />
+                                                    </TouchableOpacity>
+                                                ) : null
                                             ) : (
                                                 <TouchableOpacity
+                                                    style={{marginRight: 10}}
                                                     activeOpacity={0.7}
                                                     onPress={() =>
-                                                        this.sendFriendRequest()
+                                                        this.startChat()
                                                     }>
                                                     <Image
                                                         source={
-                                                            Constants.Images.add
+                                                            Constants.Images
+                                                                .chat
                                                         }
                                                         resizeMode="contain"
                                                         style={
@@ -405,8 +440,71 @@ class UserProfile extends Component {
                                                         }
                                                     />
                                                 </TouchableOpacity>
-                                            )
-                                        ) : null}
+                                            )}
+                                            {this.props.route?.params
+                                                ?.iseventPage ? null : this
+                                                  .state.FollowLoading ? (
+                                                <ActivityIndicator
+                                                    color="white"
+                                                    size={25}
+                                                />
+                                            ) : !this.state.list?.friend ? (
+                                                this.state.requestLoading ? (
+                                                    <ActivityIndicator
+                                                        size="small"
+                                                        color={
+                                                            Constants.Colors
+                                                                .WHITE
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <TouchableOpacity
+                                                        activeOpacity={0.7}
+                                                        onPress={() =>
+                                                            this.sendFriendRequest()
+                                                        }>
+                                                        <Image
+                                                            source={
+                                                                Constants.Images
+                                                                    .add
+                                                            }
+                                                            resizeMode="contain"
+                                                            style={
+                                                                ProfileStyles.icon
+                                                            }
+                                                        />
+                                                    </TouchableOpacity>
+                                                )
+                                            ) : this.state.list.friend === 2 ? (
+                                                this.state.requestLoading ? (
+                                                    <ActivityIndicator
+                                                        size="small"
+                                                        color={
+                                                            Constants.Colors
+                                                                .WHITE
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <TouchableOpacity
+                                                        activeOpacity={0.7}
+                                                        onPress={() =>
+                                                            this.withdrawFriendRequest()
+                                                        }>
+                                                        <Image
+                                                            source={
+                                                                Constants.Images
+                                                                    .add
+                                                            }
+                                                            resizeMode="contain"
+                                                            style={
+                                                                ProfileStyles.icon
+                                                            }
+                                                        />
+                                                        <Text>abcd</Text>
+                                                    </TouchableOpacity>
+                                                )
+                                            ) : null}
+                                        </View>
                                     </View>
                                 </ImageBackground>
                             </View>

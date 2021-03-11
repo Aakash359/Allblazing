@@ -64,17 +64,37 @@ function SearchSeceen() {
                     <View
                         style={[
                             SearchScreen.searchView,
-                            {justifyContent: 'flex-start'},
+                            {
+                                justifyContent: 'flex-start',
+                                overflow: 'hidden',
+                            },
                         ]}>
                         <Image
                             source={Constants.Images.search}
-                            style={SearchScreen.searchIcon}
+                            style={[
+                                SearchScreen.searchIcon,
+                                {
+                                    marginHorizontal:
+                                        Platform.OS === 'ios' ? 10 : 4,
+                                },
+                            ]}
                         />
 
                         <TextInput
                             placeholder="Find runner, group, event, club, coach etc..."
                             placeholderTextColor={Constants.Colors.GREY_BORDER}
-                            style={[SearchScreen.searchText, {padding: 5}]}
+                            style={[
+                                SearchScreen.searchText,
+                                {
+                                    padding: 5,
+                                    marginRight:
+                                        Platform.OS === 'ios' ? 55 : 30,
+                                    fontSize:
+                                        Platform.OS === 'ios'
+                                            ? Constants.BaseStyle.scale(16)
+                                            : Constants.BaseStyle.scale(13),
+                                },
+                            ]}
                             value={search}
                             autoCapitalize="none"
                             autoCorrect={false}
