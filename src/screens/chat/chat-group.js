@@ -10,6 +10,7 @@ import {getAuthToken} from '../../helpers/auth'
 import Colors from '../../constants/colors'
 import {ActivityIndicator} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
+import {Platform} from 'react-native'
 
 export const GROUP_TYPES = {
     MY_GROUPS: 'MY_GROUPS',
@@ -157,7 +158,7 @@ class ChatsGroup extends React.Component {
                 this.setState(
                     {
                         requestedGroups: res?.data?.data,
-                        
+
                         loader: {
                             ...this.state.loader,
                             requestedGroups: {
@@ -170,8 +171,7 @@ class ChatsGroup extends React.Component {
                         this.getThreeRequest(res?.data?.data)
                     }
                 )
-            }
-            )
+            })
             .catch((e) => {
                 console.log('ERROR AREQLL GROUP LISTING', e)
                 this.setState({
@@ -218,7 +218,7 @@ class ChatsGroup extends React.Component {
             navigation: {navigate},
         } = this.props
         const {activeTab} = this.state
-console.log("iteeeemmmm",JSON.stringify(item))
+        console.log('iteeeemmmm', JSON.stringify(item))
         if (activeTab === '0') {
             return (
                 <ChatGroup
@@ -430,6 +430,7 @@ console.log("iteeeemmmm",JSON.stringify(item))
                         showsVerticalScrollIndicator={false}
                         scrollEventThrottle={1}>
                         <FlatList
+                            style={{marginTop: Platform.OS === 'ios' ? 20 : 10}}
                             data={
                                 viewAll?.request
                                     ? this.getDataByGroupType(
@@ -509,7 +510,7 @@ console.log("iteeeemmmm",JSON.stringify(item))
                                             margin: 10,
                                         }}>
                                         <Text style={{color: Colors.WHITE}}>
-                                             Requested received
+                                            Requested Received
                                         </Text>
                                         {resceived?.length > 3 ? (
                                             <TouchableOpacity
@@ -540,6 +541,7 @@ console.log("iteeeemmmm",JSON.stringify(item))
                     </ScrollView>
                 ) : (
                     <FlatList
+                        style={{marginTop: Platform.OS === 'ios' ? 20 : 10}}
                         data={this.getDataByGroupType(this.state.activeTab)}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => `${index}`}

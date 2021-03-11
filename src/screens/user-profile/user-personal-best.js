@@ -30,6 +30,7 @@ import API from '../../constants/baseApi'
 import axios from 'axios'
 import connect from 'react-redux/lib/connect/connect'
 import {setTime} from '../../reducers/baseServices/profile'
+Ionicons.loadFont()
 
 class UserPersonalBest extends Component {
     constructor() {

@@ -187,7 +187,7 @@ class Events extends React.Component {
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
             if (this.props.filter?.data) {
                 this.getFilterEvents(filter?.eventsFilters)
-                this.getLocation()
+                // this.getLocation()
             } else {
                 this.getLocation()
             }
@@ -224,6 +224,13 @@ class Events extends React.Component {
             },
             params: {
                 token,
+                runners_type: connect,
+                gender,
+                level: selectedLevel,
+                distance,
+                latitude,
+                longitude,
+                radius: isEnabled ? '200' : '500',
             },
             data: JSON.stringify({
                 runners_type: connect,
@@ -254,8 +261,6 @@ class Events extends React.Component {
     render() {
         const {params, filter} = this.props
         const {visible, isLoading, events, error, msg, refreshing} = this.state
-        // const {filter} = this?.props?.route?.params || {}
-        console.log('Event isLoading', isLoading)
         return (
             <View style={HomeStyles.container}>
                 {params?.isMapView ? (

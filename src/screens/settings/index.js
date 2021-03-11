@@ -9,9 +9,12 @@ import {clearAsyncStorage, removeAuthToken} from '../../helpers/auth'
 import {withTranslation} from 'react-i18next'
 import {removeAuthTokenFromRedux} from '../../reducers/baseServices/auth'
 import AsyncStorage from '@react-native-community/async-storage'
-import { GoogleSignin,} from '@react-native-community/google-signin';
-import { LoginManager,GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
-
+import {GoogleSignin} from '@react-native-community/google-signin'
+import {
+    LoginManager,
+    GraphRequest,
+    GraphRequestManager,
+} from 'react-native-fbsdk'
 
 const settingList = [
     {
@@ -29,6 +32,11 @@ const settingList = [
         label: 'settings.Change Password',
         payload: {},
         route: 'ChangePassword',
+    },
+    {
+        label: 'settings.My Friends',
+        payload: {},
+        route: 'MyFriends',
     },
     {
         label: 'settings.Invite Friends',
@@ -105,34 +113,31 @@ class Settings extends Component {
     }
     Google_signOut = async () => {
         try {
-          await GoogleSignin.revokeAccess();
-          await GoogleSignin.signOut();
-          this.setState({ user: null }); // Remember to remove the user from your app's state as well
+            await GoogleSignin.revokeAccess()
+            await GoogleSignin.signOut()
+            this.setState({user: null}) // Remember to remove the user from your app's state as well
         } catch (error) {
-          console.error(error);
+            console.error(error)
         }
-      };
+    }
 
-      FB_Logout = (accessToken) => {
-        let logout =
-            new GraphRequest(
-                "me/permissions/",
-                {
-                    accessToken: accessToken,
-                    httpMethod: 'DELETE'
-                },
-                (error, result) => {
-                    if (error) {
-                        console.log('Error fetching data: ' + error.toString());
-                    } else {
-                        LoginManager.logOut();
-                    }
-                });
-        new GraphRequestManager().addRequest(logout).start();
-    };
-
-   
-
+    FB_Logout = (accessToken) => {
+        let logout = new GraphRequest(
+            'me/permissions/',
+            {
+                accessToken: accessToken,
+                httpMethod: 'DELETE',
+            },
+            (error, result) => {
+                if (error) {
+                    console.log('Error fetching data: ' + error.toString())
+                } else {
+                    LoginManager.logOut()
+                }
+            }
+        )
+        new GraphRequestManager().addRequest(logout).start()
+    }
 
     onLogout = async (accessToken) => {
         const {
@@ -150,14 +155,13 @@ class Settings extends Component {
         console.log('NEW_KEYS', newKeys)
         console.log('ALL KEYS AFTER REMOVE', allKeys)
         const token = await AsyncStorage.multiRemove(allKeys)
-        AsyncStorage.clear();
+        AsyncStorage.clear()
         console.log('========>>tokenNullll', token)
         this.Google_signOut()
         this.FB_Logout()
-       
+
         this.setState({logoutPopup: false})
         logOutSuccess('')
-        
     }
 
     render() {

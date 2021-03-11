@@ -10,7 +10,6 @@ target 'RunFast' do
   rn_maps_path = '../node_modules/react-native-maps'
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
@@ -26,6 +25,7 @@ target 'RunFast' do
 
 
   # pod 'react-native-cookies', :path => '../node_modules/@react-native-community/cookies'
+
 
 
   target 'RunFastTests' do

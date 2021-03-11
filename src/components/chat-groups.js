@@ -50,9 +50,19 @@ export const ChatGroup = ({
                     requestType,
                 })
             }
-            style={[InviteFriendsStyles.container, {height: 80}]}>
-            <View style={[InviteFriendsStyles.userWrapper, {maxWidth: '70%'}]}>
-                <Image source={image} style={InviteFriendsStyles.userImage} />
+            style={[
+                InviteFriendsStyles.container,
+                {height: 80, borderRadius: 15},
+            ]}>
+            <View
+                style={[
+                    InviteFriendsStyles.userWrapper,
+                    {maxWidth: '70%', height: '100%'},
+                ]}>
+                <Image
+                    source={image}
+                    style={[InviteFriendsStyles.userImage, {borderRadius: 15}]}
+                />
                 <View>
                     <Text style={InviteFriendsStyles.username}>
                         {group?.name}

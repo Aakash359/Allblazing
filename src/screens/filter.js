@@ -18,6 +18,7 @@ import Geolocation from '@react-native-community/geolocation'
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import {GOOGLE_API_KEY} from '../config/config'
 import Axios from 'axios'
+Ionicons.loadFont()
 
 const Filter = ({t: translate, navigation: {goBack, navigate}, route}) => {
     const [isEnabled, setIsEnabled] = React.useState(true)
