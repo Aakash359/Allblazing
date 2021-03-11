@@ -36,7 +36,7 @@ class GroupDetail extends React.Component {
     constructor() {
         super()
         this.state = {
-            optionList: ['Active', 'Created', 'Requested', 'Archived'],
+            optionList: ['Active', 'Created', 'Archived'],
             options: 'Active',
             removeMemberPopup: false,
             visible: false,
@@ -45,8 +45,8 @@ class GroupDetail extends React.Component {
             visible: false,
             leaveGroupIsLoading: false,
             ID: [],
-            discr:'',
-            members:[]
+            discr: '',
+            members: [],
         }
     }
 
@@ -105,6 +105,7 @@ class GroupDetail extends React.Component {
         this.unSubscribe = this.props.navigation.addListener('focus', () => {
             this.getGroupDetails()
         })
+<<<<<<< HEAD
         this.getGroupDetails()
          const {
             group:{userInfo,group_id,image},
@@ -112,18 +113,35 @@ class GroupDetail extends React.Component {
         console.log("MYYYGROUPPDETAIL", group_id ,image)
         
         let data = userInfo.userData.map(data => {
+=======
+        const {
+            group: {userInfo, group_id, image},
+        } = this.props.route.params
+        console.log('MYYYGROUPPDETAIL', group_id, image)
+
+        let data = userInfo.userData.map((data) => {
+>>>>>>> dcb6bc165d236da730b7d978ae40419ebd668f40
             return {
                 id: data.user_id,
-                name:data.full_name
+                name: data.full_name,
             }
         })
-        let ids = userInfo.userData.map(data => {
-            return data.user_id.toString() 
+        let ids = userInfo.userData.map((data) => {
+            return data.user_id.toString()
         })
+<<<<<<< HEAD
         console.log("Data", data)
         let discr =`${data['0'].name != null && data['0'].name.split(" ")[0]} ,${data['1'].name.split(" ")[0]} and ${data.length} others`
         this.setState({ID:ids,members:data ,discr:discr})
         console.log("IDS", ids)
+=======
+        console.log('Data', data)
+        let discr = `${
+            data['0'].name != null && data['0'].name.split(' ')[0]
+        } ,${data['1'].name} and ${data.length} others`
+        this.setState({ID: ids, members: data, discr: discr})
+        console.log('IDS', ids)
+>>>>>>> dcb6bc165d236da730b7d978ae40419ebd668f40
         // let finlData = {
         //     ID: ids,
         //     admin_id:
@@ -377,22 +395,25 @@ class GroupDetail extends React.Component {
         }
     }
 
+<<<<<<< HEAD
      startChat =async () => {
          const {
+=======
+    startChat = () => {
+        const {
+>>>>>>> dcb6bc165d236da730b7d978ae40419ebd668f40
             navigation: {goBack, navigate},
-         } = this.props
-          const {
-              groupDetails,
-              ID,members
-        } = this.state
+        } = this.props
+        const {groupDetails, ID, members} = this.state
         //  const userdata = []
-        
-      const  user1 = {
+
+        const user1 = {
             address: this.state.discr,
             group_pic: groupDetails?.group_image,
-            gname: groupDetails?.group_name,      
-      }
+            gname: groupDetails?.group_name,
+        }
         //  userdata.push(user1)
+<<<<<<< HEAD
       
          let gname = groupDetails?.group_name;
          let admin_id = groupDetails?.group_id;
@@ -424,6 +445,35 @@ console.log("DATTA FIREBASE",messages)
         }) 
          }
        
+=======
+
+        let gname = groupDetails?.group_name
+        let admin_id = groupDetails?.group_id
+        let admin_name = ''
+        let group_pic = groupDetails?.group_image
+        let group_info = groupDetails?.group_description
+        let group_id = groupDetails?.group_id
+        firestore()
+            .collection('Groups')
+            .add({
+                ID: ID,
+                users: members,
+                gname: gname,
+                admin_id: admin_id,
+                admin_name: '',
+                group_pic: group_pic,
+                group_info: group_info,
+                group_id: group_id,
+            })
+            .then((data2) => {
+                console.log('dataaaaaaFIREBASE CREEATED', data2)
+                navigate('ChatOneToOne', {
+                    id: admin_id,
+                    userData: user1,
+                    type: 'groups',
+                })
+            })
+>>>>>>> dcb6bc165d236da730b7d978ae40419ebd668f40
     }
     render() {
         const {
@@ -482,16 +532,14 @@ console.log("DATTA FIREBASE",messages)
                                             style={ChatStyles.icon}
                                         />
                                     </TouchableOpacity>
-                                    ) : null}
-                                <TouchableOpacity
-                                    onPress={this.startChat}
-                                       >
-                                        <Image
-                                            source={Constants.Images.chat}
-                                            resizeMode="contain"
-                                            style={ChatStyles.icon}
-                                        />
-                                    </TouchableOpacity>
+                                ) : null}
+                                <TouchableOpacity onPress={this.startChat}>
+                                    <Image
+                                        source={Constants.Images.chat}
+                                        resizeMode="contain"
+                                        style={ChatStyles.icon}
+                                    />
+                                </TouchableOpacity>
                             </View>
                         </ImageBackground>
                         <View>

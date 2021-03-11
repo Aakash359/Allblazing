@@ -51,6 +51,7 @@ import FollowingList from '../screens/user-profile/following-list'
 import EditProfile from '../screens/user-profile/edit-profile'
 import {Strava} from '../screens/strava'
 import BlockedUsers from '../screens/user-profile/blocked-users'
+import Friends from '../screens/user-profile/Friends'
 
 const AppStack = createStackNavigator()
 const options = {headerShown: false}
@@ -634,6 +635,16 @@ export default function MainNavigator() {
                 component={BlockedUsers}
                 options={{
                     headerTitle: 'Blocked Users',
+                    headerBackTitleVisible: false,
+                    headerTintColor: Constants.Colors.WHITE,
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <AppStack.Screen
+                name="MyFriends"
+                component={Friends}
+                options={{
+                    headerTitle: 'My Friends',
                     headerBackTitleVisible: false,
                     headerTintColor: Constants.Colors.WHITE,
                     headerTitleAlign: 'center',

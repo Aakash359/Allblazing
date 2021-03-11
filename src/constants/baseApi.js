@@ -31,7 +31,7 @@ const API = {
     RTC_TOKEN: BASE_URL + '/agoraRtcToken',
     CREATE_CHANNEL: BASE_URL + '/channel',
     RTM: BASE_URL + '/agoraRtmToken',
-    
+
     GROUP_TYPE: BASE_URL + '/groupType',
     EVENT: BASE_URL + '/event',
     JOIN_GROUP: BASE_URL + '/group/join/',
@@ -64,6 +64,7 @@ const API = {
     GROUP_MEMBERS: `${BASE_URL}/member_list`,
     GMAIL_SIGN: `${BASE_URL}/social_signup`,
     DISTANCE_LEVEL: `${BASE_URL}/level`,
+    WITHDRAW_FRIEND_REQUEST: `${BASE_URL}/friend`,
     // USERLIST : 'BASE_URL +
 }
 

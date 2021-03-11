@@ -26,15 +26,15 @@ import {setGender} from '../../reducers/baseServices/profile';
 const genders = [
   {
     label: 'Male',
-    value: 'male',
+    value: 'Male',
   },
   {
     label: 'Female',
-    value: 'female',
+    value: 'Female',
   },
   {
     label: 'Other',
-    value: 'other',
+    value: 'Other',
   },
 ];
 
@@ -117,7 +117,7 @@ class UserGender extends Component {
       navigation: {goBack},
       t: translate,
     } = this.props;
-
+   console.log("Genader Name=>>>>>> ",)
     return (
       <View style={CommonStyles.container}>
         <ScrollView>

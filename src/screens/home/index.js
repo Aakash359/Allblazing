@@ -144,12 +144,9 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.route.params?.type === 'Events') {
-            this.setState({eventFilters: this.props.route.params})
-        } else {
-            this.setState({eventFilters: this.props.route.params})
-        }
-        this.getEvents()
+        this.subscribe = this.props.navigation.addListener('focus', () => {
+            this.getEvents()
+        })
         this.UserProfileDetails()
     }
 
@@ -240,6 +237,7 @@ class Home extends React.Component {
         const {keyword, option} = this.state
         const {params} = this.props?.route
         if (data === 'Map') {
+            // this.getEvents()
             return (
                 <View style={{flex: 1}}>
                     <MapView

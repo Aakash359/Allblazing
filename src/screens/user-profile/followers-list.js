@@ -179,13 +179,14 @@ class FollowersList extends Component {
                         {
                             backgroundColor: Constants.Colors.LIGHT_RED,
                             overflow: 'hidden',
+                            height: '100%',
                         },
                     ]}>
                     <Image
                         source={{
                             uri: request ? item?.image : item?.followingImage,
                         }}
-                        style={{width: 60, height: 60, borderRadius: 12}}
+                        style={{width: 120, height: 60, borderRadius: 12}}
                     />
                 </View>
 
@@ -265,7 +266,7 @@ class FollowersList extends Component {
                             value={this.state.search}
                             autoCapitalize="none"
                             autoCorrect={false}
-                            style={{color: 'white', paddingVertical: 10}}
+                            style={{color: 'white', width: '90%'}}
                             onChangeText={(text) => {
                                 this.setState({search: text})
                             }}
@@ -284,7 +285,7 @@ class FollowersList extends Component {
                         </View>
                     ) : (
                         <>
-                            {my && (
+                            {my && this.state.requests?.length ? (
                                 <FlatList
                                     ListHeaderComponent={() => (
                                         <View
@@ -344,7 +345,7 @@ class FollowersList extends Component {
                                         this.ListEmptyComponent(true)
                                     }
                                 />
-                            )}
+                            ) : null}
                             <FlatList
                                 scrollEnabled={false}
                                 contentContainerStyle={FollowingStyles.flatList}

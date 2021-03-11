@@ -68,7 +68,7 @@ class Login extends Component {
         super()
         this.state = {
             emailId: '', //soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
-            isRemember: true,
+            isRemember: false,
             isShow: false,
             password: '', //'12345678',         //'tarun123', 12345678
             isLoading: false,
@@ -353,6 +353,9 @@ class Login extends Component {
             this.setState({token: 'User Token: ' + ' ' + result.id})
             this.setState({profile_pic: result.picture.data.url})
         }
+    }
+    Twitter_Sign_In=()=>{
+        return;
     }
 
     setIgToken = (data) => {

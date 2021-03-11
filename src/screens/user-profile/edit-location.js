@@ -32,6 +32,7 @@ import {
 import {Alert} from 'react-native'
 import {ActivityIndicator} from 'react-native'
 import {times, distanceList} from '../../data'
+AntIcon.loadFont()
 
 class EditLocation extends Component {
     onChangeText = () => {}
