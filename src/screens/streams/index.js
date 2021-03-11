@@ -45,7 +45,7 @@ class CreateStream extends React.Component {
       selected: [],
       title: '',
       toggle: false,
-      joined: true,
+      joined:false,
       flash: false,
       minutes_Counter: '00',
       seconds_Counter: '00',
@@ -53,14 +53,16 @@ class CreateStream extends React.Component {
       
     };
     this.AgoraEngine = React.createRef();
+    console.log("called")
   }
 
   init = async () => {
-    this.AgoraEngine.current = await RtcEngine.create(
+    try
+  {
+     this.AgoraEngine.current = await RtcEngine.create(
       '22143d65ab6a440099dec92cbb2c6f2f',
-    );
-    
-    this.AgoraEngine.current.enableVideo();
+      );
+       this.AgoraEngine.current.enableVideo();
     
     this.AgoraEngine.current.enableAudio();
     this.AgoraEngine.current.setChannelProfile(ChannelProfile.LiveBroadcasting);
@@ -74,11 +76,8 @@ class CreateStream extends React.Component {
         this.setState({ joined: true });
         this.onButtonStart()
       },
-    );
-    
-    
-
-   this.AgoraEngine.current.addListener(
+      );
+       this.AgoraEngine.current.addListener(
       'LeaveChannel',
       (data) => {
         console.log('LeaeveChhannel', data);
@@ -98,6 +97,18 @@ class CreateStream extends React.Component {
       // if (uid === 1) setBroadcasterVideoState(state);
       console.log("Startuusss changed" ,state)
     });
+  }
+  catch(error) 
+  {
+    console.error("Connecting eroor ",error)
+  }
+   
+    
+   
+    
+    
+
+  
   };
   permissionAsk = async () => {
     if (Platform.OS === 'android') {
@@ -114,6 +125,26 @@ class CreateStream extends React.Component {
         }
           axios
             .post(API.CREATE_CHANNEL, formdata,config)
+            .then((response) => {
+                 console.log('===>response', response?.data)      
+                if (response?.data) {
+                          
+                  
+                  this.setState({ rtmToken:token })              
+                }
+            })
+  }
+  
+  startRecording  = async (channel) => {
+   
+    const token = this.props.token
+     const formdata = new FormData()
+    formdata.append('channel_id', channel);
+        const config = {
+            headers: {Authorization: `Bearer ${token}`},
+        }
+          axios
+            .post("https://api.agora.io/v1/apps/22143d65ab6a440099dec92cbb2c6f2f/cloud_recording/acquire", formdata,config)
             .then((response) => {
                  console.log('===>response', response?.data)      
                 if (response?.data) {
@@ -210,21 +241,7 @@ onSwitchCamera = () => {
     });
   };
 
-  onSelect = (payload) => {
-    const {selected} = this.state;
-
-    let values = [...selected];
-
-    const isExist = values.find((value) => value === payload);
-
-    if (isExist) {
-      values = values.filter((value) => value !== payload);
-    } else {
-      values.push(payload);
-    }
-
-    this.setState({selected: values});
-  };
+ 
 
   onOutsideClick = () => {
     const {isFocused} = this.state;
@@ -234,11 +251,28 @@ onSwitchCamera = () => {
     }
   };
 
+  destroyChanel = async () => {
+    const token = this.props.token
+        const {channel} = this.props.route.params
+        const url = `${API.CREATE_CHANNEL}/${channel}`
+const config = {
+            headers: {Authorization: `Bearer ${token}`},
+        }
+    try {
+           axios.delete(url,config)
+      .then(res => {
+        console.log("RessspseeDELTEEEE XHNAEEL",res);
+        console.log(res.data);
+      })
+    }
+    catch (error) {
+            console.log('ERROR GROUP DETAILS', error)
+        }
+  }
 
   onDelete = () => {
     clearInterval(this.state.timer);
-    
-   
+    this.destroyChanel()
     this.AgoraEngine.current.leaveChannel();
   };
 onButtonStart = () => {

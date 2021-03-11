@@ -64,7 +64,7 @@ class FeedScreen extends Component {
         })
         Axios.post(API.USER_POST_FEED, {}, config)
             .then((response) => {
-                console.log('USERRRFEDDDD', response.data)
+                console.log('USERRRFEDDDD', JSON.stringify(response.data))
                 if (response?.data?.data?.result) {
                     this.setState({
                         userPostList: response?.data?.data?.result || [],

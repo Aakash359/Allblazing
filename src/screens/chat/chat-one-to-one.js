@@ -19,7 +19,7 @@ class ChatOneToOne extends React.Component {
       messages: [],
       channel: 'live_streaming',
       name: '',
-      id: '101',
+      id: '',
       isTyping: true,
       userData:[]
     };
@@ -367,6 +367,11 @@ return `${num1}_${num2}`
 
   );
 
+  renderAvatar = (props) => {
+    return (
+      <SvgUri width="60" height="60" source={{ uri: `https://avatars.dicebear.com/v2/male/mike.svg` }} />
+    )
+  }
   render() {
     const {
       route: {params},
@@ -383,35 +388,6 @@ return `${num1}_${num2}`
         {this.renderHeader({
           goBack, params
         })}
-        {/* <FlatList
-          data={[1, 2, 3, 4, 5]}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => `${index}`}
-        />
-        <View style={HomeStyles.ChatBody}>
-          <View style={HomeStyles.ChatBody}>
-            <TextInput
-              style={HomeStyles.ChatInput}
-              multiline
-              value={message}
-              placeholder="Write your message..."
-              placeholderTextColor={Constants.Colors.TEXT_COLOR}
-              onChangeText={(text) => this.setState({ message: text })}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-            <TouchableOpacity>
-              <Image
-                source={Constants.Images.send}
-                resizeMode='contain'
-                style={{
-                  height: Constants.BaseStyle.scale(20),
-                  marginRight: Constants.BaseStyle.scale(20),
-                  width: Constants.BaseStyle.scale(20),
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View> */}
        <GiftedChat
 messages={this.state.messages}
 listViewProps={{
@@ -421,7 +397,7 @@ style: {
 },
 }}
 renderUsernameOnMessage={false}
-renderAvatar={() => null}
+renderAvatar={params.type =='chat'? () => null:this.renderAvatar}
 renderTime={() => null}
 alwaysShowSend={true}
 textInputStyle={ { color: 'white'}}
@@ -434,7 +410,8 @@ onSend={newMessage => this.handleSend(newMessage)}
 isTyping={true}
 user={{
 _id: this.state.id,
-name: this.state.name
+  name: this.state.name,
+avatar: 'https://placeimg.com/140/140/any',
 }}
 
 

@@ -30,6 +30,7 @@ const API = {
     RTC_TOKEN: BASE_URL + '/agoraRtcToken',
     CREATE_CHANNEL: BASE_URL + '/channel',
     RTM: BASE_URL + '/agoraRtmToken',
+    
     GROUP_TYPE: BASE_URL + '/groupType',
     EVENT: BASE_URL + '/event',
     JOIN_GROUP: BASE_URL + '/group/join/',

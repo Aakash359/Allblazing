@@ -7,7 +7,7 @@ import Constants from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-class Chats extends React.Component {
+class Chats extends React.Component { 
   constructor() {
     super();
     this.state = { activeTab: '0', threds: [],groupThreds:[] };
@@ -111,9 +111,9 @@ class Chats extends React.Component {
     
   //     }
 
-  componentWillUnmount() {
-    this.unsubscribe.remove();
-  }
+  // componentWillUnmount() {
+  //   this.unsubscribe.remove();
+  // }
   
   renderHeader = () => {
     const { activeTab } = this.state;
