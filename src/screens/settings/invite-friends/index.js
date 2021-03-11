@@ -215,31 +215,47 @@ class InviteFriends extends React.Component {
     }
 
     FBShare = async () => {
-        const options = {
-            title: 'Share RunFast',
-            message: 'Please join RunFast and RunFast.',
+        // const shareFacebook = async () => {
+        const shareOptions = {
             url:
-                'https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/HiHowAreYouGame_wiki.png/220px-HiHowAreYouGame_wiki.png',
+                'https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg',
+            title: 'Facebook Test',
+            message: 'This is a test',
             social: Share.Social.FACEBOOK,
         }
 
         try {
-            const res = await Share.open(options)
-            console.log('SHARE RESULT: ', res)
+            const ShareResponse = await Share.shareSingle(shareOptions)
+            console.log(JSON.stringify(ShareResponse, null, 2))
         } catch (error) {
-            if (Platform.OS === 'ios') {
-                await Linking.openURL(
-                    'https://apps.apple.com/in/app/facebook/id284882215'
-                )
-            } else {
-                await Linking.openURL(
-                    'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_IN&gl=US'
-                )
-            }
+            console.log('Error =>', error)
+            // setResult('error: '.concat(getErrorString(error)))
         }
-        this.setState({visible: false})
+        // }
 
-        Alert.alert('Share')
+        // const options = {
+        //     // title: 'Share RunFast',
+        //     // message: 'Please join RunFast and RunFast.',
+        //     social: Share.Social.FACEBOOK,
+        // }
+
+        // try {
+        //     const res = await Share.shareSingle(options)
+        //     console.log('SHARE RESULT: ', res)
+        // } catch (error) {
+        //     console.log('SHARE RESULT: ', error)
+
+        //     if (Platform.OS === 'ios') {
+        //         await Linking.openURL(
+        //             'https://apps.apple.com/in/app/facebook/id284882215'
+        //         )
+        //     } else {
+        //         await Linking.openURL(
+        //             'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_IN&gl=US'
+        //         )
+        //     }
+        // }
+        // this.setState({visible: false})
     }
 
     render() {
