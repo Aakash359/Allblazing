@@ -283,7 +283,7 @@ class FollowersList extends Component {
                         </View>
                     ) : (
                         <>
-                            {my && (
+                            {my && this.state.requests?.length ? (
                                 <FlatList
                                     ListHeaderComponent={() => (
                                         <View
@@ -343,7 +343,7 @@ class FollowersList extends Component {
                                         this.ListEmptyComponent(true)
                                     }
                                 />
-                            )}
+                            ) : null}
                             <FlatList
                                 scrollEnabled={false}
                                 contentContainerStyle={FollowingStyles.flatList}
