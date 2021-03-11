@@ -19,7 +19,7 @@ class ChatOneToOne extends React.Component {
       messages: [],
       channel: 'live_streaming',
       name: '',
-      id: '101',
+      id: '',
       isTyping: true,
       userData:[]
     };
@@ -103,7 +103,10 @@ return `${num1}_${num2}`
               .doc(threadName)
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(querySnapshot => {
+                  .onSnapshot(querySnapshot => {
+                    if (querySnapshot == null) {
+                  return
+                }
               const messages = querySnapshot.docs.map(doc => {
               const firebaseData = doc.data()
 
@@ -139,7 +142,13 @@ return `${num1}_${num2}`
               .doc(threadName)
               .collection('MESSAGES')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(querySnapshot => {
+                  .onSnapshot(querySnapshot => {
+                    if (querySnapshot == null) {
+                  return
+                    }
+                    else {
+                      
+                    }
               const messages = querySnapshot.docs.map(doc => {
               const firebaseData = doc.data()
 
@@ -348,7 +357,7 @@ return `${num1}_${num2}`
         <View>
           {params.type === 'chat' ? <Text style={InviteFriendsStyles.username}>{this.state.userData.length > 0 && this.state.userData['0'].name}</Text> :
           <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].gname}</Text>}
-       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address}</Text>
+       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address ||params.address}</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
@@ -358,6 +367,11 @@ return `${num1}_${num2}`
 
   );
 
+  renderAvatar = (props) => {
+    return (
+      <SvgUri width="60" height="60" source={{ uri: `https://avatars.dicebear.com/v2/male/mike.svg` }} />
+    )
+  }
   render() {
     const {
       route: {params},
@@ -374,35 +388,6 @@ return `${num1}_${num2}`
         {this.renderHeader({
           goBack, params
         })}
-        {/* <FlatList
-          data={[1, 2, 3, 4, 5]}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => `${index}`}
-        />
-        <View style={HomeStyles.ChatBody}>
-          <View style={HomeStyles.ChatBody}>
-            <TextInput
-              style={HomeStyles.ChatInput}
-              multiline
-              value={message}
-              placeholder="Write your message..."
-              placeholderTextColor={Constants.Colors.TEXT_COLOR}
-              onChangeText={(text) => this.setState({ message: text })}
-              underlineColorAndroid={Constants.Colors.TRANSPARENT}
-            />
-            <TouchableOpacity>
-              <Image
-                source={Constants.Images.send}
-                resizeMode='contain'
-                style={{
-                  height: Constants.BaseStyle.scale(20),
-                  marginRight: Constants.BaseStyle.scale(20),
-                  width: Constants.BaseStyle.scale(20),
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View> */}
        <GiftedChat
 messages={this.state.messages}
 listViewProps={{
@@ -412,7 +397,7 @@ style: {
 },
 }}
 renderUsernameOnMessage={false}
-renderAvatar={() => null}
+renderAvatar={params.type =='chat'? () => null:this.renderAvatar}
 renderTime={() => null}
 alwaysShowSend={true}
 textInputStyle={ { color: 'white'}}
@@ -425,7 +410,8 @@ onSend={newMessage => this.handleSend(newMessage)}
 isTyping={true}
 user={{
 _id: this.state.id,
-name: this.state.name
+  name: this.state.name,
+avatar: 'https://placeimg.com/140/140/any',
 }}
 
 

@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Text,
     Linking,
+    Alert,
 } from 'react-native'
 import Clipboard from '@react-native-community/clipboard'
 import {func, shape, string} from 'prop-types'
@@ -26,6 +27,7 @@ import {getAuthToken} from '../../../helpers/auth'
 import {ActivityIndicator} from 'react-native'
 import {FlatList} from 'react-native-gesture-handler'
 import Colors from '../../../constants/colors'
+import Share from 'react-native-share'
 
 class InviteFriends extends React.Component {
     constructor(props) {
@@ -210,6 +212,26 @@ class InviteFriends extends React.Component {
                 )
             }
         }
+    }
+
+    FBShare = async () => {
+       
+        const shareOptions = {
+            url:
+                'https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg',
+            title: 'Facebook Test',
+            message: 'This is a test',
+            social: Share.Social.FACEBOOK,
+        }
+
+        try {
+            const ShareResponse = await Share.shareSingle(shareOptions)
+            console.log(JSON.stringify(ShareResponse, null, 2))
+        } catch (error) {
+            console.log('Error =>', error)  
+        }
+        
+        this.setState({visible: false})
     }
 
     render() {
@@ -424,7 +446,7 @@ class InviteFriends extends React.Component {
                 )}
                 {visible && (
                     <InviteOptionPopup
-                        onFacebook={() => this.setState({visible: false})}
+                        onFacebook={this.FBShare}
                         // onStrava={this.onStrava}
                         onWhatsApp={() => {
                             this.whatsAppShare()

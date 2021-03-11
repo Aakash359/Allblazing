@@ -7,7 +7,7 @@ import Constants from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-class Chats extends React.Component {
+class Chats extends React.Component { 
   constructor() {
     super();
     this.state = { activeTab: '0', threds: [],groupThreds:[] };
@@ -40,11 +40,41 @@ class Chats extends React.Component {
     const { user_id } = this.props
     console.log(user_id, "IDDDD")
     this.unsubscribe = this.props.navigation.addListener('focus', async () => {
- firestore()
+      firestore()
         .collection('chatroom')
         .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
-          const threads = querySnapshot.docs.map(documentSnapshot => {
-            console.log("myQuerySnapShot", documentSnapshot)
+          console.log("myQuerySnapShot", querySnapshot)
+          if (querySnapshot == null) {
+            return
+          }
+          else {
+            const threads = querySnapshot.docs.map(documentSnapshot => {
+              console.log("myQuerySnapShot", documentSnapshot)
+              return {
+                // _id: documentSnapshot.id,
+                // name: documentSnapshot.data.name,
+                // latestMessage: { text: '' },
+                ...documentSnapshot.data()
+              }
+         
+            })
+            this.setState({ threds: threads })
+         
+          }
+        })
+    })
+     
+
+    firestore()
+      .collection('Groups')
+      .where("ID", "array-contains", user_id.toString()).onSnapshot(querySnapshot => {
+        if (querySnapshot == null) {
+          return
+        }
+        else {
+          const threads2 = querySnapshot.docs.map(documentSnapshot => {
+        
+           
             return {
               // _id: documentSnapshot.id,
               // name: documentSnapshot.data.name,
@@ -53,27 +83,15 @@ class Chats extends React.Component {
             }
          
           })
-
-        firestore()
-            .collection('Groups')
-          .where("group_id", "==", '172').onSnapshot(querySnapshot => {
-        const threads2 = querySnapshot.docs.map(documentSnapshot => {
-          console.log("myQuerySnapShot", documentSnapshot)
-          return {
-            // _id: documentSnapshot.id,
-            // name: documentSnapshot.data.name,
-            // latestMessage: { text: '' },
-            ...documentSnapshot.data()
-          }
+           console.log("Groupsss ", threads2)
+          this.setState({ groupThreds: threads2 })
+        }
          
         })
-           console.log("Groupsss ", threads2)
-          this.setState({ threds: threads,groupThreds: threads2 })
-        })
-    })
   
+ 
           
-      })
+      
   }
   // async componentDidMount() {
    
@@ -93,9 +111,9 @@ class Chats extends React.Component {
     
   //     }
 
-  componentWillUnmount() {
-    
-  }
+  // componentWillUnmount() {
+  //   this.unsubscribe.remove();
+  // }
   
   renderHeader = () => {
     const { activeTab } = this.state;
