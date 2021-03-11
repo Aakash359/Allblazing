@@ -359,6 +359,9 @@ class Login extends Component {
         this.setState({token: data.access_token, user_id: data.user_id})
     }
 
+    Twitter_Sign_In = () => {
+        return null
+    }
     Socail_Api_Hit(item) {
         switch (item) {
             case 'google':

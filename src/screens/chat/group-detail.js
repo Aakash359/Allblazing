@@ -100,9 +100,12 @@ class GroupDetail extends React.Component {
     }
 
     componentDidMount() {
+       
+
         this.unSubscribe = this.props.navigation.addListener('focus', () => {
             this.getGroupDetails()
         })
+        this.getGroupDetails()
          const {
             group:{userInfo,group_id,image},
          } = this.props.route.params
@@ -118,7 +121,7 @@ class GroupDetail extends React.Component {
             return data.user_id.toString() 
         })
         console.log("Data", data)
-        let discr =`${data['0'].name != null && data['0'].name.split(" ")[0]} ,${data['1'].name} and ${data.length} others`
+        let discr =`${data['0'].name != null && data['0'].name.split(" ")[0]} ,${data['1'].name.split(" ")[0]} and ${data.length} others`
         this.setState({ID:ids,members:data ,discr:discr})
         console.log("IDS", ids)
         // let finlData = {
@@ -374,7 +377,7 @@ class GroupDetail extends React.Component {
         }
     }
 
-     startChat = () => {
+     startChat =async () => {
          const {
             navigation: {goBack, navigate},
          } = this.props
@@ -397,7 +400,12 @@ class GroupDetail extends React.Component {
          let group_pic = groupDetails?.group_image;
         let group_info = groupDetails?.group_description;
          let group_id = groupDetails?.group_id;
-        firestore()
+         const messages = await firestore().collection('Groups').where("group_id", "==", 1).get();
+console.log("DATTA FIREBASE",messages)
+         if (messages._docs.length > 0) {
+              navigate('ChatOneToOne' ,{id:admin_id,userData:user1,type:'groups'})
+         } else {
+             firestore()
         .collection('Groups')
         .add({
           ID:ID,
@@ -413,7 +421,9 @@ class GroupDetail extends React.Component {
             .then((data2) => {
             console.log("dataaaaaaFIREBASE CREEATED",data2)
           navigate('ChatOneToOne' ,{id:admin_id,userData:user1,type:'groups'})
-        })
+        }) 
+         }
+       
     }
     render() {
         const {
