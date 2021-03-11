@@ -263,7 +263,7 @@ class FollowersList extends Component {
                             value={this.state.search}
                             autoCapitalize="none"
                             autoCorrect={false}
-                            style={{color: 'white', paddingVertical: 10}}
+                            style={{color: 'white', paddingVertical: 10,width:'90%'}}
                             onChangeText={(text) => {
                                 this.setState({search: text})
                             }}
