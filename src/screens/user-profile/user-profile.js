@@ -493,14 +493,13 @@ class UserProfile extends Component {
                                                         <Image
                                                             source={
                                                                 Constants.Images
-                                                                    .add
+                                                                    .removeFriend
                                                             }
                                                             resizeMode="contain"
                                                             style={
                                                                 ProfileStyles.icon
                                                             }
                                                         />
-                                                        <Text>abcd</Text>
                                                     </TouchableOpacity>
                                                 )
                                             ) : null}
