@@ -121,6 +121,23 @@ class ChangePassword extends Component {
       );
       return;
     }
+    else if (confirmPassword.length < 8) {
+      Alert.alert('', 'Your password should be atleast 8 characters',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'Cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+      {Cancelable:false}
+      );
+      return;
+    }
     this.setState({
       isLoading: true,
     });

@@ -73,7 +73,7 @@ componentDidMount(){
       headers: {Authorization: `Bearer ${token}`},
       };
       this.setState({
-        Loading: true,
+        Loading:true,
       });
 
     if (name === '') {
