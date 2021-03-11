@@ -115,9 +115,7 @@ class GroupDetail extends React.Component {
             }
         })
         let ids = userInfo.userData.map(data => {
-            return data.user_id.toString()
-                
-            
+            return data.user_id.toString() 
         })
         console.log("Data", data)
         let discr =`${data['0'].name != null && data['0'].name.split(" ")[0]} ,${data['1'].name} and ${data.length} others`
