@@ -5,7 +5,7 @@ import { TouchableOpacity, Text, View, Image } from 'react-native';
 
 import { InviteFriendsStyles } from '../styles';
 import Constants from '../constants';
-
+import { scale, } from 'react-native-size-matters';
 export const ChatFriends = ({
   hasChats,
   navigation,
@@ -16,13 +16,14 @@ export const ChatFriends = ({
 
   <TouchableOpacity activeOpacity={0.7} onPress={() => navigation('ChatOneToOne' ,{thread: data ,id:type === 'chat' ?nameObj['0'].id:data.group_id,userData:type === 'chat' ?nameObj:data,type:type,address: data.users['0'].name !=null && `${data.users['0'].name.split(" ")[0]} ,${data.users['1'].name.split(" ")[0]} and ${data.users.length} others`})} style={InviteFriendsStyles.container}>
     <View style={InviteFriendsStyles.userWrapper}>
-      <Image source={type === 'chat' ? { uri: nameObj.length >0 && nameObj['0'].pic } :type === 'groups'? { uri: data.group_pic } :Constants.Images.inviteUser1} style={InviteFriendsStyles.userImage} />
+      {type === 'chat' ? <Image source={ nameObj.length > 0 && nameObj['0'].pic=='N/A'? Constants.Images.profilePic:{ uri: nameObj.length > 0 && nameObj['0'].pic }} style={InviteFriendsStyles.userImage} />:
+        <Image source={{ uri: data.group_pic } } style={InviteFriendsStyles.userImage} />}
       {type === 'chat' ? (
           <View>
             
             
             <Text style={InviteFriendsStyles.username}>{ nameObj.length >0 && nameObj['0'].name}</Text>
-            <Text style={InviteFriendsStyles.location}>{nameObj.length >0 && nameObj['0'].address}</Text>
+            <Text numberOfLines = {1} ellipsizeMode='tail' style={[InviteFriendsStyles.location,{maxWidth:scale(200)}]}>{nameObj.length >0 && nameObj['0'].address}</Text>
         </View>
       ) : (
         <View>

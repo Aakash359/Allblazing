@@ -87,16 +87,14 @@ return `${num1}_${num2}`
   
   componentDidMount() {
        const {
-    
       route: {params},user_id,
       t: translate,
        } = this.props;
-    if (params.type === 'chat') {
+       if (params.type === 'chat') {
       let another_id = params.id;
-    let userData = params.userData;
-    let threadName = this.Id_generator(user_id, another_id)
-    console.log("threadDATAA" ,userData,another_id)
-                 
+      let userData = params.userData;
+       let threadName = this.Id_generator(user_id, another_id)
+        console.log("threadDATAA" ,userData,another_id)       
                   this.setState({id:user_id,userData:userData})
                 this.unsubscribeListener = firestore()
               .collection('Messages')
@@ -134,9 +132,9 @@ return `${num1}_${num2}`
       let userData = params.userData;
       dummyArray.push(userData)
     let threadName = params.id.toString()
-    console.log("threadDATAANEW" , dummyArray,threadName)
+    console.log("threadDATAANEW" , JSON.stringify(dummyArray),threadName)
                  
-                  this.setState({id:user_id,userData:dummyArray})
+                this.setState({id:user_id,userData:dummyArray})
                 this.unsubscribeListener = firestore()
               .collection('Messages')
               .doc(threadName)
@@ -147,9 +145,7 @@ return `${num1}_${num2}`
                   return
                     }
                     else {
-                      
-                    }
-              const messages = querySnapshot.docs.map(doc => {
+                       const messages = querySnapshot.docs.map(doc => {
               const firebaseData = doc.data()
 
               const data = {
@@ -165,9 +161,12 @@ return `${num1}_${num2}`
               }
 
               return data
-              })
-              console.log('DataFireStore-------->', messages )
+                       })
+                        console.log('DataFireStore-------->', messages )
                 this.setState({ messages:messages })
+                    }
+             
+            
               })
     }
     
@@ -237,7 +236,7 @@ return `${num1}_${num2}`
 
               <View style={styles.rightTriangle}/>
               <Text style={{textAlign:'left',alignSelf:"flex-start",justifyContent:'flex-start',
-              alignItems:'baseline',position:'absolute',right:15,bottom:-12,color:'#898989',fontSize:12}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
+              alignItems:'baseline',position:'absolute',right:15,bottom:-12,color:'#898989',fontSize:10}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
               </View>
               );
               }
@@ -246,7 +245,15 @@ return `${num1}_${num2}`
 
               <View style={{flexDirection: 'row',
               margin: scale(14),}} >
-
+ <Image
+          source={{ uri:`https://quytech.net/runfast-sftp/RunFast/public/uploads/group/1615401602.jpg`  }}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(20),
+            height: Constants.BaseStyle.scale(40),
+            width: Constants.BaseStyle.scale(40),
+            right:-8
+          }}
+        />
               <View style={styles.leftTriangle}/>
 
               <Bubble
@@ -278,7 +285,7 @@ return `${num1}_${num2}`
               />
 
               <Text style={{textAlign:'left',alignSelf:"flex-end",justifyContent:'flex-start',
-              alignItems:'baseline',position:'absolute',left:15,bottom:-12,color:'#898989',fontSize:12}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
+              alignItems:'baseline',position:'absolute',left:35,bottom:-12,color:'#898989',fontSize:10}}>{moment(props.currentMessage.createdAt).format("LT")}</Text>
 
               </View>
 
@@ -333,7 +340,7 @@ return `${num1}_${num2}`
           <Image source={Constants.Images.back} resizeMode='contain' style={CommonStyles.crossImage} />
         </TouchableOpacity>
         {this.state.userData.length >0 && params.type ==='chat' ?<Image
-          source={{ uri: this.state.userData['0'].pic   }}
+          source={ this.state.userData['0'].pic == 'N/A' ? Constants.Images.profilePic :{ uri: this.state.userData['0'].pic   }}
           style={{
             borderRadius: Constants.BaseStyle.scale(25),
             height: Constants.BaseStyle.scale(50),
@@ -357,7 +364,7 @@ return `${num1}_${num2}`
         <View>
           {params.type === 'chat' ? <Text style={InviteFriendsStyles.username}>{this.state.userData.length > 0 && this.state.userData['0'].name}</Text> :
           <Text style={InviteFriendsStyles.username}>{ this.state.userData.length >0 &&this.state.userData['0'].gname}</Text>}
-       <Text style={InviteFriendsStyles.location}>{ this.state.userData.length >0 &&this.state.userData['0'].address ||params.address}</Text>
+       <Text style={[InviteFriendsStyles.location,{maxWidth:scale(200)}]} numberOfLines = {1} ellipsizeMode='tail'>{ this.state.userData.length >0 &&this.state.userData['0'].address  ||params.address}</Text>
         </View>
       </View>
       <TouchableOpacity activeOpacity={0.7} onPress={() => this.setState({ visible: true })}>
@@ -369,7 +376,15 @@ return `${num1}_${num2}`
 
   renderAvatar = (props) => {
     return (
-      <SvgUri width="60" height="60" source={{ uri: `https://avatars.dicebear.com/v2/male/mike.svg` }} />
+      <Image
+          source={{ uri:`https://quytech.net/runfast-sftp/RunFast/public/uploads/group/1615401602.jpg`  }}
+          style={{
+            borderRadius: Constants.BaseStyle.scale(20),
+            height: Constants.BaseStyle.scale(40),
+            width: Constants.BaseStyle.scale(40),
+          }}
+        />
+    
     )
   }
   render() {
@@ -397,7 +412,7 @@ style: {
 },
 }}
 renderUsernameOnMessage={false}
-renderAvatar={params.type =='chat'? () => null:this.renderAvatar}
+renderAvatar={ () => null}
 renderTime={() => null}
 alwaysShowSend={true}
 textInputStyle={ { color: 'white'}}

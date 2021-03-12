@@ -168,7 +168,9 @@ class FollowersList extends Component {
                               id: request ? item?.friend_id : item.folowing_id,
                               follow_id: request
                                   ? item?.friend_id
-                                  : item.folowing_id,
+                                : item.folowing_id,
+                            data: item,
+                               type:'follow'
                           })
                 }>
                 <View

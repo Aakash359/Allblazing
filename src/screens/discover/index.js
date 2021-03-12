@@ -149,6 +149,7 @@ class FeedScreen extends Component {
                         this.props.navigation.navigate('UserProfile', {
                             id: item.user_id,
                             data: item,
+                            type:'feed'
                         })
                     }}>
                     <View
