@@ -68,6 +68,8 @@ class ForgotPassword extends Component {
       });
   };
 
+ 
+
   render() {
     const {email, visible, isLoading} = this.state;
     const {
@@ -98,6 +100,8 @@ class ForgotPassword extends Component {
           onClick={() => this.setState({visible: false}, () =>navigate('ForgotOTP',{email:this.state.email}))}
           hasResendBtn={false}
         />
+        
+        
         <View style={ForgotPassStyles.buttonsWrapper}>
           <TouchableOpacity
             style={[

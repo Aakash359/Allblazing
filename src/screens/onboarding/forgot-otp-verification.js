@@ -14,7 +14,7 @@ import { setOtpToken, getUserId, getForgotPasswordUserId, setForgotOtpToken } fr
 class ForgotOTP extends Component {
   constructor() {
     super();
-    this.state = {otp: '', isLoading:false,Loading:false};
+    this.state = {otp: '', isLoading:false,Loading:false,};
    
   }
 
@@ -97,18 +97,19 @@ class ForgotOTP extends Component {
         });
       });
   };
-
-  // Resend OTP
-  _handleResendOTP = () => {
-
+   // Resend OTP
+   _handleResendOTP = async()  => {
+ 
+    const UserId = await getForgotPasswordUserId();
     this.setState({
       Loading: true,
     });
     axios
       .post(API.RESEND_OTP, {
-        user_id: 1,
+        user_id: UserId
       })
       .then((response) => {
+        console.log("Resend OTP=======>",response)
         if (response?.data?.code === 422) {
           Alert.alert(
             '',
@@ -137,6 +138,7 @@ class ForgotOTP extends Component {
         });
       });
   };
+
 
   render() {
     const {otp} = this.state;
