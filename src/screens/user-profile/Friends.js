@@ -124,43 +124,41 @@ export class Friends extends Component {
 
         return (
             <>
-                <ScrollView style={FollowingStyles.container}>
-                    <View style={FollowingStyles.searchView}>
-                        <Image
-                            source={Constants.Images.search}
-                            style={FollowingStyles.searchIcon}
-                        />
+                <View style={FollowingStyles.searchView}>
+                    <Image
+                        source={Constants.Images.search}
+                        style={FollowingStyles.searchIcon}
+                    />
 
-                        <TextInput
-                            placeholder={`Search Friend`}
-                            placeholderTextColor="#898989"
-                            value={this.state.search}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            style={{color: 'white', width: '90%'}}
-                            onChangeText={(text) => {
-                                this.setState({search: text})
-                            }}
-                            underlineColorAndroid={Constants.Colors.TRANSPARENT}
-                        />
-                    </View>
-                    {isLoading ? (
-                        <ActivityIndicator
-                            size="small"
-                            color={Constants.Colors.WHITE}
-                        />
-                    ) : (
-                        <FlatList
-                            scrollEnabled={false}
-                            contentContainerStyle={FollowingStyles.flatList}
-                            data={friends}
-                            renderItem={({item, index, navigate}) => (
-                                <this.renderItem item={item} index={index} />
-                            )}
-                            ListEmptyComponent={this.ListEmptyComponent()}
-                        />
-                    )}
-                </ScrollView>
+                    <TextInput
+                        placeholder={`Search Friend`}
+                        placeholderTextColor="#898989"
+                        value={this.state.search}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        style={{color: 'white', width: '90%'}}
+                        onChangeText={(text) => {
+                            this.setState({search: text})
+                        }}
+                        underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                    />
+                </View>
+                {isLoading ? (
+                    <ActivityIndicator
+                        size="small"
+                        color={Constants.Colors.WHITE}
+                    />
+                ) : (
+                    <FlatList
+                        scrollEnabled={false}
+                        contentContainerStyle={FollowingStyles.flatList}
+                        data={friends}
+                        renderItem={({item, index, navigate}) => (
+                            <this.renderItem item={item} index={index} />
+                        )}
+                        ListEmptyComponent={this.ListEmptyComponent()}
+                    />
+                )}
             </>
         )
     }
