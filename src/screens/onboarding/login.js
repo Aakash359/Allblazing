@@ -68,7 +68,7 @@ class Login extends Component {
         super()
         this.state = {
             emailId: '', //soni@yopmail.com' ,      //'abcd@yopmail.com' //soni@yopmail.com
-            isRemember: true,
+            isRemember: false,
             isShow: false,
             password: '', //'12345678',         //'tarun123', 12345678
             isLoading: false,
@@ -408,6 +408,7 @@ class Login extends Component {
                         />
                         <View>
                             <InputField
+                            
                                 value={emailId}
                                 placeholder={translate('Email')}
                                 onChangeText={(text) =>
