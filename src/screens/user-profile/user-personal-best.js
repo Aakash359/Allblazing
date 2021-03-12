@@ -183,7 +183,11 @@ class UserPersonalBest extends Component {
                         {!params?.isEditMode && (
                             <StepBar count={5} selected={[0, 1, 2, 3]} />
                         )}
-                        <View style={ConnectUserTypeStyles.inputWrapper}>
+                        <View
+                            style={[
+                                ConnectUserTypeStyles.inputWrapper,
+                                {marginTop: 25},
+                            ]}>
                             {!params?.isEditMode && (
                                 <Text
                                     style={[

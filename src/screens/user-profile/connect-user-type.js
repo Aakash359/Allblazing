@@ -81,33 +81,48 @@ class ConnectUserType extends Component {
                                 style={[
                                     AuthStyle.loginTouchable,
                                     AuthStyle.loginTouchableRow,
+                                    {
+                                        flex: 1,
+                                    },
                                 ]}
                                 activeOpacity={0.7}
                                 onPress={() => this.onTypeChange('train')}>
                                 <Text style={AuthStyle.buttonText}></Text>
-                                <Text
-                                    style={[
-                                        AuthStyle.buttonText,
-                                        {
-                                            color:
-                                                type === 'train'
-                                                    ? Constants.Colors
-                                                          .TEXT_COLOR_WHITE
-                                                    : Constants.Colors
-                                                          .TEXT_COLOR2,
-                                        },
-                                    ]}>
-                                    {translate('Train')}
-                                </Text>
-                                {type === 'train' ? (
-                                    <Image
-                                        source={Constants.Images.check}
-                                        resizeMode="contain"
-                                        style={AuthStyle.checkImg}
-                                    />
-                                ) : (
-                                    <Text style={AuthStyle.checkImg}>{}</Text>
-                                )}
+                                <View
+                                    style={{
+                                        flex: 0.5,
+                                        alignItems: 'flex-end',
+                                        marginLeft: '10%',
+                                    }}>
+                                    <Text
+                                        style={[
+                                            AuthStyle.buttonText,
+                                            {
+                                                color:
+                                                    type === 'train'
+                                                        ? Constants.Colors
+                                                              .TEXT_COLOR_WHITE
+                                                        : Constants.Colors
+                                                              .TEXT_COLOR2,
+                                            },
+                                        ]}>
+                                        {translate('Train')}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{flex: 0.5, alignItems: 'flex-end'}}>
+                                    {type === 'train' ? (
+                                        <Image
+                                            source={Constants.Images.check}
+                                            resizeMode="contain"
+                                            style={AuthStyle.checkImg}
+                                        />
+                                    ) : (
+                                        <Text style={AuthStyle.checkImg}>
+                                            {}
+                                        </Text>
+                                    )}
+                                </View>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[
@@ -117,29 +132,44 @@ class ConnectUserType extends Component {
                                 activeOpacity={0.7}
                                 onPress={() => this.onTypeChange('race')}>
                                 <Text style={AuthStyle.buttonText}></Text>
-                                <Text
-                                    style={[
-                                        AuthStyle.buttonText,
-                                        {
-                                            color:
-                                                type === 'race'
-                                                    ? Constants.Colors
-                                                          .TEXT_COLOR_WHITE
-                                                    : Constants.Colors
-                                                          .TEXT_COLOR2,
-                                        },
-                                    ]}>
-                                    {translate('Race')}
-                                </Text>
-                                {type === 'race' ? (
-                                    <Image
-                                        source={Constants.Images.check}
-                                        resizeMode="contain"
-                                        style={AuthStyle.checkImg}
-                                    />
-                                ) : (
-                                    <Text style={AuthStyle.checkImg}>{}</Text>
-                                )}
+                                <View
+                                    style={{
+                                        flex: 0.5,
+                                        alignItems: 'flex-end',
+                                        marginLeft: '10%',
+                                    }}>
+                                    <Text
+                                        style={[
+                                            AuthStyle.buttonText,
+                                            {
+                                                color:
+                                                    type === 'race'
+                                                        ? Constants.Colors
+                                                              .TEXT_COLOR_WHITE
+                                                        : Constants.Colors
+                                                              .TEXT_COLOR2,
+                                            },
+                                        ]}>
+                                        {translate('Race')}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{
+                                        flex: 0.5,
+                                        alignItems: 'flex-end',
+                                    }}>
+                                    {type === 'race' ? (
+                                        <Image
+                                            source={Constants.Images.check}
+                                            resizeMode="contain"
+                                            style={AuthStyle.checkImg}
+                                        />
+                                    ) : (
+                                        <Text style={AuthStyle.checkImg}>
+                                            {}
+                                        </Text>
+                                    )}
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </View>
