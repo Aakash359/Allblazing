@@ -90,6 +90,7 @@ class Login extends Component {
             this.setState({
                 emailId: userCred?.email,
                 password: userCred?.password,
+                
             })
         } catch (error) {
             console.log('Unable to get User Last Cred')
@@ -382,6 +383,7 @@ class Login extends Component {
     }
     render() {
         const {emailId, password, isShow, isRemember, isLoading} = this.state
+        console.log("IsReamber=========>", isRemember)
         const {
             navigation: {navigate},
             t: translate,
@@ -406,6 +408,7 @@ class Login extends Component {
                         />
                         <View>
                             <InputField
+                            
                                 value={emailId}
                                 placeholder={translate('Email')}
                                 onChangeText={(text) =>
