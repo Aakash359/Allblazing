@@ -10,7 +10,7 @@ import {
     SafeAreaView,
 } from 'react-native'
 import {useNavigation} from '@react-navigation/native'
-import {CreateEventStyles} from '../../styles'
+import {CreateEventStyles,CommonStyles,CreateGroupStyles} from '../../styles'
 import Constants from '../../constants'
 import {func, shape} from 'prop-types'
 import {connect} from 'react-redux'
@@ -341,14 +341,14 @@ class CreateEvent extends Component {
                             placeholder="Event Name"
                             placeholderTextColor={Constants.Colors.GREY_BORDER}
                             value={name}
-                            autoCapitalize="none"
+                           
                             autoCorrect={false}
                             onChangeText={(text) => {
                                 this.setState({name: text})
                             }}
                             style={[
                                 CreateEventStyles.groupName,
-                                {textAlign: 'left'},
+                                {textAlign: 'left',width:'100%'},
                             ]}
                             underlineColorAndroid={Constants.Colors.TRANSPARENT}
                         />
@@ -414,14 +414,14 @@ class CreateEvent extends Component {
                             placeholder="Event Address Line 1"
                             placeholderTextColor={Constants.Colors.GREY_BORDER}
                             value={address1}
-                            autoCapitalize="none"
+                            // autoCapitalize="none"
                             autoCorrect={false}
                             onChangeText={(text) => {
                                 this.setState({address1: text})
                             }}
                             style={[
                                 CreateEventStyles.groupName,
-                                {textAlign: 'left'},
+                                {textAlign: 'left',width:'100%'},
                             ]}
                             underlineColorAndroid={Constants.Colors.TRANSPARENT}
                         />
@@ -431,19 +431,49 @@ class CreateEvent extends Component {
                             placeholder="Event Address Line 2"
                             placeholderTextColor={Constants.Colors.GREY_BORDER}
                             value={address2}
-                            autoCapitalize="none"
+                            // autoCapitalize="none"
                             autoCorrect={false}
                             onChangeText={(text) => {
                                 this.setState({address2: text})
                             }}
                             style={[
                                 CreateEventStyles.groupName,
-                                {textAlign: 'left'},
+                                {textAlign: 'left',width:'100%'},
                             ]}
                             underlineColorAndroid={Constants.Colors.TRANSPARENT}
                         />
                     </View>
-                    <View style={CreateEventStyles.searchView}>
+
+                    <View
+                        style={{
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        backgroundColor: Constants.Colors.SECONDARY_COLOR,
+                        borderRadius: Constants.BaseStyle.scale(8),
+                        height: Constants.BaseStyle.scale(200),
+                        justifyContent: 'flex-start',
+                        width: '95%',
+                        }}>
+                        <TextInput
+                        multiline
+                        autoCorrect={false}
+                        numberOfLines={5}
+                        maxLength={450}
+                        numberOfLines={20}
+                        style={[
+                            CommonStyles.textAreaWrapper,
+                            CreateGroupStyles.textAreaWrapper,
+                            {paddingTop: Platform.OS === 'ios' ? 25 : 15, textAlignVertical:'top'}
+                        ]}
+                        placeholder="Description..."
+                        value={description}
+                        onChangeText={(text) => this.setState({description: text})}
+                        placeholderTextColor={Constants.Colors.GREY_BORDER}
+                        underlineColorAndroid={Constants.Colors.TRANSPARENT}
+                        textAlignVertical = 'top'
+                        />
+                    </View>
+                    {/* <View style={CreateEventStyles.searchView}>
                         <TextInput
                             multiline
                             numberOfLines={5}
@@ -458,7 +488,7 @@ class CreateEvent extends Component {
                             style={CreateEventStyles.description}
                             underlineColorAndroid={Constants.Colors.TRANSPARENT}
                         />
-                    </View>
+                    </View> */}
                     <TouchableOpacity
                         activeOpacity={0.7}
                         onPress={() => this.NameStore()}

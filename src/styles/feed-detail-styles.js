@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
   },
 
   listView: {
-    flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 16,
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    marginHorizontal: 16,
   },
   userImage: {
     borderRadius: 23,

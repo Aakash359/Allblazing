@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     textAreaWrapper: {
         alignItems: 'center',
         alignSelf: 'center',
+        fontSize: Constants.BaseStyle.scale(14),
         backgroundColor: Constants.Colors.SECONDARY_COLOR,
         borderRadius: Constants.BaseStyle.scale(8),
         height: Constants.BaseStyle.scale(200),

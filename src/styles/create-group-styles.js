@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     ...Constants.Fonts.Regular,
     color: Constants.Colors.GREY_BORDER,
     fontSize: Constants.BaseStyle.scale(16),
+    width:'100%'
   },
   groupType: {
     ...Constants.Fonts.Regular,

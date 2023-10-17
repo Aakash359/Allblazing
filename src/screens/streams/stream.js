@@ -276,7 +276,7 @@ class Stream extends React.Component {
                                 width: dimensions.width,
                                 height: dimensions.height,
                             }}
-                            uid={id}
+                            uid={parseInt(id)}
                             channelId={channelName}
                             renderMode={VideoRenderMode.Hidden}
                         />

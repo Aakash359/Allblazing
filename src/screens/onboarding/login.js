@@ -164,17 +164,36 @@ class Login extends Component {
                 social_id: social_id,
             })
             .then(async (response) => {
-                if (response?.data?.code === 200) {
-                    console.log('Gamil-Response', response)
-                    console.log('User-Id', response?.data?.data?.user_id)
-                    await AsyncStorage.setItem(
+                if (response?.data?.code === 200) 
+                {
+                    if(response?.data?.data?.completeProfile==1)
+
+                    {   
+                        console.log('Gamil-Response', response)
+                        console.log('User-Id', response?.data?.data?.user_id)
+                        await AsyncStorage.setItem(
                         'socail_id',
-                        response?.data?.data?.user_id.toString()
-                    )
-                    setAuthToken(response?.data?.data?.token)
-                    this.props.addLoginDetail(response?.data?.data)
-                    setLoginUserId(JSON.stringify(response?.data?.data))
-                    navigate('Username', {data: response?.data?.data?.user_id})
+                        response?.data?.data?.user_id.toString())
+                        setAuthToken(response?.data?.data?.token)
+                       this.props.addLoginDetail(response?.data?.data)
+                        setLoginUserId(JSON.stringify(response?.data?.data))
+                        navigate('Home', {data: response?.data?.data?.user_id})
+                        
+
+                    }
+                    else
+                    {
+                        console.log('Gamil-Response', response)
+                        console.log('User-Id', response?.data?.data?.user_id)
+                        await AsyncStorage.setItem(
+                        'socail_id',
+                        response?.data?.data?.user_id.toString())
+                        setAuthToken(response?.data?.data?.token)
+                        this.props.addLoginDetail(response?.data?.data)
+                        setLoginUserId(JSON.stringify(response?.data?.data))
+                        navigate('Username', {data: response?.data?.data?.user_id})
+                    }
+                    
                 }
             })
             .finally(() => {
@@ -222,7 +241,7 @@ class Login extends Component {
         LoginManager.logInWithPermissions([
             'public_profile',
             'email',
-            'user_friends',
+         
         ]).then(
             (result) => {
                 if (result.isCancelled) {
@@ -245,30 +264,29 @@ class Login extends Component {
                                     })
                                     .then(async (response) => {
                                         if (response?.data?.code === 200) {
-                                            console.log(
-                                                'Response',
-                                                response.data
-                                            )
-                                            await AsyncStorage.setItem(
-                                                'socail_id',
-                                                response?.data?.data?.user_id.toString()
-                                            )
-                                            setAuthToken(
-                                                response?.data?.data?.token
-                                            )
-                                            this.props.addLoginDetail(
-                                                response?.data?.data
-                                            )
-                                            setLoginUserId(
-                                                JSON.stringify(
-                                                    response?.data?.data
+
+                                            if(response?.data?.data?.completeProfile==1){
+
+                                                console.log('Response', response.data)
+                                                await AsyncStorage.setItem('socail_id',response?.data?.data?.user_id.toString()
                                                 )
-                                            )
-                                            navigate('Username', {
-                                                data:
-                                                    response?.data?.data
-                                                        ?.user_id,
-                                            })
+                                                setAuthToken(response?.data?.data?.token)
+                                                this.props.addLoginDetail(response?.data?.data)
+                                                setLoginUserId(JSON.stringify(response?.data?.data))
+                                                navigate('Home', { data:response?.data?.data?.user_id,})
+
+                                            }
+                                            else{
+                                                console.log('Response', response.data)
+                                                await AsyncStorage.setItem('socail_id',response?.data?.data?.user_id.toString()
+                                                )
+                                                setAuthToken(response?.data?.data?.token)
+                                                this.props.addLoginDetail(response?.data?.data)
+                                                setLoginUserId(JSON.stringify(response?.data?.data))
+                                                navigate('Username', { data:response?.data?.data?.user_id,})
+
+                                            }
+                                           
                                         }
                                     })
                                     .finally(() => {

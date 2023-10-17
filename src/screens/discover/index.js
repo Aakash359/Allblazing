@@ -64,7 +64,7 @@ class FeedScreen extends Component {
         })
         Axios.post(API.USER_POST_FEED, {}, config)
             .then((response) => {
-                console.log('USERRRFEDDDD', JSON.stringify(response.data))
+                console.log('USER-Post-List========>', response.data)
                 if (response?.data?.data?.result) {
                     this.setState({
                         userPostList: response?.data?.data?.result || [],
@@ -90,10 +90,14 @@ class FeedScreen extends Component {
             isLoading: true,
         })
         Axios.get(API.POST_LIST, config)
+        
             .then((response) => {
+                console.log("Feed List======> ",response)
+
                 if (response.data.data.result) {
                     this.setState({
                         list: response?.data?.data?.result,
+                        
                     })
                     addFeedDetails(response?.data?.data?.result)
                 }
@@ -361,7 +365,8 @@ class FeedScreen extends Component {
                                         onRefresh={this.onRefresh}
                                     />
                                 }
-                                // scrollEnabled={false}
+                                scrollEnabled={true}
+                                ListFooterComponent={<View style={{height: 100}}/>}
                                 contentContainerStyle={FollowersStyles.flatList}
                                 data={this.state.list}
                                 renderItem={this.renderItem}

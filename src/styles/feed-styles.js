@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   flatList: {
     flexDirection: 'column',
     justifyContent: 'space-around',
+    
   },
   heartIcon: {
     height: 16,

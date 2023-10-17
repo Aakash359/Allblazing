@@ -25,9 +25,7 @@ class CreatePost extends Component {
             Loading: false,
         }
     }
-    // const navigation = useNavigation();
-    // const [upload, setUpload] = useState(false);
-    // const [selectedImage, setSelectedImage] = useState();
+   
 
     choosePhotosFromGallery = (imageIndex) => {
         ImagePicker.openPicker({
@@ -44,16 +42,7 @@ class CreatePost extends Component {
         })
     }
 
-    //  takePhotoFromCamera = async (imageIndex) => {
-    //   try {
-    //     const image = await ImagePicker.openCamera({
-    //       cropping: true,
-    //       includeBase64: true,
-    //     });
-    //   } catch (err) {
-    //     // logError(err, '[useProfilePhotos] getPhotoLibrary Error');
-    //   }
-    // };
+   
     takePhotoFromCamera = (imageIndex) => {
         try {
             ImagePicker.openCamera({
@@ -138,7 +127,7 @@ class CreatePost extends Component {
         axios
             .post(API.POST, formData, config)
             .then((response) => {
-                console.log('CRETAE POST response' + response)
+                console.log('CRETAE POST response' + JSON.stringify(response))
                 if (response?.data?.code === 422) {
                     Alert.alert('', response?.data?.message ?? '')
                 }
@@ -154,7 +143,7 @@ class CreatePost extends Component {
                             },
                             {
                                 text: 'OK',
-                                onPress: () => navigate('Discover'),
+                                onPress: () => navigate('Discover', ),
                             },
                         ],
                         {Cancelable: false}
